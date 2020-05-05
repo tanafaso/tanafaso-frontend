@@ -4,7 +4,9 @@
 .pub
 build
 ios/.generated
-packages
+.packages
+.android/.idea
+.flutter-plugins-dependencies
 .flutter-plugins
 .DS_Store
 .dart_tool
