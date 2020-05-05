@@ -10,15 +10,15 @@
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		oG5/OGn+vw7vp/nu5DUDoZJ4nFc=
+		WO+wDY/dMRHaNENvy9qbe8NC08c=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
-		lILml1/Dm8FIsisqu4EM3Kg929Q=
+		TlqtkPZgeXj/etHHtkqv8L5q1B0=
 		</data>
 		<key>flutter_assets/LICENSE</key>
 		<data>
-		oO9uWuBp76079crQpZa6kTaE+XU=
+		BtiRJ9/Ux7PPERsKLeyYIZsPZto=
 		</data>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.ttf</key>
 		<data>
@@ -26,19 +26,51 @@
 		</data>
 		<key>flutter_assets/isolate_snapshot_data</key>
 		<data>
-		6Q7gJUs/xoGfGSssJQF4HSQt+tg=
+		KOMcQdw7AgysBT6dE5+xCfnnPFE=
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		ooqO7+NHKkpG9YXJz/0+15mOvL4=
+		KVbrqJDZKiJk6YCPdgr+NTNvjCs=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
 		TdRNbRcrlXQQgeiweLFizPmk92g=
 		</data>
+		<key>flutter_assets/packages/flutter_auth_buttons/fonts/Roboto-Medium.ttf</key>
+		<data>
+		Xxb01tu0pPEtiulkiKwgm7SXYqU=
+		</data>
+		<key>flutter_assets/packages/flutter_auth_buttons/fonts/SF-Pro-Medium.ttf</key>
+		<data>
+		YvOd+ZBqVtyE1oyvKZaUBBPlVSU=
+		</data>
+		<key>flutter_assets/packages/flutter_auth_buttons/graphics/Twitter_Logo_Blue.png</key>
+		<data>
+		rMNklGB3sOMrI0NHTOQGatPuUkw=
+		</data>
+		<key>flutter_assets/packages/flutter_auth_buttons/graphics/apple_logo_black.png</key>
+		<data>
+		hV4KtPsC4p4RN3RWIhsbyIsJuyE=
+		</data>
+		<key>flutter_assets/packages/flutter_auth_buttons/graphics/apple_logo_white.png</key>
+		<data>
+		Z1cA5iWnN7dRh/jnCdZqSfTZyyE=
+		</data>
+		<key>flutter_assets/packages/flutter_auth_buttons/graphics/flogo-HexRBG-Wht-100.png</key>
+		<data>
+		37EO1OStz0TfgzFP669PH7bIa/8=
+		</data>
+		<key>flutter_assets/packages/flutter_auth_buttons/graphics/google-logo.png</key>
+		<data>
+		h2E0TeHHYPhONN594Q8v22ArPkQ=
+		</data>
+		<key>flutter_assets/packages/flutter_auth_buttons/graphics/ms-symbollockup_mssymbol_19.png</key>
+		<data>
+		KPdxpU2HVwUFjutZQdp2JAHArLk=
+		</data>
 		<key>flutter_assets/vm_snapshot_data</key>
 		<data>
-		9/Sg3xz36iaqQAEPm7T0k2zXcgk=
+		yYi4BJdGlIFJfw4GiO1LmGm+lCo=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -47,33 +79,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			oG5/OGn+vw7vp/nu5DUDoZJ4nFc=
+			WO+wDY/dMRHaNENvy9qbe8NC08c=
 			</data>
 			<key>hash2</key>
 			<data>
-			Sps95+7JukayebvM0TLjL1LW1VXXndpKp/O8tOm9ZR8=
+			q9uTlWIAegcrgLv1bEPclDjOwUUzM8qeV/h8c6Fu0KU=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			lILml1/Dm8FIsisqu4EM3Kg929Q=
+			TlqtkPZgeXj/etHHtkqv8L5q1B0=
 			</data>
 			<key>hash2</key>
 			<data>
-			YwkPE2N7k/su9XjVFpdeoUy7GFY9DEY+G4h3aEyC1dg=
+			Q5WNPFtsE7PEqgi2KhyMgEu5Swh21tRRGtKJ28mIsIE=
 			</data>
 		</dict>
 		<key>flutter_assets/LICENSE</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			oO9uWuBp76079crQpZa6kTaE+XU=
+			BtiRJ9/Ux7PPERsKLeyYIZsPZto=
 			</data>
 			<key>hash2</key>
 			<data>
-			8QiLH7wMUtvqb7CoBxFD24nqGJI0XRx0HMtUgJAkXP8=
+			yfhZD89ZUcSj94qQATnwLyfzWNayEGx6NA5djfhtrZ0=
 			</data>
 		</dict>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.ttf</key>
@@ -91,22 +123,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			6Q7gJUs/xoGfGSssJQF4HSQt+tg=
+			KOMcQdw7AgysBT6dE5+xCfnnPFE=
 			</data>
 			<key>hash2</key>
 			<data>
-			h6j2w4UCVTMupMkHzYN0Y6PvYOJbFAVOfvWo7xh8mC8=
+			QOJld01vOiDxU80o6RDzeF+EceRys0Pi6tMMfubyE+I=
 			</data>
 		</dict>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ooqO7+NHKkpG9YXJz/0+15mOvL4=
+			KVbrqJDZKiJk6YCPdgr+NTNvjCs=
 			</data>
 			<key>hash2</key>
 			<data>
-			0hs/aFFR2muKZkz/xSEMktVCQBuqszcHDqPmoUkhq9E=
+			VoswqXthtXrsj5lqvkXemBkdxf7MCNXSCmiufR9EvM8=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -120,15 +152,103 @@
 			d6fK2iHuml40zu1xSV3HnoE9PVFhQREGOzVfduySSBY=
 			</data>
 		</dict>
+		<key>flutter_assets/packages/flutter_auth_buttons/fonts/Roboto-Medium.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Xxb01tu0pPEtiulkiKwgm7SXYqU=
+			</data>
+			<key>hash2</key>
+			<data>
+			8gXMURgh6lYHihBVV/zqYlMSlATUEcmX4YZvvQBqu2g=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_auth_buttons/fonts/SF-Pro-Medium.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			YvOd+ZBqVtyE1oyvKZaUBBPlVSU=
+			</data>
+			<key>hash2</key>
+			<data>
+			TSge91cOo0mMtdS2ky/QPeO9EalounnvcNR2JryE6j4=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_auth_buttons/graphics/Twitter_Logo_Blue.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			rMNklGB3sOMrI0NHTOQGatPuUkw=
+			</data>
+			<key>hash2</key>
+			<data>
+			G+XQXOb6rUaff5xaWHny2fjSZ7YOs5TpLBkhcmi86o8=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_auth_buttons/graphics/apple_logo_black.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			hV4KtPsC4p4RN3RWIhsbyIsJuyE=
+			</data>
+			<key>hash2</key>
+			<data>
+			aEMRoHg0xTdjGlf8mU+eN2+dtG6wiyz6L3enCrOSjUw=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_auth_buttons/graphics/apple_logo_white.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Z1cA5iWnN7dRh/jnCdZqSfTZyyE=
+			</data>
+			<key>hash2</key>
+			<data>
+			kbr/qBrIH6ApaPxSExp5Qb89rMd/5z2QgeyxADGLXmA=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_auth_buttons/graphics/flogo-HexRBG-Wht-100.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			37EO1OStz0TfgzFP669PH7bIa/8=
+			</data>
+			<key>hash2</key>
+			<data>
+			0a16v5vADbyLF1tQIqyl/GsY+cf3LpA1B9NM99torVU=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_auth_buttons/graphics/google-logo.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			h2E0TeHHYPhONN594Q8v22ArPkQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			r4gTmcsICo5Dj/D9eK6KLcA0/qP6SeI21gAh7EOyKU4=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/flutter_auth_buttons/graphics/ms-symbollockup_mssymbol_19.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			KPdxpU2HVwUFjutZQdp2JAHArLk=
+			</data>
+			<key>hash2</key>
+			<data>
+			7MbsUaD/KiwzFOP5j0fHW+tsopTnBWnNxFegX+cCjY0=
+			</data>
+		</dict>
 		<key>flutter_assets/vm_snapshot_data</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9/Sg3xz36iaqQAEPm7T0k2zXcgk=
+			yYi4BJdGlIFJfw4GiO1LmGm+lCo=
 			</data>
 			<key>hash2</key>
 			<data>
-			D6DyCLPkZxFO4v3Insr+wJXtdDwBQpE12Cia0eqJyuQ=
+			uLRGf397YvghS2/Zfd0rKmwMBeVFmNC2kdtKq2REI5g=
 			</data>
 		</dict>
 	</dict>
