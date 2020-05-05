@@ -5,6 +5,7 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 class Authentication {
   static final _facebookLogin = FacebookLogin();
   static var _facebookAccessToken;
+
   static Future<void> loginWithFacebook() async {
     _facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
 
