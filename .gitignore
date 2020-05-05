@@ -1,9 +1,10 @@
 .idea
-.vscode/
+.vscode
 .packages
-.pub/
-build/
-ios/.generated/
+.pub
+build
+ios/.generated
 packages
 .flutter-plugins
 .DS_Store
+.dart_tool
