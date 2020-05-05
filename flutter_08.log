@@ -1,0 +1,171 @@
+Flutter crash report; please file at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter --no-color build ios --simulator
+
+## exception
+
+ProcessException: ProcessException: Process exited abnormally:
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -list
+
+
+xcodebuild: error: Could not resolve package dependencies:
+  Packages are not supported when using legacy build locations, but the current project has them enabled.
+  Command: /usr/bin/xcodebuild -list
+
+```
+#0      RunResult.throwException (package:flutter_tools/src/base/process.dart:172:5)
+#1      _DefaultProcessUtils.run (package:flutter_tools/src/base/process.dart:322:19)
+<asynchronous suspension>
+#2      XcodeProjectInterpreter.getInfo (package:flutter_tools/src/ios/xcodeproj.dart:389:50)
+#3      buildXcodeProject (package:flutter_tools/src/ios/mac.dart:108:78)
+#4      BuildIOSCommand.runCommand (package:flutter_tools/src/commands/build_ios.dart:83:43)
+#5      _rootRunUnary (dart:async/zone.dart:1192:38)
+#6      _CustomZone.runUnary (dart:async/zone.dart:1085:19)
+#7      _FutureListener.handleValue (dart:async/future_impl.dart:141:18)
+#8      Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:682:45)
+#9      Future._propagateToListeners (dart:async/future_impl.dart:711:32)
+#10     Future._completeWithValue (dart:async/future_impl.dart:526:5)
+#11     _AsyncAwaitCompleter.complete (dart:async-patch/async_patch.dart:36:15)
+#12     _completeOnAsyncReturn (dart:async-patch/async_patch.dart:298:13)
+#13     ApplicationPackageStore.getPackageForPlatform (package:flutter_tools/src/application_package.dart)
+#14     _rootRunUnary (dart:async/zone.dart:1192:38)
+#15     _CustomZone.runUnary (dart:async/zone.dart:1085:19)
+#16     _FutureListener.handleValue (dart:async/future_impl.dart:141:18)
+#17     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:682:45)
+#18     Future._propagateToListeners (dart:async/future_impl.dart:711:32)
+#19     Future._completeWithValue (dart:async/future_impl.dart:526:5)
+#20     _AsyncAwaitCompleter.complete (dart:async-patch/async_patch.dart:36:15)
+#21     _completeOnAsyncReturn (dart:async-patch/async_patch.dart:298:13)
+#22     BuildableIOSApp.fromProject (package:flutter_tools/src/application_package.dart)
+#23     _rootRunUnary (dart:async/zone.dart:1192:38)
+#24     _CustomZone.runUnary (dart:async/zone.dart:1085:19)
+#25     _FutureListener.handleValue (dart:async/future_impl.dart:141:18)
+#26     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:682:45)
+#27     Future._propagateToListeners (dart:async/future_impl.dart:711:32)
+#28     Future._completeWithValue (dart:async/future_impl.dart:526:5)
+#29     _AsyncAwaitCompleter.complete (dart:async-patch/async_patch.dart:36:15)
+#30     _completeOnAsyncReturn (dart:async-patch/async_patch.dart:298:13)
+#31     IosProject.productBundleIdentifier (package:flutter_tools/src/project.dart)
+#32     _rootRunUnary (dart:async/zone.dart:1192:38)
+#33     _CustomZone.runUnary (dart:async/zone.dart:1085:19)
+#34     _FutureListener.handleValue (dart:async/future_impl.dart:141:18)
+#35     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:682:45)
+#36     Future._propagateToListeners (dart:async/future_impl.dart:711:32)
+#37     Future._completeWithValue (dart:async/future_impl.dart:526:5)
+#38     _AsyncAwaitCompleter.complete (dart:async-patch/async_patch.dart:36:15)
+#39     _completeOnAsyncReturn (dart:async-patch/async_patch.dart:298:13)
+#40     IosProject.buildSettings (package:flutter_tools/src/project.dart)
+#41     _rootRunUnary (dart:async/zone.dart:1192:38)
+#42     _CustomZone.runUnary (dart:async/zone.dart:1085:19)
+#43     _FutureListener.handleValue (dart:async/future_impl.dart:141:18)
+#44     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:682:45)
+#45     Future._propagateToListeners (dart:async/future_impl.dart:711:32)
+#46     Future._completeWithValue (dart:async/future_impl.dart:526:5)
+#47     _AsyncAwaitCompleter.complete (dart:async-patch/async_patch.dart:36:15)
+#48     _completeOnAsyncReturn (dart:async-patch/async_patch.dart:298:13)
+#49     XcodeProjectInterpreter.getBuildSettings (package:flutter_tools/src/ios/xcodeproj.dart)
+#50     _asyncErrorWrapperHelper.errorCallback (dart:async-patch/async_patch.dart:86:61)
+#51     _rootRunBinary (dart:async/zone.dart:1204:38)
+#52     _CustomZone.runBinary (dart:async/zone.dart:1093:19)
+#53     _FutureListener.handleError (dart:async/future_impl.dart:155:20)
+#54     Future._propagateToListeners.handleError (dart:async/future_impl.dart:694:47)
+#55     Future._propagateToListeners (dart:async/future_impl.dart:715:24)
+#56     Future._completeError (dart:async/future_impl.dart:534:5)
+#57     _AsyncAwaitCompleter.completeError (dart:async-patch/async_patch.dart:43:15)
+#58     _DefaultProcessUtils.run (package:flutter_tools/src/base/process.dart)
+#59     _rootRunUnary (dart:async/zone.dart:1192:38)
+#60     _CustomZone.runUnary (dart:async/zone.dart:1085:19)
+#61     _FutureListener.handleValue (dart:async/future_impl.dart:141:18)
+#62     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:682:45)
+#63     Future._propagateToListeners (dart:async/future_impl.dart:711:32)
+#64     Future._completeWithValue (dart:async/future_impl.dart:526:5)
+#65     Future.wait.<anonymous closure> (dart:async/future.dart:402:22)
+#66     _rootRunUnary (dart:async/zone.dart:1192:38)
+#67     _CustomZone.runUnary (dart:async/zone.dart:1085:19)
+#68     _FutureListener.handleValue (dart:async/future_impl.dart:141:18)
+#69     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:682:45)
+#70     Future._propagateToListeners (dart:async/future_impl.dart:711:32)
+#71     Future._complete (dart:async/future_impl.dart:516:7)
+#72     _BufferingStreamSubscription.asFuture.<anonymous closure> (dart:async/stream_impl.dart:207:14)
+#73     _rootRun (dart:async/zone.dart:1180:38)
+#74     _CustomZone.run (dart:async/zone.dart:1077:19)
+#75     _CustomZone.runGuarded (dart:async/zone.dart:979:7)
+#76     _BufferingStreamSubscription._sendDone.sendDone (dart:async/stream_impl.dart:392:13)
+#77     _BufferingStreamSubscription._sendDone (dart:async/stream_impl.dart:402:15)
+#78     _BufferingStreamSubscription._close (dart:async/stream_impl.dart:286:7)
+#79     _SinkTransformerStreamSubscription._close (dart:async/stream_transformers.dart:98:11)
+#80     _EventSinkWrapper.close (dart:async/stream_transformers.dart:25:11)
+#81     _StringAdapterSink.close (dart:convert/string_conversion.dart:251:11)
+#82     _Utf8ConversionSink.close (dart:convert/string_conversion.dart:302:20)
+#83     _ConverterStreamEventSink.close (dart:convert/chunked_conversion.dart:83:18)
+#84     _SinkTransformerStreamSubscription._handleDone (dart:async/stream_transformers.dart:143:24)
+#85     _rootRun (dart:async/zone.dart:1180:38)
+#86     _CustomZone.run (dart:async/zone.dart:1077:19)
+#87     _CustomZone.runGuarded (dart:async/zone.dart:979:7)
+#88     _BufferingStreamSubscription._sendDone.sendDone (dart:async/stream_impl.dart:392:13)
+#89     _BufferingStreamSubscription._sendDone (dart:async/stream_impl.dart:402:15)
+#90     _BufferingStreamSubscription._close (dart:async/stream_impl.dart:286:7)
+#91     _SyncStreamControllerDispatch._sendDone (dart:async/stream_controller.dart:787:19)
+#92     _StreamController._closeUnchecked (dart:async/stream_controller.dart:644:7)
+#93     _StreamController.close (dart:async/stream_controller.dart:637:5)
+#94     _Socket._onData (dart:io-patch/socket_patch.dart:1989:21)
+#95     _rootRunUnary (dart:async/zone.dart:1196:13)
+#96     _CustomZone.runUnary (dart:async/zone.dart:1085:19)
+#97     _CustomZone.runUnaryGuarded (dart:async/zone.dart:987:7)
+#98     _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:339:11)
+#99     _BufferingStreamSubscription._add (dart:async/stream_impl.dart:266:7)
+#100    _SyncStreamControllerDispatch._sendData (dart:async/stream_controller.dart:779:19)
+#101    _StreamController._add (dart:async/stream_controller.dart:655:7)
+#102    _StreamController.add (dart:async/stream_controller.dart:597:5)
+#103    new _RawSocket.<anonymous closure> (dart:io-patch/socket_patch.dart:1534:35)
+#104    _NativeSocket.issueReadEvent.issue (dart:io-patch/socket_patch.dart:1012:18)
+#105    _microtaskLoop (dart:async/schedule_microtask.dart:43:21)
+#106    _startMicrotaskLoop (dart:async/schedule_microtask.dart:52:5)
+#107    _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#108    _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:169:5)
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel beta, v1.17.0-3.4.pre, on Mac OS X 10.15.4 19E287, locale en-EG)
+    • Flutter version 1.17.0-3.4.pre at /Users/omar/Documents/Projects/flutter
+    • Framework revision e6b34c2b5c (3 days ago), 2020-05-02 11:39:18 -0700
+    • Engine revision 540786dd51
+    • Dart version 2.8.1
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 29.0.1)
+    • Android SDK at /Users/omar/Library/Android/sdk
+    • Platform android-29, build-tools 29.0.1
+    • Java binary at: /Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/bin/java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_212-release-1586-b4-5784211)
+    • All Android licenses accepted.
+
+[✓] Xcode - develop for iOS and macOS (Xcode 11.4)
+    • Xcode at /Applications/Xcode.app/Contents/Developer
+    • Xcode 11.4, Build version 11E146
+    • CocoaPods version 1.9.1
+
+[✓] Android Studio (version 3.6)
+    • Android Studio at /Applications/Android Studio.app/Contents
+    • Flutter plugin version 45.1.1
+    • Dart plugin version 192.7761
+    • Java version OpenJDK Runtime Environment (build 1.8.0_212-release-1586-b4-5784211)
+
+[✓] IntelliJ IDEA Community Edition (version 2019.3.4)
+    • IntelliJ at /Applications/IntelliJ IDEA CE.app
+    • Flutter plugin version 45.1.2
+    • Dart plugin version 193.6911.31
+
+[✓] VS Code (version 1.44.2)
+    • VS Code at /Applications/Visual Studio Code.app/Contents
+    • Flutter extension version 3.8.1
+
+[!] Connected device
+    ! No devices available
+
+! Doctor found issues in 1 category.
+```

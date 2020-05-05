@@ -1,0 +1,87 @@
+Flutter crash report; please file at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter --no-color build ios --simulator
+
+## exception
+
+ProcessException: ProcessException: Process exited abnormally:
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -list
+
+
+xcodebuild: error: Could not resolve package dependencies:
+  Packages are not supported when using legacy build locations, but the current project has them enabled.
+  Command: /usr/bin/xcodebuild -list
+
+```
+#0      RunResult.throwException (package:flutter_tools/src/base/process.dart:141:5)
+#1      _DefaultProcessUtils.run (package:flutter_tools/src/base/process.dart:275:19)
+<asynchronous suspension>
+#2      XcodeProjectInterpreter.getInfo (package:flutter_tools/src/ios/xcodeproj.dart:342:49)
+#3      buildXcodeProject (package:flutter_tools/src/ios/mac.dart:281:70)
+#4      BuildIOSCommand.runCommand (package:flutter_tools/src/commands/build_ios.dart:80:43)
+<asynchronous suspension>
+#5      FlutterCommand.verifyThenRunCommand (package:flutter_tools/src/runner/flutter_command.dart:615:18)
+#6      _asyncThenWrapperHelper.<anonymous closure> (dart:async-patch/async_patch.dart:73:64)
+#7      _rootRunUnary (dart:async/zone.dart:1134:38)
+#8      _CustomZone.runUnary (dart:async/zone.dart:1031:19)
+#9      _FutureListener.handleValue (dart:async/future_impl.dart:139:18)
+#10     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:680:45)
+#11     Future._propagateToListeners (dart:async/future_impl.dart:709:32)
+#12     Future._completeWithValue (dart:async/future_impl.dart:524:5)
+#13     Future._asyncComplete.<anonymous closure> (dart:async/future_impl.dart:554:7)
+#14     _rootRun (dart:async/zone.dart:1126:13)
+#15     _CustomZone.run (dart:async/zone.dart:1023:19)
+#16     _CustomZone.runGuarded (dart:async/zone.dart:925:7)
+#17     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:965:23)
+#18     _microtaskLoop (dart:async/schedule_microtask.dart:43:21)
+#19     _startMicrotaskLoop (dart:async/schedule_microtask.dart:52:5)
+#20     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#21     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:175:5)
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel stable, v1.12.13+hotfix.9, on Mac OS X 10.15.4 19E287, locale en-EG)
+    • Flutter version 1.12.13+hotfix.9 at /Users/omar/Documents/Projects/flutter
+    • Framework revision f139b11009 (5 weeks ago), 2020-03-30 13:57:30 -0700
+    • Engine revision af51afceb8
+    • Dart version 2.7.2
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 29.0.1)
+    • Android SDK at /Users/omar/Library/Android/sdk
+    • Android NDK location not configured (optional; useful for native profiling support)
+    • Platform android-29, build-tools 29.0.1
+    • Java binary at: /Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/bin/java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_212-release-1586-b4-5784211)
+    • All Android licenses accepted.
+
+[✓] Xcode - develop for iOS and macOS (Xcode 11.4)
+    • Xcode at /Applications/Xcode.app/Contents/Developer
+    • Xcode 11.4, Build version 11E146
+    • CocoaPods version 1.9.1
+
+[✓] Android Studio (version 3.6)
+    • Android Studio at /Applications/Android Studio.app/Contents
+    • Flutter plugin version 45.1.1
+    • Dart plugin version 192.7761
+    • Java version OpenJDK Runtime Environment (build 1.8.0_212-release-1586-b4-5784211)
+
+[✓] IntelliJ IDEA Community Edition (version 2019.3.4)
+    • IntelliJ at /Applications/IntelliJ IDEA CE.app
+    • Flutter plugin version 45.1.2
+    • Dart plugin version 193.6911.31
+
+[✓] VS Code (version 1.44.2)
+    • VS Code at /Applications/Visual Studio Code.app/Contents
+    • Flutter extension version 3.8.1
+
+[✓] Connected device (2 available)
+    • sdk gphone x86 arm • emulator-5554                        • android-x86 • Android 10 (API 29) (emulator)
+    • iPhone 11 Pro Max  • DE3DCBF4-2F21-4772-9B9D-1F85C174AFF0 • ios         • com.apple.CoreSimulator.SimRuntime.iOS-13-4 (simulator)
+
+• No issues found!
+```
