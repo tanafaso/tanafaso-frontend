@@ -6,3 +6,4 @@ build/
 ios/.generated/
 packages
 .flutter-plugins
+.DS_Store
