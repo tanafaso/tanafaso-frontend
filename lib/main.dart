@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:azkar/authentication.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
+import 'package:flutter_login/flutter_login.dart';
+import 'login_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,13 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'azkar',
+        title: 'Azkar',
         home: Scaffold(
-          body: Center(
-            child: FacebookSignInButton(onPressed: () {
-              Authentication.loginWithFacebook();
-            }),
-          ),
+          body: LoginScreen(),
         ));
   }
 }
