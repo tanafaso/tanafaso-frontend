@@ -26,6 +26,7 @@ dependencies:
   flutter_facebook_login: ^3.0.0
   http: ^0.12.1
   flutter_auth_buttons: ^0.8.0
+  flutter_login: ^1.0.14
 
 dev_dependencies:
   flutter_test:
@@ -43,6 +44,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - assets/images/mountains.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
@@ -73,3 +76,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: icomoon
+      fonts:
+        - asset: assets/fonts/IcoMoon.ttf
