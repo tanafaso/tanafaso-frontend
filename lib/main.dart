@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Azkar',
         home: Scaffold(
-          body: LoginScreen(),
+          body: LoginPage(),
         ));
   }
 }
