@@ -1,122 +1,27 @@
 // TODO: Add this license somewhere: https://github.com/samarthagarwal/FlutterScreens/blob/master/LICENSE
+import 'package:azkar/authentication.dart';
+import 'package:azkar/home_page.dart';
+import 'package:azkar/payload/authentication/responses/facebook_authentication_response.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _LoginScreenState createState() => new _LoginScreenState();
+  _LoginPageState createState() => new _LoginPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
+class _LoginPageState extends State<LoginPage>
     with TickerProviderStateMixin {
-  //The code is commented because instead of manual scrolling with animation,
-  //Now PageView is being used
 
-  /*double scrollPercent = 0.0;
-  Offset startDrag;
-  double startDragPercentScroll;
-  double dragDirection; // -1 for left, +1 for right
-
-  AnimationController controller_minus1To0;
-  AnimationController controller_0To1;
-  CurvedAnimation anim_minus1To0;
-  CurvedAnimation anim_0To1;
-
-  final numCards = 3;
-
-  void _onHorizontalDragStart(DragStartDetails details) {
-    startDrag = details.globalPosition;
-    startDragPercentScroll = scrollPercent;
+  void loginWithFacebook() async {
+    FacebookAuthenticationResponse response =
+        await Authentication.loginWithFacebook();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => new HomePage(response.error.error_message)));
   }
 
-  void _onHorizontalDragUpdate(DragUpdateDetails details) {
-    final currDrag = details.globalPosition;
-    final dragDistance = currDrag.dx - startDrag.dx;
-    if (dragDistance > 0) {
-      dragDirection = 1.0;
-    } else {
-      dragDirection = -1.0;
-    }
-    final singleCardDragPercent = dragDistance / context.size.width;
-
-    setState(() {
-      scrollPercent =
-          (startDragPercentScroll + (-singleCardDragPercent / numCards))
-              .clamp(0.0 - (1 / numCards), (1 / numCards));
-      print(scrollPercent);
-    });
-  }
-
-  void _onHorizontalDragEnd(DragEndDetails details) {
-    if (scrollPercent > 0.1666) {
-      print("FIRST CASE");
-      controller_0To1.forward(from: scrollPercent * numCards);
-    } else if (scrollPercent < 0.1666 &&
-        scrollPercent > -0.1666 &&
-        dragDirection == -1.0) {
-      print("SECOND CASE");
-      controller_0To1.reverse(from: scrollPercent * numCards);
-    } else if (scrollPercent < 0.1666 &&
-        scrollPercent > -0.1666 &&
-        dragDirection == 1.0) {
-      print("THIRD CASE");
-      controller_minus1To0.forward(from: scrollPercent * numCards);
-    } else if (scrollPercent < -0.1666) {
-      print("LAST CASE");
-      controller_minus1To0.reverse(from: scrollPercent * numCards);
-    }
-
-    setState(() {
-      startDrag = null;
-      startDragPercentScroll = null;
-    });
-  }
-  */
-
-  @override
-  void initState() {
-    super.initState();
-
-    //The code is commented because instead of manual scrolling with animation,
-    //Now PageView is being used
-
-    /*
-    controller_minus1To0 = new AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-      lowerBound: -1.0,
-      upperBound: 0.0,
-    );
-    controller_0To1 = new AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-      lowerBound: 0.0,
-      upperBound: 1.0,
-    );
-
-    anim_minus1To0 = new CurvedAnimation(
-      parent: controller_minus1To0,
-      curve: Interval(0.10, 0.90, curve: Curves.bounceInOut),
-    );
-    anim_0To1 = new CurvedAnimation(
-      parent: controller_0To1,
-      curve: Interval(0.10, 0.90, curve: Curves.bounceInOut),
-    );
-
-    anim_0To1.addListener(() {
-      scrollPercent = controller_0To1.value / numCards;
-//      print(scrollPercent);
-      setState(() {});
-    });
-
-    anim_minus1To0.addListener(() {
-      scrollPercent = controller_minus1To0.value / numCards;
-//      print(scrollPercent);
-      setState(() {});
-    });
-    */
-  }
-
-  Widget HomePage() {
+  Widget getLoginMainPageWidget() {
     return new Container(
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
@@ -131,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen>
       child: new Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(top: 250.0),
+            padding: EdgeInsets.only(top: 200.0),
             child: Center(
                 // TODO: Add icon
                 ),
@@ -282,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   ),
                                   new Expanded(
                                     child: new FlatButton(
-                                      onPressed: () => {},
+                                      onPressed: () => loginWithFacebook(),
                                       padding: EdgeInsets.only(
                                         top: 20.0,
                                         bottom: 20.0,
@@ -332,7 +237,7 @@ class _LoginScreenState extends State<LoginScreen>
     );
   }
 
-  Widget LoginPage() {
+  Widget getLoginPageWidget() {
     return new Container(
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
@@ -572,7 +477,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   ),
                                   new Expanded(
                                     child: new FlatButton(
-                                      onPressed: () => {},
+                                      onPressed: () => loginWithFacebook(),
                                       padding: EdgeInsets.only(
                                         top: 20.0,
                                         bottom: 20.0,
@@ -622,7 +527,7 @@ class _LoginScreenState extends State<LoginScreen>
     );
   }
 
-  Widget SignupPage() {
+  Widget getSignUpPageWidget() {
     return new Container(
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
@@ -887,32 +792,10 @@ class _LoginScreenState extends State<LoginScreen>
   Widget build(BuildContext context) {
     return Container(
         height: MediaQuery.of(context).size.height,
-//      child: new GestureDetector(
-//        onHorizontalDragStart: _onHorizontalDragStart,
-//        onHorizontalDragUpdate: _onHorizontalDragUpdate,
-//        onHorizontalDragEnd: _onHorizontalDragEnd,
-//        behavior: HitTestBehavior.translucent,
-//        child: Stack(
-//          children: <Widget>[
-//            new FractionalTranslation(
-//              translation: Offset(-1 - (scrollPercent / (1 / numCards)), 0.0),
-//              child: SignupPage(),
-//            ),
-//            new FractionalTranslation(
-//              translation: Offset(0 - (scrollPercent / (1 / numCards)), 0.0),
-//              child: HomePage(),
-//            ),
-//            new FractionalTranslation(
-//              translation: Offset(1 - (scrollPercent / (1 / numCards)), 0.0),
-//              child: LoginPage(),
-//            ),
-//          ],
-//        ),
-//      ),
         child: PageView(
           controller: _controller,
           physics: new AlwaysScrollableScrollPhysics(),
-          children: <Widget>[LoginPage(), HomePage(), SignupPage()],
+          children: <Widget>[getLoginPageWidget(), getLoginMainPageWidget(), getSignUpPageWidget()],
           scrollDirection: Axis.horizontal,
         ));
   }

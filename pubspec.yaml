@@ -27,6 +27,7 @@ dependencies:
   http: ^0.12.1
   flutter_auth_buttons: ^0.8.0
   flutter_login: ^1.0.14
+  flutter_secure_storage: ^3.3.3
 
 dev_dependencies:
   flutter_test:
