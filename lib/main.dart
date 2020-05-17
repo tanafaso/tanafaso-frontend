@@ -3,8 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_login/flutter_login.dart';
-import 'login_screen.dart';
+
+import 'login_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Azkar',
         home: Scaffold(
-          body: LoginScreen(),
+          body: LoginPage(),
         ));
   }
 }
