@@ -11,17 +11,16 @@ import 'package:http/http.dart' as http;
 import 'payload/authentication/responses/facebook_authentication_response.dart';
 
 class Authentication {
-  static final _facebookLogin = FacebookLogin();
 
-  // The context that from which the authentication is fired.
   static var _facebookAccessToken;
 
   static Future<FacebookAuthenticationResponse> loginWithFacebook() async {
+    final _facebookLogin = FacebookLogin();
     _facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
 
     final facebookGraphApiResponse = await _facebookLogin.logIn(['email']);
-    FacebookAuthenticationResponse facebookAuthenticationResponse;
 
+    FacebookAuthenticationResponse facebookAuthenticationResponse;
     switch (facebookGraphApiResponse.status) {
       case FacebookLoginStatus.loggedIn:
         _facebookAccessToken = facebookGraphApiResponse.accessToken.token;
@@ -51,6 +50,9 @@ class Authentication {
       case FacebookLoginStatus.error:
         facebookAuthenticationResponse.error =
             new Error("Facebook login error.");
+        return new Future.value(facebookAuthenticationResponse);
+      default:
+        facebookAuthenticationResponse.error = new Error("Internal Error");
         return new Future.value(facebookAuthenticationResponse);
     }
   }
