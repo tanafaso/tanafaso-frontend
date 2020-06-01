@@ -3,9 +3,9 @@ import 'package:azkar/payload/response_error.dart';
 
 class FacebookAuthenticationResponse extends ResponseBase {
   static FacebookAuthenticationResponse fromJson(Map<String, dynamic> json) {
-    FacebookAuthenticationResponse resposne =
+    FacebookAuthenticationResponse response =
         new FacebookAuthenticationResponse();
-    resposne.error = new Error(json['error']);
-    return resposne;
+    response.setError(json);
+    return response;
   }
 }
