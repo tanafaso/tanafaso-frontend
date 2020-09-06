@@ -3,8 +3,10 @@ import 'dart:io';
 
 import 'package:azkar/api_routes.dart';
 import 'package:azkar/payload/authentication/requests/email_registration_request.dart';
+import 'package:azkar/payload/authentication/requests/email_verification_request.dart';
 import 'package:azkar/payload/authentication/requests/facebook_authentication_request.dart';
 import 'package:azkar/payload/authentication/responses/email_registration_response.dart';
+import 'package:azkar/payload/authentication/responses/email_verification_response.dart';
 import 'package:azkar/payload/response_error.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -69,6 +71,19 @@ class Authentication {
     );
 
     return EmailRegistrationResponse.fromJson(jsonDecode(apiResponse.body));
+  }
+
+  static Future<EmailVerificationResponse> verifyEmail
+      (EmailVerificationRequest request) async {
+    final http.Response apiResponse = await http.put(
+      Uri.http(ApiRoutes.BASE_URL, ApiRoutes.VERIFY_EMAIL),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(request.toJson()),
+    );
+
+    return EmailVerificationResponse.fromJson(jsonDecode(apiResponse.body));
   }
 
   static get facebookAccessToken => _facebookAccessToken;

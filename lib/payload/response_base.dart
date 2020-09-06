@@ -17,7 +17,7 @@ abstract class ResponseBase<T> {
   }
 
   bool hasError() {
-    return _error?.error_message?.isEmpty ?? false;
+    return _error?.error_message?.isNotEmpty ?? false;
   }
 
   Error get error => _error;
