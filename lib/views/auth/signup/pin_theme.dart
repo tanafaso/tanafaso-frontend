@@ -1,6 +1,6 @@
+import 'package:azkar/views/auth/signup/pin_code_text_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../pin_code_text_field.dart';
 
 class PinTheme {
   /// Colors of the input fields which have inputs. Default is [Colors.green]
@@ -56,40 +56,40 @@ class PinTheme {
 
   factory PinTheme(
       {Color activeColor,
-        Color selectedColor,
-        Color inactiveColor,
-        Color disabledColor,
-        Color activeFillColor,
-        Color selectedFillColor,
-        Color inactiveFillColor,
-        BorderRadius borderRadius,
-        double fieldHeight,
-        double fieldWidth,
-        double borderWidth,
-        PinCodeFieldShape shape}) {
+      Color selectedColor,
+      Color inactiveColor,
+      Color disabledColor,
+      Color activeFillColor,
+      Color selectedFillColor,
+      Color inactiveFillColor,
+      BorderRadius borderRadius,
+      double fieldHeight,
+      double fieldWidth,
+      double borderWidth,
+      PinCodeFieldShape shape}) {
     final defaultValues = PinTheme._internal();
     return PinTheme._internal(
       activeColor:
-      activeColor == null ? defaultValues.activeColor : activeColor,
+          activeColor == null ? defaultValues.activeColor : activeColor,
       activeFillColor: activeFillColor == null
           ? defaultValues.activeFillColor
           : activeFillColor,
       borderRadius:
-      borderRadius == null ? defaultValues.borderRadius : borderRadius,
+          borderRadius == null ? defaultValues.borderRadius : borderRadius,
       borderWidth:
-      borderWidth == null ? defaultValues.borderWidth : borderWidth,
+          borderWidth == null ? defaultValues.borderWidth : borderWidth,
       disabledColor:
-      disabledColor == null ? defaultValues.disabledColor : disabledColor,
+          disabledColor == null ? defaultValues.disabledColor : disabledColor,
       fieldHeight:
-      fieldHeight == null ? defaultValues.fieldHeight : fieldHeight,
+          fieldHeight == null ? defaultValues.fieldHeight : fieldHeight,
       fieldWidth: fieldWidth == null ? defaultValues.fieldWidth : fieldWidth,
       inactiveColor:
-      inactiveColor == null ? defaultValues.inactiveColor : inactiveColor,
+          inactiveColor == null ? defaultValues.inactiveColor : inactiveColor,
       inactiveFillColor: inactiveFillColor == null
           ? defaultValues.inactiveFillColor
           : inactiveFillColor,
       selectedColor:
-      selectedColor == null ? defaultValues.selectedColor : selectedColor,
+          selectedColor == null ? defaultValues.selectedColor : selectedColor,
       selectedFillColor: selectedFillColor == null
           ? defaultValues.selectedFillColor
           : selectedFillColor,

@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:azkar/api_routes.dart';
+import 'package:azkar/net/api_routes.dart';
+import 'package:azkar/payload/authentication/requests/email_login_request.dart';
 import 'package:azkar/payload/authentication/requests/email_registration_request.dart';
 import 'package:azkar/payload/authentication/requests/email_verification_request.dart';
 import 'package:azkar/payload/authentication/requests/facebook_authentication_request.dart';
+import 'package:azkar/payload/authentication/responses/email_login_response.dart';
 import 'package:azkar/payload/authentication/responses/email_registration_response.dart';
 import 'package:azkar/payload/authentication/responses/email_verification_response.dart';
 import 'package:azkar/payload/response_error.dart';
@@ -12,7 +14,7 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
-import 'payload/authentication/responses/facebook_authentication_response.dart';
+import '../payload/authentication/responses/facebook_authentication_response.dart';
 
 class Authentication {
   static var _facebookAccessToken;
@@ -73,8 +75,28 @@ class Authentication {
     return EmailRegistrationResponse.fromJson(jsonDecode(apiResponse.body));
   }
 
-  static Future<EmailVerificationResponse> verifyEmail
-      (EmailVerificationRequest request) async {
+  static Future<EmailLoginResponse> login(EmailLoginRequest request) async {
+    final http.Response apiResponse = await http.put(
+      Uri.http(ApiRoutes.BASE_URL, ApiRoutes.LOGIN_WITH_EMAIL),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(request.toJson()),
+    );
+
+    EmailLoginResponse emailLoginResponse =
+        EmailLoginResponse.fromJson(jsonDecode(apiResponse.body));
+
+    if (!emailLoginResponse.hasError()) {
+      final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
+      final _storage = FlutterSecureStorage();
+      await _storage.write(key: 'jwtToken', value: jwtToken);
+    }
+    return emailLoginResponse;
+  }
+
+  static Future<EmailVerificationResponse> verifyEmail(
+      EmailVerificationRequest request) async {
     final http.Response apiResponse = await http.put(
       Uri.http(ApiRoutes.BASE_URL, ApiRoutes.VERIFY_EMAIL),
       headers: <String, String>{

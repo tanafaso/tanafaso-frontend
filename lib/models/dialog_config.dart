@@ -22,9 +22,9 @@ class DialogConfig {
 
   factory DialogConfig(
       {String affirmativeText,
-        String dialogContent,
-        String dialogTitle,
-        String negativeText}) {
+      String dialogContent,
+      String dialogTitle,
+      String negativeText}) {
     return DialogConfig._internal(
       affirmativeText: affirmativeText == null ? "Paste" : affirmativeText,
       dialogContent: dialogContent == null
