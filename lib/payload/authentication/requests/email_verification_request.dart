@@ -4,9 +4,7 @@ class EmailVerificationRequest {
   final String email;
   final int pin;
 
-  EmailVerificationRequest(
-      {@required this.email, @required this.pin});
+  EmailVerificationRequest({@required this.email, @required this.pin});
 
-  Map<String, dynamic> toJson() =>
-      {'email': email, 'pin': pin};
+  Map<String, dynamic> toJson() => {'email': email, 'pin': pin};
 }

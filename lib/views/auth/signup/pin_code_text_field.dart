@@ -3,13 +3,13 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'dart:math';
 
+import 'package:azkar/views/auth/signup/pin_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'models/dialog_config.dart';
-import 'models/pin_theme.dart';
+import '../../../models/dialog_config.dart';
 
 /// Pin code text fields which automatically changes focus and validates
 class PinCodeTextField extends StatefulWidget {
@@ -414,11 +414,12 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
                 keyboardType: widget.textInputType,
                 keyboardAppearance: widget.keyboardAppearance,
                 textCapitalization: widget.textCapitalization,
-                inputFormatters: widget.inputFormatters + [
-                  LengthLimitingTextInputFormatter(
-                    widget.length,
-                  ), // this limits the input length
-                ],
+                inputFormatters: widget.inputFormatters +
+                    [
+                      LengthLimitingTextInputFormatter(
+                        widget.length,
+                      ), // this limits the input length
+                    ],
                 // trigger on the complete event handler from the keyboard
                 onSubmitted: widget.onSubmitted,
                 enableInteractiveSelection: false,

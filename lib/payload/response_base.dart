@@ -13,7 +13,7 @@ abstract class ResponseBase<T> {
   }
 
   setError(Map<String, dynamic> json) {
-    _error = new Error((json['error'] ?? const {}) ['message']);
+    _error = new Error((json['error'] ?? const {})['message']);
   }
 
   bool hasError() {
