@@ -24,12 +24,28 @@ class _HomePageState extends State<HomePage> {
       future: getUserToken(),
       builder: (context, AsyncSnapshot snapshot) {
         return Scaffold(
-          appBar: AppBar(
+            appBar: AppBar(
             title: Text('Home Page'),
-          ),
-          body: Center(
-            child: Text(widget._error_message ?? userToken ?? 'Default'),
-          ),
+        ),
+        body: Center(
+        child: Text(widget._error_message ?? userToken ?? 'Default'),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+        icon: Icon(Icons.whatshot),
+        label: 'Challenges',
+        ),
+        BottomNavigationBarItem(
+        icon: Icon(Icons.group),
+        label: 'Groups',
+        ),
+        BottomNavigationBarItem(
+        icon: Icon(Icons.contacts),
+        label: 'Friends',
+        ),
+        ]
+        )
         );
       },
     );
