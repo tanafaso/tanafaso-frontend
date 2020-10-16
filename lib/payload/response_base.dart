@@ -13,11 +13,11 @@ abstract class ResponseBase<T> {
   }
 
   setError(Map<String, dynamic> json) {
-    _error = new Error((json['error'] ?? const {}) ['message']);
+    _error = new Error((json['error'] ?? const {})['message']);
   }
 
   bool hasError() {
-    return _error?.error_message?.isEmpty ?? false;
+    return _error?.error_message?.isNotEmpty ?? false;
   }
 
   Error get error => _error;
