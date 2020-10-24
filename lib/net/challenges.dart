@@ -1,0 +1,5 @@
+class Challenges {
+ static GetAzkar() {
+
+ }
+}
