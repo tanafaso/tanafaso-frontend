@@ -1,4 +1,4 @@
-import 'package:azkar/home_page.dart';
+import 'package:azkar/views/home_page.dart';
 import 'package:azkar/net/authentication.dart';
 import 'package:azkar/payload/authentication/requests/email_login_request.dart';
 import 'package:azkar/payload/authentication/responses/email_login_response.dart';
