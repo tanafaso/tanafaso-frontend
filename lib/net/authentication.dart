@@ -9,6 +9,7 @@ import 'package:azkar/payload/authentication/requests/facebook_authentication_re
 import 'package:azkar/payload/authentication/responses/email_login_response.dart';
 import 'package:azkar/payload/authentication/responses/email_registration_response.dart';
 import 'package:azkar/payload/authentication/responses/email_verification_response.dart';
+import 'package:azkar/payload/request_base.dart';
 import 'package:azkar/payload/response_error.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -31,7 +32,8 @@ class Authentication {
         _facebookAccessToken = facebookGraphApiResponse.accessToken.token;
 
         final http.Response apiResponse = await http.put(
-            Uri.http(ApiRoutes.BASE_URL, ApiRoutes.LOGIN_WITH_FACEBOOK),
+            Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),
+                ApiRoutesUtil.apiRouteToString(ApiRoute.LOGIN_WITH_FACEBOOK)),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
             },
@@ -65,7 +67,8 @@ class Authentication {
   static Future<EmailRegistrationResponse> signUp(
       EmailRegistrationRequest request) async {
     final http.Response apiResponse = await http.put(
-      Uri.http(ApiRoutes.BASE_URL, ApiRoutes.REGISTER_WITH_EMAIL),
+      Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),
+          ApiRoutesUtil.apiRouteToString(ApiRoute.REGISTER_WITH_EMAIL)),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -77,7 +80,8 @@ class Authentication {
 
   static Future<EmailLoginResponse> login(EmailLoginRequest request) async {
     final http.Response apiResponse = await http.put(
-      Uri.http(ApiRoutes.BASE_URL, ApiRoutes.LOGIN_WITH_EMAIL),
+      Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),
+          ApiRoutesUtil.apiRouteToString(ApiRoute.LOGIN_WITH_EMAIL)),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -98,7 +102,8 @@ class Authentication {
   static Future<EmailVerificationResponse> verifyEmail(
       EmailVerificationRequest request) async {
     final http.Response apiResponse = await http.put(
-      Uri.http(ApiRoutes.BASE_URL, ApiRoutes.VERIFY_EMAIL),
+      Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),
+          ApiRoutesUtil.apiRouteToString(ApiRoute.VERIFY_EMAIL)),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -106,6 +111,11 @@ class Authentication {
     );
 
     return EmailVerificationResponse.fromJson(jsonDecode(apiResponse.body));
+  }
+
+  static Future<String> getJwtToken() async {
+    final _storage = FlutterSecureStorage();
+    return await _storage.read(key: 'jwtToken');
   }
 
   static get facebookAccessToken => _facebookAccessToken;
