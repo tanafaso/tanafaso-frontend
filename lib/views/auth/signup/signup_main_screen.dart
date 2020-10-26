@@ -1,6 +1,6 @@
-import 'package:azkar/net/authentication.dart';
-import 'package:azkar/payload/authentication/requests/email_registration_request.dart';
-import 'package:azkar/payload/authentication/responses/email_registration_response.dart';
+import 'package:azkar/net/authentication_service.dart';
+import 'package:azkar/net/payload/authentication/requests/email_registration_request.dart';
+import 'package:azkar/net/payload/authentication/responses/email_registration_response.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:azkar/views/auth/signup/email_verification_screen.dart';
 import 'package:flutter/material.dart';
@@ -391,7 +391,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void performSignUp() async {
-    Authentication.signUp(new EmailRegistrationRequest(
+    AuthenticationService.signUp(new EmailRegistrationRequest(
             email: _email, password: _password, name: _name))
         .then<void>((EmailRegistrationResponse response) {
       if (response.hasError()) {

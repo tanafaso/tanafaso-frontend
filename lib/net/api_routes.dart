@@ -4,7 +4,8 @@ enum ApiRoute {
   REGISTER_WITH_EMAIL,
   VERIFY_EMAIL,
   LOGIN_WITH_EMAIL,
-  GET_AZKAR
+  GET_AZKAR,
+  GET_CURRENT_USER_PROFILE
 }
 
 class ApiRoutesUtil {
@@ -22,6 +23,8 @@ class ApiRoutesUtil {
         return '/login/email';
       case ApiRoute.GET_AZKAR:
         return '/azkar';
+      case ApiRoute.GET_CURRENT_USER_PROFILE:
+        return '/me';
       default:
         print('Route enum is not registered.');
     }

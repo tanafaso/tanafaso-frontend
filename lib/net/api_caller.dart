@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:azkar/net/api_routes.dart';
-import 'package:azkar/net/authentication.dart';
+import 'package:azkar/net/authentication_service.dart';
 import 'package:http/http.dart' as http;
 
 class ApiCaller {
   static Future<http.Response> get(ApiRoute route) async {
-    String jwtToken = await Authentication.getJwtToken();
+    String jwtToken = await AuthenticationService.getJwtToken();
 
     return await http.get(
       Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),

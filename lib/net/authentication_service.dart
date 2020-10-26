@@ -2,23 +2,24 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:azkar/net/api_routes.dart';
-import 'package:azkar/payload/authentication/requests/email_login_request.dart';
-import 'package:azkar/payload/authentication/requests/email_registration_request.dart';
-import 'package:azkar/payload/authentication/requests/email_verification_request.dart';
-import 'package:azkar/payload/authentication/requests/facebook_authentication_request.dart';
-import 'package:azkar/payload/authentication/responses/email_login_response.dart';
-import 'package:azkar/payload/authentication/responses/email_registration_response.dart';
-import 'package:azkar/payload/authentication/responses/email_verification_response.dart';
-import 'package:azkar/payload/request_base.dart';
-import 'package:azkar/payload/response_error.dart';
+import 'package:azkar/net/payload/authentication/requests/email_login_request.dart';
+import 'package:azkar/net/payload/authentication/requests/email_registration_request.dart';
+import 'package:azkar/net/payload/authentication/requests/email_verification_request.dart';
+import 'package:azkar/net/payload/authentication/requests/facebook_authentication_request.dart';
+import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
+import 'package:azkar/net/payload/authentication/responses/email_registration_response.dart';
+import 'package:azkar/net/payload/authentication/responses/email_verification_response.dart';
+import 'package:azkar/net/payload/request_base.dart';
+import 'package:azkar/net/payload/response_error.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
-import '../payload/authentication/responses/facebook_authentication_response.dart';
+import '../net/payload/authentication/responses/facebook_authentication_response.dart';
 
-class Authentication {
-  static var _facebookAccessToken;
+class AuthenticationService {
+  static final String jwtTokenStorageKey = 'jwtToken';
+  static final String facebookTokenStorageKey = 'facebookAccessToken';
 
   static Future<FacebookAuthenticationResponse> loginWithFacebook() async {
     final _facebookLogin = FacebookLogin();
@@ -29,7 +30,8 @@ class Authentication {
     FacebookAuthenticationResponse facebookAuthenticationResponse;
     switch (facebookGraphApiResponse.status) {
       case FacebookLoginStatus.loggedIn:
-        _facebookAccessToken = facebookGraphApiResponse.accessToken.token;
+        final _storage = FlutterSecureStorage();
+        await _storage.write(key: facebookTokenStorageKey, value: facebookGraphApiResponse.accessToken.token);
 
         final http.Response apiResponse = await http.put(
             Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),
@@ -48,7 +50,7 @@ class Authentication {
         if (!facebookAuthenticationResponse.hasError()) {
           final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
           final _storage = FlutterSecureStorage();
-          await _storage.write(key: 'jwtToken', value: jwtToken);
+          await _storage.write(key: jwtTokenStorageKey, value: jwtToken);
         }
         return new Future.value(facebookAuthenticationResponse);
       case FacebookLoginStatus.cancelledByUser:
@@ -94,7 +96,7 @@ class Authentication {
     if (!emailLoginResponse.hasError()) {
       final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
       final _storage = FlutterSecureStorage();
-      await _storage.write(key: 'jwtToken', value: jwtToken);
+      await _storage.write(key: jwtTokenStorageKey, value: jwtToken);
     }
     return emailLoginResponse;
   }
@@ -115,8 +117,6 @@ class Authentication {
 
   static Future<String> getJwtToken() async {
     final _storage = FlutterSecureStorage();
-    return await _storage.read(key: 'jwtToken');
+    return await _storage.read(key: jwtTokenStorageKey);
   }
-
-  static get facebookAccessToken => _facebookAccessToken;
 }
