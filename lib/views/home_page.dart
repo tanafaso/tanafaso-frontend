@@ -1,6 +1,7 @@
 import 'package:azkar/views/entities/challenges/challenges_widget.dart';
 import 'package:azkar/views/entities/friends/friends_widget.dart';
 import 'package:azkar/views/entities/groups/groups_widget.dart';
+import 'package:azkar/views/entities/profile/profile_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -28,6 +29,10 @@ class HomePage extends StatefulWidget {
         bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.contacts), label: 'Friends'),
         widget: FriendsWidget()),
+    Topic(
+        bottomNavigationBarItem: BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle), label: 'Profile'),
+        widget: ProfileWidget()),
   ];
 
   HomePage(this._error_message);
@@ -65,7 +70,7 @@ class _HomePageState extends State<HomePage> {
   void setAppBarTitle(String app_bar_title) {
     _app_bar_title = app_bar_title;
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -79,6 +84,7 @@ class _HomePageState extends State<HomePage> {
               child: widget._topics[_selectedIdx].widget,
             ),
             bottomNavigationBar: BottomNavigationBar(
+              unselectedItemColor: Colors.black,
               items:
                   widget._topics.map((e) => e.bottomNavigationBarItem).toList(),
               selectedItemColor: Colors.amber[800],
