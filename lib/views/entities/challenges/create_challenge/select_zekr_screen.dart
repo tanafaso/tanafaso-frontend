@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/api_routes.dart';
-import 'package:azkar/payload/challenges/responses/get_azkar_response.dart';
+import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
