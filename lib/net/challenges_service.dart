@@ -1,4 +1,4 @@
-class Challenges {
+class ChallengesService {
  static GetAzkar() {
 
  }

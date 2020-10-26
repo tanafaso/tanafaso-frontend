@@ -1,8 +1,8 @@
 import 'package:azkar/views/home_page.dart';
-import 'package:azkar/net/authentication.dart';
-import 'package:azkar/payload/authentication/requests/email_login_request.dart';
-import 'package:azkar/payload/authentication/responses/email_login_response.dart';
-import 'package:azkar/payload/authentication/responses/facebook_authentication_response.dart';
+import 'package:azkar/net/authentication_service.dart';
+import 'package:azkar/net/payload/authentication/requests/email_login_request.dart';
+import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
+import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -357,7 +357,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   loginWithFacebook() async {
     FacebookAuthenticationResponse response =
-        await Authentication.loginWithFacebook();
+        await AuthenticationService.loginWithFacebook();
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -365,7 +365,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   loginWithEmail(EmailLoginRequest request) async {
-    EmailLoginResponse response = await Authentication.login(request);
+    EmailLoginResponse response = await AuthenticationService.login(request);
     Navigator.push(
         context,
         MaterialPageRoute(
