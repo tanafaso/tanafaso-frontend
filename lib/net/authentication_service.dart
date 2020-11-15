@@ -31,7 +31,9 @@ class AuthenticationService {
     switch (facebookGraphApiResponse.status) {
       case FacebookLoginStatus.loggedIn:
         final _storage = FlutterSecureStorage();
-        await _storage.write(key: facebookTokenStorageKey, value: facebookGraphApiResponse.accessToken.token);
+        await _storage.write(
+            key: facebookTokenStorageKey,
+            value: facebookGraphApiResponse.accessToken.token);
 
         final http.Response apiResponse = await http.put(
             Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),
@@ -81,16 +83,28 @@ class AuthenticationService {
   }
 
   static Future<EmailLoginResponse> login(EmailLoginRequest request) async {
-    final http.Response apiResponse = await http.put(
-      Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),
-          ApiRoutesUtil.apiRouteToString(ApiRoute.LOGIN_WITH_EMAIL)),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(request.toJson()),
-    );
+    EmailLoginResponse emailLoginResponse;
+    http.Response apiResponse;
+    try {
+      apiResponse = await http.put(
+        Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),
+            ApiRoutesUtil.apiRouteToString(ApiRoute.LOGIN_WITH_EMAIL)),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(request.toJson()),
+      );
+    } catch (e) {
+      print('Error: An exception while requesting:'
+          '${ApiRoutesUtil.apiRouteToString(ApiRoute.LOGIN_WITH_EMAIL)} '
+          'with stack trace: ${e.toString()}');
+      emailLoginResponse = new EmailLoginResponse();
+      emailLoginResponse.setErrorMessage(
+          "Can't connect to the server. Please check your internet connection.");
+      return emailLoginResponse;
+    }
 
-    EmailLoginResponse emailLoginResponse =
+    emailLoginResponse =
         EmailLoginResponse.fromJson(jsonDecode(apiResponse.body));
 
     if (!emailLoginResponse.hasError()) {

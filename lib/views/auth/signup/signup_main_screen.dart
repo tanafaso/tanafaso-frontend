@@ -395,7 +395,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             email: _email, password: _password, name: _name))
         .then<void>((EmailRegistrationResponse response) {
       if (response.hasError()) {
-        onSignUpError(response.error.error_message);
+        onSignUpError(response.error.errorMessage);
       } else {
         Navigator.push(
             context,
