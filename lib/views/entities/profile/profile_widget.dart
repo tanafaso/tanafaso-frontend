@@ -18,7 +18,7 @@ class ProfileWidget extends StatelessWidget {
             GetUserResponse response = snapshot.data;
 
             if (response.hasError()) {
-              return Text(response.error.error_message);
+              return Text(response.error.errorMessage);
             }
 
             return Column(children: [

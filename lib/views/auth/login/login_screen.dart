@@ -13,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _loginScreenScaffoldKey = GlobalKey<ScaffoldState>();
   final _loginFormKey = GlobalKey<FormState>();
   String _email;
   String _password;
@@ -20,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _loginScreenScaffoldKey,
       body: Center(
           child: Container(
               height: MediaQuery.of(context).size.height,
@@ -361,14 +363,21 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => new HomePage(response.error.error_message)));
+            builder: (context) => new HomePage()));
   }
 
   loginWithEmail(EmailLoginRequest request) async {
     EmailLoginResponse response = await AuthenticationService.login(request);
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => new HomePage(response.error.error_message)));
+
+    if (!response.hasError()) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => new HomePage()));
+    } else {
+      _loginScreenScaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(response.error.errorMessage),
+      ));
+    }
   }
 }
