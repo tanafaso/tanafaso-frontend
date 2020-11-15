@@ -15,7 +15,6 @@ class Topic {
 
 class HomePage extends StatefulWidget {
   static _HomePageState _homePageState;
-  final String _error_message;
   final List<Topic> _topics = [
     Topic(
         bottomNavigationBarItem: BottomNavigationBarItem(
@@ -35,7 +34,7 @@ class HomePage extends StatefulWidget {
         widget: ProfileWidget()),
   ];
 
-  HomePage(this._error_message);
+  HomePage();
 
   @override
   _HomePageState createState() {
