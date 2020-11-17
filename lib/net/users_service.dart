@@ -5,7 +5,6 @@ import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:http/http.dart' as http;
-import 'package:sprintf/sprintf.dart';
 
 class UsersService {
   static Future<GetUserResponse> getCurrentUser() async {
