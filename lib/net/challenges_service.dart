@@ -1,5 +1,3 @@
 class ChallengesService {
- static GetAzkar() {
-
- }
+  static GetAzkar() {}
 }

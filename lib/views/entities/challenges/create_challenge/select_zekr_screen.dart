@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:azkar/net/api_caller.dart';
-import 'package:azkar/net/api_routes.dart';
+import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +10,7 @@ class SelectZekrWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: ApiCaller.get(ApiRoute.GET_AZKAR),
+        future: ApiCaller.get(Endpoint(endpointRoute: EndpointRoute.GET_AZKAR)),
         builder: (BuildContext context, AsyncSnapshot<http.Response> snapshot) {
           if (snapshot.hasData) {
             GetAzkarResponse response =
