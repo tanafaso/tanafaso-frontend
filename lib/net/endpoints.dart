@@ -15,7 +15,7 @@ enum EndpointRoute {
 class Endpoint {
   final EndpointRoute endpointRoute;
   List<String> pathVariables = List.empty();
-  Map<String, String> requestParams = Map<String,String>();
+  Map<String, String> requestParams = Map<String, String>();
 
   Endpoint(
       {@required this.endpointRoute, this.pathVariables, this.requestParams});
