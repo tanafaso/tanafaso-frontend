@@ -1,7 +1,3 @@
-import 'response_base.dart';
-
-abstract class RequestBase<C extends RequestBase<C>> {
-
+abstract class RequestBodyBase<C extends RequestBodyBase<C>> {
   Map<String, dynamic> toJson();
-
 }

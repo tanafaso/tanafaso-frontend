@@ -1,5 +1,5 @@
-import 'package:azkar/views/home_page.dart';
 import 'package:azkar/views/entities/challenges/challenges_widget.dart';
+import 'package:azkar/views/home_page.dart';
 import 'package:flutter/material.dart';
 
 class ShowChallengesWidget extends StatefulWidget {
@@ -19,8 +19,9 @@ class _ShowChallengesWidgetState extends State<ShowChallengesWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Text('This is show challenges widget.'),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+      floatingActionButton: FloatingActionButton.extended(
+          icon: Icon(Icons.add),
+          label: Text('Add Challenge'),
           onPressed: () {
             widget.challengesWidgetState.setChallengesWidgetStateType(
                 ChallengesWidgetStateType.addChallenge);

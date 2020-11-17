@@ -7,6 +7,9 @@ class GetUserResponse extends ResponseBase {
   static GetUserResponse fromJson(Map<String, dynamic> json) {
     GetUserResponse response = new GetUserResponse();
     response.setError(json);
+    if (response.hasError()) {
+      return response;
+    }
 
     var data = json['data'];
     response.user = User(
