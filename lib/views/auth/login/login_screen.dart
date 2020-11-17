@@ -1,8 +1,8 @@
-import 'package:azkar/views/home_page.dart';
 import 'package:azkar/net/authentication_service.dart';
-import 'package:azkar/net/payload/authentication/requests/email_login_request.dart';
+import 'package:azkar/net/payload/authentication/requests/email_login_request_body.dart';
 import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
+import 'package:azkar/views/home_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -82,7 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style: BorderStyle.solid),
                             ),
                           ),
-                          padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+                          padding:
+                              const EdgeInsets.only(left: 0.0, right: 10.0),
                           child: new Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -144,7 +145,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style: BorderStyle.solid),
                             ),
                           ),
-                          padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+                          padding:
+                              const EdgeInsets.only(left: 0.0, right: 10.0),
                           child: new Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -203,12 +205,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               new Expanded(
                                 child: new FlatButton(
                                   shape: new RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(30.0),
+                                    borderRadius:
+                                        new BorderRadius.circular(30.0),
                                   ),
                                   color: Colors.redAccent,
                                   onPressed: () {
                                     if (_loginFormKey.currentState.validate()) {
-                                      loginWithEmail(new EmailLoginRequest(email: _email, password: _password));
+                                      loginWithEmail(new EmailLoginRequestBody(
+                                          email: _email, password: _password));
                                     }
                                   },
                                   child: new Container(
@@ -217,7 +221,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       horizontal: 20.0,
                                     ),
                                     child: new Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         new Expanded(
                                           child: Text(
@@ -299,14 +304,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 new Expanded(
                                                   child: new FlatButton(
                                                     onPressed: () =>
-                                                    loginWithFacebook(),
+                                                        loginWithFacebook(),
                                                     padding: EdgeInsets.only(
                                                       top: 20.0,
                                                       bottom: 20.0,
                                                     ),
                                                     child: new Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment.start,
+                                                          MainAxisAlignment
+                                                              .start,
                                                       children: <Widget>[
                                                         Icon(
                                                           const IconData(0xea90,
@@ -318,11 +324,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         Expanded(
                                                           child: Text(
                                                             "FACEBOOK",
-                                                            textAlign:
-                                                                TextAlign.center,
+                                                            textAlign: TextAlign
+                                                                .center,
                                                             style: TextStyle(
-                                                                color:
-                                                                    Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold),
@@ -361,19 +367,15 @@ class _LoginScreenState extends State<LoginScreen> {
     FacebookAuthenticationResponse response =
         await AuthenticationService.loginWithFacebook();
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => new HomePage()));
+        context, MaterialPageRoute(builder: (context) => new HomePage()));
   }
 
-  loginWithEmail(EmailLoginRequest request) async {
+  loginWithEmail(EmailLoginRequestBody request) async {
     EmailLoginResponse response = await AuthenticationService.login(request);
 
     if (!response.hasError()) {
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => new HomePage()));
+          context, MaterialPageRoute(builder: (context) => new HomePage()));
     } else {
       _loginScreenScaffoldKey.currentState.showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),

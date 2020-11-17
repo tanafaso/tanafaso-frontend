@@ -1,11 +1,13 @@
-import '../../request_base.dart';
 import 'package:flutter/cupertino.dart';
 
-class FacebookAuthenticationRequest extends RequestBase<FacebookAuthenticationRequest> {
+import '../../request_base.dart';
+
+class FacebookAuthenticationRequestBody
+    extends RequestBodyBase<FacebookAuthenticationRequestBody> {
   final String token;
   final String facebookUserId;
 
-  FacebookAuthenticationRequest(
+  FacebookAuthenticationRequestBody(
       {@required this.token, @required this.facebookUserId});
 
   @override

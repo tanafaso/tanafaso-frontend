@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 
 import '../../request_base.dart';
 
-class GetAzkarRequest extends RequestBase<GetAzkarRequest> {
+class GetAzkarRequestBody extends RequestBodyBase<GetAzkarRequestBody> {
   @override
   Map<String, dynamic> toJson() {
     return {};

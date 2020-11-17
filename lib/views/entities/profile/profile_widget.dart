@@ -4,7 +4,6 @@ import 'package:azkar/views/home_page.dart';
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
-
   ProfileWidget() {
     HomePage.setAppBarTitle("Profile");
   }
@@ -12,8 +11,9 @@ class ProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: UsersService().getCurrentUser(),
-        builder: (BuildContext context, AsyncSnapshot<GetUserResponse> snapshot) {
+        future: UsersService.getCurrentUser(),
+        builder:
+            (BuildContext context, AsyncSnapshot<GetUserResponse> snapshot) {
           if (snapshot.hasData) {
             GetUserResponse response = snapshot.data;
 
@@ -21,11 +21,13 @@ class ProfileWidget extends StatelessWidget {
               return Text(response.error.errorMessage);
             }
 
-            return Column(children: [
-                 Text('Name: ${response.user.name}'),
-                 Text('Email: ${response.user.email}'),
-                 Text('Username: ${response.user.username}'),
-            ],);
+            return Column(
+              children: [
+                Text('Name: ${response.user.name}'),
+                Text('Email: ${response.user.email}'),
+                Text('Username: ${response.user.username}'),
+              ],
+            );
           } else if (snapshot.hasError) {
             // TODO(omorsi): Handle error
             return Text('Error');
@@ -35,5 +37,4 @@ class ProfileWidget extends StatelessWidget {
           }
         });
   }
-
 }

@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:azkar/net/api_routes.dart';
-import 'package:azkar/net/payload/authentication/requests/email_login_request.dart';
-import 'package:azkar/net/payload/authentication/requests/email_registration_request.dart';
-import 'package:azkar/net/payload/authentication/requests/email_verification_request.dart';
-import 'package:azkar/net/payload/authentication/requests/facebook_authentication_request.dart';
+import 'package:azkar/net/endpoints.dart';
+import 'package:azkar/net/payload/authentication/requests/email_login_request_body.dart';
+import 'package:azkar/net/payload/authentication/requests/email_registration_request_body.dart';
+import 'package:azkar/net/payload/authentication/requests/email_verification_request_body.dart';
+import 'package:azkar/net/payload/authentication/requests/facebook_authentication_request_body.dart';
 import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
 import 'package:azkar/net/payload/authentication/responses/email_registration_response.dart';
 import 'package:azkar/net/payload/authentication/responses/email_verification_response.dart';
-import 'package:azkar/net/payload/request_base.dart';
 import 'package:azkar/net/payload/response_error.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -36,12 +35,15 @@ class AuthenticationService {
             value: facebookGraphApiResponse.accessToken.token);
 
         final http.Response apiResponse = await http.put(
-            Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),
-                ApiRoutesUtil.apiRouteToString(ApiRoute.LOGIN_WITH_FACEBOOK)),
+            Uri.http(
+                ApiRoutesUtil.apiRouteToString(
+                    Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
+                ApiRoutesUtil.apiRouteToString(Endpoint(
+                    endpointRoute: EndpointRoute.LOGIN_WITH_FACEBOOK))),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
             },
-            body: jsonEncode(new FacebookAuthenticationRequest(
+            body: jsonEncode(new FacebookAuthenticationRequestBody(
               facebookUserId: facebookGraphApiResponse.accessToken.userId,
               token: facebookGraphApiResponse.accessToken.token,
             ).toJson()));
@@ -69,10 +71,13 @@ class AuthenticationService {
   }
 
   static Future<EmailRegistrationResponse> signUp(
-      EmailRegistrationRequest request) async {
+      EmailRegistrationRequestBody request) async {
     final http.Response apiResponse = await http.put(
-      Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),
-          ApiRoutesUtil.apiRouteToString(ApiRoute.REGISTER_WITH_EMAIL)),
+      Uri.http(
+          ApiRoutesUtil.apiRouteToString(
+              Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
+          ApiRoutesUtil.apiRouteToString(
+              Endpoint(endpointRoute: EndpointRoute.REGISTER_WITH_EMAIL))),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -82,13 +87,16 @@ class AuthenticationService {
     return EmailRegistrationResponse.fromJson(jsonDecode(apiResponse.body));
   }
 
-  static Future<EmailLoginResponse> login(EmailLoginRequest request) async {
+  static Future<EmailLoginResponse> login(EmailLoginRequestBody request) async {
     EmailLoginResponse emailLoginResponse;
     http.Response apiResponse;
     try {
       apiResponse = await http.put(
-        Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),
-            ApiRoutesUtil.apiRouteToString(ApiRoute.LOGIN_WITH_EMAIL)),
+        Uri.http(
+            ApiRoutesUtil.apiRouteToString(
+                Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
+            ApiRoutesUtil.apiRouteToString(
+                Endpoint(endpointRoute: EndpointRoute.LOGIN_WITH_EMAIL))),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -96,7 +104,7 @@ class AuthenticationService {
       );
     } catch (e) {
       print('Error: An exception while requesting:'
-          '${ApiRoutesUtil.apiRouteToString(ApiRoute.LOGIN_WITH_EMAIL)} '
+          '${ApiRoutesUtil.apiRouteToString(Endpoint(endpointRoute: EndpointRoute.LOGIN_WITH_EMAIL))} '
           'with stack trace: ${e.toString()}');
       emailLoginResponse = new EmailLoginResponse();
       emailLoginResponse.setErrorMessage(
@@ -116,10 +124,13 @@ class AuthenticationService {
   }
 
   static Future<EmailVerificationResponse> verifyEmail(
-      EmailVerificationRequest request) async {
+      EmailVerificationRequestBody request) async {
     final http.Response apiResponse = await http.put(
-      Uri.http(ApiRoutesUtil.apiRouteToString(ApiRoute.BASE_URL),
-          ApiRoutesUtil.apiRouteToString(ApiRoute.VERIFY_EMAIL)),
+      Uri.http(
+          ApiRoutesUtil.apiRouteToString(
+              Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
+          ApiRoutesUtil.apiRouteToString(
+              Endpoint(endpointRoute: EndpointRoute.VERIFY_EMAIL))),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
