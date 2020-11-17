@@ -11,8 +11,7 @@ class ChallengesWidget extends StatefulWidget {
 
 class ChallengesWidgetState extends State<ChallengesWidget> {
   ChallengesWidgetStateType challengesWidgetStatetype =
-      ChallengesWidgetStateType.addChallenge;
-
+      ChallengesWidgetStateType.showChallenges;
 
   void setChallengesWidgetStateType(ChallengesWidgetStateType type) {
     setState(() {
@@ -25,10 +24,14 @@ class ChallengesWidgetState extends State<ChallengesWidget> {
     Widget widget;
     switch (challengesWidgetStatetype) {
       case ChallengesWidgetStateType.addChallenge:
-        widget = CreateChallengeWidget(challengesWidgetState: this,);
+        widget = CreateChallengeWidget(
+          challengesWidgetState: this,
+        );
         break;
       case ChallengesWidgetStateType.showChallenges:
-        widget = ShowChallengesWidget(challengesWidgetState: this,);
+        widget = ShowChallengesWidget(
+          challengesWidgetState: this,
+        );
         break;
     }
 

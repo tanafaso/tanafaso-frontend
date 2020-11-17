@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 
 import '../../request_base.dart';
 
-class EmailRegistrationRequest extends RequestBase<EmailRegistrationRequest>{
+class EmailRegistrationRequestBody
+    extends RequestBodyBase<EmailRegistrationRequestBody> {
   final String email;
   final String password;
   final String name;
 
-  EmailRegistrationRequest(
+  EmailRegistrationRequestBody(
       {@required this.email, @required this.password, @required this.name});
 
   @override

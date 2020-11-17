@@ -30,6 +30,8 @@ dependencies:
   flutter_secure_storage: ^3.3.3
   flare_flutter: ^2.0.3
   fluttertoast: ^7.0.4
+  progress_state_button: ^1.0.1
+  sprintf: "^4.0.0"
 
 dev_dependencies:
   flutter_test:

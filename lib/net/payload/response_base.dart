@@ -11,11 +11,10 @@ abstract class ResponseBase {
   }
 
   void setErrorMessage(String errorMessage) {
-   error = Error(errorMessage);
+    error = Error(errorMessage);
   }
 
   bool hasError() {
     return error?.errorMessage?.isNotEmpty ?? false;
   }
-
 }
