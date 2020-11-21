@@ -23,7 +23,12 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
               padding: const EdgeInsets.only(left: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [Text('${widget.friend.username}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)],
+                children: [
+                  Text(
+                    '${widget.friend.username}',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  )
+                ],
               ),
             ),
           ),

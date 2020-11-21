@@ -8,7 +8,7 @@ class Friend {
 
   Friend(
       {@required this.userId,
-        @required this.username,
-        @required this.name,
-        @required this.pending});
+      @required this.username,
+      @required this.name,
+      @required this.pending});
 }
