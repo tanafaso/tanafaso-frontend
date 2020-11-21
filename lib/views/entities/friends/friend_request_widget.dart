@@ -13,29 +13,9 @@ class FriendRequestWidget extends StatefulWidget {
   _FriendRequestWidgetState createState() => _FriendRequestWidgetState();
 }
 
-enum FriendshipState { PENDING, ACCEPTED, REJECTED }
-
 class _FriendRequestWidgetState extends State<FriendRequestWidget> {
-  FriendshipState _friendshipState = FriendshipState.PENDING;
-
   @override
   Widget build(BuildContext context) {
-    print(_friendshipState);
-    switch (_friendshipState) {
-      case FriendshipState.PENDING:
-        return getPendingWidget();
-      case FriendshipState.ACCEPTED:
-        return getAcceptedWidget();
-      case FriendshipState.REJECTED:
-        return getRejectedWidget();
-      default:
-        assert(false);
-        print('Unexpected friendship state.');
-        return getAcceptedWidget();
-    }
-  }
-
-  Widget getPendingWidget() {
     return Card(
       child: Row(
         children: [
@@ -112,31 +92,5 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
       ));
       widget.parentState.setState(() {});
     }
-  }
-
-  Widget getAcceptedWidget() {
-    return Card(
-      child: Container(
-        height: 20,
-        child: Text(
-          'Accepted',
-          textAlign: TextAlign.center,
-        ),
-      ),
-      color: Colors.green.shade400,
-    );
-  }
-
-  Widget getRejectedWidget() {
-    return Card(
-      child: Container(
-        height: 20,
-        child: Text(
-          'Rejected',
-          textAlign: TextAlign.center,
-        ),
-      ),
-      color: Colors.red.shade300,
-    );
   }
 }

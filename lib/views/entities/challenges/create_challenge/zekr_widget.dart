@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 
 class ZekrWidget extends StatefulWidget {
   final String zekr;
-
 
   ZekrWidget({@required this.zekr});
 
