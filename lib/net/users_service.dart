@@ -5,6 +5,7 @@ import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
+import 'package:azkar/net/payload/users/responses/resolve_friend_request_response.dart';
 import 'package:http/http.dart' as http;
 
 class UsersService {
@@ -44,5 +45,23 @@ class UsersService {
     http.Response response = await ApiCaller.get(
         route: Endpoint(endpointRoute: EndpointRoute.GET_FRIENDS));
     return GetFriendsResponse.fromJson(jsonDecode(response.body));
+  }
+
+  static Future<ResolveFriendRequestResponse> acceptFriend(
+      String friendId) async {
+    http.Response response = await ApiCaller.put(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.ACCEPT_FRIEND,
+            pathVariables: [friendId]));
+    return ResolveFriendRequestResponse.fromJson(jsonDecode(response.body));
+  }
+
+  static Future<ResolveFriendRequestResponse> rejectFriend(
+      String friendId) async {
+    http.Response response = await ApiCaller.put(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.REJECT_FRIEND,
+            pathVariables: [friendId]));
+    return ResolveFriendRequestResponse.fromJson(jsonDecode(response.body));
   }
 }
