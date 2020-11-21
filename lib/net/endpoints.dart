@@ -9,7 +9,8 @@ enum EndpointRoute {
   GET_AZKAR,
   GET_CURRENT_USER_PROFILE,
   GET_USER_BY_USERNAME,
-  ADD_FRIEND_BY_USERNAME
+  ADD_FRIEND_BY_USERNAME,
+  GET_FRIENDS
 }
 
 class Endpoint {
@@ -44,6 +45,8 @@ class ApiRoutesUtil {
       case EndpointRoute.ADD_FRIEND_BY_USERNAME:
         assert(route.pathVariables.length == 1);
         return '/friends/${route.pathVariables[0]}';
+      case EndpointRoute.GET_FRIENDS:
+        return '/friends';
       default:
         print('Route enum is not registered.');
     }
