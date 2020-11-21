@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ApiCaller {
-  static Future<http.Response> get(Endpoint route) async {
+  static Future<http.Response> get({@required Endpoint route}) async {
     return await http.get(
       Uri.http(
           ApiRoutesUtil.apiRouteToString(
