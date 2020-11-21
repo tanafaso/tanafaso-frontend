@@ -1,10 +1,13 @@
 import 'package:azkar/models/friend.dart';
+import 'package:azkar/net/payload/users/responses/resolve_friend_request_response.dart';
+import 'package:azkar/net/users_service.dart';
 import 'package:flutter/material.dart';
 
 class FriendRequestWidget extends StatefulWidget {
   final Friend friend;
+  final State parentState;
 
-  FriendRequestWidget({@required this.friend});
+  FriendRequestWidget({@required this.friend, @required this.parentState});
 
   @override
   _FriendRequestWidgetState createState() => _FriendRequestWidgetState();
@@ -42,14 +45,14 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
                   child: RaisedButton(
                     child: Text('Accept'),
                     color: Colors.green.shade400,
-                    onPressed: () => {},
+                    onPressed: () => onAcceptedPressed(),
                   ),
                 ),
                 Flexible(
                   fit: FlexFit.tight,
                   child: OutlineButton(
                     child: (Text('Ignore')),
-                    onPressed: () => {},
+                    onPressed: () => onRejectedPressed(),
                   ),
                 )
               ],
@@ -58,5 +61,36 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
         ],
       ),
     );
+  }
+
+  void onAcceptedPressed() async {
+    ResolveFriendRequestResponse response =
+        await UsersService.acceptFriend(widget.friend.userId);
+    if (response.hasError()) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(response.error.errorMessage),
+      ));
+    } else {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.green.shade400,
+        content: Text('${widget.friend.name} is now your friend.'),
+      ));
+      widget.parentState.setState(() {});
+    }
+  }
+
+  void onRejectedPressed() async {
+    ResolveFriendRequestResponse response =
+        await UsersService.rejectFriend(widget.friend.userId);
+    if (response.hasError()) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(response.error.errorMessage),
+      ));
+    } else {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text("${widget.friend.name}'s friend request is ignored."),
+      ));
+      widget.parentState.setState(() {});
+    }
   }
 }

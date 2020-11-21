@@ -1,3 +1,4 @@
+import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/users_service.dart';
@@ -5,7 +6,13 @@ import 'package:azkar/views/entities/friends/friend_request_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ShowFriendRequestsWidget extends StatelessWidget {
+class ShowFriendRequestsWidget extends StatefulWidget {
+  @override
+  _ShowFriendRequestsWidgetState createState() =>
+      _ShowFriendRequestsWidgetState();
+}
+
+class _ShowFriendRequestsWidgetState extends State<ShowFriendRequestsWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,7 +22,7 @@ class ShowFriendRequestsWidget extends StatelessWidget {
             (BuildContext context, AsyncSnapshot<GetFriendsResponse> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            return getFriendRequestsList(snapshot.data.friendship);
+            return getFriendRequestsListWidget(snapshot.data.friendship);
           } else if (snapshot.hasError) {
             children = <Widget>[
               Icon(
@@ -53,15 +60,16 @@ class ShowFriendRequestsWidget extends StatelessWidget {
     );
   }
 
-  Widget getFriendRequestsList(Friendship friendship) {
-    var friend = friendship.friends[0];
-    for (var i = 0; i < 100; ++i) {
-      friendship.friends.add(friend);
-    }
+  Widget getFriendRequestsListWidget(Friendship friendship) {
+    List<Friend> pendingFriends =
+        friendship.friends.where((friend) => friend.pending).toList();
     return ListView.builder(
-      itemCount: friendship.friends.length,
+      itemCount: pendingFriends.length,
       itemBuilder: (context, index) {
-        return FriendRequestWidget(friend: friendship.friends[index]);
+        return FriendRequestWidget(
+          friend: pendingFriends[index],
+          parentState: this,
+        );
       },
     );
   }

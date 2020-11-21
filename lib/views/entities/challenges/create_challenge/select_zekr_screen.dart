@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
+import 'package:azkar/views/entities/challenges/create_challenge/zekr_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,27 +22,16 @@ class SelectZekrWidget extends StatelessWidget {
               appBar: AppBar(
                 title: Text('Select Zekr'),
               ),
-              body: Center(
-                  child: ListView.separated(
-                itemCount: azkar.length,
-                separatorBuilder: (context, index) => Divider(
-                  color: Colors.black,
-                ),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: ListTile(
-                        title: Text(
-                      '${utf8.decode(azkar[index].codeUnits)}',
-                      textAlign: TextAlign.center,
-                      textDirection: TextDirection.rtl,
-                      style: new TextStyle(
-                        fontSize: 20.0,
-                      ),
-                    )),
-                  );
-                },
-              )),
+              body: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                    child: ListView.builder(
+                  itemCount: azkar.length,
+                  itemBuilder: (context, index) {
+                    return ZekrWidget(zekr: azkar[index]);
+                  },
+                )),
+              ),
             );
           } else if (snapshot.hasError) {
             // TODO(omorsi): Handle error
