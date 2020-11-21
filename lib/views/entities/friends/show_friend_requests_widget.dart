@@ -54,6 +54,10 @@ class ShowFriendRequestsWidget extends StatelessWidget {
   }
 
   Widget getFriendRequestsList(Friendship friendship) {
+    var friend = friendship.friends[0];
+    for (var i = 0; i < 100; ++i) {
+      friendship.friends.add(friend);
+    }
     return ListView.builder(
       itemCount: friendship.friends.length,
       itemBuilder: (context, index) {

@@ -17,10 +17,14 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
       child: Row(
         children: [
           Flexible(
-            flex: 10,
+            flex: 7,
             fit: FlexFit.tight,
-            child: Column(
-              children: [Text('Username: ${widget.friend.username}')],
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [Text('${widget.friend.username}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)],
+              ),
             ),
           ),
           Flexible(
@@ -28,14 +32,20 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
             fit: FlexFit.tight,
             child: Row(
               children: [
-                RaisedButton(
-                  child: Text('Accept'),
-                  color: Colors.green.shade400,
-                  onPressed: () => {},
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: RaisedButton(
+                    child: Text('Accept'),
+                    color: Colors.green.shade400,
+                    onPressed: () => {},
+                  ),
                 ),
-                OutlineButton(
-                  child: (Text('Ignore')),
-                  onPressed: () => {},
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: OutlineButton(
+                    child: (Text('Ignore')),
+                    onPressed: () => {},
+                  ),
                 )
               ],
             ),
