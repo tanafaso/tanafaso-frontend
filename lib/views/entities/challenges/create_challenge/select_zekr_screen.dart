@@ -10,7 +10,8 @@ class SelectZekrWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: ApiCaller.get(Endpoint(endpointRoute: EndpointRoute.GET_AZKAR)),
+        future: ApiCaller.get(
+            route: Endpoint(endpointRoute: EndpointRoute.GET_AZKAR)),
         builder: (BuildContext context, AsyncSnapshot<http.Response> snapshot) {
           if (snapshot.hasData) {
             GetAzkarResponse response =
