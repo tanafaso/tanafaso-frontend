@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 enum EndpointRoute {
   BASE_URL,
   LOGIN_WITH_FACEBOOK,
+  CONNECT_FACEBOOK,
   REGISTER_WITH_EMAIL,
   VERIFY_EMAIL,
   LOGIN_WITH_EMAIL,
@@ -31,6 +32,8 @@ class ApiRoutesUtil {
         return 'localhost:8080';
       case EndpointRoute.LOGIN_WITH_FACEBOOK:
         return '/login/facebook';
+      case EndpointRoute.CONNECT_FACEBOOK:
+        return '/connect/facebook';
       case EndpointRoute.REGISTER_WITH_EMAIL:
         return '/register/email';
       case EndpointRoute.VERIFY_EMAIL:

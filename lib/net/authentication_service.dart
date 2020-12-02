@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/authentication/requests/email_login_request_body.dart';
 import 'package:azkar/net/payload/authentication/requests/email_registration_request_body.dart';
@@ -68,6 +69,56 @@ class AuthenticationService {
         facebookAuthenticationResponse.error = new Error("Internal Error");
         return new Future.value(facebookAuthenticationResponse);
     }
+  }
+
+  static Future<FacebookAuthenticationResponse> connectFacebook() async {
+    final _facebookLogin = FacebookLogin();
+    _facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
+
+    final facebookGraphApiResponse = await _facebookLogin.logIn(['email']);
+
+    FacebookAuthenticationResponse facebookAuthenticationResponse;
+    switch (facebookGraphApiResponse.status) {
+      case FacebookLoginStatus.loggedIn:
+        final _storage = FlutterSecureStorage();
+        await _storage.write(
+            key: facebookTokenStorageKey,
+            value: facebookGraphApiResponse.accessToken.token);
+
+        final http.Response apiResponse = await ApiCaller.put(
+            route: Endpoint(endpointRoute: EndpointRoute.CONNECT_FACEBOOK),
+            requestBody: FacebookAuthenticationRequestBody(
+              facebookUserId: facebookGraphApiResponse.accessToken.userId,
+              token: facebookGraphApiResponse.accessToken.token,
+            ));
+
+        facebookAuthenticationResponse =
+            FacebookAuthenticationResponse.fromJson(
+                jsonDecode(apiResponse.body));
+        if (!facebookAuthenticationResponse.hasError()) {
+          final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
+          final _storage = FlutterSecureStorage();
+          await _storage.write(key: jwtTokenStorageKey, value: jwtToken);
+        }
+        return new Future.value(facebookAuthenticationResponse);
+      case FacebookLoginStatus.cancelledByUser:
+        facebookAuthenticationResponse.error = new Error("Cancelled by user.");
+        return new Future.value(facebookAuthenticationResponse);
+      case FacebookLoginStatus.error:
+        facebookAuthenticationResponse.error =
+            new Error("Facebook login error.");
+        return new Future.value(facebookAuthenticationResponse);
+      default:
+        facebookAuthenticationResponse.error = new Error("Internal Error");
+        return new Future.value(facebookAuthenticationResponse);
+    }
+  }
+
+  static Future<String> getFacebookToken() async {
+    final _storage = FlutterSecureStorage();
+    String facebookToken = await _storage.read(key: facebookTokenStorageKey);
+    // TODO(omar): Check that the token is not expired.
+    return facebookToken;
   }
 
   static Future<EmailRegistrationResponse> signUp(
