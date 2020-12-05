@@ -345,5 +345,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
     }
   }
 
-  void onFindFriendsWithFacebookPressed() async {}
+  void onFindFriendsWithFacebookPressed() async {
+    AuthenticationService.getFacebookFriends();
+  }
 }

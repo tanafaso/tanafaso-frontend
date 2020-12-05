@@ -20,6 +20,7 @@ import '../net/payload/authentication/responses/facebook_authentication_response
 class AuthenticationService {
   static final String jwtTokenStorageKey = 'jwtToken';
   static final String facebookTokenStorageKey = 'facebookAccessToken';
+  static final int FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE = 190;
 
   static Future<FacebookAuthenticationResponse> loginWithFacebook() async {
     final _facebookLogin = FacebookLogin();
@@ -75,7 +76,8 @@ class AuthenticationService {
     final _facebookLogin = FacebookLogin();
     _facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
 
-    final facebookGraphApiResponse = await _facebookLogin.logIn(['email']);
+    final facebookGraphApiResponse =
+        await _facebookLogin.logIn(['email', 'user_friends']);
 
     FacebookAuthenticationResponse facebookAuthenticationResponse;
     switch (facebookGraphApiResponse.status) {
@@ -119,6 +121,19 @@ class AuthenticationService {
     String facebookToken = await _storage.read(key: facebookTokenStorageKey);
     // TODO(omar): Check that the token is not expired.
     return facebookToken;
+  }
+
+  // TODO('Create FacebookService')
+  static Future<void> getFacebookFriends() async {
+    String facebookToken = await getFacebookToken();
+    http.Response response = await http.get(
+        "https://graph.facebook.com/v9.0/me/friends?access_token=$facebookToken");
+   if (response.statusCode == FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE) {
+     print('Invalid OAuth Token');
+     // TODO('Ask the user to connect to facebook')
+   } else {
+
+   }
   }
 
   static Future<EmailRegistrationResponse> signUp(
