@@ -23,6 +23,15 @@ class UsersService {
     return GetUserResponse.fromJson(jsonDecode(response.body));
   }
 
+  static Future<GetUserResponse> getUserByFacebookUserId(
+      String facebookUserId) async {
+    http.Response response = await ApiCaller.get(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.GET_USER_BY_FACEBOOK_USER_ID,
+            requestParams: {'facebook_user_id': facebookUserId}));
+    return GetUserResponse.fromJson(jsonDecode(response.body));
+  }
+
   static Future<AddFriendResponse> addFriend(String username) async {
     GetUserResponse getUserResponse = await getUserByUsername(username);
 
