@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/authentication/requests/email_login_request_body.dart';
 import 'package:azkar/net/payload/authentication/requests/email_registration_request_body.dart';
@@ -9,6 +10,7 @@ import 'package:azkar/net/payload/authentication/requests/facebook_authenticatio
 import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
 import 'package:azkar/net/payload/authentication/responses/email_registration_response.dart';
 import 'package:azkar/net/payload/authentication/responses/email_verification_response.dart';
+import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
 import 'package:azkar/net/payload/response_error.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -19,6 +21,8 @@ import '../net/payload/authentication/responses/facebook_authentication_response
 class AuthenticationService {
   static final String jwtTokenStorageKey = 'jwtToken';
   static final String facebookTokenStorageKey = 'facebookAccessToken';
+  static final int FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE = 190;
+  static final int MAXIMUM_FRIENDS_USING_APP_COUNT = 100;
 
   static Future<FacebookAuthenticationResponse> loginWithFacebook() async {
     final _facebookLogin = FacebookLogin();
@@ -68,6 +72,70 @@ class AuthenticationService {
         facebookAuthenticationResponse.error = new Error("Internal Error");
         return new Future.value(facebookAuthenticationResponse);
     }
+  }
+
+  static Future<FacebookAuthenticationResponse> connectFacebook() async {
+    final _facebookLogin = FacebookLogin();
+    _facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
+
+    final facebookGraphApiResponse =
+        await _facebookLogin.logIn(['email', 'user_friends']);
+
+    FacebookAuthenticationResponse facebookAuthenticationResponse;
+    switch (facebookGraphApiResponse.status) {
+      case FacebookLoginStatus.loggedIn:
+        final _storage = FlutterSecureStorage();
+        await _storage.write(
+            key: facebookTokenStorageKey,
+            value: facebookGraphApiResponse.accessToken.token);
+
+        final http.Response apiResponse = await ApiCaller.put(
+            route: Endpoint(endpointRoute: EndpointRoute.CONNECT_FACEBOOK),
+            requestBody: FacebookAuthenticationRequestBody(
+              facebookUserId: facebookGraphApiResponse.accessToken.userId,
+              token: facebookGraphApiResponse.accessToken.token,
+            ));
+
+        facebookAuthenticationResponse =
+            FacebookAuthenticationResponse.fromJson(
+                jsonDecode(apiResponse.body));
+        if (!facebookAuthenticationResponse.hasError()) {
+          final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
+          final _storage = FlutterSecureStorage();
+          await _storage.write(key: jwtTokenStorageKey, value: jwtToken);
+        }
+        return new Future.value(facebookAuthenticationResponse);
+      case FacebookLoginStatus.cancelledByUser:
+        facebookAuthenticationResponse.error = new Error("Cancelled by user.");
+        return new Future.value(facebookAuthenticationResponse);
+      case FacebookLoginStatus.error:
+        facebookAuthenticationResponse.error =
+            new Error("Facebook login error.");
+        return new Future.value(facebookAuthenticationResponse);
+      default:
+        facebookAuthenticationResponse.error = new Error("Internal Error");
+        return new Future.value(facebookAuthenticationResponse);
+    }
+  }
+
+  static Future<String> getFacebookToken() async {
+    final _storage = FlutterSecureStorage();
+    String facebookToken = await _storage.read(key: facebookTokenStorageKey);
+    // TODO(omar): Check that the token is not expired.
+    return facebookToken;
+  }
+
+  // TODO('Create FacebookService')
+  static Future<FacebookFriendsResponse> getFacebookFriends() async {
+    String facebookToken = await getFacebookToken();
+    http.Response response = await http.get(
+        "https://graph.facebook.com/v9.0/me/friends?access_token=${facebookToken}&limit=$MAXIMUM_FRIENDS_USING_APP_COUNT");
+    if (response.statusCode == FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE) {
+      print('Invalid OAuth Token');
+      // TODO('Ask the user to connect to facebook')
+    }
+
+    return FacebookFriendsResponse.fromJson(jsonDecode(response.body));
   }
 
   static Future<EmailRegistrationResponse> signUp(
