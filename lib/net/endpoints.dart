@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 enum EndpointRoute {
   BASE_URL,
   LOGIN_WITH_FACEBOOK,
+  CONNECT_FACEBOOK,
   REGISTER_WITH_EMAIL,
   VERIFY_EMAIL,
   LOGIN_WITH_EMAIL,
   GET_AZKAR,
   GET_CURRENT_USER_PROFILE,
   GET_USER_BY_USERNAME,
+  GET_USER_BY_FACEBOOK_USER_ID,
   ADD_FRIEND_BY_USERNAME,
   GET_FRIENDS,
   ACCEPT_FRIEND,
@@ -31,6 +33,8 @@ class ApiRoutesUtil {
         return 'localhost:8080';
       case EndpointRoute.LOGIN_WITH_FACEBOOK:
         return '/login/facebook';
+      case EndpointRoute.CONNECT_FACEBOOK:
+        return '/connect/facebook';
       case EndpointRoute.REGISTER_WITH_EMAIL:
         return '/register/email';
       case EndpointRoute.VERIFY_EMAIL:
@@ -43,7 +47,12 @@ class ApiRoutesUtil {
         return 'users/me';
       case EndpointRoute.GET_USER_BY_USERNAME:
         assert(route.requestParams.length == 1);
-        return '/users';
+        assert(route.requestParams.keys.first == 'username');
+        return '/users/search';
+      case EndpointRoute.GET_USER_BY_FACEBOOK_USER_ID:
+        assert(route.requestParams.length == 1);
+        assert(route.requestParams.keys.first == 'facebook_user_id');
+        return '/users/search';
       case EndpointRoute.ADD_FRIEND_BY_USERNAME:
         assert(route.pathVariables.length == 1);
         return '/friends/${route.pathVariables[0]}';
