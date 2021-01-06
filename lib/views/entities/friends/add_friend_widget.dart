@@ -1,7 +1,12 @@
+import 'package:azkar/models/user.dart';
 import 'package:azkar/net/authentication_service.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
+import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
 import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
+import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
+import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/users_service.dart';
+import 'package:azkar/views/entities/friends/facebook_friends_screen.dart';
 import 'package:azkar/views/entities/friends/friends_widget.dart';
 import 'package:azkar/views/home_page.dart';
 import 'package:flutter/material.dart';
@@ -346,6 +351,51 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
   }
 
   void onFindFriendsWithFacebookPressed() async {
-    AuthenticationService.getFacebookFriends();
+    List<User> friends = await getFacebookFriends();
+
+    print(friends.length);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                FacebookFriendsScreen(facebookFriends: friends)));
+  }
+
+  Future<List<User>> getFacebookFriends() async {
+    FacebookFriendsResponse getFacebookFriendsResponse =
+        await AuthenticationService.getFacebookFriends();
+    List<User> facebookFriends = [];
+    for (var facebookFriend in getFacebookFriendsResponse.facebookFriends) {
+      GetUserResponse getUserResponse =
+          await UsersService.getUserByFacebookUserId(facebookFriend.id);
+      if (getUserResponse.hasError()) {
+        print(getUserResponse.error.errorMessage);
+      } else {
+        facebookFriends.add(getUserResponse.user);
+      }
+    }
+
+    return getNotYetInvitedAppFriends(facebookFriends);
+  }
+
+  Future<List<User>> getNotYetInvitedAppFriends(
+      List<User> facebookFriends) async {
+    GetFriendsResponse response = await UsersService.getFriends();
+
+    if (response.hasError()) {
+      Scaffold.of(context)
+          .showSnackBar(SnackBar(content: Text(response.error.errorMessage)));
+      return facebookFriends;
+    }
+
+    List<User> notYetAppFriends = [];
+    for (User user in facebookFriends) {
+      if (!response.friendship.friends
+          .any((friend) => friend.userId == user.id)) {
+        notYetAppFriends.add(user);
+      }
+    }
+
+    return notYetAppFriends;
   }
 }

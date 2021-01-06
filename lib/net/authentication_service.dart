@@ -10,6 +10,7 @@ import 'package:azkar/net/payload/authentication/requests/facebook_authenticatio
 import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
 import 'package:azkar/net/payload/authentication/responses/email_registration_response.dart';
 import 'package:azkar/net/payload/authentication/responses/email_verification_response.dart';
+import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
 import 'package:azkar/net/payload/response_error.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -21,6 +22,7 @@ class AuthenticationService {
   static final String jwtTokenStorageKey = 'jwtToken';
   static final String facebookTokenStorageKey = 'facebookAccessToken';
   static final int FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE = 190;
+  static final int MAXIMUM_FRIENDS_USING_APP_COUNT = 100;
 
   static Future<FacebookAuthenticationResponse> loginWithFacebook() async {
     final _facebookLogin = FacebookLogin();
@@ -124,16 +126,16 @@ class AuthenticationService {
   }
 
   // TODO('Create FacebookService')
-  static Future<void> getFacebookFriends() async {
+  static Future<FacebookFriendsResponse> getFacebookFriends() async {
     String facebookToken = await getFacebookToken();
     http.Response response = await http.get(
-        "https://graph.facebook.com/v9.0/me/friends?access_token=$facebookToken");
-   if (response.statusCode == FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE) {
-     print('Invalid OAuth Token');
-     // TODO('Ask the user to connect to facebook')
-   } else {
+        "https://graph.facebook.com/v9.0/me/friends?access_token=${facebookToken}&limit=$MAXIMUM_FRIENDS_USING_APP_COUNT");
+    if (response.statusCode == FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE) {
+      print('Invalid OAuth Token');
+      // TODO('Ask the user to connect to facebook')
+    }
 
-   }
+    return FacebookFriendsResponse.fromJson(jsonDecode(response.body));
   }
 
   static Future<EmailRegistrationResponse> signUp(
