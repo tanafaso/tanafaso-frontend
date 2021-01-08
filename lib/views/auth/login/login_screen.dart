@@ -366,8 +366,14 @@ class _LoginScreenState extends State<LoginScreen> {
   loginWithFacebook() async {
     FacebookAuthenticationResponse response =
         await AuthenticationService.loginWithFacebook();
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => new HomePage()));
+    if (response.hasError()) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(response.error.errorMessage),
+      ));
+    } else {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => new HomePage()));
+    }
   }
 
   loginWithEmail(EmailLoginRequestBody request) async {
