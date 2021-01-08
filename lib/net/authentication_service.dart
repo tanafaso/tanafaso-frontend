@@ -12,17 +12,15 @@ import 'package:azkar/net/payload/authentication/responses/email_registration_re
 import 'package:azkar/net/payload/authentication/responses/email_verification_response.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
 import 'package:azkar/net/payload/response_error.dart';
+import 'package:azkar/net/secure_storage_util.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 import '../net/payload/authentication/responses/facebook_authentication_response.dart';
 
 class AuthenticationService {
-  static final String jwtTokenStorageKey = 'jwtToken';
-  static final String facebookTokenStorageKey = 'facebookAccessToken';
-  static final int FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE = 190;
-  static final int MAXIMUM_FRIENDS_USING_APP_COUNT = 100;
+  static const int FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE = 190;
+  static const int MAXIMUM_FRIENDS_USING_APP_COUNT = 100;
 
   static Future<FacebookAuthenticationResponse> loginWithFacebook() async {
     final _facebookLogin = FacebookLogin();
@@ -33,34 +31,11 @@ class AuthenticationService {
     FacebookAuthenticationResponse facebookAuthenticationResponse;
     switch (facebookGraphApiResponse.status) {
       case FacebookLoginStatus.loggedIn:
-        final _storage = FlutterSecureStorage();
-        await _storage.write(
-            key: facebookTokenStorageKey,
-            value: facebookGraphApiResponse.accessToken.token);
+        final FacebookAccessToken _facebookAccessToken =
+            facebookGraphApiResponse.accessToken;
+        await SecureStorageUtil.setFacebookToken(_facebookAccessToken.token);
 
-        final http.Response apiResponse = await http.put(
-            Uri.http(
-                ApiRoutesUtil.apiRouteToString(
-                    Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
-                ApiRoutesUtil.apiRouteToString(Endpoint(
-                    endpointRoute: EndpointRoute.LOGIN_WITH_FACEBOOK))),
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: jsonEncode(new FacebookAuthenticationRequestBody(
-              facebookUserId: facebookGraphApiResponse.accessToken.userId,
-              token: facebookGraphApiResponse.accessToken.token,
-            ).toJson()));
-
-        facebookAuthenticationResponse =
-            FacebookAuthenticationResponse.fromJson(
-                jsonDecode(apiResponse.body));
-        if (!facebookAuthenticationResponse.hasError()) {
-          final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
-          final _storage = FlutterSecureStorage();
-          await _storage.write(key: jwtTokenStorageKey, value: jwtToken);
-        }
-        return new Future.value(facebookAuthenticationResponse);
+        return _loginWithFacebookAccessToken(_facebookAccessToken);
       case FacebookLoginStatus.cancelledByUser:
         facebookAuthenticationResponse.error = new Error("Cancelled by user.");
         return new Future.value(facebookAuthenticationResponse);
@@ -72,6 +47,31 @@ class AuthenticationService {
         facebookAuthenticationResponse.error = new Error("Internal Error");
         return new Future.value(facebookAuthenticationResponse);
     }
+  }
+
+  static Future<FacebookAuthenticationResponse> _loginWithFacebookAccessToken(
+      FacebookAccessToken facebookAccessToken) async {
+    final http.Response apiResponse = await http.put(
+        Uri.http(
+            ApiRoutesUtil.apiRouteToString(
+                Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
+            ApiRoutesUtil.apiRouteToString(
+                Endpoint(endpointRoute: EndpointRoute.LOGIN_WITH_FACEBOOK))),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(new FacebookAuthenticationRequestBody(
+          facebookUserId: facebookAccessToken.userId,
+          token: facebookAccessToken.token,
+        ).toJson()));
+
+    FacebookAuthenticationResponse response =
+        FacebookAuthenticationResponse.fromJson(jsonDecode(apiResponse.body));
+    if (!response.hasError()) {
+      final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
+      await SecureStorageUtil.setJwtToken(jwtToken);
+    }
+    return response;
   }
 
   static Future<FacebookAuthenticationResponse> connectFacebook() async {
@@ -84,50 +84,45 @@ class AuthenticationService {
     FacebookAuthenticationResponse facebookAuthenticationResponse;
     switch (facebookGraphApiResponse.status) {
       case FacebookLoginStatus.loggedIn:
-        final _storage = FlutterSecureStorage();
-        await _storage.write(
-            key: facebookTokenStorageKey,
-            value: facebookGraphApiResponse.accessToken.token);
+        FacebookAccessToken facebookAccessToken =
+            facebookGraphApiResponse.accessToken;
+        await SecureStorageUtil.setFacebookToken(facebookAccessToken.token);
 
-        final http.Response apiResponse = await ApiCaller.put(
-            route: Endpoint(endpointRoute: EndpointRoute.CONNECT_FACEBOOK),
-            requestBody: FacebookAuthenticationRequestBody(
-              facebookUserId: facebookGraphApiResponse.accessToken.userId,
-              token: facebookGraphApiResponse.accessToken.token,
-            ));
-
-        facebookAuthenticationResponse =
-            FacebookAuthenticationResponse.fromJson(
-                jsonDecode(apiResponse.body));
-        if (!facebookAuthenticationResponse.hasError()) {
-          final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
-          final _storage = FlutterSecureStorage();
-          await _storage.write(key: jwtTokenStorageKey, value: jwtToken);
-        }
-        return new Future.value(facebookAuthenticationResponse);
+        return _connectFacebookWithFacebookAccessToken(facebookAccessToken);
       case FacebookLoginStatus.cancelledByUser:
         facebookAuthenticationResponse.error = new Error("Cancelled by user.");
-        return new Future.value(facebookAuthenticationResponse);
+        return facebookAuthenticationResponse;
       case FacebookLoginStatus.error:
         facebookAuthenticationResponse.error =
             new Error("Facebook login error.");
-        return new Future.value(facebookAuthenticationResponse);
+        return facebookAuthenticationResponse;
       default:
         facebookAuthenticationResponse.error = new Error("Internal Error");
-        return new Future.value(facebookAuthenticationResponse);
+        return facebookAuthenticationResponse;
     }
   }
 
-  static Future<String> getFacebookToken() async {
-    final _storage = FlutterSecureStorage();
-    String facebookToken = await _storage.read(key: facebookTokenStorageKey);
-    // TODO(omar): Check that the token is not expired.
-    return facebookToken;
+  static Future<FacebookAuthenticationResponse>
+      _connectFacebookWithFacebookAccessToken(
+          FacebookAccessToken facebookAccessToken) async {
+    final http.Response apiResponse = await ApiCaller.put(
+        route: Endpoint(endpointRoute: EndpointRoute.CONNECT_FACEBOOK),
+        requestBody: FacebookAuthenticationRequestBody(
+          facebookUserId: facebookAccessToken.userId,
+          token: facebookAccessToken.token,
+        ));
+
+    FacebookAuthenticationResponse response =
+        FacebookAuthenticationResponse.fromJson(jsonDecode(apiResponse.body));
+    if (!response.hasError()) {
+      final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
+      await SecureStorageUtil.setJwtToken(jwtToken);
+    }
+    return response;
   }
 
-  // TODO('Create FacebookService')
   static Future<FacebookFriendsResponse> getFacebookFriends() async {
-    String facebookToken = await getFacebookToken();
+    String facebookToken = await SecureStorageUtil.getFacebookToken();
     http.Response response = await http.get(
         "https://graph.facebook.com/v9.0/me/friends?access_token=${facebookToken}&limit=$MAXIMUM_FRIENDS_USING_APP_COUNT");
     if (response.statusCode == FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE) {
@@ -185,8 +180,7 @@ class AuthenticationService {
 
     if (!emailLoginResponse.hasError()) {
       final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
-      final _storage = FlutterSecureStorage();
-      await _storage.write(key: jwtTokenStorageKey, value: jwtToken);
+      await SecureStorageUtil.setJwtToken(jwtToken);
     }
     return emailLoginResponse;
   }
@@ -206,10 +200,5 @@ class AuthenticationService {
     );
 
     return EmailVerificationResponse.fromJson(jsonDecode(apiResponse.body));
-  }
-
-  static Future<String> getJwtToken() async {
-    final _storage = FlutterSecureStorage();
-    return await _storage.read(key: jwtTokenStorageKey);
   }
 }
