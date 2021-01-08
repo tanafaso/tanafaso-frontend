@@ -1,5 +1,8 @@
+import 'package:azkar/net/authentication_service.dart';
+import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:azkar/views/auth/signup/signup_main_screen.dart';
+import 'package:azkar/views/home_page.dart';
 import 'package:flutter/material.dart';
 
 class AuthMainScreen extends StatelessWidget {
@@ -194,7 +197,9 @@ class AuthMainScreen extends StatelessWidget {
                                               ),
                                               new Expanded(
                                                 child: new FlatButton(
-                                                  // onPressed: () => loginWithFacebook(),
+                                                  onPressed: () =>
+                                                      loginWithFacebook(
+                                                          context),
                                                   padding: EdgeInsets.only(
                                                     top: 20.0,
                                                     bottom: 20.0,
@@ -247,5 +252,18 @@ class AuthMainScreen extends StatelessWidget {
                     ],
                   ),
                 )))));
+  }
+
+  loginWithFacebook(BuildContext context) async {
+    FacebookAuthenticationResponse response =
+        await AuthenticationService.loginWithFacebook();
+    if (response.hasError()) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(response.error.errorMessage),
+      ));
+    } else {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => new HomePage()));
+    }
   }
 }
