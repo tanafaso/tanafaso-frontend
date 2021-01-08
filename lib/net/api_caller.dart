@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:azkar/net/authentication_service.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/request_base.dart';
+import 'package:azkar/net/secure_storage_util.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,7 +32,7 @@ class ApiCaller {
   }
 
   static Future<Map<String, String>> getHeaders() async {
-    String jwtToken = await AuthenticationService.getJwtToken();
+    String jwtToken = await SecureStorageUtil.getJwtToken();
 
     return <String, String>{
       HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
