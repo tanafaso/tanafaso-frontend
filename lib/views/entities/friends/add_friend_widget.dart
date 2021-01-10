@@ -1,11 +1,10 @@
 import 'package:azkar/models/user.dart';
-import 'package:azkar/net/authentication_service.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
 import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
-import 'package:azkar/net/users_service.dart';
+import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/entities/friends/facebook_friends_screen.dart';
 import 'package:azkar/views/entities/friends/friends_widget.dart';
 import 'package:azkar/views/home_page.dart';
@@ -316,7 +315,8 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
   }
 
   void addFriend() async {
-    AddFriendResponse response = await UsersService.addFriend(_friend_username);
+    AddFriendResponse response =
+        await ServiceProvider.usersService.addFriend(_friend_username);
     if (response.hasError()) {
       setState(() {
         stateTextWithIcon = ButtonState.fail;
@@ -339,7 +339,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
 
   void onConnectFacebookPressed() async {
     FacebookAuthenticationResponse response =
-        await AuthenticationService.connectFacebook();
+        await ServiceProvider.authenticationService.connectFacebook();
     if (response.hasError()) {
       Scaffold.of(context)
           .showSnackBar(SnackBar(content: Text(response.error.errorMessage)));
@@ -363,11 +363,11 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
 
   Future<List<User>> getFacebookFriends() async {
     FacebookFriendsResponse getFacebookFriendsResponse =
-        await AuthenticationService.getFacebookFriends();
+        await ServiceProvider.authenticationService.getFacebookFriends();
     List<User> facebookFriends = [];
     for (var facebookFriend in getFacebookFriendsResponse.facebookFriends) {
-      GetUserResponse getUserResponse =
-          await UsersService.getUserByFacebookUserId(facebookFriend.id);
+      GetUserResponse getUserResponse = await ServiceProvider.usersService
+          .getUserByFacebookUserId(facebookFriend.id);
       if (getUserResponse.hasError()) {
         print(getUserResponse.error.errorMessage);
       } else {
@@ -380,7 +380,8 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
 
   Future<List<User>> getNotYetInvitedAppFriends(
       List<User> facebookFriends) async {
-    GetFriendsResponse response = await UsersService.getFriends();
+    GetFriendsResponse response =
+        await ServiceProvider.usersService.getFriends();
 
     if (response.hasError()) {
       Scaffold.of(context)

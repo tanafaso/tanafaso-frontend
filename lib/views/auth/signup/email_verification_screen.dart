@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:azkar/net/authentication_service.dart';
 import 'package:azkar/net/payload/authentication/requests/email_verification_request_body.dart';
 import 'package:azkar/net/payload/authentication/responses/email_verification_response.dart';
+import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:azkar/views/auth/signup/pin_code_text_field.dart';
 import 'package:azkar/views/auth/signup/pin_theme.dart';
@@ -238,7 +238,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
   void performEmailVerification() {
-    AuthenticationService.verifyEmail(new EmailVerificationRequestBody(
+    ServiceProvider.authenticationService
+        .verifyEmail(new EmailVerificationRequestBody(
             email: widget.phoneNumber, pin: int.parse(currentText)))
         .then<void>((EmailVerificationResponse value) {
       if (value.hasError()) {

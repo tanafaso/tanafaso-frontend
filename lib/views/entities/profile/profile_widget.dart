@@ -1,5 +1,5 @@
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
-import 'package:azkar/net/users_service.dart';
+import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,7 @@ class ProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: UsersService.getCurrentUser(),
+        future: ServiceProvider.usersService.getCurrentUser(),
         builder:
             (BuildContext context, AsyncSnapshot<GetUserResponse> snapshot) {
           if (snapshot.hasData) {
