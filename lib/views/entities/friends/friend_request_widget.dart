@@ -1,6 +1,6 @@
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/payload/users/responses/resolve_friend_request_response.dart';
-import 'package:azkar/net/users_service.dart';
+import 'package:azkar/net/service_provider.dart';
 import 'package:flutter/material.dart';
 
 class FriendRequestWidget extends StatefulWidget {
@@ -65,7 +65,7 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
 
   void onAcceptedPressed() async {
     ResolveFriendRequestResponse response =
-        await UsersService.acceptFriend(widget.friend.userId);
+        await ServiceProvider.usersService.acceptFriend(widget.friend.userId);
     if (response.hasError()) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
@@ -81,7 +81,7 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
 
   void onRejectedPressed() async {
     ResolveFriendRequestResponse response =
-        await UsersService.rejectFriend(widget.friend.userId);
+        await ServiceProvider.usersService.rejectFriend(widget.friend.userId);
     if (response.hasError()) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),

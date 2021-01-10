@@ -22,7 +22,7 @@ class AuthenticationService {
   static const int FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE = 190;
   static const int MAXIMUM_FRIENDS_USING_APP_COUNT = 100;
 
-  static Future<FacebookAuthenticationResponse> loginWithFacebook() async {
+  Future<FacebookAuthenticationResponse> loginWithFacebook() async {
     final _facebookLogin = FacebookLogin();
     _facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
 
@@ -49,7 +49,7 @@ class AuthenticationService {
     }
   }
 
-  static Future<FacebookAuthenticationResponse> _loginWithFacebookAccessToken(
+  Future<FacebookAuthenticationResponse> _loginWithFacebookAccessToken(
       FacebookAccessToken facebookAccessToken) async {
     final http.Response apiResponse = await http.put(
         Uri.http(
@@ -74,7 +74,7 @@ class AuthenticationService {
     return response;
   }
 
-  static Future<FacebookAuthenticationResponse> connectFacebook() async {
+  Future<FacebookAuthenticationResponse> connectFacebook() async {
     final _facebookLogin = FacebookLogin();
     _facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
 
@@ -102,7 +102,7 @@ class AuthenticationService {
     }
   }
 
-  static Future<FacebookAuthenticationResponse>
+  Future<FacebookAuthenticationResponse>
       _connectFacebookWithFacebookAccessToken(
           FacebookAccessToken facebookAccessToken) async {
     final http.Response apiResponse = await ApiCaller.put(
@@ -121,7 +121,7 @@ class AuthenticationService {
     return response;
   }
 
-  static Future<FacebookFriendsResponse> getFacebookFriends() async {
+  Future<FacebookFriendsResponse> getFacebookFriends() async {
     String facebookToken = await SecureStorageUtil.getFacebookToken();
     http.Response response = await http.get(
         "https://graph.facebook.com/v9.0/me/friends?access_token=${facebookToken}&limit=$MAXIMUM_FRIENDS_USING_APP_COUNT");
@@ -133,7 +133,7 @@ class AuthenticationService {
     return FacebookFriendsResponse.fromJson(jsonDecode(response.body));
   }
 
-  static Future<EmailRegistrationResponse> signUp(
+  Future<EmailRegistrationResponse> signUp(
       EmailRegistrationRequestBody request) async {
     final http.Response apiResponse = await http.put(
       Uri.http(
@@ -150,7 +150,7 @@ class AuthenticationService {
     return EmailRegistrationResponse.fromJson(jsonDecode(apiResponse.body));
   }
 
-  static Future<EmailLoginResponse> login(EmailLoginRequestBody request) async {
+  Future<EmailLoginResponse> login(EmailLoginRequestBody request) async {
     EmailLoginResponse emailLoginResponse;
     http.Response apiResponse;
     try {
@@ -185,7 +185,7 @@ class AuthenticationService {
     return emailLoginResponse;
   }
 
-  static Future<EmailVerificationResponse> verifyEmail(
+  Future<EmailVerificationResponse> verifyEmail(
       EmailVerificationRequestBody request) async {
     final http.Response apiResponse = await http.put(
       Uri.http(

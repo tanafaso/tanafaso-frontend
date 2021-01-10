@@ -1,6 +1,6 @@
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
-import 'package:azkar/net/users_service.dart';
+import 'package:azkar/net/service_provider.dart';
 import 'package:flutter/material.dart';
 
 class InviteFacebookFriendWidget extends StatefulWidget {
@@ -63,8 +63,8 @@ class _InviteFacebookFriendWidgetState
   }
 
   void onInvitePressed() async {
-    AddFriendResponse response =
-        await UsersService.addFriend(widget.facebookFriend.username);
+    AddFriendResponse response = await ServiceProvider.usersService
+        .addFriend(widget.facebookFriend.username);
     if (response.hasError()) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),

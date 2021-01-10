@@ -1,7 +1,7 @@
-import 'package:azkar/net/authentication_service.dart';
 import 'package:azkar/net/payload/authentication/requests/email_login_request_body.dart';
 import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
+import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -365,7 +365,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   loginWithFacebook() async {
     FacebookAuthenticationResponse response =
-        await AuthenticationService.loginWithFacebook();
+        await ServiceProvider.authenticationService.loginWithFacebook();
     if (response.hasError()) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
@@ -377,7 +377,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   loginWithEmail(EmailLoginRequestBody request) async {
-    EmailLoginResponse response = await AuthenticationService.login(request);
+    EmailLoginResponse response =
+        await ServiceProvider.authenticationService.login(request);
 
     if (!response.hasError()) {
       Navigator.push(
