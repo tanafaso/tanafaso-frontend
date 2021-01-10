@@ -1,5 +1,5 @@
-import 'package:azkar/net/authentication_service.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
+import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:azkar/views/auth/signup/signup_main_screen.dart';
 import 'package:azkar/views/home_page.dart';
@@ -256,7 +256,7 @@ class AuthMainScreen extends StatelessWidget {
 
   loginWithFacebook(BuildContext context) async {
     FacebookAuthenticationResponse response =
-        await AuthenticationService.loginWithFacebook();
+        await ServiceProvider.authenticationService.loginWithFacebook();
     if (response.hasError()) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
