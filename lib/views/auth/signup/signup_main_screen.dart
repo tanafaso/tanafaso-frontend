@@ -3,27 +3,27 @@ import 'package:azkar/net/payload/authentication/responses/email_registration_re
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:azkar/views/auth/signup/email_verification_screen.dart';
+import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpMainScreen extends StatefulWidget {
   @override
-  _SignUpScreenState createState() {
-    _SignUpScreenState state = new _SignUpScreenState();
+  _SignUpMainScreenState createState() {
+    _SignUpMainScreenState state = new _SignUpMainScreenState();
     return state;
   }
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpMainScreenState extends State<SignUpMainScreen> {
   final _signUpFormKey = GlobalKey<FormState>();
   String _name;
   String _email;
   String _password;
 
-  Widget getSignUpPageWidget() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: Keys.SIGN_UP_MAIN_SCREEN,
       body: Center(
           child: Container(
               height: MediaQuery.of(context).size.height,
