@@ -73,7 +73,7 @@ class AuthMainScreen extends StatelessWidget {
                             children: <Widget>[
                               new Expanded(
                                 child: new OutlineButton(
-                                  key: Keys.AUTH_MAIN_SCREEN_SIGN_UP_BUTTON,
+                                  key: Keys.authMainScreenSignUpButton,
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
                                           new BorderRadius.circular(30.0)),
@@ -100,7 +100,7 @@ class AuthMainScreen extends StatelessWidget {
                                           child: Text(
                                             'SIGN UP',
                                             key: Keys
-                                                .AUTH_MAIN_SCREEN_SIGN_UP_TEXT,
+                                                .authMainScreenSignUpText,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.white,
@@ -133,7 +133,7 @@ class AuthMainScreen extends StatelessWidget {
                             children: <Widget>[
                               new Expanded(
                                 child: new FlatButton(
-                                  key: Keys.AUTH_MAIN_SCREEN_LOGIN_BUTTON,
+                                  key: Keys.authMainScreenLoginButton,
                                   height: double.infinity,
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
@@ -156,7 +156,7 @@ class AuthMainScreen extends StatelessWidget {
                                           child: Text(
                                             'LOGIN',
                                             key: Keys
-                                                .AUTH_MAIN_SCREEN_LOGIN_TEXT,
+                                                .authMainScreenLoginText,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.redAccent,
@@ -230,7 +230,7 @@ class AuthMainScreen extends StatelessWidget {
                             children: <Widget>[
                               new Expanded(
                                 child: new FlatButton(
-                                  key: Keys.AUTH_MAIN_SCREEN_FACEBOOK_BUTTON,
+                                  key: Keys.authMainScreenFacebookButton,
                                   shape: new RoundedRectangleBorder(
                                     borderRadius:
                                         new BorderRadius.circular(30.0),
@@ -264,7 +264,7 @@ class AuthMainScreen extends StatelessWidget {
                                                   child: Text(
                                                     'FACEBOOK',
                                                     key: Keys
-                                                        .AUTH_MAIN_SCREEN_FACEBOOK_TEXT,
+                                                        .authMainScreenFacebookText,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         color: Colors.white,

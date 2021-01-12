@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: Keys.LOGIN_SCREEN,
+      key: Keys.loginScreen,
       body: Center(
           child: Container(
               height: MediaQuery.of(context).size.height,
@@ -384,7 +384,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => new HomePage()));
     } else {
-      Keys.LOGIN_SCREEN.currentState.showSnackBar(SnackBar(
+      Keys.loginScreen.currentState.showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
       ));
     }
