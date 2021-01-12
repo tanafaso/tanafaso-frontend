@@ -3,12 +3,11 @@ name: Android Continuous Build and Test
 # This workflow is triggered on pushes to the repository.
 
 on:
+  pull_request:
   push:
-    branches:
-    - master
-    
-# on: push    # Default will running for every branch.
-    
+      branches:
+        - main
+      
 jobs:
   build:
     # This job will run on ubuntu virtual machine
