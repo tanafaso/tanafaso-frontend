@@ -99,8 +99,7 @@ class AuthMainScreen extends StatelessWidget {
                                         new Expanded(
                                           child: Text(
                                             'SIGN UP',
-                                            key: Keys
-                                                .authMainScreenSignUpText,
+                                            key: Keys.authMainScreenSignUpText,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.white,
@@ -155,8 +154,7 @@ class AuthMainScreen extends StatelessWidget {
                                         new Expanded(
                                           child: Text(
                                             'LOGIN',
-                                            key: Keys
-                                                .authMainScreenLoginText,
+                                            key: Keys.authMainScreenLoginText,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.redAccent,
