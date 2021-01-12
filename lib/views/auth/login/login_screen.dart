@@ -3,6 +3,7 @@ import 'package:azkar/net/payload/authentication/responses/email_login_response.
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/home_page.dart';
+import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _loginScreenScaffoldKey = GlobalKey<ScaffoldState>();
   final _loginFormKey = GlobalKey<FormState>();
   String _email;
   String _password;
@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _loginScreenScaffoldKey,
+      key: Keys.LOGIN_SCREEN,
       body: Center(
           child: Container(
               height: MediaQuery.of(context).size.height,
@@ -384,7 +384,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => new HomePage()));
     } else {
-      _loginScreenScaffoldKey.currentState.showSnackBar(SnackBar(
+      Keys.LOGIN_SCREEN.currentState.showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
       ));
     }
