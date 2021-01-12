@@ -32,7 +32,7 @@ void main() {
     await tester.tap(find.byKey(Keys.AUTH_MAIN_SCREEN_LOGIN_BUTTON));
     await tester.pumpAndSettle();
 
-    expect(find.byKey(Keys.LOGIN_SCREEN), findsOneWidget);
+    expect(find.byKey(Keys.LOGIN_SCREEN), findsNWidgets(3));
   });
 
   // TODO(Add login with facebook tests)
