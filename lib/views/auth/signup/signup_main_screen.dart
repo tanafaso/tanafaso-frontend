@@ -23,7 +23,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: Keys.SIGN_UP_MAIN_SCREEN,
+      key: Keys.signUpMainScreen,
       body: Center(
           child: Container(
               height: MediaQuery.of(context).size.height,
