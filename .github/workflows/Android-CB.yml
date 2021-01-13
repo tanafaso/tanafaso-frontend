@@ -20,7 +20,7 @@ jobs:
       with:
         channel: 'stable' # 'dev', 'alpha', default to: 'stable'
     
-    - run: flutter update
+    - run: flutter upgrade
     - run: flutter pub get
     - run: flutter format --set-exit-if-changed .
     - run: flutter analyze .
