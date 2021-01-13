@@ -296,7 +296,7 @@ class AuthMainScreen extends StatelessWidget {
     FacebookAuthenticationResponse response =
         await ServiceProvider.authenticationService.loginWithFacebook();
     if (response.hasError()) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
       ));
     } else {

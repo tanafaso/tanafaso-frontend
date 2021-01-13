@@ -16,7 +16,10 @@ class Topic {
 class HomePage extends StatefulWidget {
   static _HomePageState _homePageState;
 
-  HomePage();
+  final Widget challengesWidget = ChallengesWidget();
+  final Widget groupsWidget = GroupsWidget();
+  final Widget friendsWidget = FriendsWidget();
+  final Widget profileWidget = ProfileWidget();
 
   @override
   _HomePageState createState() {
@@ -26,6 +29,7 @@ class HomePage extends StatefulWidget {
 
   static void setAppBarTitle(String appBarTitle) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // ignore: invalid_use_of_protected_member
       _homePageState.setState(() {
         _homePageState.setAppBarTitle(appBarTitle);
       });
@@ -36,7 +40,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String userToken;
   int _selectedIdx = 0;
-  String _app_bar_title = 'Home Page';
+  String _appBarTitle = 'Home Page';
 
   Future<void> getUserToken() async {
     userToken = await FlutterSecureStorage().read(key: 'jwtToken');
@@ -48,8 +52,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void setAppBarTitle(String app_bar_title) {
-    _app_bar_title = app_bar_title;
+  void setAppBarTitle(String appBarTitle) {
+    _appBarTitle = appBarTitle;
   }
 
   @override
@@ -60,7 +64,7 @@ class _HomePageState extends State<HomePage> {
       builder: (context, AsyncSnapshot snapshot) {
         return Scaffold(
             appBar: AppBar(
-              title: Text(_app_bar_title),
+              title: Text(_appBarTitle),
             ),
             body: Center(
               child: topics[_selectedIdx].widget,
@@ -85,28 +89,28 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.whatshot),
               label: 'Challenges',
               backgroundColor: Theme.of(context).primaryColor),
-          widget: ChallengesWidget()),
+          widget: widget.challengesWidget),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.group),
             label: 'Groups',
             backgroundColor: Theme.of(context).primaryColor,
           ),
-          widget: GroupsWidget()),
+          widget: widget.groupsWidget),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
             label: 'Friends',
             backgroundColor: Theme.of(context).primaryColor,
           ),
-          widget: FriendsWidget()),
+          widget: widget.friendsWidget),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             label: 'Profile',
             backgroundColor: Theme.of(context).primaryColor,
           ),
-          widget: ProfileWidget()),
+          widget: widget.profileWidget),
     ];
   }
 }

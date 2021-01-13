@@ -67,11 +67,11 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
     ResolveFriendRequestResponse response =
         await ServiceProvider.usersService.acceptFriend(widget.friend.userId);
     if (response.hasError()) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
       ));
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.green.shade400,
         content: Text('${widget.friend.name} is now your friend.'),
       ));
@@ -83,11 +83,11 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
     ResolveFriendRequestResponse response =
         await ServiceProvider.usersService.rejectFriend(widget.friend.userId);
     if (response.hasError()) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
       ));
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("${widget.friend.name}'s friend request is ignored."),
       ));
       widget.parentState.setState(() {});

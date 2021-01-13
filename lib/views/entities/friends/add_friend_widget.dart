@@ -28,7 +28,7 @@ class AddFriendWidget extends StatefulWidget {
 class _AddFriendWidgetState extends State<AddFriendWidget> {
   final _formKey = GlobalKey<FormState>();
 
-  String _friend_username;
+  String _friendUsername;
   ButtonState stateOnlyText = ButtonState.idle;
   ButtonState stateTextWithIcon = ButtonState.idle;
 
@@ -57,7 +57,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                   ),
                 ),
                 onChanged: (String username) {
-                  _friend_username = username;
+                  _friendUsername = username;
                 },
                 validator: (val) {
                   if (val.contains(" ")) {
@@ -322,12 +322,12 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
 
   void addFriend() async {
     AddFriendResponse response =
-        await ServiceProvider.usersService.addFriend(_friend_username);
+        await ServiceProvider.usersService.addFriend(_friendUsername);
     if (response.hasError()) {
       setState(() {
         stateTextWithIcon = ButtonState.fail;
       });
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
       ));
       return;
@@ -337,9 +337,9 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
       stateTextWithIcon = ButtonState.success;
     });
 
-    Scaffold.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
-          'An invitation to ${_friend_username} has been sent successfully.'),
+          'An invitation to $_friendUsername has been sent successfully.'),
     ));
   }
 
@@ -347,10 +347,10 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
     FacebookAuthenticationResponse response =
         await ServiceProvider.authenticationService.connectFacebook();
     if (response.hasError()) {
-      Scaffold.of(context)
+      ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response.error.errorMessage)));
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.green.shade400,
           content: Text('Connected Facebook Successfully')));
     }
@@ -358,8 +358,6 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
 
   void onFindFriendsWithFacebookPressed() async {
     List<User> friends = await getFacebookFriends();
-
-    print(friends.length);
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -375,7 +373,6 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
       GetUserResponse getUserResponse = await ServiceProvider.usersService
           .getUserByFacebookUserId(facebookFriend.id);
       if (getUserResponse.hasError()) {
-        print(getUserResponse.error.errorMessage);
       } else {
         facebookFriends.add(getUserResponse.user);
       }
@@ -390,7 +387,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
         await ServiceProvider.usersService.getFriends();
 
     if (response.hasError()) {
-      Scaffold.of(context)
+      ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response.error.errorMessage)));
       return facebookFriends;
     }

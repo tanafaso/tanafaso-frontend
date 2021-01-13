@@ -21,7 +21,7 @@ jobs:
         channel: 'stable'
     - run: flutter pub get
     - run: flutter format --set-exit-if-changed .
-#     - run: flutter analyze .
+    - run: flutter analyze .
     - run: flutter test
 #     - run: flutter build apk
 #     - run: flutter build ios --release --no-codesign

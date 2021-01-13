@@ -124,7 +124,7 @@ class AuthenticationService {
   Future<FacebookFriendsResponse> getFacebookFriends() async {
     String facebookToken = await SecureStorageUtil.getFacebookToken();
     http.Response response = await http.get(
-        "https://graph.facebook.com/v9.0/me/friends?access_token=${facebookToken}&limit=$MAXIMUM_FRIENDS_USING_APP_COUNT");
+        "https://graph.facebook.com/v9.0/me/friends?access_token=$facebookToken&limit=$MAXIMUM_FRIENDS_USING_APP_COUNT");
     if (response.statusCode == FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE) {
       print('Invalid OAuth Token');
       // TODO('Ask the user to connect to facebook')

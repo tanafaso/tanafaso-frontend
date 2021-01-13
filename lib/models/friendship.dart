@@ -7,13 +7,10 @@ class Friendship {
   // Must always be the same as the current user's ID.
   final String userId;
   final List<Friend> friends;
-  final int createdAt;
-  final int modifiedAt;
 
-  Friendship(
-      {@required this.id,
-      @required this.userId,
-      @required this.friends,
-      @required this.createdAt,
-      @required this.modifiedAt});
+  Friendship({
+    @required this.id,
+    @required this.userId,
+    @required this.friends,
+  });
 }
