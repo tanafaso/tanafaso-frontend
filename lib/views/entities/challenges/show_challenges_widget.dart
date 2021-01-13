@@ -7,7 +7,7 @@ class ShowChallengesWidget extends StatefulWidget {
 
   ShowChallengesWidget({Key key, @required this.challengesWidgetState})
       : super(key: key) {
-    HomePage.setAppBarTitle('Show Challenges');
+    HomePage.setAppBarTitle('Challenges');
   }
 
   @override

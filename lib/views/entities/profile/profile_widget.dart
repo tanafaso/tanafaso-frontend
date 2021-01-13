@@ -4,12 +4,10 @@ import 'package:azkar/views/home_page.dart';
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
-  ProfileWidget() {
-    HomePage.setAppBarTitle("Profile");
-  }
-
   @override
   Widget build(BuildContext context) {
+    HomePage.setAppBarTitle('Profile');
+
     return FutureBuilder(
         future: ServiceProvider.usersService.getCurrentUser(),
         builder:

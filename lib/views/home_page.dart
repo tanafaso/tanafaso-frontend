@@ -15,24 +15,6 @@ class Topic {
 
 class HomePage extends StatefulWidget {
   static _HomePageState _homePageState;
-  final List<Topic> _topics = [
-    Topic(
-        bottomNavigationBarItem: BottomNavigationBarItem(
-            icon: Icon(Icons.whatshot), label: 'Challenges'),
-        widget: ChallengesWidget()),
-    Topic(
-        bottomNavigationBarItem:
-            BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Groups'),
-        widget: GroupsWidget()),
-    Topic(
-        bottomNavigationBarItem: BottomNavigationBarItem(
-            icon: Icon(Icons.contacts), label: 'Friends'),
-        widget: FriendsWidget()),
-    Topic(
-        bottomNavigationBarItem: BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle), label: 'Profile'),
-        widget: ProfileWidget()),
-  ];
 
   HomePage();
 
@@ -42,10 +24,10 @@ class HomePage extends StatefulWidget {
     return _homePageState;
   }
 
-  static void setAppBarTitle(String app_bar_title) {
+  static void setAppBarTitle(String appBarTitle) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _homePageState.setState(() {
-        _homePageState.setAppBarTitle(app_bar_title);
+        _homePageState.setAppBarTitle(appBarTitle);
       });
     });
   }
@@ -72,6 +54,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Topic> topics = getTopics(context);
     return FutureBuilder(
       future: getUserToken(),
       builder: (context, AsyncSnapshot snapshot) {
@@ -80,17 +63,50 @@ class _HomePageState extends State<HomePage> {
               title: Text(_app_bar_title),
             ),
             body: Center(
-              child: widget._topics[_selectedIdx].widget,
+              child: topics[_selectedIdx].widget,
             ),
             bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: Theme.of(context).primaryColor,
+              items: topics.map((e) => e.bottomNavigationBarItem).toList(),
+              selectedItemColor: Colors.white,
               unselectedItemColor: Colors.black,
-              items:
-                  widget._topics.map((e) => e.bottomNavigationBarItem).toList(),
-              selectedItemColor: Colors.amber[800],
+              showUnselectedLabels: true,
               currentIndex: _selectedIdx,
               onTap: _onItemTapped,
             ));
       },
     );
+  }
+
+  List<Topic> getTopics(BuildContext context) {
+    return [
+      Topic(
+          bottomNavigationBarItem: BottomNavigationBarItem(
+              icon: Icon(Icons.whatshot),
+              label: 'Challenges',
+              backgroundColor: Theme.of(context).primaryColor),
+          widget: ChallengesWidget()),
+      Topic(
+          bottomNavigationBarItem: BottomNavigationBarItem(
+            icon: Icon(Icons.group),
+            label: 'Groups',
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+          widget: GroupsWidget()),
+      Topic(
+          bottomNavigationBarItem: BottomNavigationBarItem(
+            icon: Icon(Icons.contacts),
+            label: 'Friends',
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+          widget: FriendsWidget()),
+      Topic(
+          bottomNavigationBarItem: BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Profile',
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+          widget: ProfileWidget()),
+    ];
   }
 }

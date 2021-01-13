@@ -9,6 +9,7 @@ import 'package:azkar/views/entities/friends/facebook_friends_screen.dart';
 import 'package:azkar/views/entities/friends/friends_widget.dart';
 import 'package:azkar/views/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
@@ -44,13 +45,16 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
               padding: const EdgeInsets.all(10.0),
               child: new TextFormField(
                 decoration: new InputDecoration(
-                  labelText: "Enter a username",
-                  fillColor: Colors.white,
-                  border: new OutlineInputBorder(
+                  hintStyle: TextStyle(color: Colors.black),
+                  hintText: "Enter a username",
+                  enabledBorder: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(25.0),
                     borderSide: new BorderSide(),
                   ),
-                  //fillColor: Colors.green
+                  focusedBorder: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                    borderSide: new BorderSide(),
+                  ),
                 ),
                 onChanged: (String username) {
                   _friend_username = username;
@@ -91,7 +95,6 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                   Text(
                     "OR ADD FRIENDS WITH",
                     style: TextStyle(
-                      color: Colors.grey,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -263,11 +266,14 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
 
   Widget buildTextWithIcon() {
     return ProgressButton.icon(
+      textStyle: TextStyle(
+        color: Colors.black,
+      ),
       iconedButtons: {
         ButtonState.idle: IconedButton(
             text: "Invite",
-            icon: Icon(Icons.add, color: Colors.white),
-            color: Theme.of(context).primaryColor),
+            icon: Icon(Icons.add, color: Colors.black),
+            color: Theme.of(context).buttonColor),
         ButtonState.loading:
             IconedButton(text: "Sending", color: Colors.deepPurple.shade700),
         ButtonState.fail: IconedButton(
