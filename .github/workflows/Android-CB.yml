@@ -18,7 +18,7 @@ jobs:
     
     - uses: subosito/flutter-action@v1
       with:
-        channel: 'stable' # 'dev', 'alpha', default to: 'stable'
+        channel: 'beta' # 'dev', 'alpha', default to: 'stable'
     
     - run: flutter upgrade
     - run: flutter pub get
