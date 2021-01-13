@@ -54,7 +54,6 @@ class _InviteFacebookFriendWidgetState
   }
 
   Widget conditionallyGetInviteButton() {
-    print(invited);
     return RaisedButton(
       child: invited ? Text('Invited') : Text('Invite'),
       color: invited ? null : Colors.green.shade400,
@@ -66,13 +65,13 @@ class _InviteFacebookFriendWidgetState
     AddFriendResponse response = await ServiceProvider.usersService
         .addFriend(widget.facebookFriend.username);
     if (response.hasError()) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
       ));
       return;
     }
 
-    Scaffold.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: Colors.green.shade400,
       content: Text(
           'An invitation to ${widget.facebookFriend.name} has been sent successfully.'),

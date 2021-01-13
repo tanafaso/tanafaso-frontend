@@ -270,10 +270,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                       ),
                                       validator: (confirmedPassword) {
                                         if (confirmedPassword != _password) {
-                                          print(confirmedPassword.length
-                                                  .toString() +
-                                              " " +
-                                              _password.length.toString());
                                           return 'Passwords did not match';
                                         }
                                         return null;

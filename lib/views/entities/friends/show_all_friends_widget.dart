@@ -67,7 +67,6 @@ class _ShowAllFriendsWidgetState extends State<ShowAllFriendsWidget> {
       itemBuilder: (context, index) {
         return FriendWidget(
           friend: nonPendingFriends[index],
-          parentState: this,
         );
       },
     );

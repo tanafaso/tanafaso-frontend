@@ -361,7 +361,7 @@ class _LoginScreenState extends State<LoginScreen> {
     FacebookAuthenticationResponse response =
         await ServiceProvider.authenticationService.loginWithFacebook();
     if (response.hasError()) {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
       ));
     } else {
@@ -378,7 +378,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => new HomePage()));
     } else {
-      Keys.loginScreen.currentState.showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
       ));
     }

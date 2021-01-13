@@ -9,7 +9,7 @@ class FacebookFriendsResponse extends ResponseBase {
 
   FacebookFriendsResponse.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      facebookFriends = new List<FacebookFriend>();
+      facebookFriends = [];
       json['data'].forEach((v) {
         facebookFriends.add(new FacebookFriend.fromJson(v));
       });
