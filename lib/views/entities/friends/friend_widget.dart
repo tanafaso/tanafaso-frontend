@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 
 class FriendWidget extends StatelessWidget {
   final Friend friend;
-  final State parentState;
 
-  FriendWidget({@required this.friend, @required this.parentState});
+  FriendWidget({@required this.friend});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +16,6 @@ class FriendWidget extends StatelessWidget {
             friend.username,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
-          // Text(
-          //   friend.name,
-          //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          // )
         ],
       ),
     );

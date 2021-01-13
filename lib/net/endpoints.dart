@@ -27,6 +27,7 @@ class Endpoint {
 }
 
 class ApiRoutesUtil {
+  // ignore: missing_return
   static String apiRouteToString(Endpoint route) {
     switch (route.endpointRoute) {
       case EndpointRoute.BASE_URL:

@@ -177,7 +177,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
     _focusNode.addListener(() {
       setState(() {});
     }); // Rebuilds on every change to reflect the correct color on each field.
-    _inputList = List<String>(widget.length);
+    _inputList = List.filled(widget.length, "");
     _initializeValues();
     _controller = AnimationController(
       duration: const Duration(milliseconds: 500),
@@ -557,7 +557,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
   }
 
   void _setTextToInput(String data) async {
-    var replaceInputList = List<String>(widget.length);
+    var replaceInputList = List.filled(widget.length, "");
 
     for (int i = 0; i < widget.length; i++) {
       replaceInputList[i] = data.length > i ? data[i] : "";

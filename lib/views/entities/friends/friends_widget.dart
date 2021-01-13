@@ -10,19 +10,19 @@ class FriendsWidget extends StatefulWidget {
 }
 
 class FriendsWidgetState extends State<FriendsWidget> {
-  FriendsWidgetStateType FriendsWidgetStatetype =
+  FriendsWidgetStateType friendsWidgetStatetype =
       FriendsWidgetStateType.showFriends;
 
   void setFriendsWidgetStateType(FriendsWidgetStateType type) {
     setState(() {
-      FriendsWidgetStatetype = type;
+      friendsWidgetStatetype = type;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     Widget widget;
-    switch (FriendsWidgetStatetype) {
+    switch (friendsWidgetStatetype) {
       case FriendsWidgetStateType.addFriend:
         widget = AddFriendWidget(
           friendsWidgetState: this,

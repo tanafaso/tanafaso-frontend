@@ -19,7 +19,7 @@ enum ChallengeTarget { self, friend, group }
 
 class _CreateChallengeWidgetState extends State<CreateChallengeWidget> {
   ChallengeTarget _challengeTarget = ChallengeTarget.self;
-  String _friend_id;
+  String _friendId;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _CreateChallengeWidgetState extends State<CreateChallengeWidget> {
         child: Column(children: [
           Text('I want to challenge ...'),
           Column(
-            children: GetChallengeTargets(),
+            children: getChallengeTargets(),
           ),
           Row(
             children: [
@@ -39,7 +39,7 @@ class _CreateChallengeWidgetState extends State<CreateChallengeWidget> {
                 width: 200,
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  value: _friend_id,
+                  value: _friendId,
                   hint: Text('Choose a friend'),
                   icon: Icon(Icons.arrow_downward),
                   iconSize: 24,
@@ -51,7 +51,7 @@ class _CreateChallengeWidgetState extends State<CreateChallengeWidget> {
                   ),
                   onChanged: (String newValue) {
                     setState(() {
-                      _friend_id = newValue;
+                      _friendId = newValue;
                     });
                   },
                   items: <String>['one', 'Two', 'Free', 'Four']
@@ -77,7 +77,7 @@ class _CreateChallengeWidgetState extends State<CreateChallengeWidget> {
     ));
   }
 
-  List<Widget> GetChallengeTargets() {
+  List<Widget> getChallengeTargets() {
     return <Widget>[
       ListTile(
         title: const Text('myself'),
