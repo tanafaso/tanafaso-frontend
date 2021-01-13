@@ -33,13 +33,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                   child: new Container(
                     height: MediaQuery.of(context).size.height,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      image: DecorationImage(
-                        colorFilter: new ColorFilter.mode(
-                            Colors.black.withOpacity(0.05), BlendMode.dstATop),
-                        image: AssetImage('assets/images/mountains.jpg'),
-                        fit: BoxFit.cover,
-                      ),
+                      color: Theme.of(context).primaryColor,
                     ),
                     child: ListView(
                       children: [
@@ -50,7 +44,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               child: Center(
                                 child: Icon(
                                   Icons.headset_mic,
-                                  color: Colors.redAccent,
+                                  color: Colors.black,
                                   size: 50.0,
                                 ),
                               ),
@@ -64,7 +58,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                       "NAME",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.redAccent,
                                         fontSize: 15.0,
                                       ),
                                     ),
@@ -80,7 +73,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               decoration: BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                      color: Colors.redAccent,
+                                      color: Colors.black,
                                       width: 0.5,
                                       style: BorderStyle.solid),
                                 ),
@@ -97,8 +90,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintText: 'Name Example',
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
                                       ),
                                       onChanged: (name) => _name = name,
                                       validator: (name) {
@@ -124,7 +115,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                       "EMAIL",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.redAccent,
                                         fontSize: 15.0,
                                       ),
                                     ),
@@ -140,7 +130,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               decoration: BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                      color: Colors.redAccent,
+                                      color: Colors.black,
                                       width: 0.5,
                                       style: BorderStyle.solid),
                                 ),
@@ -157,8 +147,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintText: 'email@example.com',
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
                                       ),
                                       onChanged: (email) => _email = email,
                                       validator: (email) {
@@ -187,7 +175,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                       "PASSWORD",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.redAccent,
                                         fontSize: 15.0,
                                       ),
                                     ),
@@ -203,7 +190,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               decoration: BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                      color: Colors.redAccent,
+                                      color: Colors.black,
                                       width: 0.5,
                                       style: BorderStyle.solid),
                                 ),
@@ -221,8 +208,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintText: '*********',
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
                                       ),
                                       onChanged: (password) =>
                                           _password = password,
@@ -249,7 +234,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                       "CONFIRM PASSWORD",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.redAccent,
                                         fontSize: 15.0,
                                       ),
                                     ),
@@ -265,7 +249,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               decoration: BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                      color: Colors.redAccent,
+                                      color: Colors.black,
                                       width: 0.5,
                                       style: BorderStyle.solid),
                                 ),
@@ -283,8 +267,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintText: '*********',
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
                                       ),
                                       validator: (confirmedPassword) {
                                         if (confirmedPassword != _password) {
@@ -314,7 +296,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                       "Already have an account?",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.redAccent,
                                         fontSize: 15.0,
                                       ),
                                       textAlign: TextAlign.end,
@@ -342,11 +323,11 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                 children: <Widget>[
                                   new Expanded(
                                     child: new FlatButton(
+                                      color: Theme.of(context).buttonColor,
                                       shape: new RoundedRectangleBorder(
                                         borderRadius:
                                             new BorderRadius.circular(30.0),
                                       ),
-                                      color: Colors.redAccent,
                                       onPressed: () {
                                         if (_signUpFormKey.currentState
                                             .validate()) {
@@ -367,7 +348,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                                 "SIGN UP",
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                    color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),

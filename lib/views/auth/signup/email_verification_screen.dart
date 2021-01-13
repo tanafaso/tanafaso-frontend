@@ -52,7 +52,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
       key: scaffoldKey,
       body: GestureDetector(
         onTap: () {
@@ -120,7 +119,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                         activeFillColor: Colors.white,
                       ),
                       animationDuration: Duration(milliseconds: 300),
-                      backgroundColor: Colors.blue.shade50,
+                      backgroundColor: Theme.of(context).primaryColor,
                       enableActiveFill: false,
                       errorAnimationController: errorController,
 //                    controller: textEditingController,
