@@ -338,8 +338,8 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
     });
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-          'An invitation to $_friendUsername has been sent successfully.'),
+      content:
+          Text('An invitation to $_friendUsername has been sent successfully.'),
     ));
   }
 
