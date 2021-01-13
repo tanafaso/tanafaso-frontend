@@ -9,7 +9,7 @@ class ShowFriendsWidget extends StatefulWidget {
 
   ShowFriendsWidget({Key key, @required this.friendsWidgetState})
       : super(key: key) {
-    HomePage.setAppBarTitle('Show Friends');
+    HomePage.setAppBarTitle('Friends');
   }
 
   @override

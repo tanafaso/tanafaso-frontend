@@ -31,13 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: new Container(
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    image: DecorationImage(
-                      colorFilter: new ColorFilter.mode(
-                          Colors.black.withOpacity(0.05), BlendMode.dstATop),
-                      image: AssetImage('assets/images/mountains.jpg'),
-                      fit: BoxFit.cover,
-                    ),
+                    color: Theme.of(context).primaryColor,
                   ),
                   child: SingleChildScrollView(
                     child: new Column(
@@ -47,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Center(
                             child: Icon(
                               Icons.headset_mic,
-                              color: Colors.redAccent,
+                              color: Colors.black,
                               size: 50.0,
                             ),
                           ),
@@ -61,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   "EMAIL",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.redAccent,
+                                    color: Colors.black,
                                     fontSize: 15.0,
                                   ),
                                 ),
@@ -77,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
-                                  color: Colors.redAccent,
+                                  color: Colors.black,
                                   width: 0.5,
                                   style: BorderStyle.solid),
                             ),
@@ -124,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   "PASSWORD",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.redAccent,
+                                    color: Colors.black,
                                     fontSize: 15.0,
                                   ),
                                 ),
@@ -140,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
-                                  color: Colors.redAccent,
+                                  color: Colors.black,
                                   width: 0.5,
                                   style: BorderStyle.solid),
                             ),
@@ -185,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   "Forgot Password?",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.redAccent,
+                                    color: Colors.black,
                                     fontSize: 15.0,
                                   ),
                                   textAlign: TextAlign.end,
@@ -208,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     borderRadius:
                                         new BorderRadius.circular(30.0),
                                   ),
-                                  color: Colors.redAccent,
+                                  color: Colors.white,
                                   onPressed: () {
                                     if (_loginFormKey.currentState.validate()) {
                                       loginWithEmail(new EmailLoginRequestBody(
@@ -229,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             "LOGIN",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ),
@@ -258,7 +252,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Text(
                                 "OR LOGIN WITH",
                                 style: TextStyle(
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

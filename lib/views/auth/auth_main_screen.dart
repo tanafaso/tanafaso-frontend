@@ -17,13 +17,7 @@ class AuthMainScreen extends StatelessWidget {
                     child: new Container(
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
-                    color: Colors.redAccent,
-                    image: DecorationImage(
-                      colorFilter: new ColorFilter.mode(
-                          Colors.black.withOpacity(0.1), BlendMode.dstATop),
-                      image: AssetImage('assets/images/mountains.jpg'),
-                      fit: BoxFit.cover,
-                    ),
+                    color: Theme.of(context).primaryColor,
                   ),
                   child: new Column(
                     children: <Widget>[
@@ -48,7 +42,7 @@ class AuthMainScreen extends StatelessWidget {
                               Text(
                                 "Azkar",
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -77,7 +71,7 @@ class AuthMainScreen extends StatelessWidget {
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
                                           new BorderRadius.circular(30.0)),
-                                  color: Colors.redAccent,
+                                  color: Theme.of(context).primaryColor,
                                   highlightedBorderColor: Colors.white,
                                   onPressed: () {
                                     Navigator.push(
@@ -102,7 +96,7 @@ class AuthMainScreen extends StatelessWidget {
                                             key: Keys.authMainScreenSignUpText,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ),
@@ -157,7 +151,7 @@ class AuthMainScreen extends StatelessWidget {
                                             key: Keys.authMainScreenLoginText,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                color: Colors.redAccent,
+                                                color: Colors.black,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ),
@@ -196,7 +190,7 @@ class AuthMainScreen extends StatelessWidget {
                               Text(
                                 "OR LOGIN WITH",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
