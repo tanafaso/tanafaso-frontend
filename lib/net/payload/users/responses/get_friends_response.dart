@@ -5,6 +5,8 @@ import 'package:azkar/net/payload/response_base.dart';
 class GetFriendsResponse extends ResponseBase {
   Friendship friendship;
 
+  GetFriendsResponse({this.friendship});
+
   static GetFriendsResponse fromJson(Map<String, dynamic> json) {
     GetFriendsResponse response = new GetFriendsResponse();
     response.setError(json);
