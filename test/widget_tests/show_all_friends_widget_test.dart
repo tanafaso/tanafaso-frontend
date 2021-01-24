@@ -63,6 +63,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(Keys.showAllFriendsWidgetList), findsOneWidget);
+
     // Finds only two FriendWidgets, which are the two non-pending friends.
     expect(find.byType(FriendWidget), findsNWidgets(2));
 
