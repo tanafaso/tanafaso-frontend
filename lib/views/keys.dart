@@ -17,4 +17,7 @@ class Keys {
   // Keys for widgets used in login_screen.dart
   static final GlobalKey<ScaffoldState> loginScreen =
       GlobalKey<ScaffoldState>();
+
+  // Keys for widgets used in show_all_friends_widget.dart
+  static final GlobalKey showAllFriendsWidgetList = new GlobalKey();
 }
