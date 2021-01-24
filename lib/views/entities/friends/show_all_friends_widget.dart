@@ -3,6 +3,7 @@ import 'package:azkar/models/friendship.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/entities/friends/friend_widget.dart';
+import 'package:azkar/views/keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -63,6 +64,7 @@ class _ShowAllFriendsWidgetState extends State<ShowAllFriendsWidget> {
     List<Friend> nonPendingFriends =
         friendship.friends.where((friend) => !friend.pending).toList();
     return ListView.builder(
+      key: Keys.showAllFriendsWidgetList,
       itemCount: nonPendingFriends.length,
       itemBuilder: (context, index) {
         return FriendWidget(
