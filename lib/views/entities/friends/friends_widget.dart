@@ -1,42 +1,67 @@
 import 'package:azkar/views/entities/friends/add_friend_widget.dart';
-import 'package:azkar/views/entities/friends/show_friends_widget.dart';
+import 'package:azkar/views/entities/friends/show_all_friends_widget.dart';
+import 'package:azkar/views/entities/friends/show_friend_requests_widget.dart';
+import 'package:azkar/views/home_page.dart';
 import 'package:flutter/material.dart';
 
-enum FriendsWidgetStateType { addFriend, showFriends }
-
 class FriendsWidget extends StatefulWidget {
+
+  FriendsWidget({Key key})
+      : super(key: key) {
+    HomePage.setAppBarTitle('Friends');
+  }
+
   @override
-  FriendsWidgetState createState() => FriendsWidgetState();
+  _FriendsWidgetState createState() => _FriendsWidgetState();
 }
 
-class FriendsWidgetState extends State<FriendsWidget> {
-  FriendsWidgetStateType friendsWidgetStatetype =
-      FriendsWidgetStateType.showFriends;
+class _FriendsWidgetState extends State<FriendsWidget>
+    with SingleTickerProviderStateMixin {
+  final showAllFriendsTabKey = UniqueKey();
+  final showFriendRequestsTabKey = UniqueKey();
 
-  void setFriendsWidgetStateType(FriendsWidgetStateType type) {
-    setState(() {
-      friendsWidgetStatetype = type;
-    });
+  List<Tab> showFriendsTabs;
+  TabController _tabController;
+
+  @override
+  void initState() {
+    showFriendsTabs = <Tab>[
+      Tab(key: showAllFriendsTabKey, text: 'Friends'),
+      Tab(key: showFriendRequestsTabKey, text: 'Friend Requests'),
+    ];
+
+    super.initState();
+    _tabController = TabController(vsync: this, length: showFriendsTabs.length);
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget widget;
-    switch (friendsWidgetStatetype) {
-      case FriendsWidgetStateType.addFriend:
-        widget = AddFriendWidget(
-          friendsWidgetState: this,
-        );
-        break;
-      case FriendsWidgetStateType.showFriends:
-        widget = ShowFriendsWidget(
-          friendsWidgetState: this,
-        );
-        break;
-    }
-
     return Scaffold(
-      body: widget,
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: TabBar(
+            controller: _tabController,
+            tabs: showFriendsTabs,
+          )),
+      body: TabBarView(
+        controller: _tabController,
+        children: showFriendsTabs.map((Tab tab) {
+          if (tab.key == showAllFriendsTabKey) {
+            return ShowAllFriendsWidget();
+          } else if (tab.key == showFriendRequestsTabKey) {
+            return ShowFriendRequestsWidget();
+          } else {
+            assert(false);
+          }
+        }).toList(),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+          icon: Icon(Icons.add),
+          label: Text('Add Friend'),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AddFriendWidget()));
+          }),
     );
   }
 }
