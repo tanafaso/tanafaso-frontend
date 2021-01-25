@@ -5,18 +5,13 @@ import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
-import 'package:azkar/views/entities/friends/facebook_friends_screen.dart';
-import 'package:azkar/views/home_page.dart';
+import 'package:azkar/views/core_views/friends/add_friend/facebook_friends_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
 class AddFriendWidget extends StatefulWidget {
-  AddFriendWidget({Key key}) : super(key: key) {
-    HomePage.setAppBarTitle('Add Friend');
-  }
-
   @override
   _AddFriendWidgetState createState() => _AddFriendWidgetState();
 }

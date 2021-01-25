@@ -2,7 +2,7 @@ import 'package:azkar/net/payload/authentication/requests/email_login_request_bo
 import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/net/service_provider.dart';
-import 'package:azkar/views/home_page.dart';
+import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 

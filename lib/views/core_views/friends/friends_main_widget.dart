@@ -1,19 +1,15 @@
-import 'package:azkar/views/entities/friends/add_friend_widget.dart';
-import 'package:azkar/views/entities/friends/show_all_friends_widget.dart';
-import 'package:azkar/views/entities/friends/show_friend_requests_widget.dart';
-import 'package:azkar/views/home_page.dart';
+import 'package:azkar/views/core_views/friends/add_friend/add_friend_widget.dart';
+import 'package:azkar/views/core_views/friends/all_friends/show_all_friends_widget.dart';
+import 'package:azkar/views/core_views/friends/friend_requests/show_friend_requests_widget.dart';
+import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
 
-class FriendsWidget extends StatefulWidget {
-  FriendsWidget({Key key}) : super(key: key) {
-    HomePage.setAppBarTitle('Friends');
-  }
-
+class FriendsMainWidget extends StatefulWidget {
   @override
-  _FriendsWidgetState createState() => _FriendsWidgetState();
+  _FriendsMainWidgetState createState() => _FriendsMainWidgetState();
 }
 
-class _FriendsWidgetState extends State<FriendsWidget>
+class _FriendsMainWidgetState extends State<FriendsMainWidget>
     with SingleTickerProviderStateMixin {
   final showAllFriendsTabKey = UniqueKey();
   final showFriendRequestsTabKey = UniqueKey();
@@ -34,6 +30,8 @@ class _FriendsWidgetState extends State<FriendsWidget>
 
   @override
   Widget build(BuildContext context) {
+    HomePage.setAppBarTitle('Friends');
+
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
