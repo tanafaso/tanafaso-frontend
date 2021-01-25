@@ -6,7 +6,6 @@ import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/entities/friends/facebook_friends_screen.dart';
-import 'package:azkar/views/entities/friends/friends_widget.dart';
 import 'package:azkar/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -14,10 +13,7 @@ import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
 class AddFriendWidget extends StatefulWidget {
-  final FriendsWidgetState friendsWidgetState;
-
-  AddFriendWidget({Key key, @required this.friendsWidgetState})
-      : super(key: key) {
+  AddFriendWidget({Key key}) : super(key: key) {
     HomePage.setAppBarTitle('Add Friend');
   }
 
@@ -34,231 +30,239 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: new TextFormField(
-                decoration: new InputDecoration(
-                  hintStyle: TextStyle(color: Colors.black),
-                  hintText: "Enter a username",
-                  enabledBorder: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(25.0),
-                    borderSide: new BorderSide(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Invite friends'),
+      ),
+      body: Center(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: new TextFormField(
+                  decoration: new InputDecoration(
+                    hintStyle: TextStyle(color: Colors.black),
+                    hintText: "Enter a username",
+                    enabledBorder: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(25.0),
+                      borderSide: new BorderSide(),
+                    ),
+                    focusedBorder: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(25.0),
+                      borderSide: new BorderSide(),
+                    ),
                   ),
-                  focusedBorder: new OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(25.0),
-                    borderSide: new BorderSide(),
+                  onChanged: (String username) {
+                    _friendUsername = username;
+                  },
+                  validator: (val) {
+                    if (val.contains(" ")) {
+                      return "Username should have no spaces";
+                    } else {
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.text,
+                  style: new TextStyle(
+                    fontFamily: "Poppins",
                   ),
                 ),
-                onChanged: (String username) {
-                  _friendUsername = username;
-                },
-                validator: (val) {
-                  if (val.contains(" ")) {
-                    return "Username should have no spaces";
-                  } else {
-                    return null;
-                  }
-                },
-                keyboardType: TextInputType.text,
-                style: new TextStyle(
-                  fontFamily: "Poppins",
+              ),
+              // new Padding(
+              //   padding: EdgeInsets.all(5),
+              // ),
+              buildTextWithIcon(),
+              new Padding(
+                padding: EdgeInsets.all(20),
+              ),
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                margin:
+                    const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+                alignment: Alignment.center,
+                child: Row(
+                  children: <Widget>[
+                    new Expanded(
+                      child: new Container(
+                        margin: EdgeInsets.all(8.0),
+                        decoration:
+                            BoxDecoration(border: Border.all(width: 0.25)),
+                      ),
+                    ),
+                    Text(
+                      "OR ADD FRIENDS WITH",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    new Expanded(
+                      child: new Container(
+                        margin: EdgeInsets.all(8.0),
+                        decoration:
+                            BoxDecoration(border: Border.all(width: 0.25)),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            // new Padding(
-            //   padding: EdgeInsets.all(5),
-            // ),
-            buildTextWithIcon(),
-            new Padding(
-              padding: EdgeInsets.all(20),
-            ),
-            new Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-              alignment: Alignment.center,
-              child: Row(
-                children: <Widget>[
-                  new Expanded(
-                    child: new Container(
-                      margin: EdgeInsets.all(8.0),
-                      decoration:
-                          BoxDecoration(border: Border.all(width: 0.25)),
-                    ),
-                  ),
-                  Text(
-                    "OR ADD FRIENDS WITH",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  new Expanded(
-                    child: new Container(
-                      margin: EdgeInsets.all(8.0),
-                      decoration:
-                          BoxDecoration(border: Border.all(width: 0.25)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            new Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-              child: new Row(
-                children: <Widget>[
-                  new Expanded(
-                    child: new Container(
-                      alignment: Alignment.center,
-                      child: new Row(
-                        children: <Widget>[
-                          new Expanded(
-                            child: new FlatButton(
-                              shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0),
-                              ),
-                              color: Color(0Xff3B5998),
-                              onPressed: () => {},
-                              child: new Container(
-                                child: new Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Container(
-                                      padding: EdgeInsets.only(
-                                        left: 20.0,
-                                      ),
-                                    ),
-                                    new Expanded(
-                                      child: new FlatButton(
-                                        onPressed: () =>
-                                            onConnectFacebookPressed(),
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                margin:
+                    const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+                child: new Row(
+                  children: <Widget>[
+                    new Expanded(
+                      child: new Container(
+                        alignment: Alignment.center,
+                        child: new Row(
+                          children: <Widget>[
+                            new Expanded(
+                              child: new FlatButton(
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(30.0),
+                                ),
+                                color: Color(0Xff3B5998),
+                                onPressed: () => {},
+                                child: new Container(
+                                  child: new Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Container(
                                         padding: EdgeInsets.only(
-                                          top: 20.0,
-                                          bottom: 20.0,
+                                          left: 20.0,
                                         ),
-                                        child: new Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            Icon(
-                                              const IconData(0xea90,
-                                                  fontFamily: 'icomoon'),
-                                              color: Colors.white,
-                                              size: 20.0,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                "CONNECT WITH FACEBOOK",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                      ),
+                                      new Expanded(
+                                        child: new FlatButton(
+                                          onPressed: () =>
+                                              onConnectFacebookPressed(),
+                                          padding: EdgeInsets.only(
+                                            top: 20.0,
+                                            bottom: 20.0,
+                                          ),
+                                          child: new Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              Icon(
+                                                const IconData(0xea90,
+                                                    fontFamily: 'icomoon'),
+                                                color: Colors.white,
+                                                size: 20.0,
                                               ),
-                                            ),
-                                          ],
+                                              Expanded(
+                                                child: Text(
+                                                  "CONNECT WITH FACEBOOK",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    new Container(
-                                      padding: EdgeInsets.only(
-                                        right: 20.0,
+                                      new Container(
+                                        padding: EdgeInsets.only(
+                                          right: 20.0,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            new Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-              child: new Row(
-                children: <Widget>[
-                  new Expanded(
-                    child: new Container(
-                      alignment: Alignment.center,
-                      child: new Row(
-                        children: <Widget>[
-                          new Expanded(
-                            child: new FlatButton(
-                              shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0),
-                              ),
-                              color: Color(0Xff3B5998),
-                              onPressed: () => {},
-                              child: new Container(
-                                child: new Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Container(
-                                      padding: EdgeInsets.only(
-                                        left: 20.0,
-                                      ),
-                                    ),
-                                    new Expanded(
-                                      child: new FlatButton(
-                                        onPressed: () =>
-                                            onFindFriendsWithFacebookPressed(),
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                margin:
+                    const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+                child: new Row(
+                  children: <Widget>[
+                    new Expanded(
+                      child: new Container(
+                        alignment: Alignment.center,
+                        child: new Row(
+                          children: <Widget>[
+                            new Expanded(
+                              child: new FlatButton(
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(30.0),
+                                ),
+                                color: Color(0Xff3B5998),
+                                onPressed: () => {},
+                                child: new Container(
+                                  child: new Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Container(
                                         padding: EdgeInsets.only(
-                                          top: 20.0,
-                                          bottom: 20.0,
+                                          left: 20.0,
                                         ),
-                                        child: new Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            Icon(
-                                              const IconData(0xea90,
-                                                  fontFamily: 'icomoon'),
-                                              color: Colors.white,
-                                              size: 20.0,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                "ADD FACEBOOK FRIEND",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                      ),
+                                      new Expanded(
+                                        child: new FlatButton(
+                                          onPressed: () =>
+                                              onFindFriendsWithFacebookPressed(),
+                                          padding: EdgeInsets.only(
+                                            top: 20.0,
+                                            bottom: 20.0,
+                                          ),
+                                          child: new Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              Icon(
+                                                const IconData(0xea90,
+                                                    fontFamily: 'icomoon'),
+                                                color: Colors.white,
+                                                size: 20.0,
                                               ),
-                                            ),
-                                          ],
+                                              Expanded(
+                                                child: Text(
+                                                  "ADD FACEBOOK FRIEND",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    new Container(
-                                      padding: EdgeInsets.only(
-                                        right: 20.0,
+                                      new Container(
+                                        padding: EdgeInsets.only(
+                                          right: 20.0,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            )
-          ],
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
