@@ -5,9 +5,7 @@ import 'package:azkar/views/home_page.dart';
 import 'package:flutter/material.dart';
 
 class FriendsWidget extends StatefulWidget {
-
-  FriendsWidget({Key key})
-      : super(key: key) {
+  FriendsWidget({Key key}) : super(key: key) {
     HomePage.setAppBarTitle('Friends');
   }
 

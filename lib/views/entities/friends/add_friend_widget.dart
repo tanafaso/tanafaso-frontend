@@ -13,9 +13,7 @@ import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
 class AddFriendWidget extends StatefulWidget {
-
-  AddFriendWidget({Key key})
-      : super(key: key) {
+  AddFriendWidget({Key key}) : super(key: key) {
     HomePage.setAppBarTitle('Add Friend');
   }
 
