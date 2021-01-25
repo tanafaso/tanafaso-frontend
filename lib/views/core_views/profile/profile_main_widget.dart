@@ -1,9 +1,9 @@
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
-import 'package:azkar/views/home_page.dart';
+import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
 
-class ProfileWidget extends StatelessWidget {
+class ProfileMainWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomePage.setAppBarTitle('Profile');

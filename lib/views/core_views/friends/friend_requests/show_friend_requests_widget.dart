@@ -2,7 +2,7 @@ import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
-import 'package:azkar/views/entities/friends/friend_request_widget.dart';
+import 'package:azkar/views/core_views/friends/friend_requests/friend_request_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
