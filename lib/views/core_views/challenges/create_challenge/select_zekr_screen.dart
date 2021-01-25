@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
-import 'package:azkar/views/entities/challenges/create_challenge/zekr_widget.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/zekr_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

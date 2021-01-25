@@ -1,7 +1,7 @@
-import 'package:azkar/views/home_page.dart';
+import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
 
-class GroupsWidget extends StatelessWidget {
+class GroupsMainWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomePage.setAppBarTitle('Groups');
