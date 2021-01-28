@@ -35,7 +35,29 @@ class HomePage extends StatefulWidget {
       });
     });
   }
+
+  void selectNavigationBarItemForTesting(
+      HomePageNavigationBarItem homePageNavigationBarItem) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      switch (homePageNavigationBarItem) {
+        case HomePageNavigationBarItem.challenges:
+          _homePageState._onItemTapped(0);
+          break;
+        case HomePageNavigationBarItem.groups:
+          _homePageState._onItemTapped(1);
+          break;
+        case HomePageNavigationBarItem.friends:
+          _homePageState._onItemTapped(2);
+          break;
+        case HomePageNavigationBarItem.profile:
+          _homePageState._onItemTapped(3);
+          break;
+      }
+    });
+  }
 }
+
+enum HomePageNavigationBarItem { challenges, groups, friends, profile }
 
 class _HomePageState extends State<HomePage> {
   String userToken;
