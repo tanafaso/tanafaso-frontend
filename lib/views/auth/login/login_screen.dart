@@ -348,12 +348,32 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ],
                           ),
-                        )
+                        ),
+                        testing(),
                       ],
                     ),
                   ),
                 ),
               )))),
+    );
+  }
+
+  Widget testing() {
+    return Row(
+      children: [
+        FlatButton(
+            onPressed: () {
+              loginWithEmail(new EmailLoginRequestBody(
+                  email: 'oyaraouf@gmail.com', password: 'omaromar'));
+            },
+            child: Text('oyaraouf')),
+        FlatButton(
+            onPressed: () {
+              loginWithEmail(new EmailLoginRequestBody(
+                  email: 'oyasser826@gmail.com', password: 'omaromar'));
+            },
+            child: Text('oyasser826'))
+      ],
     );
   }
 

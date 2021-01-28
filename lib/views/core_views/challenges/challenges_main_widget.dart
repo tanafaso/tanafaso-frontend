@@ -15,8 +15,8 @@ class _ChallengesMainWidgetState extends State<ChallengesMainWidget> {
     return Scaffold(
       body: Text('This is show challenges widget.'),
       floatingActionButton: FloatingActionButton.extended(
-          icon: Icon(Icons.add),
-          label: Text('Add Challenge'),
+          icon: Icon(Icons.create),
+          label: Text('Create Challenge'),
           onPressed: () {
             Navigator.push(
                 context,
