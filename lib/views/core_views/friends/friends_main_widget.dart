@@ -1,6 +1,6 @@
 import 'package:azkar/views/core_views/friends/add_friend/add_friend_widget.dart';
-import 'package:azkar/views/core_views/friends/all_friends/show_all_friends_widget.dart';
-import 'package:azkar/views/core_views/friends/friend_requests/show_friend_requests_widget.dart';
+import 'package:azkar/views/core_views/friends/all_friends/all_friends_widget.dart';
+import 'package:azkar/views/core_views/friends/friend_requests/friend_requests_widget.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -11,21 +11,21 @@ class FriendsMainWidget extends StatefulWidget {
 
 class _FriendsMainWidgetState extends State<FriendsMainWidget>
     with SingleTickerProviderStateMixin {
-  final showAllFriendsTabKey = UniqueKey();
-  final showFriendRequestsTabKey = UniqueKey();
+  final allFriendsTabKey = UniqueKey();
+  final friendRequestsTabKey = UniqueKey();
 
-  List<Tab> showFriendsTabs;
+  List<Tab> friendsTabs;
   TabController _tabController;
 
   @override
   void initState() {
-    showFriendsTabs = <Tab>[
-      Tab(key: showAllFriendsTabKey, text: 'Friends'),
-      Tab(key: showFriendRequestsTabKey, text: 'Friend Requests'),
+    friendsTabs = <Tab>[
+      Tab(key: allFriendsTabKey, text: 'Friends'),
+      Tab(key: friendRequestsTabKey, text: 'Friend Requests'),
     ];
 
     super.initState();
-    _tabController = TabController(vsync: this, length: showFriendsTabs.length);
+    _tabController = TabController(vsync: this, length: friendsTabs.length);
   }
 
   @override
@@ -37,15 +37,15 @@ class _FriendsMainWidgetState extends State<FriendsMainWidget>
           automaticallyImplyLeading: false,
           title: TabBar(
             controller: _tabController,
-            tabs: showFriendsTabs,
+            tabs: friendsTabs,
           )),
       body: TabBarView(
         controller: _tabController,
-        children: showFriendsTabs.map((Tab tab) {
-          if (tab.key == showAllFriendsTabKey) {
-            return ShowAllFriendsWidget();
-          } else if (tab.key == showFriendRequestsTabKey) {
-            return ShowFriendRequestsWidget();
+        children: friendsTabs.map((Tab tab) {
+          if (tab.key == allFriendsTabKey) {
+            return AllFriendsWidget();
+          } else if (tab.key == friendRequestsTabKey) {
+            return FriendRequestsWidget();
           } else {
             assert(false);
           }

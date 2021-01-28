@@ -114,9 +114,4 @@ class _CreateChallengeWidgetState extends State<CreateChallengeWidget> {
       ),
     ];
   }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-  }
 }

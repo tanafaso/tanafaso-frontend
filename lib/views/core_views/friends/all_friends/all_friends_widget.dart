@@ -7,12 +7,12 @@ import 'package:azkar/views/keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ShowAllFriendsWidget extends StatefulWidget {
+class AllFriendsWidget extends StatefulWidget {
   @override
-  _ShowAllFriendsWidgetState createState() => _ShowAllFriendsWidgetState();
+  _AllFriendsWidgetState createState() => _AllFriendsWidgetState();
 }
 
-class _ShowAllFriendsWidgetState extends State<ShowAllFriendsWidget> {
+class _AllFriendsWidgetState extends State<AllFriendsWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -64,7 +64,7 @@ class _ShowAllFriendsWidgetState extends State<ShowAllFriendsWidget> {
     List<Friend> nonPendingFriends =
         friendship.friends.where((friend) => !friend.pending).toList();
     return ListView.builder(
-      key: Keys.showAllFriendsWidgetList,
+      key: Keys.allFriendsWidgetList,
       itemCount: nonPendingFriends.length,
       itemBuilder: (context, index) {
         return FriendWidget(

@@ -6,13 +6,12 @@ import 'package:azkar/views/core_views/friends/friend_requests/friend_request_wi
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ShowFriendRequestsWidget extends StatefulWidget {
+class FriendRequestsWidget extends StatefulWidget {
   @override
-  _ShowFriendRequestsWidgetState createState() =>
-      _ShowFriendRequestsWidgetState();
+  _FriendRequestsWidgetState createState() => _FriendRequestsWidgetState();
 }
 
-class _ShowFriendRequestsWidgetState extends State<ShowFriendRequestsWidget> {
+class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
