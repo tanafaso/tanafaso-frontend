@@ -18,6 +18,13 @@ class Keys {
   static final GlobalKey<ScaffoldState> loginScreen =
       GlobalKey<ScaffoldState>();
 
-  // Keys for widgets used in show_all_friends_widget.dart
-  static final GlobalKey showAllFriendsWidgetList = new GlobalKey();
+  // Keys for widgets used in all_friends_widget.dart
+  static final GlobalKey allFriendsWidgetList = new GlobalKey();
+
+  // Keys for widgets used in groups_main_widget_test.dart
+  static final GlobalKey groupsMainWidgetTabBar = new GlobalKey();
+  static final GlobalKey groupsMainWidgetAllGroupsTabKey = new GlobalKey();
+  static final GlobalKey groupsMainWidgetGroupInvitationsTabKey =
+      new GlobalKey();
+  static final GlobalKey groupsMainWidgetFloatingButton = new GlobalKey();
 }
