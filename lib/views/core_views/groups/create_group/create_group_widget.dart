@@ -10,10 +10,10 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Create Challenge'),
+          title: Text('Create Group'),
         ),
         body: Center(
-          child: Text('Create Challenge widget'),
+          child: Text('Create Group widget'),
         ));
   }
 }
