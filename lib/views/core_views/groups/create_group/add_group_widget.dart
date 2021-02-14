@@ -1,13 +1,16 @@
+import 'package:azkar/net/payload/groups/requests/add_group_request_body.dart';
+import 'package:azkar/net/service_provider.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
-class CreateGroupWidget extends StatefulWidget {
+class AddGroupWidget extends StatefulWidget {
   @override
-  _CreateGroupWidgetState createState() => _CreateGroupWidgetState();
+  _AddGroupWidgetState createState() => _AddGroupWidgetState();
 }
 
-class _CreateGroupWidgetState extends State<CreateGroupWidget> {
+class _AddGroupWidgetState extends State<AddGroupWidget> {
   final _formKey = GlobalKey<FormState>();
+  String _groupName = "";
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +46,7 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                     if (groupName.length > 30) {
                       return "Group name is too long";
                     }
+                    _groupName = groupName;
                     return null;
                   },
                 ),
@@ -54,7 +58,10 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                   height: 50,
                   child: FlatButton(
                     onPressed: () async {
-                      if (_formKey.currentState.validate()) {}
+                      if (_formKey.currentState.validate()) {
+                        ServiceProvider.groupsService
+                            .addGroup(AddGroupRequestBody(name: _groupName));
+                      }
                     },
                     child: Center(
                         child: Text(

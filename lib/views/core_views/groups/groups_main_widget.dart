@@ -1,5 +1,5 @@
 import 'package:azkar/views/core_views/groups/all_groups/all_groups_widget.dart';
-import 'package:azkar/views/core_views/groups/create_group/create_group_widget.dart';
+import 'package:azkar/views/core_views/groups/create_group/add_group_widget.dart';
 import 'package:azkar/views/core_views/groups/group_invitations/group_invitations_widget.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/keys.dart';
@@ -60,7 +60,7 @@ class _GroupsMainWidgetState extends State<GroupsMainWidget>
           ),
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CreateGroupWidget()));
+                MaterialPageRoute(builder: (context) => AddGroupWidget()));
           }),
     );
   }

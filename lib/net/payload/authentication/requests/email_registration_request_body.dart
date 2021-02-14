@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../request_base.dart';
 
-class EmailRegistrationRequestBody
-    extends RequestBodyBase<EmailRegistrationRequestBody> {
+class EmailRegistrationRequestBody extends RequestBodyBase {
   final String email;
   final String password;
   final String name;

@@ -1,5 +1,5 @@
 import 'package:azkar/views/core_views/groups/all_groups/all_groups_widget.dart';
-import 'package:azkar/views/core_views/groups/create_group/create_group_widget.dart';
+import 'package:azkar/views/core_views/groups/create_group/add_group_widget.dart';
 import 'package:azkar/views/core_views/groups/group_invitations/group_invitations_widget.dart';
 import 'package:azkar/views/core_views/groups/groups_main_widget.dart';
 import 'package:azkar/views/core_views/home_page.dart';
@@ -61,7 +61,7 @@ void main() {
     await tester.tap(find.byKey(Keys.groupsMainWidgetFloatingButton));
     await tester.pumpAndSettle();
 
-    expect(find.byType(CreateGroupWidget), findsOneWidget);
+    expect(find.byType(AddGroupWidget), findsOneWidget);
     expect(find.byType(GroupsMainWidget), findsNothing);
   });
 }

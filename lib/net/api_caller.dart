@@ -31,6 +31,18 @@ class ApiCaller {
     );
   }
 
+  static Future<http.Response> post(
+      {@required Endpoint route, RequestBodyBase requestBody}) async {
+    return await http.post(
+      Uri.http(
+          ApiRoutesUtil.apiRouteToString(
+              Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
+          ApiRoutesUtil.apiRouteToString(route)),
+      headers: await getHeaders(),
+      body: jsonEncode(requestBody?.toJson()),
+    );
+  }
+
   static Future<Map<String, String>> getHeaders() async {
     String jwtToken = await SecureStorageUtil.getJwtToken();
 
