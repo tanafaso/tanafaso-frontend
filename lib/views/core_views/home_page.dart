@@ -1,6 +1,6 @@
-import 'package:azkar/views/core_views/challenges/challenges_main_widget.dart';
-import 'package:azkar/views/core_views/friends/friends_main_widget.dart';
-import 'package:azkar/views/core_views/groups/groups_main_widget.dart';
+import 'package:azkar/views/core_views/challenges/challenges_main_screen.dart';
+import 'package:azkar/views/core_views/friends/friends_main_screen.dart';
+import 'package:azkar/views/core_views/groups/groups_main_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_main_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

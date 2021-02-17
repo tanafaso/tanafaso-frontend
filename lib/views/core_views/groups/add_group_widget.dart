@@ -1,4 +1,5 @@
 import 'package:azkar/net/payload/groups/requests/add_group_request_body.dart';
+import 'package:azkar/net/payload/groups/responses/add_group_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -59,8 +60,15 @@ class _AddGroupWidgetState extends State<AddGroupWidget> {
                   child: FlatButton(
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
-                        ServiceProvider.groupsService
+                        AddGroupResponse response = await ServiceProvider
+                            .groupsService
                             .addGroup(AddGroupRequestBody(name: _groupName));
+                        if (response.hasError()) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(response.error.errorMessage)));
+                        } else {
+
+                        }
                       }
                     },
                     child: Center(

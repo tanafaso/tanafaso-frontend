@@ -1,4 +1,4 @@
-import 'package:azkar/views/core_views/challenges/create_challenge/create_challenge_widget.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/create_challenge_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,6 @@
-import 'package:azkar/views/core_views/groups/all_groups/all_groups_widget.dart';
-import 'package:azkar/views/core_views/groups/create_group/add_group_widget.dart';
-import 'package:azkar/views/core_views/groups/group_invitations/group_invitations_widget.dart';
+import 'package:azkar/views/core_views/groups/all_groups_widget.dart';
+import 'package:azkar/views/core_views/groups/add_group_widget.dart';
+import 'package:azkar/views/core_views/groups/group_invitations_widget.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
