@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum EndpointRoute {
-  BASE_URL,
+  LOCAL_HOST_BASE_URL,
   LOGIN_WITH_FACEBOOK,
   CONNECT_FACEBOOK,
   REGISTER_WITH_EMAIL,
@@ -31,7 +31,7 @@ class ApiRoutesUtil {
   // ignore: missing_return
   static String apiRouteToString(Endpoint route) {
     switch (route.endpointRoute) {
-      case EndpointRoute.BASE_URL:
+      case EndpointRoute.LOCAL_HOST_BASE_URL:
         return 'localhost:8080';
       case EndpointRoute.LOGIN_WITH_FACEBOOK:
         return '/login/facebook';

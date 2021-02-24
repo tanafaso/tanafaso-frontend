@@ -54,7 +54,7 @@ class AuthenticationService {
     final http.Response apiResponse = await http.put(
         Uri.http(
             ApiRoutesUtil.apiRouteToString(
-                Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
+                Endpoint(endpointRoute: EndpointRoute.LOCAL_HOST_BASE_URL)),
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.LOGIN_WITH_FACEBOOK))),
         headers: <String, String>{
@@ -138,7 +138,7 @@ class AuthenticationService {
     final http.Response apiResponse = await http.put(
       Uri.http(
           ApiRoutesUtil.apiRouteToString(
-              Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
+              Endpoint(endpointRoute: EndpointRoute.LOCAL_HOST_BASE_URL)),
           ApiRoutesUtil.apiRouteToString(
               Endpoint(endpointRoute: EndpointRoute.REGISTER_WITH_EMAIL))),
       headers: <String, String>{
@@ -157,7 +157,7 @@ class AuthenticationService {
       apiResponse = await http.put(
         Uri.http(
             ApiRoutesUtil.apiRouteToString(
-                Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
+                Endpoint(endpointRoute: EndpointRoute.LOCAL_HOST_BASE_URL)),
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.LOGIN_WITH_EMAIL))),
         headers: <String, String>{
@@ -190,7 +190,7 @@ class AuthenticationService {
     final http.Response apiResponse = await http.put(
       Uri.http(
           ApiRoutesUtil.apiRouteToString(
-              Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
+              Endpoint(endpointRoute: EndpointRoute.LOCAL_HOST_BASE_URL)),
           ApiRoutesUtil.apiRouteToString(
               Endpoint(endpointRoute: EndpointRoute.VERIFY_EMAIL))),
       headers: <String, String>{
