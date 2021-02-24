@@ -1,14 +1,14 @@
 import 'package:azkar/views/core_views/challenges/create_challenge/select_zekr_screen.dart';
 import 'package:flutter/material.dart';
 
-class CreateChallengeWidget extends StatefulWidget {
+class CreateChallengeScreen extends StatefulWidget {
   @override
-  _CreateChallengeWidgetState createState() => _CreateChallengeWidgetState();
+  _CreateChallengeScreenState createState() => _CreateChallengeScreenState();
 }
 
 enum ChallengeTarget { self, friend, group }
 
-class _CreateChallengeWidgetState extends State<CreateChallengeWidget> {
+class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   ChallengeTarget _challengeTarget = ChallengeTarget.self;
   String _friendId;
 
@@ -66,7 +66,7 @@ class _CreateChallengeWidgetState extends State<CreateChallengeWidget> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SelectZekrWidget()));
+                          builder: (context) => SelectZekrScreen()));
                 },
               )
             ]),

@@ -1,16 +1,16 @@
-import 'package:azkar/views/core_views/groups/all_groups_widget.dart';
 import 'package:azkar/views/core_views/groups/add_group_widget.dart';
+import 'package:azkar/views/core_views/groups/all_groups_widget.dart';
 import 'package:azkar/views/core_views/groups/group_invitations_widget.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 
-class GroupsMainWidget extends StatefulWidget {
+class GroupsMainScreen extends StatefulWidget {
   @override
-  _GroupsMainWidgetState createState() => _GroupsMainWidgetState();
+  _GroupsMainScreenState createState() => _GroupsMainScreenState();
 }
 
-class _GroupsMainWidgetState extends State<GroupsMainWidget>
+class _GroupsMainScreenState extends State<GroupsMainScreen>
     with SingleTickerProviderStateMixin {
   List<Tab> groupsTabs;
   TabController _tabController;
@@ -18,9 +18,9 @@ class _GroupsMainWidgetState extends State<GroupsMainWidget>
   @override
   void initState() {
     groupsTabs = <Tab>[
-      Tab(key: Keys.groupsMainWidgetAllGroupsTabKey, text: 'Groups'),
+      Tab(key: Keys.groupsMainScreenAllGroupsTabKey, text: 'Groups'),
       Tab(
-          key: Keys.groupsMainWidgetGroupInvitationsTabKey,
+          key: Keys.groupsMainScreenGroupInvitationsTabKey,
           text: 'Group Invitations'),
     ];
 
@@ -36,16 +36,16 @@ class _GroupsMainWidgetState extends State<GroupsMainWidget>
       appBar: AppBar(
           automaticallyImplyLeading: false,
           title: TabBar(
-            key: Keys.groupsMainWidgetTabBar,
+            key: Keys.groupsMainScreenTabBar,
             controller: _tabController,
             tabs: groupsTabs,
           )),
       body: TabBarView(
         controller: _tabController,
         children: groupsTabs.map((Tab tab) {
-          if (tab.key == Keys.groupsMainWidgetAllGroupsTabKey) {
+          if (tab.key == Keys.groupsMainScreenAllGroupsTabKey) {
             return AllGroupsWidget();
-          } else if (tab.key == Keys.groupsMainWidgetGroupInvitationsTabKey) {
+          } else if (tab.key == Keys.groupsMainScreenGroupInvitationsTabKey) {
             return GroupInvitationsWidget();
           } else {
             assert(false);
@@ -53,7 +53,8 @@ class _GroupsMainWidgetState extends State<GroupsMainWidget>
         }).toList(),
       ),
       floatingActionButton: FloatingActionButton.extended(
-          key: Keys.groupsMainWidgetFloatingButton,
+          heroTag: "mainFloating",
+          key: Keys.groupsMainScreenFloatingButton,
           icon: Icon(Icons.create),
           label: Text(
             'Create Group',

@@ -2,12 +2,12 @@ import 'package:azkar/views/core_views/challenges/create_challenge/create_challe
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
 
-class ChallengesMainWidget extends StatefulWidget {
+class ChallengesMainScreen extends StatefulWidget {
   @override
-  _ChallengesMainWidgetState createState() => _ChallengesMainWidgetState();
+  _ChallengesMainScreenState createState() => _ChallengesMainScreenState();
 }
 
-class _ChallengesMainWidgetState extends State<ChallengesMainWidget> {
+class _ChallengesMainScreenState extends State<ChallengesMainScreen> {
   @override
   Widget build(BuildContext context) {
     HomePage.setAppBarTitle('Challenges');
@@ -15,13 +15,14 @@ class _ChallengesMainWidgetState extends State<ChallengesMainWidget> {
     return Scaffold(
       body: Text('This is show challenges widget.'),
       floatingActionButton: FloatingActionButton.extended(
+          heroTag: "mainFloating",
           icon: Icon(Icons.create),
           label: Text('Create Challenge'),
           onPressed: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CreateChallengeWidget()));
+                    builder: (context) => CreateChallengeScreen()));
           }),
     );
   }

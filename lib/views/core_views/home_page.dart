@@ -16,9 +16,9 @@ class Topic {
 class HomePage extends StatefulWidget {
   static _HomePageState _homePageState;
 
-  final Widget challengesWidget = ChallengesMainWidget();
-  final Widget groupsWidget = GroupsMainWidget();
-  final Widget friendsWidget = FriendsMainWidget();
+  final Widget challengesWidget = ChallengesMainScreen();
+  final Widget groupsWidget = GroupsMainScreen();
+  final Widget friendsWidget = FriendsMainScreen();
   final Widget profileWidget = ProfileMainWidget();
 
   @override

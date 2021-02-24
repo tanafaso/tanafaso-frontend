@@ -20,11 +20,11 @@ void main() {
   testWidgets('Expected widgets are found', (WidgetTester tester) async {
     await pumpAndSettleGroupsMainWidget(tester);
 
-    expect(find.byType(GroupsMainWidget), findsOneWidget);
-    expect(find.byKey(Keys.groupsMainWidgetFloatingButton), findsOneWidget);
-    expect(find.byKey(Keys.groupsMainWidgetTabBar), findsOneWidget);
-    expect(find.byKey(Keys.groupsMainWidgetAllGroupsTabKey), findsOneWidget);
-    expect(find.byKey(Keys.groupsMainWidgetGroupInvitationsTabKey),
+    expect(find.byType(GroupsMainScreen), findsOneWidget);
+    expect(find.byKey(Keys.groupsMainScreenFloatingButton), findsOneWidget);
+    expect(find.byKey(Keys.groupsMainScreenTabBar), findsOneWidget);
+    expect(find.byKey(Keys.groupsMainScreenAllGroupsTabKey), findsOneWidget);
+    expect(find.byKey(Keys.groupsMainScreenGroupInvitationsTabKey),
         findsOneWidget);
     expect(find.byType(AllGroupsWidget), findsOneWidget);
   });
@@ -39,13 +39,13 @@ void main() {
     expect(find.byType(GroupInvitationsWidget), findsNothing);
 
     // Show group invitations
-    await tester.tap(find.byKey(Keys.groupsMainWidgetGroupInvitationsTabKey));
+    await tester.tap(find.byKey(Keys.groupsMainScreenGroupInvitationsTabKey));
     await tester.pumpAndSettle();
     expect(find.byType(AllGroupsWidget), findsNothing);
     expect(find.byType(GroupInvitationsWidget), findsOneWidget);
 
     // Show all groups
-    await tester.tap(find.byKey(Keys.groupsMainWidgetAllGroupsTabKey));
+    await tester.tap(find.byKey(Keys.groupsMainScreenAllGroupsTabKey));
     await tester.pumpAndSettle();
     expect(find.byType(AllGroupsWidget), findsOneWidget);
     expect(find.byType(GroupInvitationsWidget), findsNothing);
@@ -55,13 +55,13 @@ void main() {
       (WidgetTester tester) async {
     await pumpAndSettleGroupsMainWidget(tester);
 
-    expect(find.byType(GroupsMainWidget), findsOneWidget);
-    expect(find.byKey(Keys.groupsMainWidgetFloatingButton), findsOneWidget);
+    expect(find.byType(GroupsMainScreen), findsOneWidget);
+    expect(find.byKey(Keys.groupsMainScreenFloatingButton), findsOneWidget);
 
-    await tester.tap(find.byKey(Keys.groupsMainWidgetFloatingButton));
+    await tester.tap(find.byKey(Keys.groupsMainScreenFloatingButton));
     await tester.pumpAndSettle();
 
     expect(find.byType(AddGroupWidget), findsOneWidget);
-    expect(find.byType(GroupsMainWidget), findsNothing);
+    expect(find.byType(GroupsMainScreen), findsNothing);
   });
 }

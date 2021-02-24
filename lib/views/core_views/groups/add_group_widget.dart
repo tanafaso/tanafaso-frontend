@@ -1,6 +1,7 @@
 import 'package:azkar/net/payload/groups/requests/add_group_request_body.dart';
 import 'package:azkar/net/payload/groups/responses/add_group_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/views/core_views/groups/group_screen.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +68,15 @@ class _AddGroupWidgetState extends State<AddGroupWidget> {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(response.error.errorMessage)));
                         } else {
-
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Group Added Successfully'),
+                            backgroundColor: Colors.green.shade400,
+                          ));
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      GroupScreen(group: response.group)));
                         }
                       }
                     },

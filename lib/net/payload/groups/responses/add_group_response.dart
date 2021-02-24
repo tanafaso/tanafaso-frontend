@@ -8,13 +8,6 @@ class AddGroupResponse extends ResponseBase {
     this.group
   });
 
-  String id;
-  String name;
-  String adminId;
-  List<String> usersIds;
-  List<String> challengesIds;
-  bool binary;
-
   factory AddGroupResponse.fromJson(Map<String, dynamic> json) {
     AddGroupResponse response = new AddGroupResponse();
     response.setError(json);
