@@ -11,7 +11,6 @@ class GroupsService {
     http.Response response = await ApiCaller.post(
         route: Endpoint(endpointRoute: EndpointRoute.ADD_GROUP),
         requestBody: requestBody);
-    print(response.body);
     return AddGroupResponse.fromJson(jsonDecode(response.body));
   }
 }

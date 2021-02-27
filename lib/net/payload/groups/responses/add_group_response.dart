@@ -1,16 +1,18 @@
-import 'package:azkar/models/Group.dart';
+import 'package:azkar/models/group.dart';
 import 'package:azkar/net/payload/response_base.dart';
 
 class AddGroupResponse extends ResponseBase {
   Group group;
 
-  AddGroupResponse({
-    this.group
-  });
+  AddGroupResponse({this.group});
 
   factory AddGroupResponse.fromJson(Map<String, dynamic> json) {
     AddGroupResponse response = new AddGroupResponse();
     response.setError(json);
+
+    if (response.hasError()) {
+      return response;
+    }
 
     var data = json['data'];
     response.group = new Group(

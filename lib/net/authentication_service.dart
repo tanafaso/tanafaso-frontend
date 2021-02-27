@@ -12,7 +12,7 @@ import 'package:azkar/net/payload/authentication/responses/email_registration_re
 import 'package:azkar/net/payload/authentication/responses/email_verification_response.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
 import 'package:azkar/net/payload/response_error.dart';
-import 'package:azkar/net/secure_storage_util.dart';
+import 'package:azkar/net/service_provider.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,7 +33,8 @@ class AuthenticationService {
       case FacebookLoginStatus.loggedIn:
         final FacebookAccessToken _facebookAccessToken =
             facebookGraphApiResponse.accessToken;
-        await SecureStorageUtil.setFacebookToken(_facebookAccessToken.token);
+        await ServiceProvider.secureStorageService
+            .setFacebookToken(_facebookAccessToken.token);
 
         return _loginWithFacebookAccessToken(_facebookAccessToken);
       case FacebookLoginStatus.cancelledByUser:
@@ -69,7 +70,7 @@ class AuthenticationService {
         FacebookAuthenticationResponse.fromJson(jsonDecode(apiResponse.body));
     if (!response.hasError()) {
       final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
-      await SecureStorageUtil.setJwtToken(jwtToken);
+      await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
     }
     return response;
   }
@@ -86,7 +87,8 @@ class AuthenticationService {
       case FacebookLoginStatus.loggedIn:
         FacebookAccessToken facebookAccessToken =
             facebookGraphApiResponse.accessToken;
-        await SecureStorageUtil.setFacebookToken(facebookAccessToken.token);
+        await ServiceProvider.secureStorageService
+            .setFacebookToken(facebookAccessToken.token);
 
         return _connectFacebookWithFacebookAccessToken(facebookAccessToken);
       case FacebookLoginStatus.cancelledByUser:
@@ -116,13 +118,14 @@ class AuthenticationService {
         FacebookAuthenticationResponse.fromJson(jsonDecode(apiResponse.body));
     if (!response.hasError()) {
       final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
-      await SecureStorageUtil.setJwtToken(jwtToken);
+      await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
     }
     return response;
   }
 
   Future<FacebookFriendsResponse> getFacebookFriends() async {
-    String facebookToken = await SecureStorageUtil.getFacebookToken();
+    String facebookToken =
+        await ServiceProvider.secureStorageService.getFacebookToken();
     http.Response response = await http.get(
         "https://graph.facebook.com/v9.0/me/friends?access_token=$facebookToken&limit=$MAXIMUM_FRIENDS_USING_APP_COUNT");
     if (response.statusCode == FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE) {
@@ -180,7 +183,7 @@ class AuthenticationService {
 
     if (!emailLoginResponse.hasError()) {
       final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
-      await SecureStorageUtil.setJwtToken(jwtToken);
+      await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
     }
     return emailLoginResponse;
   }

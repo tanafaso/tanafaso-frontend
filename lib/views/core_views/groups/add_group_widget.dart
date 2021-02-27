@@ -2,7 +2,6 @@ import 'package:azkar/net/payload/groups/requests/add_group_request_body.dart';
 import 'package:azkar/net/payload/groups/responses/add_group_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/core_views/groups/group_screen.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
 class AddGroupWidget extends StatefulWidget {
@@ -26,15 +25,6 @@ class _AddGroupWidgetState extends State<AddGroupWidget> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                height: MediaQuery.of(context).size.height / 3,
-                child: FlareActor(
-                  "assets/images/otp.flr",
-                  animation: "otp",
-                  fit: BoxFit.fitHeight,
-                  alignment: Alignment.center,
-                ),
-              ),
               Padding(padding: EdgeInsets.all(30)),
               Padding(
                 padding: const EdgeInsets.all(16.0),

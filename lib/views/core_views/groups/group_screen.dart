@@ -1,4 +1,4 @@
-import 'package:azkar/models/Group.dart';
+import 'package:azkar/models/group.dart';
 import 'package:flutter/material.dart';
 
 class GroupScreen extends StatefulWidget {
