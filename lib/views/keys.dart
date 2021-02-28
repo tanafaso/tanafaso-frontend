@@ -20,6 +20,7 @@ class Keys {
 
   // Keys for widgets used in all_friends_widget.dart
   static final GlobalKey allFriendsWidgetList = new GlobalKey();
+  static final GlobalKey allFriendsWidgetNoFriendsFoundKey = new GlobalKey();
 
   // Keys for widgets used in groups_main_screen_test.dart
   static final GlobalKey groupsMainScreenTabBar = new GlobalKey();
@@ -27,4 +28,7 @@ class Keys {
   static final GlobalKey groupsMainScreenGroupInvitationsTabKey =
       new GlobalKey();
   static final GlobalKey groupsMainScreenFloatingButton = new GlobalKey();
+
+  // Keys for widgets used in all_groups_widget.dart
+  static final GlobalKey allGroupsWidgetNoGroupsFoundKey = new GlobalKey();
 }
