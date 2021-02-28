@@ -116,6 +116,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                         child: new Row(
                           children: <Widget>[
                             new Expanded(
+                              // ignore: deprecated_member_use
                               child: new FlatButton(
                                 shape: new RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(30.0),
@@ -132,6 +133,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                                         ),
                                       ),
                                       new Expanded(
+                                        // ignore: deprecated_member_use
                                         child: new FlatButton(
                                           onPressed: () =>
                                               onConnectFacebookPressed(),
@@ -192,6 +194,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                         child: new Row(
                           children: <Widget>[
                             new Expanded(
+                              // ignore: deprecated_member_use
                               child: new FlatButton(
                                 shape: new RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(30.0),
@@ -208,6 +211,7 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                                         ),
                                       ),
                                       new Expanded(
+                                        // ignore: deprecated_member_use
                                         child: new FlatButton(
                                           onPressed: () =>
                                               onFindFriendsWithFacebookPressed(),
