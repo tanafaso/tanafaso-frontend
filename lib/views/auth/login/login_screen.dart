@@ -174,6 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(right: 20.0),
+                              // ignore: deprecated_member_use
                               child: new FlatButton(
                                 child: new Text(
                                   "Forgot Password?",
@@ -197,6 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: new Row(
                             children: <Widget>[
                               new Expanded(
+                                // ignore: deprecated_member_use
                                 child: new FlatButton(
                                   shape: new RoundedRectangleBorder(
                                     borderRadius:
@@ -278,6 +280,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: new Row(
                                     children: <Widget>[
                                       new Expanded(
+                                        // ignore: deprecated_member_use
                                         child: new FlatButton(
                                           shape: new RoundedRectangleBorder(
                                             borderRadius:
@@ -296,6 +299,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   ),
                                                 ),
                                                 new Expanded(
+                                                  // ignore: deprecated_member_use
                                                   child: new FlatButton(
                                                     onPressed: () =>
                                                         loginWithFacebook(),
@@ -349,31 +353,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                         ),
-                        testing(),
                       ],
                     ),
                   ),
                 ),
               )))),
-    );
-  }
-
-  Widget testing() {
-    return Row(
-      children: [
-        FlatButton(
-            onPressed: () {
-              loginWithEmail(new EmailLoginRequestBody(
-                  email: 'oyaraouf@gmail.com', password: 'omaromar'));
-            },
-            child: Text('oyaraouf')),
-        FlatButton(
-            onPressed: () {
-              loginWithEmail(new EmailLoginRequestBody(
-                  email: 'oyasser826@gmail.com', password: 'omaromar'));
-            },
-            child: Text('oyasser826'))
-      ],
     );
   }
 

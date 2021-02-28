@@ -61,6 +61,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                   )
                 ],
               ),
+              // ignore: deprecated_member_use
               RaisedButton(
                 onPressed: () {
                   Navigator.push(

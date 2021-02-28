@@ -42,6 +42,7 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
               children: [
                 Flexible(
                   fit: FlexFit.tight,
+                  // ignore: deprecated_member_use
                   child: RaisedButton(
                     child: Text('Accept'),
                     color: Colors.green.shade400,
@@ -50,6 +51,7 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
                 ),
                 Flexible(
                   fit: FlexFit.tight,
+                  // ignore: deprecated_member_use
                   child: OutlineButton(
                     child: (Text('Ignore')),
                     onPressed: () => onRejectedPressed(),
