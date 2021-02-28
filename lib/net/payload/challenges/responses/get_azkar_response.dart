@@ -7,6 +7,10 @@ class GetAzkarResponse extends ResponseBase {
     GetAzkarResponse response = new GetAzkarResponse();
     response.setError(json);
 
+    if (response.hasError()) {
+      return response;
+    }
+
     response.azkar = json['data'].cast<String>();
     return response;
   }

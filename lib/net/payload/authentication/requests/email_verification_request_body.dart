@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../request_base.dart';
 
-class EmailVerificationRequestBody
-    extends RequestBodyBase<EmailVerificationRequestBody> {
+class EmailVerificationRequestBody extends RequestBodyBase {
   final String email;
   final int pin;
 

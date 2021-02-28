@@ -11,12 +11,12 @@ import 'package:flutter/widgets.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
-class AddFriendWidget extends StatefulWidget {
+class AddFriendScreen extends StatefulWidget {
   @override
-  _AddFriendWidgetState createState() => _AddFriendWidgetState();
+  _AddFriendScreenState createState() => _AddFriendScreenState();
 }
 
-class _AddFriendWidgetState extends State<AddFriendWidget> {
+class _AddFriendScreenState extends State<AddFriendScreen> {
   final _formKey = GlobalKey<FormState>();
 
   String _friendUsername;
