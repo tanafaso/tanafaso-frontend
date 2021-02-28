@@ -1,10 +1,10 @@
 import 'package:azkar/models/friend.dart';
 import 'package:flutter/material.dart';
 
-class FriendListItemWidget extends StatelessWidget {
+class FriendsListItemWidget extends StatelessWidget {
   final Friend friend;
 
-  FriendListItemWidget({@required this.friend});
+  FriendsListItemWidget({@required this.friend});
 
   @override
   Widget build(BuildContext context) {

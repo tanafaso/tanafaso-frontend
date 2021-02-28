@@ -1,28 +1,27 @@
-import 'package:azkar/models/friend.dart';
-import 'package:azkar/models/friendship.dart';
-import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
+import 'package:azkar/models/challenge.dart';
+import 'package:azkar/net/payload/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/service_provider.dart';
-import 'package:azkar/views/core_views/friends/all_friends/friends_list_item_widget.dart';
+import 'package:azkar/views/core_views/challenges/personal_challenges/personal_challenges_list_item_widget.dart';
 import 'package:azkar/views/keys.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AllFriendsWidget extends StatefulWidget {
+class PersonalChallengesWidget extends StatefulWidget {
   @override
-  _AllFriendsWidgetState createState() => _AllFriendsWidgetState();
+  _PersonalChallengesWidgetState createState() =>
+      _PersonalChallengesWidgetState();
 }
 
-class _AllFriendsWidgetState extends State<AllFriendsWidget> {
+class _PersonalChallengesWidgetState extends State<PersonalChallengesWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder<GetFriendsResponse>(
-        future: ServiceProvider.usersService.getFriends(),
-        builder:
-            (BuildContext context, AsyncSnapshot<GetFriendsResponse> snapshot) {
+      child: FutureBuilder<GetChallengesResponse>(
+        future: ServiceProvider.challengesService.getPersonalChallenges(),
+        builder: (BuildContext context,
+            AsyncSnapshot<GetChallengesResponse> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            return getFriendsListWidget(snapshot.data.friendship);
+            return getPersonalChallengesListWidget(snapshot.data.challenges);
           } else if (snapshot.hasError) {
             children = <Widget>[
               Icon(
@@ -44,7 +43,7 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 16),
-                child: Text('Retrieving friends...'),
+                child: Text('Retrieving challenges...'),
               )
             ];
           }
@@ -60,26 +59,22 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
     );
   }
 
-  Widget getFriendsListWidget(Friendship friendship) {
-    if (friendship == null ||
-        friendship.friends == null ||
-        friendship.friends.isEmpty) {
+  Widget getPersonalChallengesListWidget(List<Challenge> challenges) {
+    if (challenges == null || challenges.isEmpty) {
       return Center(
         child: Text(
-          'No friends found.',
-          key: Keys.allFriendsWidgetNoFriendsFoundKey,
+          'No personal challenges found.',
+          key: Keys.personalChallengesWidgetNoChallengesFoundKey,
         ),
       );
     }
 
-    List<Friend> nonPendingFriends =
-        friendship.friends.where((friend) => !friend.pending).toList();
     return ListView.builder(
-      key: Keys.allFriendsWidgetListKey,
-      itemCount: nonPendingFriends.length,
+      key: Keys.personalChallengesWidgetListKey,
+      itemCount: challenges.length,
       itemBuilder: (context, index) {
-        return FriendsListItemWidget(
-          friend: nonPendingFriends[index],
+        return PersonalChallengesListItemWidget(
+          challenge: challenges[index],
         );
       },
     );
