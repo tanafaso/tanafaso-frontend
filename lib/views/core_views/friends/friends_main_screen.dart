@@ -1,15 +1,15 @@
-import 'package:azkar/views/core_views/friends/add_friend/add_friend_widget.dart';
+import 'package:azkar/views/core_views/friends/add_friend/add_friend_screen.dart';
 import 'package:azkar/views/core_views/friends/all_friends/all_friends_widget.dart';
 import 'package:azkar/views/core_views/friends/friend_requests/friend_requests_widget.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
 
-class FriendsMainWidget extends StatefulWidget {
+class FriendsMainScreen extends StatefulWidget {
   @override
-  _FriendsMainWidgetState createState() => _FriendsMainWidgetState();
+  _FriendsMainScreenState createState() => _FriendsMainScreenState();
 }
 
-class _FriendsMainWidgetState extends State<FriendsMainWidget>
+class _FriendsMainScreenState extends State<FriendsMainScreen>
     with SingleTickerProviderStateMixin {
   final allFriendsTabKey = UniqueKey();
   final friendRequestsTabKey = UniqueKey();
@@ -52,11 +52,12 @@ class _FriendsMainWidgetState extends State<FriendsMainWidget>
         }).toList(),
       ),
       floatingActionButton: FloatingActionButton.extended(
+          heroTag: "mainFloating",
           icon: Icon(Icons.add),
           label: Text('Add Friend'),
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AddFriendWidget()));
+                MaterialPageRoute(builder: (context) => AddFriendScreen()));
           }),
     );
   }

@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../request_base.dart';
 
-class FacebookAuthenticationRequestBody
-    extends RequestBodyBase<FacebookAuthenticationRequestBody> {
+class FacebookAuthenticationRequestBody extends RequestBodyBase {
   final String token;
   final String facebookUserId;
 

@@ -7,7 +7,7 @@ import 'package:azkar/views/core_views/challenges/create_challenge/zekr_widget.d
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class SelectZekrWidget extends StatelessWidget {
+class SelectZekrScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

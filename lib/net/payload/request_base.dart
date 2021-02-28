@@ -1,3 +1,3 @@
-abstract class RequestBodyBase<C extends RequestBodyBase<C>> {
+abstract class RequestBodyBase {
   Map<String, dynamic> toJson();
 }
