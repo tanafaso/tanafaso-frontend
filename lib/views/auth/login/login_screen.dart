@@ -373,6 +373,27 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget testing() {
+    return Row(
+      children: [
+        // ignore: deprecated_member_use
+        FlatButton(
+            onPressed: () {
+              loginWithEmail(new EmailLoginRequestBody(
+                  email: 'oyaraouf@gmail.com', password: 'omaromar'));
+            },
+            child: Text('oyaraouf')),
+        // ignore: deprecated_member_use
+        FlatButton(
+            onPressed: () {
+              loginWithEmail(new EmailLoginRequestBody(
+                  email: 'oyasser826@gmail.com', password: 'omaromar'));
+            },
+            child: Text('oyasser826'))
+      ],
+    );
+  }
+
   loginWithFacebook() async {
     FacebookAuthenticationResponse response =
         await ServiceProvider.authenticationService.loginWithFacebook();
