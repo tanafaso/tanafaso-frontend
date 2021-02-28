@@ -54,6 +54,7 @@ class _InviteFacebookFriendWidgetState
   }
 
   Widget conditionallyGetInviteButton() {
+    // ignore: deprecated_member_use
     return RaisedButton(
       child: invited ? Text('Invited') : Text('Invite'),
       color: invited ? null : Colors.green.shade400,
