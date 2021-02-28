@@ -199,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: <Widget>[
                               new Expanded(
                                 // ignore: deprecated_member_use
-                              child: new FlatButton(
+                                child: new FlatButton(
                                   shape: new RoundedRectangleBorder(
                                     borderRadius:
                                         new BorderRadius.circular(30.0),
@@ -281,7 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     children: <Widget>[
                                       new Expanded(
                                         // ignore: deprecated_member_use
-                                      child: new FlatButton(
+                                        child: new FlatButton(
                                           shape: new RoundedRectangleBorder(
                                             borderRadius:
                                                 new BorderRadius.circular(30.0),
@@ -300,7 +300,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 ),
                                                 new Expanded(
                                                   // ignore: deprecated_member_use
-                                                child: new FlatButton(
+                                                  child: new FlatButton(
                                                     onPressed: () =>
                                                         loginWithFacebook(),
                                                     padding: EdgeInsets.only(

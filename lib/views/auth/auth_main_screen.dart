@@ -67,7 +67,7 @@ class AuthMainScreen extends StatelessWidget {
                             children: <Widget>[
                               new Expanded(
                                 // ignore: deprecated_member_use
-                              child: new OutlineButton(
+                                child: new OutlineButton(
                                   key: Keys.authMainScreenSignUpButton,
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:

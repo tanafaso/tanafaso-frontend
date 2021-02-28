@@ -320,7 +320,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                 children: <Widget>[
                                   new Expanded(
                                     // ignore: deprecated_member_use
-                                  child: new FlatButton(
+                                    child: new FlatButton(
                                       color: Theme.of(context).buttonColor,
                                       shape: new RoundedRectangleBorder(
                                         borderRadius:
