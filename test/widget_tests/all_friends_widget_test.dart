@@ -25,6 +25,7 @@ void main() {
     List<Friend> pendingFriends = [
       Friend(
         userId: 'pendingUserId1',
+        groupId: 'groupId1',
         username: 'pendingUsername1',
         name: 'pendingName1',
         pending: true,
@@ -34,12 +35,14 @@ void main() {
     List<Friend> nonPendingFriends = [
       Friend(
         userId: 'nonPendingUserId1',
+        groupId: 'groupId2',
         username: 'nonPendingUsername1',
         name: 'nonPendingName1',
         pending: false,
       ),
       Friend(
         userId: 'nonPendingUserId2',
+        groupId: 'groupId3',
         username: 'nonPendingUsername2',
         name: 'nonPendingName2',
         pending: false,

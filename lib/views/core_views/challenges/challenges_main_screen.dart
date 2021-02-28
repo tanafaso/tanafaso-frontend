@@ -13,7 +13,9 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen> {
     HomePage.setAppBarTitle('Challenges');
 
     return Scaffold(
-      body: Text('This is show challenges widget.'),
+      body: Column(
+        children: [Card()],
+      ),
       floatingActionButton: FloatingActionButton.extended(
           heroTag: "mainFloating",
           icon: Icon(Icons.create),
