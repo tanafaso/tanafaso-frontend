@@ -66,7 +66,8 @@ class AuthMainScreen extends StatelessWidget {
                           child: new Row(
                             children: <Widget>[
                               new Expanded(
-                                child: new OutlineButton(
+                                // ignore: deprecated_member_use
+                              child: new OutlineButton(
                                   key: Keys.authMainScreenSignUpButton,
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
@@ -125,6 +126,7 @@ class AuthMainScreen extends StatelessWidget {
                           child: new Row(
                             children: <Widget>[
                               new Expanded(
+                                // ignore: deprecated_member_use
                                 child: new FlatButton(
                                   key: Keys.authMainScreenLoginButton,
                                   height: double.infinity,
@@ -221,6 +223,7 @@ class AuthMainScreen extends StatelessWidget {
                           child: new Row(
                             children: <Widget>[
                               new Expanded(
+                                // ignore: deprecated_member_use
                                 child: new FlatButton(
                                   key: Keys.authMainScreenFacebookButton,
                                   shape: new RoundedRectangleBorder(
@@ -235,6 +238,7 @@ class AuthMainScreen extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: <Widget>[
                                         new Expanded(
+                                          // ignore: deprecated_member_use
                                           child: new FlatButton(
                                             onPressed: () =>
                                                 loginWithFacebook(context),

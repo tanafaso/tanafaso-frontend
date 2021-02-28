@@ -172,6 +172,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                     const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
                 child: ButtonTheme(
                   height: 50,
+                  // ignore: deprecated_member_use
                   child: FlatButton(
                     onPressed: () async {
                       // conditions for validating
@@ -215,12 +216,14 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  // ignore: deprecated_member_use
                   FlatButton(
                     child: Text("Clear"),
                     onPressed: () {
                       textEditingController.clear();
                     },
                   ),
+                  // ignore: deprecated_member_use
                   FlatButton(
                     child: Text("Set Text"),
                     onPressed: () {

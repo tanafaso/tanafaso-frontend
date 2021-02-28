@@ -174,6 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(right: 20.0),
+                              // ignore: deprecated_member_use
                               child: new FlatButton(
                                 child: new Text(
                                   "Forgot Password?",
@@ -197,7 +198,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: new Row(
                             children: <Widget>[
                               new Expanded(
-                                child: new FlatButton(
+                                // ignore: deprecated_member_use
+                              child: new FlatButton(
                                   shape: new RoundedRectangleBorder(
                                     borderRadius:
                                         new BorderRadius.circular(30.0),
@@ -278,7 +280,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: new Row(
                                     children: <Widget>[
                                       new Expanded(
-                                        child: new FlatButton(
+                                        // ignore: deprecated_member_use
+                                      child: new FlatButton(
                                           shape: new RoundedRectangleBorder(
                                             borderRadius:
                                                 new BorderRadius.circular(30.0),
@@ -296,7 +299,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   ),
                                                 ),
                                                 new Expanded(
-                                                  child: new FlatButton(
+                                                  // ignore: deprecated_member_use
+                                                child: new FlatButton(
                                                     onPressed: () =>
                                                         loginWithFacebook(),
                                                     padding: EdgeInsets.only(
@@ -361,12 +365,14 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget testing() {
     return Row(
       children: [
+        // ignore: deprecated_member_use
         FlatButton(
             onPressed: () {
               loginWithEmail(new EmailLoginRequestBody(
                   email: 'oyaraouf@gmail.com', password: 'omaromar'));
             },
             child: Text('oyaraouf')),
+        // ignore: deprecated_member_use
         FlatButton(
             onPressed: () {
               loginWithEmail(new EmailLoginRequestBody(
