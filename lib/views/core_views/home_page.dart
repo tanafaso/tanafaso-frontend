@@ -1,6 +1,6 @@
-import 'package:azkar/views/core_views/challenges/challenges_main_widget.dart';
-import 'package:azkar/views/core_views/friends/friends_main_widget.dart';
-import 'package:azkar/views/core_views/groups/groups_main_widget.dart';
+import 'package:azkar/views/core_views/challenges/challenges_main_screen.dart';
+import 'package:azkar/views/core_views/friends/friends_main_screen.dart';
+import 'package:azkar/views/core_views/groups/groups_main_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_main_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +16,9 @@ class Topic {
 class HomePage extends StatefulWidget {
   static _HomePageState _homePageState;
 
-  final Widget challengesWidget = ChallengesMainWidget();
-  final Widget groupsWidget = GroupsMainWidget();
-  final Widget friendsWidget = FriendsMainWidget();
+  final Widget challengesWidget = ChallengesMainScreen();
+  final Widget groupsWidget = GroupsMainScreen();
+  final Widget friendsWidget = FriendsMainScreen();
   final Widget profileWidget = ProfileMainWidget();
 
   @override

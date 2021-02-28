@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum EndpointRoute {
-  BASE_URL,
+  LOCAL_HOST_BASE_URL,
   LOGIN_WITH_FACEBOOK,
   CONNECT_FACEBOOK,
   REGISTER_WITH_EMAIL,
@@ -14,7 +14,8 @@ enum EndpointRoute {
   ADD_FRIEND_BY_USERNAME,
   GET_FRIENDS,
   ACCEPT_FRIEND,
-  REJECT_FRIEND
+  REJECT_FRIEND,
+  ADD_GROUP,
 }
 
 class Endpoint {
@@ -30,7 +31,7 @@ class ApiRoutesUtil {
   // ignore: missing_return
   static String apiRouteToString(Endpoint route) {
     switch (route.endpointRoute) {
-      case EndpointRoute.BASE_URL:
+      case EndpointRoute.LOCAL_HOST_BASE_URL:
         return 'localhost:8080';
       case EndpointRoute.LOGIN_WITH_FACEBOOK:
         return '/login/facebook';
@@ -65,6 +66,8 @@ class ApiRoutesUtil {
       case EndpointRoute.REJECT_FRIEND:
         assert(route.pathVariables.length == 1);
         return '/friends/${route.pathVariables[0]}/reject';
+      case EndpointRoute.ADD_GROUP:
+        return '/groups';
       default:
         print('Route enum is not registered.');
     }
