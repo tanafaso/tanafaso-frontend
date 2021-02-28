@@ -48,6 +48,7 @@ class _AddGroupWidgetState extends State<AddGroupWidget> {
                     const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
                 child: ButtonTheme(
                   height: 50,
+                  // ignore: deprecated_member_use
                   child: FlatButton(
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
