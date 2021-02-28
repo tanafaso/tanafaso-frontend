@@ -287,6 +287,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsets.only(right: 20.0),
+                                  // ignore: deprecated_member_use
                                   child: new FlatButton(
                                     child: new Text(
                                       "Already have an account?",
@@ -318,6 +319,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               child: new Row(
                                 children: <Widget>[
                                   new Expanded(
+                                    // ignore: deprecated_member_use
                                     child: new FlatButton(
                                       color: Theme.of(context).buttonColor,
                                       shape: new RoundedRectangleBorder(
@@ -389,6 +391,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
               title: Text("Error"),
               content: Text(errorMessage),
               actions: <Widget>[
+                // ignore: deprecated_member_use
                 new FlatButton(
                   onPressed: () {
                     Navigator.of(context).pop();
