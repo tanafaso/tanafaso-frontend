@@ -573,12 +573,14 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
     var resultList = <Widget>[];
     if (Platform.isAndroid) {
       resultList.addAll([
+        // ignore: deprecated_member_use
         FlatButton(
           child: Text(_dialogConfig.negativeText),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
+        // ignore: deprecated_member_use
         FlatButton(
           child: Text(_dialogConfig.affirmativeText),
           onPressed: () {
