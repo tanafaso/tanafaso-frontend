@@ -3,8 +3,8 @@ import 'package:azkar/models/friendship.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/net/users_service.dart';
-import 'package:azkar/views/core_views/friends/all_friends/friend_widget.dart';
 import 'package:azkar/views/core_views/friends/all_friends/all_friends_widget.dart';
+import 'package:azkar/views/core_views/friends/all_friends/friend_list_item_widget.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -20,7 +20,7 @@ void main() {
   });
 
   testWidgets(
-      'Expected widgets are found when there are some pending and some non-pending friends',
+      'friend list item widgets are found when there are some pending and some non-pending friends',
       (WidgetTester tester) async {
     List<Friend> pendingFriends = [
       Friend(
@@ -65,7 +65,7 @@ void main() {
     expect(find.byKey(Keys.allFriendsWidgetList), findsOneWidget);
 
     // Finds only two FriendWidgets, which are the two non-pending friends.
-    expect(find.byType(FriendWidget), findsNWidgets(2));
+    expect(find.byType(FriendListItemWidget), findsNWidgets(2));
 
     // Finds a card for the first non-pending friend.
     expect(
@@ -82,5 +82,18 @@ void main() {
           matching: find.text(nonPendingFriends[1].username),
         ),
         findsOneWidget);
+  });
+
+  testWidgets(
+      'a message showing that the friend ist is empty is shown when the user has no friends',
+      (WidgetTester tester) async {
+    when(usersService.getFriends())
+        .thenAnswer((_) => Future.value(GetFriendsResponse()));
+
+    await tester.pumpWidget(new MaterialApp(home: AllFriendsWidget()));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(AllFriendsWidget), findsOneWidget);
+    expect(find.byKey(Keys.allFriendsWidgetNoFriendsFoundKey), findsOneWidget);
   });
 }

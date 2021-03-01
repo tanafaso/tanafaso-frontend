@@ -1,19 +1,29 @@
-import 'package:azkar/views/core_views/groups/all_groups_widget.dart';
+import 'package:azkar/net/groups_service.dart';
+import 'package:azkar/net/payload/groups/responses/get_groups_response.dart';
+import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/core_views/groups/add_group_widget.dart';
+import 'package:azkar/views/core_views/groups/all_groups_widget.dart';
 import 'package:azkar/views/core_views/groups/group_invitations_widget.dart';
 import 'package:azkar/views/core_views/groups/groups_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+
+class MockGroupsService extends Mock implements GroupsService {}
 
 void main() {
+  final MockGroupsService groupsService = new MockGroupsService();
+  ServiceProvider.groupsService = groupsService;
+
   pumpAndSettleGroupsMainWidget(WidgetTester tester) async {
     await tester.pumpWidget(new MaterialApp(home: HomePage()));
+    when(groupsService.getGroups())
+        .thenAnswer((_) => Future.value(GetGroupsResponse()));
     var homePage = find.byType(HomePage).evaluate().single.widget as HomePage;
     homePage
         .selectNavigationBarItemForTesting(HomePageNavigationBarItem.groups);
-
     await tester.pumpAndSettle();
   }
 

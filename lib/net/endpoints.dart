@@ -16,6 +16,7 @@ enum EndpointRoute {
   ACCEPT_FRIEND,
   REJECT_FRIEND,
   ADD_GROUP,
+  GET_GROUPS,
 }
 
 class Endpoint {
@@ -67,6 +68,8 @@ class ApiRoutesUtil {
         assert(route.pathVariables.length == 1);
         return '/friends/${route.pathVariables[0]}/reject';
       case EndpointRoute.ADD_GROUP:
+        return '/groups';
+      case EndpointRoute.GET_GROUPS:
         return '/groups';
       default:
         print('Route enum is not registered.');
