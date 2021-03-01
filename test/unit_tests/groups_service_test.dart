@@ -5,9 +5,9 @@ import 'package:azkar/net/payload/groups/requests/add_group_request_body.dart';
 import 'package:azkar/net/payload/groups/responses/add_group_response.dart';
 import 'package:azkar/net/secure_storage_service.dart';
 import 'package:azkar/net/service_provider.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
+import 'package:test/test.dart';
 
 class MockClient extends Mock implements http.Client {}
 
@@ -26,7 +26,7 @@ var client;
 var secureStorageService;
 
 initTest() {
-  TestWidgetsFlutterBinding.ensureInitialized();
+  // TestWidgetsFlutterBinding.ensureInitialized();
   client = MockClient();
   secureStorageService = MockSecureStorageService();
   ServiceProvider.httpClient = client;
