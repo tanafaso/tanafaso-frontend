@@ -1,10 +1,10 @@
-import 'package:azkar/models/friend.dart';
+import 'package:azkar/models/user_group.dart';
 import 'package:flutter/material.dart';
 
-class FriendWidget extends StatelessWidget {
-  final Friend friend;
+class GroupListItemWidget extends StatelessWidget {
+  final UserGroup userGroup;
 
-  FriendWidget({@required this.friend});
+  GroupListItemWidget({@required this.userGroup});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class FriendWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            friend.username,
+            userGroup.groupName,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
         ],

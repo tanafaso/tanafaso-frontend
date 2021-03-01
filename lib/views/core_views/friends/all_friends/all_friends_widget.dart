@@ -2,7 +2,7 @@ import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
-import 'package:azkar/views/core_views/friends/all_friends/friend_widget.dart';
+import 'package:azkar/views/core_views/friends/all_friends/friend_list_item_widget.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,13 +61,24 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
   }
 
   Widget getFriendsListWidget(Friendship friendship) {
+    if (friendship == null ||
+        friendship.friends == null ||
+        friendship.friends.isEmpty) {
+      return Center(
+        child: Text(
+          'No friends found.',
+          key: Keys.allFriendsWidgetNoFriendsFoundKey,
+        ),
+      );
+    }
+
     List<Friend> nonPendingFriends =
         friendship.friends.where((friend) => !friend.pending).toList();
     return ListView.builder(
       key: Keys.allFriendsWidgetList,
       itemCount: nonPendingFriends.length,
       itemBuilder: (context, index) {
-        return FriendWidget(
+        return FriendListItemWidget(
           friend: nonPendingFriends[index],
         );
       },
