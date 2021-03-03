@@ -1,6 +1,5 @@
 import 'package:azkar/views/core_views/challenges/challenges_main_screen.dart';
 import 'package:azkar/views/core_views/friends/friends_main_screen.dart';
-import 'package:azkar/views/core_views/groups/groups_main_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_main_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,6 @@ class HomePage extends StatefulWidget {
   static _HomePageState _homePageState;
 
   final Widget challengesWidget = ChallengesMainScreen();
-  final Widget groupsWidget = GroupsMainScreen();
   final Widget friendsWidget = FriendsMainScreen();
   final Widget profileWidget = ProfileMainWidget();
 
@@ -43,21 +41,18 @@ class HomePage extends StatefulWidget {
         case HomePageNavigationBarItem.challenges:
           _homePageState._onItemTapped(0);
           break;
-        case HomePageNavigationBarItem.groups:
+        case HomePageNavigationBarItem.friends:
           _homePageState._onItemTapped(1);
           break;
-        case HomePageNavigationBarItem.friends:
-          _homePageState._onItemTapped(2);
-          break;
         case HomePageNavigationBarItem.profile:
-          _homePageState._onItemTapped(3);
+          _homePageState._onItemTapped(2);
           break;
       }
     });
   }
 }
 
-enum HomePageNavigationBarItem { challenges, groups, friends, profile }
+enum HomePageNavigationBarItem { challenges, friends, profile }
 
 class _HomePageState extends State<HomePage> {
   String userToken;
@@ -112,13 +107,6 @@ class _HomePageState extends State<HomePage> {
               label: 'Challenges',
               backgroundColor: Theme.of(context).primaryColor),
           widget: widget.challengesWidget),
-      Topic(
-          bottomNavigationBarItem: BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Groups',
-            backgroundColor: Theme.of(context).primaryColor,
-          ),
-          widget: widget.groupsWidget),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
