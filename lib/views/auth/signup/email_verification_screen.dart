@@ -254,7 +254,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     setState(() {
       hasError = false;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Aye!!"),
+        content: Text("Email verified successfully!"),
         duration: Duration(seconds: 2),
       ));
     });

@@ -17,6 +17,8 @@ enum EndpointRoute {
   REJECT_FRIEND,
   ADD_GROUP,
   GET_GROUPS,
+  ADD_GROUP_CHALLENGE,
+  ADD_PERSONAL_CHALLENGE,
 }
 
 class Endpoint {
@@ -71,6 +73,10 @@ class ApiRoutesUtil {
         return '/groups';
       case EndpointRoute.GET_GROUPS:
         return '/groups';
+      case EndpointRoute.ADD_GROUP_CHALLENGE:
+        return '/challenges';
+      case EndpointRoute.ADD_PERSONAL_CHALLENGE:
+        return '/challenges/personal';
       default:
         print('Route enum is not registered.');
     }
