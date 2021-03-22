@@ -116,10 +116,6 @@ class AuthenticationService {
 
     FacebookAuthenticationResponse response =
         FacebookAuthenticationResponse.fromJson(jsonDecode(apiResponse.body));
-    if (!response.hasError()) {
-      final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
-      await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
-    }
     return response;
   }
 

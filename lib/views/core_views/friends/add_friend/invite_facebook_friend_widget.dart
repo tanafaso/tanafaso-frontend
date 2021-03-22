@@ -25,28 +25,20 @@ class _InviteFacebookFriendWidgetState
         elevation: 10,
         child: Row(
           children: [
-            Flexible(
-              flex: 7,
-              fit: FlexFit.tight,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${widget.facebookFriend.name}',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    )
-                  ],
-                ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${widget.facebookFriend.name}',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  )
+                ],
               ),
             ),
-            Flexible(
-              flex: 10,
-              fit: FlexFit.tight,
-              child: conditionallyGetInviteButton(),
-            ),
+            Padding(padding: EdgeInsets.all(8)),
+            Expanded(child: conditionallyGetInviteButton()),
           ],
         ),
       ),

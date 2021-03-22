@@ -30,6 +30,7 @@ class GetFriendsResponse extends ResponseBase {
     for (var friend in json['data']['friends']) {
       friends.add(Friend(
         userId: friend['userId'],
+        groupId: friend['groupId'],
         username: friend['username'],
         name: friend['name'],
         pending: friend['pending'],
