@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:ui';
+
 import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +24,13 @@ class MyApp extends StatelessWidget {
         floatingActionButtonTheme:
             FloatingActionButtonThemeData(backgroundColor: Colors.white),
         buttonColor: Colors.white,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+          backgroundColor:
+              MaterialStateProperty.resolveWith((_) => Colors.white),
+        )),
+        cardTheme: CardTheme(elevation: 10),
+        iconTheme: IconThemeData(color: Colors.black),
         textTheme: TextTheme(
           headline1: TextStyle(color: Colors.black),
           headline2: TextStyle(color: Colors.black),
@@ -33,6 +42,7 @@ class MyApp extends StatelessWidget {
           subtitle2: TextStyle(color: Colors.black),
           bodyText1: TextStyle(color: Colors.black),
           bodyText2: TextStyle(color: Colors.black),
+          button: TextStyle(color: Colors.black),
         ),
       ),
     );
