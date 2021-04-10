@@ -19,7 +19,7 @@ class Keys {
       GlobalKey<ScaffoldState>();
 
   // Keys for widgets used in all_friends_widget.dart
-  static final GlobalKey allFriendsWidgetList = new GlobalKey();
+  static final GlobalKey allFriendsWidgetListKey = new GlobalKey();
   static final GlobalKey allFriendsWidgetNoFriendsFoundKey = new GlobalKey();
 
   // Keys for widgets used in groups_main_screen_test.dart
@@ -31,4 +31,14 @@ class Keys {
 
   // Keys for widgets used in all_groups_widget.dart
   static final GlobalKey allGroupsWidgetNoGroupsFoundKey = new GlobalKey();
+
+  // Keys for widgets used in all_challenges_widget.dart
+  static final GlobalKey allChallengesWidgetNoChallengesFoundKey =
+      new GlobalKey();
+  static final GlobalKey allChallengesWidgetListKey = new GlobalKey();
+
+  // Keys for widgets used in personal_challenges_widget.dart
+  static final GlobalKey personalChallengesWidgetNoChallengesFoundKey =
+      new GlobalKey();
+  static final GlobalKey personalChallengesWidgetListKey = new GlobalKey();
 }

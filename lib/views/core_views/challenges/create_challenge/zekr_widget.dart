@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 class ZekrWidget extends StatefulWidget {
@@ -21,7 +19,7 @@ class _ZekrWidgetState extends State<ZekrWidget> {
         elevation: 10,
         child: ListTile(
             title: Text(
-          '${utf8.decode(widget.zekr.codeUnits)}',
+          widget.zekr,
           textAlign: TextAlign.center,
           textDirection: TextDirection.rtl,
           style: new TextStyle(

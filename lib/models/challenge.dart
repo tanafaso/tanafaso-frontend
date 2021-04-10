@@ -44,4 +44,36 @@ class Challenge {
         "subChallenges":
             List<dynamic>.from(subChallenges.map((x) => x.toJson())),
       };
+
+  bool done() {
+    for (SubChallenge subChallenge in subChallenges) {
+      if (subChallenge.repetitions != 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  bool deadlinePassed() {
+    int currentTime = DateTime.now().millisecondsSinceEpoch;
+    return currentTime >= expiryDate;
+  }
+
+  int hoursLeft() {
+    if (deadlinePassed()) {
+      return 0;
+    }
+    int currentTime = DateTime.now().millisecondsSinceEpoch;
+    int millisecondsLeft = expiryDate - currentTime;
+    return millisecondsLeft ~/ 1000 ~/ 60 ~/ 60;
+  }
+
+  int minutesLeft() {
+    if (deadlinePassed()) {
+      return 0;
+    }
+    int currentTime = DateTime.now().millisecondsSinceEpoch;
+    int millisecondsLeft = expiryDate - currentTime;
+    return millisecondsLeft ~/ 1000 ~/ 60;
+  }
 }

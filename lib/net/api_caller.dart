@@ -47,7 +47,7 @@ class ApiCaller {
     String jwtToken = await ServiceProvider.secureStorageService.getJwtToken();
 
     return <String, String>{
-      HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
+      HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.authorizationHeader: jwtToken
     };
   }
