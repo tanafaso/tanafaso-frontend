@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
@@ -32,7 +33,8 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
+                child: Text(
+                    '${AppLocalizations.of(context).error}: ${snapshot.error}'),
               )
             ];
           } else {
@@ -42,9 +44,10 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
                 width: 60,
                 height: 60,
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 16),
-                child: Text('Retrieving friends...'),
+                child:
+                    Text('${AppLocalizations.of(context).loadingFriends}...'),
               )
             ];
           }
@@ -66,7 +69,7 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
         friendship.friends.isEmpty) {
       return Center(
         child: Text(
-          'No friends found.',
+          AppLocalizations.of(context).noFriendsFound,
           key: Keys.allFriendsWidgetNoFriendsFoundKey,
         ),
       );
@@ -74,6 +77,7 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
 
     List<Friend> nonPendingFriends =
         friendship.friends.where((friend) => !friend.pending).toList();
+    for (var f in nonPendingFriends) print(f.username);
     return ListView.builder(
       key: Keys.allFriendsWidgetListKey,
       itemCount: nonPendingFriends.length,

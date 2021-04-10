@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +22,11 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
                 children: [
                   Card(
                     elevation: 1,
-                    child: Text('Name:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('${AppLocalizations.of(context).name}:',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    ),
                   ),
                   Text(
                     challenge.name,
@@ -35,9 +39,12 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
                   children: [
                     Card(
                       elevation: 1,
-                      child: Text(
-                        'Motivation:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '${AppLocalizations.of(context).motivation}:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                     Text(
@@ -50,12 +57,15 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
                 children: [
                   Card(
                     elevation: 1,
-                    child: Text(
-                      'Deadline:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '${AppLocalizations.of(context).deadline}:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
-                  getDeadlineText(),
+                  getDeadlineText(context),
                 ],
               ),
             ],
@@ -84,18 +94,21 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
     );
   }
 
-  Widget getDeadlineText() {
+  Widget getDeadlineText(BuildContext context) {
     if (challenge.deadlinePassed()) {
-      return Text('Passed');
+      return Text(AppLocalizations.of(context).passed);
     }
     int hoursLeft = challenge.hoursLeft();
     if (hoursLeft == 0) {
       int minutesLeft = challenge.minutesLeft();
       if (minutesLeft == 0) {
-        return Text('Ends after less than $minutesLeft minutes');
+        return Text(
+            '${AppLocalizations.of(context).endsAfterLessThan} $minutesLeft ${AppLocalizations.of(context).minutes}');
       }
-      return Text('Ends after $minutesLeft minutes');
+      return Text(
+          '${AppLocalizations.of(context).endsAfter} $minutesLeft ${AppLocalizations.of(context).minutes}');
     }
-    return Text('Ends after ${challenge.hoursLeft()} hours');
+    return Text(
+        '${AppLocalizations.of(context).endsAfter} ${challenge.hoursLeft()} ${AppLocalizations.of(context).hours}');
   }
 }

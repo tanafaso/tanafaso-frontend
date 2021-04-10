@@ -464,7 +464,8 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
               constraints: const BoxConstraints(minHeight: 30),
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Row(
-                mainAxisAlignment: widget.mainAxisAlignment,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                textDirection: TextDirection.ltr,
                 children: _generateFields(),
               ),
             ),

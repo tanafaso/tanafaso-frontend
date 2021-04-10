@@ -12,9 +12,12 @@ class FriendsListItemWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            friend.username,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              friend.username,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
           ),
         ],
       ),

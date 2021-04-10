@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:azkar/main.dart';
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
@@ -20,7 +21,7 @@ class SelectZekrScreen extends StatelessWidget {
             List<String> azkar = response.azkar;
             return Scaffold(
               appBar: AppBar(
-                title: Text('Select Zekr'),
+                title: Text(AppLocalizations.of(context).selectZekr),
               ),
               body: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -35,10 +36,10 @@ class SelectZekrScreen extends StatelessWidget {
             );
           } else if (snapshot.hasError) {
             // TODO(omorsi): Handle error
-            return Text('Error');
+            return Text(AppLocalizations.of(context).error);
           } else {
             // TODO(omorsi): Show loader
-            return Text('Waiting');
+            return Text(AppLocalizations.of(context).loading);
           }
         });
   }

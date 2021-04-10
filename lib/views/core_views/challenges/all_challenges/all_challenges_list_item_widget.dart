@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/user.dart';
@@ -65,8 +66,11 @@ class _AllChallengesListItemWidgetState
                 children: [
                   Card(
                     elevation: 1,
-                    child: Text('Name:',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('${AppLocalizations.of(context).name}:',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    ),
                   ),
                   Text(
                     widget.challenge.name,
@@ -79,9 +83,12 @@ class _AllChallengesListItemWidgetState
                   children: [
                     Card(
                       elevation: 1,
-                      child: Text(
-                        'Motivation:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '${AppLocalizations.of(context).motivation}:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                     Text(
@@ -94,12 +101,15 @@ class _AllChallengesListItemWidgetState
                 children: [
                   Card(
                     elevation: 1,
-                    child: Text(
-                      'Deadline:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '${AppLocalizations.of(context).deadline}:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
-                  getDeadlineText(),
+                  getDeadlineText(context),
                 ],
               ),
               Visibility(
@@ -108,14 +118,21 @@ class _AllChallengesListItemWidgetState
                   children: [
                     Card(
                       elevation: 1,
-                      child: Text(
-                        _group?.binary ?? false ? 'Friend:' : 'Group:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          _group?.binary ?? false
+                              ? '${AppLocalizations.of(context).theFriend}:'
+                              : '${AppLocalizations.of(context).theGroup}:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                     Text(_group?.binary ?? false
-                        ? _friend?.username ?? 'Name not found'
-                        : _group?.name ?? 'Name not found'),
+                        ? _friend?.username ??
+                            AppLocalizations.of(context).nameNotFound
+                        : _group?.name ??
+                            AppLocalizations.of(context).nameNotFound),
                   ],
                 ),
               ),
@@ -145,18 +162,21 @@ class _AllChallengesListItemWidgetState
     );
   }
 
-  Widget getDeadlineText() {
+  Widget getDeadlineText(BuildContext context) {
     if (widget.challenge.deadlinePassed()) {
-      return Text('Passed');
+      return Text(AppLocalizations.of(context).passed);
     }
     int hoursLeft = widget.challenge.hoursLeft();
     if (hoursLeft == 0) {
       int minutesLeft = widget.challenge.minutesLeft();
       if (minutesLeft == 0) {
-        return Text('Ends after less than $minutesLeft minutes');
+        return Text(
+            '${AppLocalizations.of(context).endsAfterLessThan} $minutesLeft ${AppLocalizations.of(context).minutes}');
       }
-      return Text('Ends after $minutesLeft minutes');
+      return Text(
+          '${AppLocalizations.of(context).endsAfter} $minutesLeft ${AppLocalizations.of(context).minutes}');
     }
-    return Text('Ends after ${widget.challenge.hoursLeft()} hours');
+    return Text(
+        '${AppLocalizations.of(context).endsAfter} ${widget.challenge.hoursLeft()} ${AppLocalizations.of(context).hours}');
   }
 }

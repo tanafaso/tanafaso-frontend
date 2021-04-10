@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
 import 'package:azkar/net/service_provider.dart';
@@ -26,7 +27,7 @@ class _InviteFacebookFriendWidgetState
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 10.0),
+              padding: const EdgeInsets.only(right: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -47,10 +48,16 @@ class _InviteFacebookFriendWidgetState
 
   Widget conditionallyGetInviteButton() {
     // ignore: deprecated_member_use
-    return RaisedButton(
-      child: invited ? Text('Invited') : Text('Invite'),
-      color: invited ? null : Colors.green.shade400,
-      onPressed: () => invited ? null : onInvitePressed(),
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      // ignore: deprecated_member_use
+      child: RaisedButton(
+        child: invited
+            ? Text(AppLocalizations.of(context).invited)
+            : Text(AppLocalizations.of(context).invite),
+        color: invited ? null : Colors.green.shade400,
+        onPressed: () => invited ? null : onInvitePressed(),
+      ),
     );
   }
 
@@ -67,7 +74,7 @@ class _InviteFacebookFriendWidgetState
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: Colors.green.shade400,
       content: Text(
-          'An invitation to ${widget.facebookFriend.name} has been sent successfully.'),
+          '${AppLocalizations.of(context).anInvitationHasBeenSentTo} ${widget.facebookFriend.name}'),
     ));
 
     setState(() {
