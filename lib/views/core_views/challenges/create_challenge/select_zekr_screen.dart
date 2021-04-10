@@ -15,8 +15,8 @@ class SelectZekrScreen extends StatelessWidget {
             route: Endpoint(endpointRoute: EndpointRoute.GET_AZKAR)),
         builder: (BuildContext context, AsyncSnapshot<http.Response> snapshot) {
           if (snapshot.hasData) {
-            GetAzkarResponse response =
-                GetAzkarResponse.fromJson(jsonDecode(snapshot.data.body));
+            GetAzkarResponse response = GetAzkarResponse.fromJson(
+                jsonDecode(utf8.decode(snapshot.data.body.codeUnits)));
             List<String> azkar = response.azkar;
             return Scaffold(
               appBar: AppBar(

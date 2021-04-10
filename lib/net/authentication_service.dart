@@ -67,7 +67,8 @@ class AuthenticationService {
         ).toJson()));
 
     FacebookAuthenticationResponse response =
-        FacebookAuthenticationResponse.fromJson(jsonDecode(apiResponse.body));
+        FacebookAuthenticationResponse.fromJson(
+            jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
     if (!response.hasError()) {
       final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
       await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
@@ -115,7 +116,8 @@ class AuthenticationService {
         ));
 
     FacebookAuthenticationResponse response =
-        FacebookAuthenticationResponse.fromJson(jsonDecode(apiResponse.body));
+        FacebookAuthenticationResponse.fromJson(
+            jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
     return response;
   }
 
@@ -129,7 +131,8 @@ class AuthenticationService {
       // TODO('Ask the user to connect to facebook')
     }
 
-    return FacebookFriendsResponse.fromJson(jsonDecode(response.body));
+    return FacebookFriendsResponse.fromJson(
+        jsonDecode(utf8.decode(response.body.codeUnits)));
   }
 
   Future<EmailRegistrationResponse> signUp(
@@ -146,7 +149,8 @@ class AuthenticationService {
       body: jsonEncode(request.toJson()),
     );
 
-    return EmailRegistrationResponse.fromJson(jsonDecode(apiResponse.body));
+    return EmailRegistrationResponse.fromJson(
+        jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
   }
 
   Future<EmailLoginResponse> login(EmailLoginRequestBody request) async {
@@ -174,8 +178,8 @@ class AuthenticationService {
       return emailLoginResponse;
     }
 
-    emailLoginResponse =
-        EmailLoginResponse.fromJson(jsonDecode(apiResponse.body));
+    emailLoginResponse = EmailLoginResponse.fromJson(
+        jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
 
     if (!emailLoginResponse.hasError()) {
       final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
@@ -198,6 +202,7 @@ class AuthenticationService {
       body: jsonEncode(request.toJson()),
     );
 
-    return EmailVerificationResponse.fromJson(jsonDecode(apiResponse.body));
+    return EmailVerificationResponse.fromJson(
+        jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
   }
 }

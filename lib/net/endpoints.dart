@@ -9,6 +9,7 @@ enum EndpointRoute {
   LOGIN_WITH_EMAIL,
   GET_AZKAR,
   GET_CURRENT_USER_PROFILE,
+  GET_USER_BY_ID,
   GET_USER_BY_USERNAME,
   GET_USER_BY_FACEBOOK_USER_ID,
   ADD_FRIEND_BY_USERNAME,
@@ -16,9 +17,12 @@ enum EndpointRoute {
   ACCEPT_FRIEND,
   REJECT_FRIEND,
   ADD_GROUP,
+  GET_GROUP,
   GET_GROUPS,
   ADD_GROUP_CHALLENGE,
   ADD_PERSONAL_CHALLENGE,
+  GET_ALL_CHALLENGES,
+  GET_PERSONAL_CHALLENGES,
 }
 
 class Endpoint {
@@ -50,6 +54,9 @@ class ApiRoutesUtil {
         return '/azkar';
       case EndpointRoute.GET_CURRENT_USER_PROFILE:
         return 'users/me';
+      case EndpointRoute.GET_USER_BY_ID:
+        assert(route.pathVariables.length == 1);
+        return 'users/${route.pathVariables[0]}';
       case EndpointRoute.GET_USER_BY_USERNAME:
         assert(route.requestParams.length == 1);
         assert(route.requestParams.keys.first == 'username');
@@ -71,11 +78,18 @@ class ApiRoutesUtil {
         return '/friends/${route.pathVariables[0]}/reject';
       case EndpointRoute.ADD_GROUP:
         return '/groups';
+      case EndpointRoute.GET_GROUP:
+        assert(route.pathVariables.length == 1);
+        return '/groups/${route.pathVariables[0]}';
       case EndpointRoute.GET_GROUPS:
         return '/groups';
       case EndpointRoute.ADD_GROUP_CHALLENGE:
         return '/challenges';
       case EndpointRoute.ADD_PERSONAL_CHALLENGE:
+        return '/challenges/personal';
+      case EndpointRoute.GET_ALL_CHALLENGES:
+        return '/challenges/';
+      case EndpointRoute.GET_PERSONAL_CHALLENGES:
         return '/challenges/personal';
       default:
         print('Route enum is not registered.');

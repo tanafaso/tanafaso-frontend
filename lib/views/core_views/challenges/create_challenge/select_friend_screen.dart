@@ -15,8 +15,8 @@ class SelectFriendScreen extends StatelessWidget {
             route: Endpoint(endpointRoute: EndpointRoute.GET_FRIENDS)),
         builder: (BuildContext context, AsyncSnapshot<http.Response> snapshot) {
           if (snapshot.hasData) {
-            GetFriendsResponse response =
-                GetFriendsResponse.fromJson(jsonDecode(snapshot.data.body));
+            GetFriendsResponse response = GetFriendsResponse.fromJson(
+                jsonDecode(utf8.decode(snapshot.data.body.codeUnits)));
             return Scaffold(
               appBar: AppBar(
                 title: Text('Select a friend'),
