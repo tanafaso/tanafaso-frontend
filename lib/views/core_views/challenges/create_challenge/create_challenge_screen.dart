@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/sub_challenge.dart';
@@ -678,7 +676,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: Text(
-                            '${utf8.decode(_subChallenges[index].zekr.codeUnits)}',
+                            _subChallenges[index].zekr,
                             textAlign: TextAlign.center,
                             textDirection: TextDirection.rtl,
                             style: TextStyle(
