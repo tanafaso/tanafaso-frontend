@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/net/payload/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/service_provider.dart';
@@ -46,9 +47,10 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
                 width: 60,
                 height: 60,
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 16),
-                child: Text('Retrieving challenges...'),
+                child: Text(
+                    '${AppLocalizations.of(context).loadingTheChallenges}...'),
               )
             ];
           }
@@ -68,7 +70,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
     if (challenges == null || challenges.isEmpty) {
       return Center(
         child: Text(
-          'No challenges found.',
+          AppLocalizations.of(context).noChallengesFound,
           key: Keys.allChallengesWidgetNoChallengesFoundKey,
         ),
       );

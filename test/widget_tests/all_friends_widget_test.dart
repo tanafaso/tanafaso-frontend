@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
@@ -62,7 +63,13 @@ void main() {
     when(usersService.getFriends())
         .thenAnswer((_) => Future.value(friendsResponse));
 
-    await tester.pumpWidget(new MaterialApp(home: AllFriendsWidget()));
+    await tester.pumpWidget(new MaterialApp(
+      home: AllFriendsWidget(),
+      localizationsDelegates: [const AppLocalizationsDelegate()],
+      supportedLocales: [
+        const Locale('ar', ''),
+      ],
+    ));
     await tester.pumpAndSettle();
 
     expect(find.byKey(Keys.allFriendsWidgetListKey), findsOneWidget);
@@ -88,12 +95,18 @@ void main() {
   });
 
   testWidgets(
-      'a message showing that the friend ist is empty is shown when the user has no friends',
+      'a message showing that the friend list is empty is shown when the user has no friends',
       (WidgetTester tester) async {
     when(usersService.getFriends())
         .thenAnswer((_) => Future.value(GetFriendsResponse()));
 
-    await tester.pumpWidget(new MaterialApp(home: AllFriendsWidget()));
+    await tester.pumpWidget(new MaterialApp(
+      home: AllFriendsWidget(),
+      localizationsDelegates: [const AppLocalizationsDelegate()],
+      supportedLocales: [
+        const Locale('ar', ''),
+      ],
+    ));
     await tester.pumpAndSettle();
 
     expect(find.byType(AllFriendsWidget), findsOneWidget);

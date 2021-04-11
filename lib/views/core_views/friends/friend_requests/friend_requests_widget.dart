@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
@@ -21,7 +22,8 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
             (BuildContext context, AsyncSnapshot<GetFriendsResponse> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            return getFriendRequestsListWidget(snapshot.data.friendship);
+            return getFriendRequestsListWidget(
+                context, snapshot.data.friendship);
           } else if (snapshot.hasError) {
             children = <Widget>[
               Icon(
@@ -31,7 +33,8 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
+                child: Text(
+                    '${AppLocalizations.of(context).error}: ${snapshot.error}'),
               )
             ];
           } else {
@@ -41,9 +44,10 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
                 width: 60,
                 height: 60,
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 16),
-                child: Text('Retrieving friends...'),
+                child:
+                    Text('${AppLocalizations.of(context).loadingFriends}...'),
               )
             ];
           }
@@ -59,9 +63,15 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
     );
   }
 
-  Widget getFriendRequestsListWidget(Friendship friendship) {
+  Widget getFriendRequestsListWidget(
+      BuildContext context, Friendship friendship) {
     List<Friend> pendingFriends =
         friendship.friends.where((friend) => friend.pending).toList();
+    if ((pendingFriends?.length ?? 0) == 0) {
+      return Center(
+        child: Text(AppLocalizations.of(context).noFriendRequestsFound),
+      );
+    }
     return ListView.builder(
       itemCount: pendingFriends.length,
       itemBuilder: (context, index) {

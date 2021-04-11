@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/views/core_views/friends/add_friend/add_friend_screen.dart';
 import 'package:azkar/views/core_views/friends/all_friends/all_friends_widget.dart';
 import 'package:azkar/views/core_views/friends/friend_requests/friend_requests_widget.dart';
@@ -10,7 +11,7 @@ class FriendsMainScreen extends StatefulWidget {
 }
 
 class _FriendsMainScreenState extends State<FriendsMainScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final allFriendsTabKey = UniqueKey();
   final friendRequestsTabKey = UniqueKey();
 
@@ -18,19 +19,16 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
   TabController _tabController;
 
   @override
-  void initState() {
+  Widget build(BuildContext context) {
+    HomePage.setAppBarTitle(AppLocalizations.of(context).friends);
     friendsTabs = <Tab>[
-      Tab(key: allFriendsTabKey, text: 'Friends'),
-      Tab(key: friendRequestsTabKey, text: 'Friend Requests'),
+      Tab(key: allFriendsTabKey, text: AppLocalizations.of(context).friends),
+      Tab(
+          key: friendRequestsTabKey,
+          text: AppLocalizations.of(context).friendRequests),
     ];
 
-    super.initState();
     _tabController = TabController(vsync: this, length: friendsTabs.length);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    HomePage.setAppBarTitle('Friends');
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +52,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
       floatingActionButton: FloatingActionButton.extended(
           heroTag: "mainFloating",
           icon: Icon(Icons.add),
-          label: Text('Add Friend'),
+          label: Text(AppLocalizations.of(context).addFriend),
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => AddFriendScreen()));
