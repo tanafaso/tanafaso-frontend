@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/net/payload/authentication/requests/email_registration_request_body.dart';
 import 'package:azkar/net/payload/authentication/responses/email_registration_response.dart';
 import 'package:azkar/net/service_provider.dart';
@@ -42,10 +43,11 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                             Container(
                               padding: EdgeInsets.all(100.0),
                               child: Center(
-                                child: Icon(
-                                  Icons.headset_mic,
-                                  color: Colors.black,
-                                  size: 50.0,
+                                child: Text(
+                                  AppLocalizations.of(context).signUp,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                 ),
                               ),
                             ),
@@ -53,9 +55,9 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               children: <Widget>[
                                 new Expanded(
                                   child: new Padding(
-                                    padding: const EdgeInsets.only(left: 40.0),
+                                    padding: const EdgeInsets.only(right: 40.0),
                                     child: new Text(
-                                      "NAME",
+                                      AppLocalizations.of(context).name,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
@@ -79,22 +81,24 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                 ),
                               ),
                               padding:
-                                  const EdgeInsets.only(left: 0.0, right: 10.0),
+                                  const EdgeInsets.only(left: 10.0, right: 0.0),
                               child: new Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   new Expanded(
                                     child: TextFormField(
-                                      textAlign: TextAlign.left,
+                                      textAlign: TextAlign.right,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintText: 'Name Example',
+                                        hintText: AppLocalizations.of(context)
+                                            .nameExample,
                                       ),
                                       onChanged: (name) => _name = name,
                                       validator: (name) {
                                         if (name.length < 2) {
-                                          return 'Name should be of at least 2 letters';
+                                          return AppLocalizations.of(context)
+                                              .nameShouldBeOfAtLeast2Letters;
                                         }
                                         return null;
                                       },
@@ -110,9 +114,9 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               children: <Widget>[
                                 new Expanded(
                                   child: new Padding(
-                                    padding: const EdgeInsets.only(left: 40.0),
+                                    padding: const EdgeInsets.only(right: 40.0),
                                     child: new Text(
-                                      "EMAIL",
+                                      AppLocalizations.of(context).email,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
@@ -136,7 +140,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                 ),
                               ),
                               padding:
-                                  const EdgeInsets.only(left: 0.0, right: 10.0),
+                                  const EdgeInsets.only(left: 10.0, right: 0.0),
                               child: new Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -154,7 +158,8 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                             '^[\\w-_\\.+]*[\\w-_\\.]\\@'
                                             '([\\w]+\\.)+[\\w]+[\\w]\$');
                                         if (regex.stringMatch(email) != email) {
-                                          return 'Email is invalid';
+                                          return AppLocalizations.of(context)
+                                              .emailIsInvalid;
                                         }
                                         return null;
                                       },
@@ -170,9 +175,9 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               children: <Widget>[
                                 new Expanded(
                                   child: new Padding(
-                                    padding: const EdgeInsets.only(left: 40.0),
+                                    padding: const EdgeInsets.only(right: 40.0),
                                     child: new Text(
-                                      "PASSWORD",
+                                      AppLocalizations.of(context).password,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
@@ -196,7 +201,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                 ),
                               ),
                               padding:
-                                  const EdgeInsets.only(left: 0.0, right: 10.0),
+                                  const EdgeInsets.only(left: 10.0, right: 0.0),
                               child: new Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -204,16 +209,19 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                   new Expanded(
                                     child: TextFormField(
                                       obscureText: true,
+                                      textDirection: TextDirection.ltr,
                                       textAlign: TextAlign.left,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintText: '*********',
+                                        hintText: AppLocalizations.of(context)
+                                            .passwordHintText,
                                       ),
                                       onChanged: (password) =>
                                           _password = password,
                                       validator: (password) {
                                         if (password.length < 8) {
-                                          return 'Password should be of at least 8 characters';
+                                          return AppLocalizations.of(context)
+                                              .passwordShouldBeOfAtLeast8Characters;
                                         }
                                         return null;
                                       },
@@ -229,9 +237,10 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               children: <Widget>[
                                 new Expanded(
                                   child: new Padding(
-                                    padding: const EdgeInsets.only(left: 40.0),
+                                    padding: const EdgeInsets.only(right: 40.0),
                                     child: new Text(
-                                      "CONFIRM PASSWORD",
+                                      AppLocalizations.of(context)
+                                          .confirmPassword,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
@@ -255,7 +264,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                 ),
                               ),
                               padding:
-                                  const EdgeInsets.only(left: 0.0, right: 10.0),
+                                  const EdgeInsets.only(left: 10.0, right: 0.0),
                               child: new Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -264,13 +273,16 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                     child: TextFormField(
                                       obscureText: true,
                                       textAlign: TextAlign.left,
+                                      textDirection: TextDirection.ltr,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintText: '*********',
+                                        hintText: AppLocalizations.of(context)
+                                            .passwordHintText,
                                       ),
                                       validator: (confirmedPassword) {
                                         if (confirmedPassword != _password) {
-                                          return 'Passwords did not match';
+                                          return AppLocalizations.of(context)
+                                              .passwordsDidNotMatch;
                                         }
                                         return null;
                                       },
@@ -286,11 +298,12 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 20.0),
+                                  padding: const EdgeInsets.only(left: 20.0),
                                   // ignore: deprecated_member_use
                                   child: new FlatButton(
                                     child: new Text(
-                                      "Already have an account?",
+                                      AppLocalizations.of(context)
+                                          .alreadyHaveAnAccount,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
@@ -343,7 +356,8 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                           children: <Widget>[
                                             new Expanded(
                                               child: Text(
-                                                "SIGN UP",
+                                                AppLocalizations.of(context)
+                                                    .signUp,
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     fontWeight:
@@ -388,7 +402,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
     showDialog(
         context: context,
         builder: (_) => AlertDialog(
-              title: Text("Error"),
+              title: Text(AppLocalizations.of(context).error),
               content: Text(errorMessage),
               actions: <Widget>[
                 // ignore: deprecated_member_use
@@ -396,7 +410,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("Ok"),
+                  child: Text(AppLocalizations.of(context).ok),
                 )
               ],
             ));

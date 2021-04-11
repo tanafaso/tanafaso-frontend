@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/views/core_views/challenges/challenges_main_screen.dart';
 import 'package:azkar/views/core_views/friends/friends_main_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_main_widget.dart';
@@ -104,20 +105,20 @@ class _HomePageState extends State<HomePage> {
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
               icon: Icon(Icons.whatshot),
-              label: 'Challenges',
+              label: AppLocalizations.of(context).challenges,
               backgroundColor: Theme.of(context).primaryColor),
           widget: widget.challengesWidget),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
-            label: 'Friends',
+            label: AppLocalizations.of(context).friends,
             backgroundColor: Theme.of(context).primaryColor,
           ),
           widget: widget.friendsWidget),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
-            label: 'Profile',
+            label: AppLocalizations.of(context).profile,
             backgroundColor: Theme.of(context).primaryColor,
           ),
           widget: widget.profileWidget),

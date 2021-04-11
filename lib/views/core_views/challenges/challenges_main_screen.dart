@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/views/core_views/challenges/all_challenges/all_challenges_widget.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/personal_challenges/personal_challenges_widget.dart';
@@ -10,7 +11,7 @@ class ChallengesMainScreen extends StatefulWidget {
 }
 
 class _ChallengesMainScreenState extends State<ChallengesMainScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final allChallengesTabKey = UniqueKey();
   final personalChallengesTabKey = UniqueKey();
 
@@ -18,19 +19,18 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
   TabController _tabController;
 
   @override
-  void initState() {
+  Widget build(BuildContext context) {
+    HomePage.setAppBarTitle(AppLocalizations.of(context).challenges);
     challengesTabs = <Tab>[
-      Tab(key: allChallengesTabKey, text: 'All Challenges'),
-      Tab(key: personalChallengesTabKey, text: 'Personal Challenges'),
+      Tab(
+          key: allChallengesTabKey,
+          text: AppLocalizations.of(context).allChallenges),
+      Tab(
+          key: personalChallengesTabKey,
+          text: AppLocalizations.of(context).personalChallenges),
     ];
 
-    super.initState();
     _tabController = TabController(vsync: this, length: challengesTabs.length);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    HomePage.setAppBarTitle('Challenges');
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +54,7 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
       floatingActionButton: FloatingActionButton.extended(
           heroTag: "mainFloating",
           icon: Icon(Icons.create),
-          label: Text('Create Challenge'),
+          label: Text(AppLocalizations.of(context).createAChallenge),
           onPressed: () {
             Navigator.push(
                 context,

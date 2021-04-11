@@ -32,6 +32,8 @@ dependencies:
   fluttertoast: ^7.0.4
   progress_state_button: ^1.0.1
   sprintf: "^4.0.0"
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

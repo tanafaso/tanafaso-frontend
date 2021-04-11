@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
@@ -40,7 +41,7 @@ class AuthMainScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                "Azkar",
+                                AppLocalizations.of(context).title,
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 20.0,
@@ -93,7 +94,7 @@ class AuthMainScreen extends StatelessWidget {
                                       children: <Widget>[
                                         new Expanded(
                                           child: Text(
-                                            'SIGN UP',
+                                            AppLocalizations.of(context).signUp,
                                             key: Keys.authMainScreenSignUpText,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
@@ -149,7 +150,7 @@ class AuthMainScreen extends StatelessWidget {
                                       children: <Widget>[
                                         new Expanded(
                                           child: Text(
-                                            'LOGIN',
+                                            AppLocalizations.of(context).login,
                                             key: Keys.authMainScreenLoginText,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
@@ -190,7 +191,7 @@ class AuthMainScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "OR LOGIN WITH",
+                                AppLocalizations.of(context).orLoginWith,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -258,7 +259,8 @@ class AuthMainScreen extends StatelessWidget {
                                                 ),
                                                 Expanded(
                                                   child: Text(
-                                                    'FACEBOOK',
+                                                    AppLocalizations.of(context)
+                                                        .facebook,
                                                     key: Keys
                                                         .authMainScreenFacebookText,
                                                     textAlign: TextAlign.center,

@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
@@ -27,7 +28,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Invite friends'),
+        title: Text(AppLocalizations.of(context).inviteFriends),
       ),
       body: Center(
         child: Form(
@@ -41,7 +42,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                 child: new TextFormField(
                   decoration: new InputDecoration(
                     hintStyle: TextStyle(color: Colors.black),
-                    hintText: "Enter a username",
+                    hintText: AppLocalizations.of(context).enterAUsername,
                     enabledBorder: new OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(25.0),
                       borderSide: new BorderSide(),
@@ -56,7 +57,8 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                   },
                   validator: (val) {
                     if (val.contains(" ")) {
-                      return "Username should have no spaces";
+                      return AppLocalizations.of(context)
+                          .usernameShouldHaveNoSpaces;
                     } else {
                       return null;
                     }
@@ -89,7 +91,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                       ),
                     ),
                     Text(
-                      "OR ADD FRIENDS WITH",
+                      AppLocalizations.of(context).orAddFriendsBy,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -153,7 +155,8 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                               ),
                                               Expanded(
                                                 child: Text(
-                                                  "CONNECT WITH FACEBOOK",
+                                                  AppLocalizations.of(context)
+                                                      .connectYourAccountWithFacebook,
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: Colors.white,
@@ -231,7 +234,8 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                               ),
                                               Expanded(
                                                 child: Text(
-                                                  "ADD FACEBOOK FRIEND",
+                                                  AppLocalizations.of(context)
+                                                      .addFacebookFriend,
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: Colors.white,
@@ -274,17 +278,18 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
       ),
       iconedButtons: {
         ButtonState.idle: IconedButton(
-            text: "Invite",
+            text: AppLocalizations.of(context).invite,
             icon: Icon(Icons.add, color: Colors.black),
             color: Theme.of(context).buttonColor),
-        ButtonState.loading:
-            IconedButton(text: "Sending", color: Colors.deepPurple.shade700),
+        ButtonState.loading: IconedButton(
+            text: AppLocalizations.of(context).sending,
+            color: Colors.deepPurple.shade700),
         ButtonState.fail: IconedButton(
-            text: "Failed",
+            text: AppLocalizations.of(context).failed,
             icon: Icon(Icons.cancel, color: Colors.white),
             color: Colors.red.shade300),
         ButtonState.success: IconedButton(
-            text: "Sent",
+            text: AppLocalizations.of(context).sent,
             icon: Icon(
               Icons.check_circle,
               color: Colors.white,
@@ -341,8 +346,8 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
     });
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content:
-          Text('An invitation to $_friendUsername has been sent successfully.'),
+      content: Text(
+          '${AppLocalizations.of(context).anInvitationHasBeenSentTo} $_friendUsername'),
     ));
   }
 
@@ -355,7 +360,8 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.green.shade400,
-          content: Text('Connected Facebook Successfully')));
+          content: Text(
+              AppLocalizations.of(context).connectedFacebookSuccessfully)));
     }
   }
 

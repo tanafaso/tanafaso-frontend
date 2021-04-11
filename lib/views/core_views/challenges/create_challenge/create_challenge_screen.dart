@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/sub_challenge.dart';
@@ -45,8 +46,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     final String newChallengeName = _challengeNameController.value.text;
     if (newChallengeName.isEmpty) {
       if (showWarning) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Name should not be empty')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(AppLocalizations.of(context).nameShouldNotBeEmpty)));
       }
       return false;
     }
@@ -69,8 +70,9 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     final String newMotivation = _motivationController.value.text;
     if (newMotivation.isEmpty) {
       if (showWarning) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Motivation should not be empty')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text(AppLocalizations.of(context).motivationShouldNotBeEmpty)));
       }
       return false;
     }
@@ -84,14 +86,16 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     } on FormatException {
       if (showWarning) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Repetitions must be a number from 1 to 100')));
+            content: Text(AppLocalizations.of(context)
+                .repetitionsMustBeANumberFrom1to100)));
       }
       return false;
     }
     if (repetitionsNum <= 0) {
       if (showWarning) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Repetitions must be more than 0')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text(AppLocalizations.of(context).repetitionsMustBeMoreThan0)));
       }
       return false;
     }
@@ -99,7 +103,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     if (repetitionsNum > 100) {
       if (showWarning) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Repetitions must be less than or equal 100')));
+            content: Text(AppLocalizations.of(context)
+                .repetitionsMustBeLessThanOrEqual100)));
       }
       return false;
     }
@@ -126,23 +131,25 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       newExpiresAfterDaysNumInt = int.parse(newExpiresAfterDayNum);
     } on FormatException {
       if (showWarning) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Days must be a number from 1 to 100')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+                AppLocalizations.of(context).daysMustBeANumberFrom1to100)));
       }
       return false;
     }
     if (newExpiresAfterDaysNumInt <= 0) {
       if (showWarning) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Days must be more than 0')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(AppLocalizations.of(context).daysMustBeMoreThan0)));
       }
       return false;
     }
 
     if (newExpiresAfterDaysNumInt > 100) {
       if (showWarning) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Days must be less than or equal 100')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+                AppLocalizations.of(context).daysMustBeLessThanOrEqual100)));
       }
       return false;
     }
@@ -161,7 +168,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Challenge'),
+        title: Text(AppLocalizations.of(context).createAChallenge),
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -193,13 +200,14 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                   child: Icon(Icons.grading),
                                 ),
                                 Text(
-                                  'I want to ...',
+                                  '${AppLocalizations.of(context).iWantTo} ...',
                                   style: TextStyle(fontWeight: FontWeight.w700),
                                 ),
                               ],
                             ),
                             RadioListTile<ChallengeTarget>(
-                              title: const Text('challenge myself'),
+                              title: Text(
+                                  AppLocalizations.of(context).challengeMyself),
                               dense: false,
                               value: ChallengeTarget.SELF,
                               groupValue: _challengeTarget,
@@ -210,7 +218,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                               },
                             ),
                             RadioListTile<ChallengeTarget>(
-                              title: const Text('challenge a friend'),
+                              title: Text(AppLocalizations.of(context)
+                                  .challengeAFriend),
                               dense: false,
                               value: ChallengeTarget.FRIEND,
                               groupValue: _challengeTarget,
@@ -341,7 +350,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                       ),
                                       Padding(padding: EdgeInsets.all(8)),
                                       Text(
-                                        'Add zekr',
+                                        AppLocalizations.of(context).addZekr,
                                         style:
                                             Theme.of(context).textTheme.button,
                                       ),
@@ -363,7 +372,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                   child: Icon(Icons.drive_file_rename_outline),
                                 ),
                                 Text(
-                                  'Challenge Name',
+                                  AppLocalizations.of(context).challengeName,
                                   style: TextStyle(fontWeight: FontWeight.w700),
                                 ),
                               ],
@@ -395,7 +404,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                   child: Icon(Icons.date_range),
                                 ),
                                 Text(
-                                  'Deadline',
+                                  AppLocalizations.of(context).deadline,
                                   style: TextStyle(fontWeight: FontWeight.w700),
                                 ),
                               ],
@@ -406,7 +415,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Challenge expires after',
+                                    AppLocalizations.of(context)
+                                        .challengeExpiresAfter,
                                     textAlign: TextAlign.center,
                                     textDirection: TextDirection.rtl,
                                   ),
@@ -435,7 +445,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                     ),
                                   ),
                                   Text(
-                                    'days',
+                                    AppLocalizations.of(context).days,
                                     textAlign: TextAlign.center,
                                     textDirection: TextDirection.rtl,
                                   ),
@@ -456,7 +466,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      'Motivation',
+                                      AppLocalizations.of(context).motivation,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700),
                                     ),
@@ -504,8 +514,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                         child: Center(
                             child: Text(
                           readyToFinishChallenge(false)
-                              ? "CREATE"
-                              : "CREATE (NOT READY)",
+                              ? AppLocalizations.of(context).add
+                              : AppLocalizations.of(context).addNotReady,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -541,8 +551,9 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
 
   onCreatePressed() async {
     if (!readyToFinishChallenge(true)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Fill all needed fields first.')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              AppLocalizations.of(context).pleaseFillUpAllTheCellsProperly)));
       return;
     }
 
@@ -580,7 +591,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     }
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Challenge has been created successfully"),
+      content:
+          Text(AppLocalizations.of(context).challengeHasBeenAddedSuccessfully),
       backgroundColor: Colors.green.shade400,
     ));
     Navigator.of(context).pop();
@@ -615,17 +627,19 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
 
   Widget getSelectedFriendNameConditionally() {
     String text = _selectedFriend == null
-        ? 'No friend selected'
-        : 'Challenging: ${_selectedFriend.name}';
+        ? AppLocalizations.of(context).noFriendSelected
+        : '${AppLocalizations.of(context).youWillChallenge}: ${_selectedFriend.name}';
+    Color color = _selectedFriend == null ? Colors.pink : Colors.black;
     return Text(
       text,
-      style: TextStyle(fontWeight: FontWeight.w700),
+      style: TextStyle(fontWeight: FontWeight.w700, color: color),
     );
   }
 
   getSelectFriendTextConditionally() {
-    final String text =
-        _selectedFriend == null ? 'Select a friend' : 'Change selected friend';
+    final String text = _selectedFriend == null
+        ? AppLocalizations.of(context).selectAFriend
+        : AppLocalizations.of(context).changeSelectedFriend;
     return Text(
       text,
       style: Theme.of(context).textTheme.button,
@@ -633,11 +647,13 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   }
 
   getAzkarSelectedTitleConditionally() {
-    final String text =
-        _subChallenges.length == 0 ? 'No azkar selected' : 'Selected azkar';
+    final String text = _subChallenges.length == 0
+        ? AppLocalizations.of(context).noAzkarSelected
+        : AppLocalizations.of(context).theSelectedAzkar;
+    Color color = _subChallenges.length == 0 ? Colors.pink : Colors.black;
     return Text(
       text,
-      style: TextStyle(fontWeight: FontWeight.w700),
+      style: TextStyle(fontWeight: FontWeight.w700, color: color),
     );
   }
 
@@ -698,7 +714,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Repetitions',
+                      AppLocalizations.of(context).repetitions,
                       textAlign: TextAlign.center,
                       textDirection: TextDirection.rtl,
                     ),
