@@ -73,7 +73,8 @@ class _AllChallengesListItemWidgetState
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         widget.challenge.name,
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ),
                   ],
@@ -107,7 +108,9 @@ class _AllChallengesListItemWidgetState
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Icon((_group?.binary ?? false) ? Icons.person : Icons.group),
+                        child: Icon((_group?.binary ?? false)
+                            ? Icons.person
+                            : Icons.group),
                       ),
                       Text(_group?.binary ?? false
                           ? _friend?.username ??
