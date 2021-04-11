@@ -9,27 +9,27 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Card(
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: getIconConditionally(),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            getIconConditionally(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: VerticalDivider(
+                width: 3,
+                color: Colors.black,
+              ),
+            ),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(
                 children: [
-                  Card(
-                    elevation: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('${AppLocalizations.of(context).name}:',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      challenge.name,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                  ),
-                  Text(
-                    challenge.name,
                   ),
                 ],
               ),
@@ -37,15 +37,9 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
                 visible: (challenge?.motivation?.length ?? 0) != 0,
                 child: Row(
                   children: [
-                    Card(
-                      elevation: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          '${AppLocalizations.of(context).motivation}:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.directions_run),
                     ),
                     Text(
                       challenge.motivation,
@@ -55,22 +49,16 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Card(
-                    elevation: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        '${AppLocalizations.of(context).deadline}:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(Icons.alarm),
                   ),
                   getDeadlineText(context),
                 ],
               ),
-            ],
-          ),
-        ],
+            ]),
+          ],
+        ),
       ),
     );
   }

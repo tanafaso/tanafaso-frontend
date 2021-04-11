@@ -61,57 +61,48 @@ class SelectFriendScreen extends StatelessWidget {
         child: Card(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Card(
-                      elevation: 5,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          AppLocalizations.of(context).name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
+            child: IntrinsicHeight(
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(Icons.person),
+                  ),
+                  VerticalDivider(
+                    width: 3,
+                    color: Colors.black,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              friend.name,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        friend.name,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                      Padding(padding: EdgeInsets.only(bottom: 8)),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              friend.username,
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 8)),
-                Row(
-                  children: [
-                    Card(
-                      elevation: 5,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          AppLocalizations.of(context).username,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        friend.username,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -53,92 +53,77 @@ class _AllChallengesListItemWidgetState
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: getIconConditionally(),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Card(
-                    elevation: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('${AppLocalizations.of(context).name}:',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                  Text(
-                    widget.challenge.name,
-                  ),
-                ],
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            getIconConditionally(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: VerticalDivider(
+                width: 3,
+                color: Colors.black,
               ),
-              Visibility(
-                visible: (widget.challenge?.motivation?.length ?? 0) != 0,
-                child: Row(
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    Card(
-                      elevation: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          '${AppLocalizations.of(context).motivation}:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    Text(
-                      widget.challenge.motivation,
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  Card(
-                    elevation: 1,
-                    child: Padding(
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        '${AppLocalizations.of(context).deadline}:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        widget.challenge.name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ),
-                  ),
-                  getDeadlineText(context),
-                ],
-              ),
-              Visibility(
-                visible: _group != null,
-                child: Row(
-                  children: [
-                    Card(
-                      elevation: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          _group?.binary ?? false
-                              ? '${AppLocalizations.of(context).theFriend}:'
-                              : '${AppLocalizations.of(context).theGroup}:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    Text(_group?.binary ?? false
-                        ? _friend?.username ??
-                            AppLocalizations.of(context).nameNotFound
-                        : _group?.name ??
-                            AppLocalizations.of(context).nameNotFound),
                   ],
                 ),
-              ),
-            ],
-          ),
-        ],
+                Visibility(
+                  visible: (widget.challenge?.motivation?.length ?? 0) != 0,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.directions_run),
+                      ),
+                      Text(
+                        widget.challenge.motivation,
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.alarm),
+                    ),
+                    getDeadlineText(context),
+                  ],
+                ),
+                Visibility(
+                  visible: _group != null,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon((_group?.binary ?? false)
+                            ? Icons.person
+                            : Icons.group),
+                      ),
+                      Text(_group?.binary ?? false
+                          ? _friend?.username ??
+                              AppLocalizations.of(context).nameNotFound
+                          : _group?.name ??
+                              AppLocalizations.of(context).nameNotFound),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
