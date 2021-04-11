@@ -2,8 +2,10 @@ import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/user.dart';
+import 'package:azkar/net/payload/challenges/responses/get_challenge_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
 import 'package:flutter/material.dart';
 
 class AllChallengesListItemWidget extends StatefulWidget {
@@ -52,77 +54,91 @@ class _AllChallengesListItemWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            getIconConditionally(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: VerticalDivider(
-                width: 3,
-                color: Colors.black,
+    return GestureDetector(
+      onTap: () async {
+        GetChallengeResponse response = await ServiceProvider.challengesService
+            .getChallenge(widget.challenge.id);
+        if (response.hasError()) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                  '${AppLocalizations.of(context).error}: ${response.error.errorMessage}')));
+          return;
+        }
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => DoChallengeScreen(response.challenge)));
+      },
+      child: Card(
+        child: IntrinsicHeight(
+          child: Row(
+            children: [
+              getIconConditionally(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: VerticalDivider(
+                  width: 3,
+                  color: Colors.black,
+                ),
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        widget.challenge.name,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-                  ],
-                ),
-                Visibility(
-                  visible: (widget.challenge?.motivation?.length ?? 0) != 0,
-                  child: Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.directions_run),
-                      ),
-                      Text(
-                        widget.challenge.motivation,
+                        child: Text(
+                          widget.challenge.name,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.alarm),
+                  Visibility(
+                    visible: (widget.challenge?.motivation?.length ?? 0) != 0,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.directions_run),
+                        ),
+                        Text(
+                          widget.challenge.motivation,
+                        ),
+                      ],
                     ),
-                    getDeadlineText(context),
-                  ],
-                ),
-                Visibility(
-                  visible: _group != null,
-                  child: Row(
+                  ),
+                  Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Icon((_group?.binary ?? false)
-                            ? Icons.person
-                            : Icons.group),
+                        child: Icon(Icons.alarm),
                       ),
-                      Text(_group?.binary ?? false
-                          ? _friend?.username ??
-                              AppLocalizations.of(context).nameNotFound
-                          : _group?.name ??
-                              AppLocalizations.of(context).nameNotFound),
+                      getDeadlineText(context),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ],
+                  Visibility(
+                    visible: _group != null,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon((_group?.binary ?? false)
+                              ? Icons.person
+                              : Icons.group),
+                        ),
+                        Text(_group?.binary ?? false
+                            ? _friend?.username ??
+                                AppLocalizations.of(context).nameNotFound
+                            : _group?.name ??
+                                AppLocalizations.of(context).nameNotFound),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -156,12 +172,12 @@ class _AllChallengesListItemWidgetState
       int minutesLeft = widget.challenge.minutesLeft();
       if (minutesLeft == 0) {
         return Text(
-            '${AppLocalizations.of(context).endsAfterLessThan} $minutesLeft ${AppLocalizations.of(context).minutes}');
+            '${AppLocalizations.of(context).endsAfterLessThan} $minutesLeft ${AppLocalizations.of(context).minute}');
       }
       return Text(
-          '${AppLocalizations.of(context).endsAfter} $minutesLeft ${AppLocalizations.of(context).minutes}');
+          '${AppLocalizations.of(context).endsAfter} $minutesLeft ${AppLocalizations.of(context).minute}');
     }
     return Text(
-        '${AppLocalizations.of(context).endsAfter} ${widget.challenge.hoursLeft()} ${AppLocalizations.of(context).hours}');
+        '${AppLocalizations.of(context).endsAfter} ${widget.challenge.hoursLeft()} ${AppLocalizations.of(context).hour}');
   }
 }

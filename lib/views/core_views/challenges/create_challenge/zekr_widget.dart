@@ -1,7 +1,8 @@
+import 'package:azkar/models/zekr.dart';
 import 'package:flutter/material.dart';
 
 class ZekrWidget extends StatefulWidget {
-  final String zekr;
+  final Zekr zekr;
 
   ZekrWidget({@required this.zekr});
 
@@ -19,7 +20,7 @@ class _ZekrWidgetState extends State<ZekrWidget> {
         elevation: 10,
         child: ListTile(
             title: Text(
-          widget.zekr,
+          widget.zekr.zekr,
           textAlign: TextAlign.center,
           textDirection: TextDirection.rtl,
           style: new TextStyle(

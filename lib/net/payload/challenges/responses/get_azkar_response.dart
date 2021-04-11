@@ -1,7 +1,9 @@
+import 'package:azkar/models/zekr.dart';
+
 import '../../response_base.dart';
 
 class GetAzkarResponse extends ResponseBase {
-  List<String> azkar;
+  List<Zekr> azkar;
 
   static GetAzkarResponse fromJson(Map<String, dynamic> json) {
     GetAzkarResponse response = new GetAzkarResponse();
@@ -11,7 +13,10 @@ class GetAzkarResponse extends ResponseBase {
       return response;
     }
 
-    response.azkar = json['data'].cast<String>();
+    response.azkar = [];
+    for (var listItem in json['data']) {
+      response.azkar.add(Zekr.fromJson(listItem));
+    }
     return response;
   }
 }
