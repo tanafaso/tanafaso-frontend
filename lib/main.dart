@@ -58,7 +58,7 @@ class AppLocalizations {
       'friends': 'الأصدقاء',
       'profile': 'الملف الشخصي',
       'home page': 'الصفحة الرئيسية',
-      'username': 'اسم االمستخدم',
+      'username': 'اسم المستخدم',
       'loading': 'جار التحميل',
       'friend requests': 'طلبات صداقة',
       'add friend': 'أضف صديق',
