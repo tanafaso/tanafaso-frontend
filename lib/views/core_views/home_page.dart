@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: Theme.of(context).primaryColor,
               items: topics.map((e) => e.bottomNavigationBarItem).toList(),
-              selectedItemColor: Colors.white,
+              selectedItemColor: Colors.green,
               unselectedItemColor: Colors.black,
               showUnselectedLabels: true,
               currentIndex: _selectedIdx,
