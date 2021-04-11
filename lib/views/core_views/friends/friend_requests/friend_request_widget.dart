@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/payload/users/responses/resolve_friend_request_response.dart';
 import 'package:azkar/net/service_provider.dart';
@@ -44,7 +45,7 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
                   fit: FlexFit.tight,
                   // ignore: deprecated_member_use
                   child: RaisedButton(
-                    child: Text('Accept'),
+                    child: Text(AppLocalizations.of(context).accept),
                     color: Colors.green.shade400,
                     onPressed: () => onAcceptedPressed(),
                   ),
@@ -53,7 +54,7 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
                   fit: FlexFit.tight,
                   // ignore: deprecated_member_use
                   child: OutlineButton(
-                    child: (Text('Ignore')),
+                    child: (Text(AppLocalizations.of(context).ignore)),
                     onPressed: () => onRejectedPressed(),
                   ),
                 )
@@ -75,7 +76,8 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.green.shade400,
-        content: Text('${widget.friend.name} is now your friend.'),
+        content: Text(
+            '${widget.friend.name} ${AppLocalizations.of(context).isNowYourFriend}'),
       ));
       widget.parentState.setState(() {});
     }
@@ -90,7 +92,8 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
       ));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("${widget.friend.name}'s friend request is ignored."),
+        content: Text(
+            "${AppLocalizations.of(context).friendRequest} ${widget.friend.name} ${AppLocalizations.of(context).isIgnored}"),
       ));
       widget.parentState.setState(() {});
     }

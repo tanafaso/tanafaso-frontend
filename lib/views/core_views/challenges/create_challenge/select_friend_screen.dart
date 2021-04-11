@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:azkar/main.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/endpoints.dart';
@@ -19,28 +20,28 @@ class SelectFriendScreen extends StatelessWidget {
                 jsonDecode(utf8.decode(snapshot.data.body.codeUnits)));
             return Scaffold(
               appBar: AppBar(
-                title: Text('Select a friend'),
+                title: Text(AppLocalizations.of(context).selectAFriend),
               ),
               body: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child:
-                    buildWidgetWithFriends(response?.friendship?.friends ?? []),
+                child: buildWidgetWithFriends(
+                    context, response?.friendship?.friends ?? []),
               ),
             );
           } else if (snapshot.hasError) {
             // TODO(omorsi): Handle error
-            return Text('Error');
+            return Text(AppLocalizations.of(context).error);
           } else {
             // TODO(omorsi): Show loader
-            return Text('Waiting');
+            return Text(AppLocalizations.of(context).loading);
           }
         });
   }
 
-  Widget buildWidgetWithFriends(List<Friend> friends) {
+  Widget buildWidgetWithFriends(BuildContext context, List<Friend> friends) {
     if (friends?.isEmpty ?? false) {
       return Center(
-        child: Text('You have not added any friends yet.'),
+        child: Text(AppLocalizations.of(context).youHaveNotAddedAnyFriendsYet),
       );
     }
 
@@ -70,7 +71,7 @@ class SelectFriendScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Name',
+                          AppLocalizations.of(context).name,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
@@ -94,7 +95,7 @@ class SelectFriendScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Username',
+                          AppLocalizations.of(context).username,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),

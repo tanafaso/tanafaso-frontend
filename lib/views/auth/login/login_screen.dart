@@ -1,3 +1,4 @@
+import 'package:azkar/main.dart';
 import 'package:azkar/net/payload/authentication/requests/email_login_request_body.dart';
 import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
@@ -39,10 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         Container(
                           padding: EdgeInsets.all(100.0),
                           child: Center(
-                            child: Icon(
-                              Icons.headset_mic,
-                              color: Colors.black,
-                              size: 50.0,
+                            child: Text(
+                              AppLocalizations.of(context).login,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
                             ),
                           ),
                         ),
@@ -50,9 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: <Widget>[
                             new Expanded(
                               child: new Padding(
-                                padding: const EdgeInsets.only(left: 40.0),
+                                // Internalize that
+                                padding: const EdgeInsets.only(right: 40.0),
                                 child: new Text(
-                                  "EMAIL",
+                                  AppLocalizations.of(context).email,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -77,7 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           padding:
-                              const EdgeInsets.only(left: 0.0, right: 10.0),
+                              // Internalize that
+                              const EdgeInsets.only(left: 10.0, right: 0.0),
                           child: new Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -113,9 +116,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: <Widget>[
                             new Expanded(
                               child: new Padding(
-                                padding: const EdgeInsets.only(left: 40.0),
+                                padding: const EdgeInsets.only(right: 40.0),
                                 child: new Text(
-                                  "PASSWORD",
+                                  AppLocalizations.of(context).password,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -140,7 +143,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           padding:
-                              const EdgeInsets.only(left: 0.0, right: 10.0),
+                              // Internalize that
+                              const EdgeInsets.only(left: 10.0, right: 0.0),
                           child: new Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -148,17 +152,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               new Expanded(
                                 child: TextFormField(
                                   obscureText: true,
+                                  textDirection: TextDirection.ltr,
                                   textAlign: TextAlign.left,
                                   onChanged: (password) => _password = password,
                                   validator: (password) {
                                     if (password.length < 8) {
-                                      return 'Password should be of at least 8 characters';
+                                      return AppLocalizations.of(context)
+                                          .passwordShouldBeOfAtLeast8Characters;
                                     }
                                     return null;
                                   },
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: '*********',
+                                    hintText: AppLocalizations.of(context)
+                                        .passwordHintText,
                                     hintStyle: TextStyle(color: Colors.grey),
                                   ),
                                 ),
@@ -173,11 +180,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(right: 20.0),
+                              // internalize that
+                              padding: const EdgeInsets.only(left: 20.0),
                               // ignore: deprecated_member_use
                               child: new FlatButton(
                                 child: new Text(
-                                  "Forgot Password?",
+                                  AppLocalizations.of(context).forgotPassword,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -222,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       children: <Widget>[
                                         new Expanded(
                                           child: Text(
-                                            "LOGIN",
+                                            AppLocalizations.of(context).login,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.black,
@@ -252,7 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               Text(
-                                "OR LOGIN WITH",
+                                AppLocalizations.of(context).orLoginWith,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -312,16 +320,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           MainAxisAlignment
                                                               .start,
                                                       children: <Widget>[
-                                                        Icon(
-                                                          const IconData(0xea90,
-                                                              fontFamily:
-                                                                  'icomoon'),
-                                                          color: Colors.white,
-                                                          size: 20.0,
-                                                        ),
                                                         Expanded(
                                                           child: Text(
-                                                            "FACEBOOK",
+                                                            AppLocalizations.of(
+                                                                    context)
+                                                                .facebook,
                                                             textAlign: TextAlign
                                                                 .center,
                                                             style: TextStyle(
@@ -332,13 +335,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                         .bold),
                                                           ),
                                                         ),
+                                                        Icon(
+                                                          const IconData(0xea90,
+                                                              fontFamily:
+                                                                  'icomoon'),
+                                                          color: Colors.white,
+                                                          size: 20.0,
+                                                        ),
                                                       ],
                                                     ),
                                                   ),
                                                 ),
                                                 new Container(
                                                   padding: EdgeInsets.only(
-                                                    right: 20.0,
+                                                    // internalize that
+                                                    left: 20.0,
                                                   ),
                                                 ),
                                               ],
@@ -350,6 +361,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
+                              testing(),
                             ],
                           ),
                         ),
@@ -358,6 +370,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               )))),
+    );
+  }
+
+  Widget testing() {
+    return Row(
+      children: [
+        // ignore: deprecated_member_use
+        FlatButton(
+            onPressed: () {
+              loginWithEmail(new EmailLoginRequestBody(
+                  email: 'oyaraouf@gmail.com', password: 'omaromar'));
+            },
+            child: Text('oyaraouf')),
+        // ignore: deprecated_member_use
+        FlatButton(
+            onPressed: () {
+              loginWithEmail(new EmailLoginRequestBody(
+                  email: 'oyasser826@gmail.com', password: 'omaromar'));
+            },
+            child: Text('oyasser826'))
+      ],
     );
   }
 

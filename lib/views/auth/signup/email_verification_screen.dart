@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:azkar/main.dart';
 import 'package:azkar/net/payload/authentication/requests/email_verification_request_body.dart';
 import 'package:azkar/net/payload/authentication/responses/email_verification_response.dart';
 import 'package:azkar/net/service_provider.dart';
@@ -76,7 +77,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  'Email Verification',
+                  AppLocalizations.of(context).emailVerification,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                   textAlign: TextAlign.center,
                 ),
@@ -86,7 +87,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                     const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
                 child: RichText(
                   text: TextSpan(
-                      text: "Enter the code sent to ",
+                      text:
+                          AppLocalizations.of(context).enterTheCodeSentTo + " ",
                       children: [
                         TextSpan(
                             text: widget.phoneNumber,
@@ -132,7 +134,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                         });
                       },
                       beforeTextPaste: (text) {
-                        print("Allowing to paste $text");
                         //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
                         //but you can show anything you want here, like your pop up saying wrong paste format or etc
                         return true;
@@ -142,7 +143,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
-                  hasError ? "*Please fill up all the cells properly" : "",
+                  hasError
+                      ? AppLocalizations.of(context)
+                          .pleaseFillUpAllTheCellsProperly
+                      : "",
                   style: TextStyle(color: Colors.red.shade300, fontSize: 15),
                 ),
               ),
@@ -152,11 +156,11 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                    text: "Didn't receive the code? ",
+                    text: AppLocalizations.of(context).didNotReceiveTheCjode,
                     style: TextStyle(color: Colors.black54, fontSize: 15),
                     children: [
                       TextSpan(
-                          text: " RESEND",
+                          text: AppLocalizations.of(context).resend,
                           recognizer: onTapRecognizer,
                           style: TextStyle(
                               color: Color(0xFF91D3B3),
@@ -188,7 +192,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                     },
                     child: Center(
                         child: Text(
-                      "VERIFY".toUpperCase(),
+                      AppLocalizations.of(context).verify,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -218,18 +222,18 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 children: <Widget>[
                   // ignore: deprecated_member_use
                   FlatButton(
-                    child: Text("Clear"),
+                    child: Text(AppLocalizations.of(context).clear),
                     onPressed: () {
                       textEditingController.clear();
                     },
                   ),
                   // ignore: deprecated_member_use
-                  FlatButton(
-                    child: Text("Set Text"),
-                    onPressed: () {
-                      textEditingController.text = "123456";
-                    },
-                  ),
+                  // FlatButton(
+                  //   child: Text("Set Text"),
+                  //   onPressed: () {
+                  //     textEditingController.text = "123456";
+                  //   },
+                  // ),
                 ],
               )
             ],
@@ -253,10 +257,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
     setState(() {
       hasError = false;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Email verified successfully!"),
-        duration: Duration(seconds: 2),
-      ));
     });
   }
 
@@ -270,7 +270,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
   void onEmailVerificationSuccess() {
     Fluttertoast.showToast(
-        msg: "Verification Successful",
+        msg: AppLocalizations.of(context).verificationSuccessful,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
