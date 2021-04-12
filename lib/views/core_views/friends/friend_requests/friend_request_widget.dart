@@ -18,50 +18,75 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Row(
-        children: [
-          Flexible(
-            flex: 7,
-            fit: FlexFit.tight,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            Flexible(
+              flex: 7,
+              fit: FlexFit.tight,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${widget.friend.username}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${widget.friend.firstName} ${widget.friend.lastName}',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${widget.friend.username}',
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: VerticalDivider(
+                width: 3,
+                color: Colors.black,
+              ),
+            ),
+            Flexible(
+              flex: 6,
+              fit: FlexFit.tight,
+              child: Row(
+                children: [
+                  Flexible(
+                    fit: FlexFit.tight,
+                    // ignore: deprecated_member_use
+                    child: RaisedButton(
+                      child: Text(AppLocalizations.of(context).accept),
+                      color: Colors.green.shade400,
+                      onPressed: () => onAcceptedPressed(),
+                    ),
+                  ),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    // ignore: deprecated_member_use
+                    child: OutlineButton(
+                      child: (Text(AppLocalizations.of(context).ignore)),
+                      onPressed: () => onRejectedPressed(),
+                    ),
                   )
                 ],
               ),
             ),
-          ),
-          Flexible(
-            flex: 10,
-            fit: FlexFit.tight,
-            child: Row(
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  // ignore: deprecated_member_use
-                  child: RaisedButton(
-                    child: Text(AppLocalizations.of(context).accept),
-                    color: Colors.green.shade400,
-                    onPressed: () => onAcceptedPressed(),
-                  ),
-                ),
-                Flexible(
-                  fit: FlexFit.tight,
-                  // ignore: deprecated_member_use
-                  child: OutlineButton(
-                    child: (Text(AppLocalizations.of(context).ignore)),
-                    onPressed: () => onRejectedPressed(),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -77,7 +102,7 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.green.shade400,
         content: Text(
-            '${widget.friend.name} ${AppLocalizations.of(context).isNowYourFriend}'),
+            '${widget.friend.firstName} ${widget.friend.lastName} ${AppLocalizations.of(context).isNowYourFriend}'),
       ));
       widget.parentState.setState(() {});
     }
@@ -93,7 +118,7 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
-            "${AppLocalizations.of(context).friendRequest} ${widget.friend.name} ${AppLocalizations.of(context).isIgnored}"),
+            "${AppLocalizations.of(context).friendRequest} ${widget.friend.firstName} ${widget.friend.lastName} ${AppLocalizations.of(context).isIgnored}"),
       ));
       widget.parentState.setState(() {});
     }

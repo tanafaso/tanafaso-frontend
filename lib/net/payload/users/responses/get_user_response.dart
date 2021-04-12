@@ -13,10 +13,12 @@ class GetUserResponse extends ResponseBase {
 
     var data = json['data'];
     response.user = User(
-        email: data['email'],
-        id: data['id'],
-        username: data['username'],
-        name: data['name']);
+      email: data['email'],
+      id: data['id'],
+      username: data['username'],
+      firstName: data['firstName'],
+      lastName: data['lastName'],
+    );
     return response;
   }
 }

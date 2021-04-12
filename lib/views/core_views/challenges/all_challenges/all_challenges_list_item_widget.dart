@@ -128,8 +128,7 @@ class _AllChallengesListItemWidgetState
                               : Icons.group),
                         ),
                         Text(_group?.binary ?? false
-                            ? _friend?.username ??
-                                AppLocalizations.of(context).nameNotFound
+                            ? '${_friend.firstName} ${_friend.lastName} (${_friend?.username ?? AppLocalizations.of(context).nameNotFound})'
                             : _group?.name ??
                                 AppLocalizations.of(context).nameNotFound),
                       ],

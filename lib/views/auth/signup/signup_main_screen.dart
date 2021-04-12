@@ -17,7 +17,8 @@ class SignUpMainScreen extends StatefulWidget {
 
 class _SignUpMainScreenState extends State<SignUpMainScreen> {
   final _signUpFormKey = GlobalKey<FormState>();
-  String _name;
+  String _firstName;
+  String _lastName;
   String _email;
   String _password;
 
@@ -57,7 +58,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                   child: new Padding(
                                     padding: const EdgeInsets.only(right: 40.0),
                                     child: new Text(
-                                      AppLocalizations.of(context).name,
+                                      AppLocalizations.of(context).firstName,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15.0,
@@ -90,11 +91,68 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                     child: TextFormField(
                                       textAlign: TextAlign.right,
                                       decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: AppLocalizations.of(context)
-                                            .nameExample,
+                                          border: InputBorder.none,
+                                          hintText: AppLocalizations.of(context)
+                                              .firstNameExample),
+                                      onChanged: (name) => _firstName = name,
+                                      validator: (name) {
+                                        if (name.length < 2) {
+                                          return AppLocalizations.of(context)
+                                              .nameShouldBeOfAtLeast2Letters;
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              height: 24.0,
+                            ),
+                            new Row(
+                              children: <Widget>[
+                                new Expanded(
+                                  child: new Padding(
+                                    padding: const EdgeInsets.only(right: 40.0),
+                                    child: new Text(
+                                      AppLocalizations.of(context).lastName,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15.0,
                                       ),
-                                      onChanged: (name) => _name = name,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            new Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin: const EdgeInsets.only(
+                                  left: 40.0, right: 40.0, top: 10.0),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                      color: Colors.black,
+                                      width: 0.5,
+                                      style: BorderStyle.solid),
+                                ),
+                              ),
+                              padding:
+                                  const EdgeInsets.only(left: 10.0, right: 0.0),
+                              child: new Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  new Expanded(
+                                    child: TextFormField(
+                                      textAlign: TextAlign.right,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: AppLocalizations.of(context)
+                                              .lastNameExample),
+                                      onChanged: (name) => _lastName = name,
                                       validator: (name) {
                                         if (name.length < 2) {
                                           return AppLocalizations.of(context)
@@ -385,7 +443,11 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
   void performSignUp() async {
     ServiceProvider.authenticationService
         .signUp(new EmailRegistrationRequestBody(
-            email: _email, password: _password, name: _name))
+      email: _email,
+      password: _password,
+      firstName: _firstName,
+      lastName: _lastName,
+    ))
         .then<void>((EmailRegistrationResponse response) {
       if (response.hasError()) {
         onSignUpError(response.error.errorMessage);

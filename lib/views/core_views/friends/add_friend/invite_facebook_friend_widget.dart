@@ -32,7 +32,7 @@ class _InviteFacebookFriendWidgetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${widget.facebookFriend.name}',
+                    '${widget.facebookFriend.firstName} ${widget.facebookFriend.lastName}',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   )
                 ],
@@ -74,7 +74,7 @@ class _InviteFacebookFriendWidgetState
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: Colors.green.shade400,
       content: Text(
-          '${AppLocalizations.of(context).anInvitationHasBeenSentTo} ${widget.facebookFriend.name}'),
+          '${AppLocalizations.of(context).anInvitationHasBeenSentTo} ${widget.facebookFriend.firstName} ${widget.facebookFriend.lastName}'),
     ));
 
     setState(() {
