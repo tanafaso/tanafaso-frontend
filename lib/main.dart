@@ -153,15 +153,19 @@ class AppLocalizations {
   String get yourFriend {
     return _localizedValues[locale.languageCode]['your friend'];
   }
+
   String get challengeThisFriend {
     return _localizedValues[locale.languageCode]['challenge this friend'];
   }
+
   String get you {
     return _localizedValues[locale.languageCode]['you'];
   }
+
   String get totalPoints {
     return _localizedValues[locale.languageCode]['total points'];
   }
+
   String get then {
     return _localizedValues[locale.languageCode]['then'];
   }

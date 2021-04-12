@@ -13,7 +13,8 @@ class DoChallengeScreen extends StatefulWidget {
   final Challenge challenge;
   final ChallengeChangedCallback challengeChangedCallback;
 
-  DoChallengeScreen({@required this.challenge, @required this.challengeChangedCallback});
+  DoChallengeScreen(
+      {@required this.challenge, @required this.challengeChangedCallback});
 
   @override
   _DoChallengeScreenState createState() => _DoChallengeScreenState();

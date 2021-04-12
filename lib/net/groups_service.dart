@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/endpoints.dart';
-import 'package:azkar/net/payload/challenges/responses/get_challenge_response.dart';
 import 'package:azkar/net/payload/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/payload/groups/responses/get_group_leaderboard_response.dart';
 import 'package:azkar/net/payload/groups/responses/get_group_response.dart';

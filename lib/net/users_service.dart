@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:azkar/models/friend_score.dart';
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/users/responses/add_friend_response.dart';

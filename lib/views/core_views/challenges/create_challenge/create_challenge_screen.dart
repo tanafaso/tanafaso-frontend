@@ -10,6 +10,7 @@ import 'package:azkar/views/core_views/challenges/create_challenge/select_friend
 import 'package:azkar/views/core_views/challenges/create_challenge/select_zekr_screen.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CreateChallengeScreen extends StatefulWidget {
   Friend selectedFriend;
 
