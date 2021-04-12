@@ -91,12 +91,12 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
       int minutesLeft = challenge.minutesLeft();
       if (minutesLeft == 0) {
         return Text(
-            '${AppLocalizations.of(context).endsAfterLessThan} $minutesLeft ${AppLocalizations.of(context).minutes}');
+            '${AppLocalizations.of(context).endsAfterLessThan} $minutesLeft ${AppLocalizations.of(context).minute}');
       }
       return Text(
-          '${AppLocalizations.of(context).endsAfter} $minutesLeft ${AppLocalizations.of(context).minutes}');
+          '${AppLocalizations.of(context).endsAfter} $minutesLeft ${AppLocalizations.of(context).minute}');
     }
     return Text(
-        '${AppLocalizations.of(context).endsAfter} ${challenge.hoursLeft()} ${AppLocalizations.of(context).hours}');
+        '${AppLocalizations.of(context).endsAfter} ${challenge.hoursLeft()} ${AppLocalizations.of(context).hour}');
   }
 }
