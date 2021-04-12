@@ -58,7 +58,7 @@ class AppLocalizations {
       'friends': 'الأصدقاء',
       'profile': 'الملف الشخصي',
       'home page': 'الصفحة الرئيسية',
-      'username': 'اسم المستخدم',
+      'username': 'كود المستخدم',
       'loading': 'جار التحميل',
       'friend requests': 'طلبات صداقة',
       'add friend': 'أضف صديق',
@@ -80,8 +80,8 @@ class AppLocalizations {
       'add facebook friend': 'إضافة صديق الفيسبوك',
       'connect your account with facebook': 'ربط حسابك بالفيسبوك',
       'or add friends by': 'أو أضف أصدقاء عن طريق',
-      'username should have no spaces': 'يجب ألا يحتوي اسم المستخدم على مسافات',
-      'enter a username': 'أدخل اسم المستخدم',
+      'username should have no spaces': 'يجب ألا يحتوي كود المستخدم على مسافات',
+      'enter a username': 'أدخل كود المستخدم',
       'invite friends': 'ادعو أصدقاء',
       'no friend requests found': 'لم يتم العثور على طلبات صداقة',
       'create a challenge': 'أضف تحدي',
@@ -138,8 +138,33 @@ class AppLocalizations {
       'you have finished reading it': 'لقد انتهيت من قراءته',
       'the remaining repetitions': 'التكرارات المتبقية',
       'you have finished the challenge successfully': 'لقد أنهيت التحدي بنجاح',
+      'first name': 'الاسم الأول',
+      'last name': 'اسم العائلة',
+      'first name example': 'مثال على الاسم الأول',
+      'last name example': 'مثال على اسم العائلة',
+      'then': 'ثم',
     },
   };
+
+  String get then {
+    return _localizedValues[locale.languageCode]['then'];
+  }
+
+  String get firstNameExample {
+    return _localizedValues[locale.languageCode]['first name example'];
+  }
+
+  String get lastNameExample {
+    return _localizedValues[locale.languageCode]['last name example'];
+  }
+
+  String get firstName {
+    return _localizedValues[locale.languageCode]['first name'];
+  }
+
+  String get lastName {
+    return _localizedValues[locale.languageCode]['last name'];
+  }
 
   String get day {
     return _localizedValues[locale.languageCode]['day'];

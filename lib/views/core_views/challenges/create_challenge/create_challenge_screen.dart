@@ -629,7 +629,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   Widget getSelectedFriendNameConditionally() {
     String text = _selectedFriend == null
         ? AppLocalizations.of(context).noFriendSelected
-        : '${AppLocalizations.of(context).youWillChallenge}: ${_selectedFriend.name}';
+        : '${AppLocalizations.of(context).youWillChallenge}: ${_selectedFriend.firstName} ${_selectedFriend.lastName}';
     Color color = _selectedFriend == null ? Colors.pink : Colors.black;
     return Text(
       text,
