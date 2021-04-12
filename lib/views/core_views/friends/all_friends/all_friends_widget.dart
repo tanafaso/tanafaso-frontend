@@ -77,7 +77,6 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
 
     List<Friend> nonPendingFriends =
         friendship.friends.where((friend) => !friend.pending).toList();
-    for (var f in nonPendingFriends) print(f.username);
     return ListView.builder(
       key: Keys.allFriendsWidgetListKey,
       itemCount: nonPendingFriends.length,

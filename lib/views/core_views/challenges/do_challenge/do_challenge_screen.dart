@@ -5,13 +5,16 @@ import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/views/core_views/challenges/challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class DoChallengeScreen extends StatefulWidget {
   final Challenge challenge;
+  final ChallengeChangedCallback challengeChangedCallback;
 
-  DoChallengeScreen(this.challenge);
+  DoChallengeScreen(
+      {@required this.challenge, @required this.challengeChangedCallback});
 
   @override
   _DoChallengeScreenState createState() => _DoChallengeScreenState();
@@ -152,6 +155,7 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                 backgroundColor: Colors.green.shade400,
               ));
             }
+            widget.challengeChangedCallback(widget.challenge);
           },
         );
       },

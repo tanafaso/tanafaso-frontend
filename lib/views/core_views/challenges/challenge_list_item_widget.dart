@@ -8,18 +8,24 @@ import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
 import 'package:flutter/material.dart';
 
-class AllChallengesListItemWidget extends StatefulWidget {
-  final Challenge challenge;
+typedef ChallengeChangedCallback = void Function(Challenge newChallenge);
 
-  AllChallengesListItemWidget({@required this.challenge});
+class ChallengeListItemWidget extends StatefulWidget {
+  final Challenge challenge;
+  final bool showName;
+  final ChallengeChangedCallback challengeChangedCallback;
+
+  ChallengeListItemWidget(
+      {@required this.challenge,
+      this.showName = true,
+      @required this.challengeChangedCallback});
 
   @override
-  _AllChallengesListItemWidgetState createState() =>
-      _AllChallengesListItemWidgetState();
+  _ChallengeListItemWidgetState createState() =>
+      _ChallengeListItemWidgetState();
 }
 
-class _AllChallengesListItemWidgetState
-    extends State<AllChallengesListItemWidget> {
+class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget> {
   Group _group;
   User _friend;
 
@@ -65,19 +71,23 @@ class _AllChallengesListItemWidgetState
           return;
         }
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => DoChallengeScreen(response.challenge)));
+            builder: (context) => DoChallengeScreen(
+                challenge: response.challenge,
+                challengeChangedCallback: (changedChallenge) {
+                  widget.challengeChangedCallback(changedChallenge);
+                })));
       },
       child: Card(
         child: IntrinsicHeight(
           child: Row(
             children: [
-              getIconConditionally(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: VerticalDivider(
-                  width: 3,
-                  color: Colors.black,
-                ),
+                child: getIconConditionally(),
+              ),
+              VerticalDivider(
+                width: 3,
+                color: Colors.black,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +128,7 @@ class _AllChallengesListItemWidgetState
                     ],
                   ),
                   Visibility(
-                    visible: _group != null,
+                    visible: _group != null && widget.showName,
                     child: Row(
                       children: [
                         Padding(
@@ -128,7 +138,7 @@ class _AllChallengesListItemWidgetState
                               : Icons.group),
                         ),
                         Text(_group?.binary ?? false
-                            ? '${_friend.firstName} ${_friend.lastName} (${_friend?.username ?? AppLocalizations.of(context).nameNotFound})'
+                            ? '${_friend.firstName} ${_friend.lastName}'
                             : _group?.name ??
                                 AppLocalizations.of(context).nameNotFound),
                       ],
