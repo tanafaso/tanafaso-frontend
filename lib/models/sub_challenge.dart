@@ -1,19 +1,27 @@
+import 'package:azkar/models/zekr.dart';
+
 class SubChallenge {
-  String zekrId;
-  String zekr;
+  Zekr zekr;
   int repetitions;
 
-  SubChallenge({this.zekrId, this.zekr, this.repetitions});
+  SubChallenge({this.zekr, this.repetitions});
 
-  factory SubChallenge.fromJson(Map<String, dynamic> json) => SubChallenge(
-        zekrId: json["zekrId"],
-        zekr: json["zekr"],
-        repetitions: json["repetitions"],
-      );
+  factory SubChallenge.fromJson(Map<String, dynamic> json) {
+    Zekr zekr = Zekr.fromJson(json["zekr"]);
+    return SubChallenge(
+      zekr: zekr,
+      repetitions: json["repetitions"],
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-        "zekrId": zekrId,
-        "zekr": zekr,
-        "repetitions": repetitions,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      "zekr": zekr.toJson(),
+      "repetitions": repetitions,
+    };
+  }
+
+  bool done() {
+    return repetitions == 0;
+  }
 }

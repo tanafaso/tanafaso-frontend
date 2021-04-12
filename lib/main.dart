@@ -91,7 +91,9 @@ class AppLocalizations {
       'loading the challenges': 'تحميل التحديات',
       'ends after': 'ينتهي بعد',
       'hours': 'ساعات',
+      'hour': 'ساعة',
       'minutes': 'دقائق',
+      'minute': 'دقيقة',
       'ends after less than': 'ينتهي بعد أقل من',
       'passed': 'انقضى',
       'deadline': 'الموعد الأخير',
@@ -114,6 +116,7 @@ class AppLocalizations {
       'add': 'إضافة',
       'add (not ready)': 'إضافة (غير جاهز)',
       'days': 'أيام',
+      'day': 'يوم',
       'challenge expires after': 'التحدي ينتهي بعد',
       'challenge name': 'اسم التحدي',
       'challenge a friend': 'أتحدى صديق',
@@ -131,8 +134,43 @@ class AppLocalizations {
           'يجب أن يكون عدد التكرار من 1 إلى 100',
       'motivation should not be empty': 'لا ينبغي أن يكون الدافع فارغًا',
       'name should not be empty': 'يجب ألا يكون الاسم فارغًا',
+      'click on zekr after reading it': 'اضغط على الذكر بعد قراءته',
+      'you have finished reading it': 'لقد انتهيت من قراءته',
+      'the remaining repetitions': 'التكرارات المتبقية',
+      'you have finished the challenge successfully': 'لقد أنهيت التحدي بنجاح',
     },
   };
+
+  String get day {
+    return _localizedValues[locale.languageCode]['day'];
+  }
+
+  String get hour {
+    return _localizedValues[locale.languageCode]['hour'];
+  }
+
+  String get minute {
+    return _localizedValues[locale.languageCode]['minute'];
+  }
+
+  String get youHaveFinishedTheChallengeSuccessfully {
+    return _localizedValues[locale.languageCode]
+        ['you have finished the challenge successfully'];
+  }
+
+  String get theRemainingRepetitions {
+    return _localizedValues[locale.languageCode]['the remaining repetitions'];
+  }
+
+  String get youHaveFinishedReadingIt {
+    return _localizedValues[locale.languageCode]
+        ['you have finished reading it'];
+  }
+
+  String get clickOnZekrAfterReadingIt {
+    return _localizedValues[locale.languageCode]
+        ['click on zekr after reading it'];
+  }
 
   String get repetitions {
     return _localizedValues[locale.languageCode]['repetitions'];

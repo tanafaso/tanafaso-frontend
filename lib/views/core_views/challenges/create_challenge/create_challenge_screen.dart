@@ -2,6 +2,7 @@ import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/sub_challenge.dart';
+import 'package:azkar/models/zekr.dart';
 import 'package:azkar/net/payload/challenges/requests/add_challenge_request_body.dart';
 import 'package:azkar/net/payload/challenges/responses/add_challenge_response.dart';
 import 'package:azkar/net/service_provider.dart';
@@ -307,12 +308,12 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(30)))),
                                 onPressed: () async {
-                                  String selectedZekr = await Navigator.push(
+                                  Zekr selectedZekr = await Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              SelectZekrScreen())) as String;
-                                  if ((selectedZekr?.length ?? 0) != 0) {
+                                              SelectZekrScreen())) as Zekr;
+                                  if ((selectedZekr.zekr?.length ?? 0) != 0) {
                                     setState(() {
                                       SubChallenge subChallenge = SubChallenge(
                                           zekr: selectedZekr,
@@ -445,7 +446,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                     ),
                                   ),
                                   Text(
-                                    AppLocalizations.of(context).days,
+                                    AppLocalizations.of(context).day,
                                     textAlign: TextAlign.center,
                                     textDirection: TextDirection.rtl,
                                   ),
@@ -692,7 +693,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: Text(
-                            _subChallenges[index].zekr,
+                            _subChallenges[index].zekr.zekr,
                             textAlign: TextAlign.center,
                             textDirection: TextDirection.rtl,
                             style: TextStyle(
