@@ -57,7 +57,7 @@ class AuthMainScreen extends StatelessWidget {
                         child: Container(),
                       ),
                       Flexible(
-                        flex: 3,
+                        flex: 4,
                         fit: FlexFit.tight,
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -117,7 +117,7 @@ class AuthMainScreen extends StatelessWidget {
                         child: Container(),
                       ),
                       Flexible(
-                        flex: 3,
+                        flex: 4,
                         fit: FlexFit.tight,
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -215,7 +215,7 @@ class AuthMainScreen extends StatelessWidget {
                         child: Container(),
                       ),
                       Flexible(
-                        flex: 3,
+                        flex: 4,
                         fit: FlexFit.tight,
                         child: Container(
                           width: MediaQuery.of(context).size.width,
