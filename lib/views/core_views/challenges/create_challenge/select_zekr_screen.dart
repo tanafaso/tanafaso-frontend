@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:azkar/main.dart';
+import 'package:azkar/models/zekr.dart';
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
@@ -18,7 +19,7 @@ class SelectZekrScreen extends StatelessWidget {
           if (snapshot.hasData) {
             GetAzkarResponse response = GetAzkarResponse.fromJson(
                 jsonDecode(utf8.decode(snapshot.data.body.codeUnits)));
-            List<String> azkar = response.azkar;
+            List<Zekr> azkar = response.azkar;
             return Scaffold(
               appBar: AppBar(
                 title: Text(AppLocalizations.of(context).selectZekr),

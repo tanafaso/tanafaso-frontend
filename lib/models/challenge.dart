@@ -47,7 +47,7 @@ class Challenge {
 
   bool done() {
     for (SubChallenge subChallenge in subChallenges) {
-      if (subChallenge.repetitions != 0) {
+      if (!subChallenge.done()) {
         return false;
       }
     }
