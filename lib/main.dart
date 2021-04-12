@@ -143,9 +143,17 @@ class AppLocalizations {
       'first name example': 'مثال على الاسم الأول',
       'last name example': 'مثال على اسم العائلة',
       'then': 'ثم',
+      'you': 'أنت',
+      'total points': 'مجموع النقاط',
     },
   };
 
+  String get you {
+    return _localizedValues[locale.languageCode]['you'];
+  }
+  String get totalPoints {
+    return _localizedValues[locale.languageCode]['total points'];
+  }
   String get then {
     return _localizedValues[locale.languageCode]['then'];
   }

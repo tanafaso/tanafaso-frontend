@@ -18,6 +18,7 @@ enum EndpointRoute {
   REJECT_FRIEND,
   ADD_GROUP,
   GET_GROUP,
+  GET_GROUP_LEADERBOARD,
   GET_GROUPS,
   ADD_GROUP_CHALLENGE,
   ADD_PERSONAL_CHALLENGE,
@@ -83,6 +84,9 @@ class ApiRoutesUtil {
       case EndpointRoute.GET_GROUP:
         assert(route.pathVariables.length == 1);
         return '/groups/${route.pathVariables[0]}';
+      case EndpointRoute.GET_GROUP_LEADERBOARD:
+        assert(route.pathVariables.length == 1);
+        return '/groups/${route.pathVariables[0]}/leaderboard';
       case EndpointRoute.GET_GROUPS:
         return '/groups';
       case EndpointRoute.ADD_GROUP_CHALLENGE:
