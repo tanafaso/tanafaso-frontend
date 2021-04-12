@@ -30,7 +30,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).inviteFriends),
       ),
-      body: Center(
+      body: Container(
         child: Form(
           key: _formKey,
           child: Column(
@@ -180,6 +180,36 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                             ),
                           ],
                         ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                margin:
+                    const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+                alignment: Alignment.center,
+                child: Row(
+                  children: <Widget>[
+                    new Expanded(
+                      child: new Container(
+                        margin: EdgeInsets.all(8.0),
+                        decoration:
+                            BoxDecoration(border: Border.all(width: 0.25)),
+                      ),
+                    ),
+                    Text(
+                      AppLocalizations.of(context).then,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    new Expanded(
+                      child: new Container(
+                        margin: EdgeInsets.all(8.0),
+                        decoration:
+                            BoxDecoration(border: Border.all(width: 0.25)),
                       ),
                     ),
                   ],

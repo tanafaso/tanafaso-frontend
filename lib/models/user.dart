@@ -4,11 +4,14 @@ class User {
   String email;
   String id;
   String username;
-  String name;
+  String firstName;
+  String lastName;
 
-  User(
-      {@required this.email,
-      @required this.id,
-      @required this.username,
-      @required this.name});
+  User({
+    @required this.email,
+    @required this.id,
+    @required this.username,
+    @required this.firstName,
+    @required this.lastName,
+  });
 }

@@ -32,7 +32,8 @@ class GetFriendsResponse extends ResponseBase {
         userId: friend['userId'],
         groupId: friend['groupId'],
         username: friend['username'],
-        name: friend['name'],
+        firstName: friend['firstName'],
+        lastName: friend['lastName'],
         pending: friend['pending'],
       ));
     }
