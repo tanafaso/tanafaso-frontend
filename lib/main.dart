@@ -145,9 +145,17 @@ class AppLocalizations {
       'then': 'ثم',
       'you': 'أنت',
       'total points': 'مجموع النقاط',
+      'challenge this friend': 'تحدي هذا الصديق',
+      'your friend': 'صديقك',
     },
   };
 
+  String get yourFriend {
+    return _localizedValues[locale.languageCode]['your friend'];
+  }
+  String get challengeThisFriend {
+    return _localizedValues[locale.languageCode]['challenge this friend'];
+  }
   String get you {
     return _localizedValues[locale.languageCode]['you'];
   }

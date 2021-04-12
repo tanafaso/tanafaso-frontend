@@ -23,6 +23,7 @@ enum EndpointRoute {
   ADD_GROUP_CHALLENGE,
   ADD_PERSONAL_CHALLENGE,
   GET_ALL_CHALLENGES,
+  GET_ALL_CHALLENGES_IN_GROUP,
   GET_CHALLENGE,
   UPDATE_CHALLENGE,
   GET_PERSONAL_CHALLENGES,
@@ -95,6 +96,9 @@ class ApiRoutesUtil {
         return '/challenges/personal';
       case EndpointRoute.GET_ALL_CHALLENGES:
         return '/challenges/';
+      case EndpointRoute.GET_ALL_CHALLENGES_IN_GROUP:
+        assert(route.pathVariables.length == 1);
+        return '/challenges/groups/${route.pathVariables[0]}/';
       case EndpointRoute.GET_CHALLENGE:
         assert(route.pathVariables.length == 1);
         return '/challenges/${route.pathVariables[0]}';
