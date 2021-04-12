@@ -10,7 +10,12 @@ import 'package:azkar/views/core_views/challenges/create_challenge/select_friend
 import 'package:azkar/views/core_views/challenges/create_challenge/select_zekr_screen.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CreateChallengeScreen extends StatefulWidget {
+  Friend selectedFriend;
+
+  CreateChallengeScreen({this.selectedFriend});
+
   @override
   _CreateChallengeScreenState createState() => _CreateChallengeScreenState();
 }
@@ -21,7 +26,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   static const int DEFAULT_ORIGINAL_REPETITIONS = 1;
 
   ChallengeTarget _challengeTarget = ChallengeTarget.FRIEND;
-  Friend _selectedFriend;
   List<SubChallenge> _subChallenges = [];
   bool _motivateFriend = false;
   TextEditingController _challengeNameController;
@@ -269,7 +273,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                             as Friend;
                                     if (selectedFriend != null) {
                                       setState(() {
-                                        _selectedFriend = selectedFriend;
+                                        widget.selectedFriend = selectedFriend;
                                       });
                                     }
                                   },
@@ -559,7 +563,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     }
 
     final String groupId = _challengeTarget == ChallengeTarget.FRIEND
-        ? _selectedFriend.groupId
+        ? widget.selectedFriend.groupId
         : null;
 
     Challenge challenge = Challenge(
@@ -600,7 +604,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   }
 
   bool readyToFinishChallenge(bool showWarnings) {
-    if (_challengeTarget == ChallengeTarget.FRIEND && _selectedFriend == null) {
+    if (_challengeTarget == ChallengeTarget.FRIEND &&
+        widget.selectedFriend == null) {
       return false;
     }
     if (_subChallenges.length == 0) {
@@ -627,10 +632,10 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   }
 
   Widget getSelectedFriendNameConditionally() {
-    String text = _selectedFriend == null
+    String text = widget.selectedFriend == null
         ? AppLocalizations.of(context).noFriendSelected
-        : '${AppLocalizations.of(context).youWillChallenge}: ${_selectedFriend.firstName} ${_selectedFriend.lastName}';
-    Color color = _selectedFriend == null ? Colors.pink : Colors.black;
+        : '${AppLocalizations.of(context).youWillChallenge}: ${widget.selectedFriend.firstName} ${widget.selectedFriend.lastName}';
+    Color color = widget.selectedFriend == null ? Colors.pink : Colors.black;
     return Text(
       text,
       style: TextStyle(fontWeight: FontWeight.w700, color: color),
@@ -638,7 +643,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   }
 
   getSelectFriendTextConditionally() {
-    final String text = _selectedFriend == null
+    final String text = widget.selectedFriend == null
         ? AppLocalizations.of(context).selectAFriend
         : AppLocalizations.of(context).changeSelectedFriend;
     return Text(
