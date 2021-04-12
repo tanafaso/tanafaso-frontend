@@ -80,7 +80,7 @@ class SelectFriendScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              friend.name,
+                              friend.firstName + " " + friend.lastName,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20),
                             ),

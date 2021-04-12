@@ -23,7 +23,7 @@ class ProfileMainWidget extends StatelessWidget {
             return Column(
               children: [
                 Text(
-                    '${AppLocalizations.of(context).name}: ${response.user.name}'),
+                    '${AppLocalizations.of(context).name}: ${response.user.firstName} ${response.user.lastName}'),
                 Text(
                     '${AppLocalizations.of(context).email}: ${response.user.email}'),
                 Text(

@@ -28,7 +28,8 @@ void main() {
         userId: 'pendingUserId1',
         groupId: 'groupId1',
         username: 'pendingUsername1',
-        name: 'pendingName1',
+        firstName: 'pendingFirstName1',
+        lastName: 'pendingLastName1',
         pending: true,
       ),
     ];
@@ -38,14 +39,16 @@ void main() {
         userId: 'nonPendingUserId1',
         groupId: 'groupId2',
         username: 'nonPendingUsername1',
-        name: 'nonPendingName1',
+        firstName: 'nonPendingFirstName1',
+        lastName: 'nonPendingLastName1',
         pending: false,
       ),
       Friend(
         userId: 'nonPendingUserId2',
         groupId: 'groupId3',
         username: 'nonPendingUsername2',
-        name: 'nonPendingName2',
+        firstName: 'nonPendingFirstName2',
+        lastName: 'nonPendingLastName2',
         pending: false,
       ),
     ];
@@ -81,7 +84,7 @@ void main() {
     expect(
         find.descendant(
           of: find.byType(Card),
-          matching: find.text(nonPendingFriends[0].username),
+          matching: find.textContaining(nonPendingFriends[0].firstName),
         ),
         findsOneWidget);
 
@@ -89,7 +92,7 @@ void main() {
     expect(
         find.descendant(
           of: find.byType(Card),
-          matching: find.text(nonPendingFriends[1].username),
+          matching: find.textContaining(nonPendingFriends[1].lastName),
         ),
         findsOneWidget);
   });
