@@ -21,132 +21,134 @@ class ProfileMainWidget extends StatelessWidget {
               return Text(response.error.errorMessage);
             }
 
-            return Column(
-              children: [
-                Container(
-                    child: Column(children: [
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Icon(
+                        //   Icons.person,
+                        //   size: 40,
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: VerticalDivider(
+                        //     width: 3,
+                        //     color: Colors.black,
+                        //   ),
+                        // ),
+                        Column(
                           children: [
-                            Icon(
-                              Icons.person,
-                              size: 30,
+                            Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                response.user.firstName +
+                                    " " +
+                                    response.user.lastName,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                ),
+                              ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(response.user.firstName +
-                                  " " +
-                                  response.user.lastName),
+                            Container(
+                              alignment: Alignment.center,
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      response.user.username + "@",
+                                      style: TextStyle(
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTapDown: (_) {
+                                      Clipboard.setData(ClipboardData(
+                                        text: response.user.username,
+                                      )).then((_) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(
+                                              AppLocalizations.of(context)
+                                                  .usernameCopiedSuccessfully),
+                                        ));
+                                      });
+                                    },
+                                    child: Icon(Icons.copy),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
+                      ],
                     ),
-                  )
-                ])),
-                Container(
-                    child: Column(children: [
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.email,
-                              size: 30,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(response.user.email),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ])),
-                Container(
-                    child: Column(children: [
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.verified_user,
-                              size: 30,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(response.user.username),
-                            ),
-                            GestureDetector(
-                              onTapDown: (_) {
-                                Clipboard.setData(ClipboardData(
-                                  text: response.user.username,
-                                )).then((_) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text(AppLocalizations.of(context)
-                                        .usernameCopiedSuccessfully),
-                                  ));
-                                });
-                              },
-                              child: Icon(Icons.copy),
-                            ),
-                          ],
-                        ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 8.0, right: 8, top: 20, bottom: 8),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.email,
+                            size: 30,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(response.user.email),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ])),
-                Container(
-                    child: Column(children: [
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.done_all,
-                              size: 30,
+                  Padding(padding: EdgeInsets.all(30)),
+                  Card(
+                    elevation: 15,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 300,
+                      width: 300,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              AppLocalizations.of(context).youHaveFinished,
+                              style: TextStyle(fontSize: 30),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                  AppLocalizations.of(context).youHaveFinished),
-                            ),
-                            Text(
+                          ),
+                          Text(
                               response.user
                                   .getFinishedChallengesCount()
                                   .toString(),
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.green),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 50,
+                                color: Colors.green,
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              AppLocalizations.of(context).challenges,
+                              style: TextStyle(fontSize: 30),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child:
-                                  Text(AppLocalizations.of(context).challenges),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ])),
-              ],
+                ],
+              ),
             );
           } else if (snapshot.hasError) {
             // TODO(omorsi): Handle error

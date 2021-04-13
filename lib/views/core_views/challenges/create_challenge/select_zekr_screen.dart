@@ -27,11 +27,13 @@ class SelectZekrScreen extends StatelessWidget {
               body: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
-                    child: ListView.builder(
-                  itemCount: azkar.length,
-                  itemBuilder: (context, index) {
-                    return ZekrWidget(zekr: azkar[index]);
-                  },
+                    child: Scrollbar(
+                  child: ListView.builder(
+                    itemCount: azkar.length,
+                    itemBuilder: (context, index) {
+                      return ZekrWidget(zekr: azkar[index]);
+                    },
+                  ),
                 )),
               ),
             );
