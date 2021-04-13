@@ -1,2 +1,3 @@
 https://github.com/samarthagarwal/FlutterScreens/blob/master/LICENSE
 https://pub.dev/packages/progress_state_button
+https://github.com/ahegazy/muslimKit/tree/master/docs/json
