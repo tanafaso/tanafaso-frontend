@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
               icon: Icon(Icons.whatshot),
-              label: AppLocalizations.of(context).challenges,
+              label: AppLocalizations.of(context).theChallenges,
               backgroundColor: Theme.of(context).primaryColor),
           widget: widget.challengesWidget),
       Topic(
