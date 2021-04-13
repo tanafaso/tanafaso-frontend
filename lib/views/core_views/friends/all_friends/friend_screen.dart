@@ -160,7 +160,7 @@ class _FriendScreenState extends State<FriendScreen> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            AppLocalizations.of(context).challenges,
+                            AppLocalizations.of(context).theChallenges,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,

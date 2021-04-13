@@ -54,7 +54,7 @@ class AppLocalizations {
       'did not receive the code?': 'لم يصلك الرمز؟',
       'please fill up all the cells properly':
           'يرجى ملء جميع الخلايا بشكل صحيح',
-      'challenges': 'التحديات',
+      'the challenges': 'التحديات',
       'friends': 'الأصدقاء',
       'profile': 'الملف الشخصي',
       'home page': 'الصفحة الرئيسية',
@@ -147,9 +147,21 @@ class AppLocalizations {
       'total points': 'مجموع النقاط',
       'challenge this friend': 'تحدي هذا الصديق',
       'your friend': 'صديقك',
+      'you have finished': 'لقد أنهيت',
+      'challenges': 'تحديات',
+      'username copied successfully': 'تم نسخ اسم المستخدم بنجاح',
     },
   };
 
+  String get usernameCopiedSuccessfully {
+    return _localizedValues[locale.languageCode]['username copied successfully'];
+  }
+  String get challenges {
+    return _localizedValues[locale.languageCode]['challenges'];
+  }
+  String get youHaveFinished {
+    return _localizedValues[locale.languageCode]['you have finished'];
+  }
   String get yourFriend {
     return _localizedValues[locale.languageCode]['your friend'];
   }
@@ -506,8 +518,8 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]['username'];
   }
 
-  String get challenges {
-    return _localizedValues[locale.languageCode]['challenges'];
+  String get theChallenges {
+    return _localizedValues[locale.languageCode]['the challenges'];
   }
 
   String get homePage {
