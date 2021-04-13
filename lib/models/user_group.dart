@@ -16,20 +16,20 @@ class UserGroup {
   int totalScore;
 
   factory UserGroup.fromJson(Map<String, dynamic> json) => UserGroup(
-    groupId: json["groupId"],
-    groupName: json["groupName"],
-    invitingUserId: json["invitingUserId"],
-    isPending: json["isPending"],
-    monthScore: json["monthScore"],
-    totalScore: json["totalScore"],
-  );
+        groupId: json["groupId"],
+        groupName: json["groupName"],
+        invitingUserId: json["invitingUserId"],
+        isPending: json["isPending"],
+        monthScore: json["monthScore"],
+        totalScore: json["totalScore"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "groupId": groupId,
-    "groupName": groupName,
-    "invitingUserId": invitingUserId,
-    "isPending": isPending,
-    "monthScore": monthScore,
-    "totalScore": totalScore,
-  };
+        "groupId": groupId,
+        "groupName": groupName,
+        "invitingUserId": invitingUserId,
+        "isPending": isPending,
+        "monthScore": monthScore,
+        "totalScore": totalScore,
+      };
 }

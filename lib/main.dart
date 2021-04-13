@@ -154,14 +154,18 @@ class AppLocalizations {
   };
 
   String get usernameCopiedSuccessfully {
-    return _localizedValues[locale.languageCode]['username copied successfully'];
+    return _localizedValues[locale.languageCode]
+        ['username copied successfully'];
   }
+
   String get challenges {
     return _localizedValues[locale.languageCode]['challenges'];
   }
+
   String get youHaveFinished {
     return _localizedValues[locale.languageCode]['you have finished'];
   }
+
   String get yourFriend {
     return _localizedValues[locale.languageCode]['your friend'];
   }
