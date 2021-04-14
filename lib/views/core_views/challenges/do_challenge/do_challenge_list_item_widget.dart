@@ -18,8 +18,16 @@ class DoChallengeSubChallengeListItemWidget extends StatefulWidget {
 }
 
 class _DoChallengeSubChallengeListItemWidgetState
-    extends State<DoChallengeSubChallengeListItemWidget> {
+    extends State<DoChallengeSubChallengeListItemWidget>
+    with TickerProviderStateMixin {
   Color buttonColor;
+  int initialRepetitions;
+
+  @override
+  void initState() {
+    initialRepetitions = widget.subChallenge.repetitions;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +82,12 @@ class _DoChallengeSubChallengeListItemWidgetState
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: getRepetitionsTextConditionally(),
+            ),
+            LinearProgressIndicator(
+              minHeight: 10,
+              backgroundColor: Colors.green,
+              value: widget.subChallenge.repetitions.toDouble() /
+                  initialRepetitions.toDouble(),
             ),
           ],
         ),
