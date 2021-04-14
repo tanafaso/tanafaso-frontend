@@ -150,12 +150,18 @@ class AppLocalizations {
       'you have finished': 'لقد أنهيت',
       'challenges': 'تحديات',
       'username copied successfully': 'تم نسخ اسم المستخدم بنجاح',
+      'search for a zekr': 'ابحث عن ذكر',
     },
   };
 
+  String get searchForAZekr {
+    return _localizedValues[locale.languageCode]
+    ['search for a zekr'];
+  }
+
   String get usernameCopiedSuccessfully {
     return _localizedValues[locale.languageCode]
-        ['username copied successfully'];
+    ['username copied successfully'];
   }
 
   String get challenges {
