@@ -25,8 +25,7 @@ class GroupChallengeListItemWidget extends StatefulWidget {
       _GroupChallengeListItemWidgetState();
 }
 
-class _GroupChallengeListItemWidgetState
-    extends State<GroupChallengeListItemWidget> {
+class _GroupChallengeListItemWidgetState extends State<GroupChallengeListItemWidget> {
   Group _group;
   User _friend;
 
