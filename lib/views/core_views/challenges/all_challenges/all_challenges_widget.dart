@@ -82,7 +82,9 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
       itemBuilder: (context, index) {
         return ChallengeListItemWidget(
           challenge: challenges[index],
-          challengeChangedCallback: (_) {},
+          challengeChangedCallback: (_) {
+            setState(() {});
+          },
         );
       },
     );

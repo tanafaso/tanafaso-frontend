@@ -155,13 +155,12 @@ class AppLocalizations {
   };
 
   String get searchForAZekr {
-    return _localizedValues[locale.languageCode]
-    ['search for a zekr'];
+    return _localizedValues[locale.languageCode]['search for a zekr'];
   }
 
   String get usernameCopiedSuccessfully {
     return _localizedValues[locale.languageCode]
-    ['username copied successfully'];
+        ['username copied successfully'];
   }
 
   String get challenges {
