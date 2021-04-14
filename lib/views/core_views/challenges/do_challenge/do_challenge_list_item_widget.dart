@@ -86,8 +86,10 @@ class _DoChallengeSubChallengeListItemWidgetState
             LinearProgressIndicator(
               minHeight: 10,
               backgroundColor: Colors.green,
-              value: widget.subChallenge.repetitions.toDouble() /
-                  initialRepetitions.toDouble(),
+              value: initialRepetitions == 0
+                  ? 1
+                  : widget.subChallenge.repetitions.toDouble() /
+                      initialRepetitions.toDouble(),
             ),
           ],
         ),
