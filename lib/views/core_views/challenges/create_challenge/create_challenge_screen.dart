@@ -1,14 +1,20 @@
+import 'dart:convert';
+
 import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/models/zekr.dart';
+import 'package:azkar/net/api_caller.dart';
+import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/challenges/requests/add_challenge_request_body.dart';
 import 'package:azkar/net/payload/challenges/responses/add_challenge_response.dart';
+import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_zekr_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
 class CreateChallengeScreen extends StatefulWidget {
@@ -312,11 +318,27 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(30)))),
                                 onPressed: () async {
+                                  http.Response apiResponse =
+                                      await ApiCaller.get(
+                                          route: Endpoint(
+                                              endpointRoute:
+                                                  EndpointRoute.GET_AZKAR));
+                                  GetAzkarResponse response =
+                                      GetAzkarResponse.fromJson(jsonDecode(utf8
+                                          .decode(apiResponse.body.codeUnits)));
+                                  if (response.hasError()) {
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                      content: Text(response.error.errorMessage),
+                                    ));
+                                    return;
+                                  }
                                   Zekr selectedZekr = await Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              SelectZekrScreen())) as Zekr;
+                                              SelectZekrScreen(
+                                                azkar: response.azkar,
+                                              ))) as Zekr;
                                   if ((selectedZekr.zekr?.length ?? 0) != 0) {
                                     setState(() {
                                       SubChallenge subChallenge = SubChallenge(
