@@ -17,6 +17,7 @@ class Challenge {
   String creatingUserId;
   String motivation;
   String name;
+
   // In seconds since epoch
   int expiryDate;
   List<String> usersFinished;
