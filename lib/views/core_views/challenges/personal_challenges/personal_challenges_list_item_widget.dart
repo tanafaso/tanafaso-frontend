@@ -1,7 +1,7 @@
 import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
-import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class PersonalChallengesListItemWidget extends StatelessWidget {
