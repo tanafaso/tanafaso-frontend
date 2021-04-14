@@ -2,7 +2,7 @@ import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/net/payload/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/service_provider.dart';
-import 'package:azkar/views/core_views/challenges/challenge_list_item_widget.dart';
+import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 
@@ -80,7 +80,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
       key: Keys.allChallengesWidgetListKey,
       itemCount: challenges.length,
       itemBuilder: (context, index) {
-        return ChallengeListItemWidget(
+        return GroupChallengeListItemWidget(
           challenge: challenges[index],
           challengeChangedCallback: (_) {
             setState(() {});

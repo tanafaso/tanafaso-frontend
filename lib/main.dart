@@ -151,8 +151,13 @@ class AppLocalizations {
       'challenges': 'تحديات',
       'username copied successfully': 'تم نسخ اسم المستخدم بنجاح',
       'search for a zekr': 'ابحث عن ذكر',
+      'the deadline has already passed for this challenge': 'لقد انقضى الموعد النهائي لهذا التحدي',
     },
   };
+
+  String get theDeadlineHasAlreadyPassedForThisChallenge {
+    return _localizedValues[locale.languageCode]['the deadline has already passed for this challenge'];
+  }
 
   String get searchForAZekr {
     return _localizedValues[locale.languageCode]['search for a zekr'];
