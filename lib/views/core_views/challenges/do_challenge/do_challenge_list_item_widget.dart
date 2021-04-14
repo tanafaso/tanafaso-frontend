@@ -1,4 +1,5 @@
 import 'package:azkar/main.dart';
+import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +10,14 @@ class DoChallengeSubChallengeListItemWidget extends StatefulWidget {
   final SubChallenge subChallenge;
   final SubChallengeChangedCallback callback;
 
+  // Only use to check if the challenge is expired, since other data may change
+  // and will not be consistent.
+  final Challenge challenge;
+
   DoChallengeSubChallengeListItemWidget(
-      {@required this.subChallenge, @required this.callback});
+      {@required this.subChallenge,
+      @required this.callback,
+      @required this.challenge});
 
   @override
   _DoChallengeSubChallengeListItemWidgetState createState() =>
@@ -40,6 +47,14 @@ class _DoChallengeSubChallengeListItemWidgetState
     return GestureDetector(
       onTapDown: (_) {
         if (widget.subChallenge.done()) {
+          return;
+        }
+        if (widget.challenge.deadlinePassed()) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(AppLocalizations.of(context)
+                .theDeadlineHasAlreadyPassedForThisChallenge),
+          ));
+          Navigator.of(context).pop();
           return;
         }
         setState(() {
