@@ -327,8 +327,10 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                       GetAzkarResponse.fromJson(jsonDecode(utf8
                                           .decode(apiResponse.body.codeUnits)));
                                   if (response.hasError()) {
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                      content: Text(response.error.errorMessage),
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content:
+                                          Text(response.error.errorMessage),
                                     ));
                                     return;
                                   }
