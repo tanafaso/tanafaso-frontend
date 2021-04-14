@@ -9,41 +9,76 @@ import 'package:azkar/views/core_views/challenges/create_challenge/zekr_widget.d
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class SelectZekrScreen extends StatelessWidget {
+class SelectZekrScreen extends StatefulWidget {
+  final List<Zekr> azkar;
+
+  SelectZekrScreen({@required this.azkar});
+
+  @override
+  _SelectZekrScreenState createState() => _SelectZekrScreenState();
+}
+
+class _SelectZekrScreenState extends State<SelectZekrScreen> {
+  TextEditingController searchController;
+  List<Zekr> filteredAzkar;
+
+  @override
+  void initState() {
+    filteredAzkar = widget.azkar;
+    searchController = TextEditingController();
+    searchController.addListener(() {
+      setState(() {
+        filterBy(searchController.value.text);
+      });
+    });
+    super.initState();
+  }
+
+  void filterBy(String sequence) {
+   filteredAzkar = [];
+   for (Zekr zekr in widget.azkar) {
+      if (zekr.zekr.contains(sequence)) {
+        filteredAzkar.add(zekr);
+      }
+   }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: ApiCaller.get(
-            route: Endpoint(endpointRoute: EndpointRoute.GET_AZKAR)),
-        builder: (BuildContext context, AsyncSnapshot<http.Response> snapshot) {
-          if (snapshot.hasData) {
-            GetAzkarResponse response = GetAzkarResponse.fromJson(
-                jsonDecode(utf8.decode(snapshot.data.body.codeUnits)));
-            List<Zekr> azkar = response.azkar;
-            return Scaffold(
-              appBar: AppBar(
-                title: Text(AppLocalizations.of(context).selectZekr),
-              ),
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                    child: Scrollbar(
-                  child: ListView.builder(
-                    itemCount: azkar.length,
-                    itemBuilder: (context, index) {
-                      return ZekrWidget(zekr: azkar[index]);
-                    },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context).selectZekr),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+            child: Column(
+              children: [
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: searchController,
+                      decoration: InputDecoration(
+                        hintText:
+                        AppLocalizations.of(context).searchForAZekr,
+                      ),
+                    ),
                   ),
-                )),
-              ),
-            );
-          } else if (snapshot.hasError) {
-            // TODO(omorsi): Handle error
-            return Text(AppLocalizations.of(context).error);
-          } else {
-            // TODO(omorsi): Show loader
-            return Text(AppLocalizations.of(context).loading);
-          }
-        });
+                ),
+                Flexible(
+                  child: Scrollbar(
+                    child: ListView.builder(
+                      itemCount: filteredAzkar.length,
+                      itemBuilder: (context, index) {
+                        return ZekrWidget(zekr: filteredAzkar[index]);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            )),
+      ),
+    );
   }
 }
