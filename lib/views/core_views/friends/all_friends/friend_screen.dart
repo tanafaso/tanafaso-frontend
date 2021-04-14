@@ -3,7 +3,7 @@ import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/payload/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/payload/groups/responses/get_group_leaderboard_response.dart';
 import 'package:azkar/net/service_provider.dart';
-import 'package:azkar/views/core_views/challenges/challenge_list_item_widget.dart';
+import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_challenge_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
@@ -211,7 +211,7 @@ class _FriendScreenState extends State<FriendScreen> {
             return ListView.builder(
               itemCount: response.challenges.length,
               itemBuilder: (context, index) {
-                return ChallengeListItemWidget(
+                return GroupChallengeListItemWidget(
                   challenge: response.challenges[index],
                   showName: false,
                   challengeChangedCallback: (_) {

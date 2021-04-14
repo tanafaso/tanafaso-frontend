@@ -3,18 +3,22 @@ import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/models/user.dart';
+import 'package:azkar/net/payload/challenges/responses/update_challenge_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
-import 'package:azkar/views/core_views/challenges/challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
+import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class DoChallengeScreen extends StatefulWidget {
   final Challenge challenge;
   final ChallengeChangedCallback challengeChangedCallback;
+  final bool isPersonalChallenge;
 
   DoChallengeScreen(
-      {@required this.challenge, @required this.challengeChangedCallback});
+      {@required this.challenge,
+      @required this.challengeChangedCallback,
+      @required this.isPersonalChallenge});
 
   @override
   _DoChallengeScreenState createState() => _DoChallengeScreenState();
@@ -23,37 +27,37 @@ class DoChallengeScreen extends StatefulWidget {
 class _DoChallengeScreenState extends State<DoChallengeScreen> {
   Group _group;
   User _friend;
-  bool _isPersonalChallenge = false;
 
   @override
   void initState() {
-    ServiceProvider.groupsService
-        .getGroup(widget.challenge.groupId)
-        .then((getGroupResponse) async {
-      if (getGroupResponse.hasError()) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getGroupResponse.error.errorMessage),
-        ));
-        return;
-      }
-
-      if (getGroupResponse.group.binary) {
-        GetUserResponse currentUserResponse =
-            await ServiceProvider.usersService.getCurrentUser();
-        String otherUserId = getGroupResponse.group.usersIds.singleWhere(
-            (userId) => userId != currentUserResponse.user.id,
-            orElse: null);
-        _isPersonalChallenge = otherUserId == null;
-        if (otherUserId != null) {
-          GetUserResponse otherUserResponse =
-              await ServiceProvider.usersService.getUserById(otherUserId);
-          _friend = otherUserResponse.user;
+    if (!widget.isPersonalChallenge) {
+      ServiceProvider.groupsService
+          .getGroup(widget.challenge.groupId)
+          .then((getGroupResponse) async {
+        if (getGroupResponse.hasError()) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(getGroupResponse.error.errorMessage),
+          ));
+          return;
         }
-      }
 
-      _group = getGroupResponse.group;
-      setState(() {});
-    });
+        if (getGroupResponse.group.binary) {
+          GetUserResponse currentUserResponse =
+              await ServiceProvider.usersService.getCurrentUser();
+          String otherUserId = getGroupResponse.group.usersIds.singleWhere(
+              (userId) => userId != currentUserResponse.user.id,
+              orElse: null);
+          if (otherUserId != null) {
+            GetUserResponse otherUserResponse =
+                await ServiceProvider.usersService.getUserById(otherUserId);
+            _friend = otherUserResponse.user;
+          }
+        }
+
+        _group = getGroupResponse.group;
+        setState(() {});
+      });
+    }
 
     super.initState();
   }
@@ -69,7 +73,7 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
             children: [
               Card(
                 child: Visibility(
-                  visible: !_isPersonalChallenge && _group != null,
+                  visible: !widget.isPersonalChallenge && _group != null,
                   child: Row(
                     children: [
                       Padding(
@@ -130,11 +134,17 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
       itemBuilder: (context, index) {
         return DoChallengeSubChallengeListItemWidget(
           subChallenge: widget.challenge.subChallenges[index],
+          challenge: widget.challenge,
           callback: (SubChallenge newSubChallenge) {
             widget.challenge.subChallenges[index] = newSubChallenge;
-            ServiceProvider.challengesService
-                .updateChallenge(widget.challenge)
-                .then((response) {
+            Future<UpdateChallengeResponse> updateChallengeResponseFuture =
+                widget.isPersonalChallenge
+                    ? ServiceProvider.challengesService
+                        .updatePersonalChallenge(widget.challenge)
+                    : ServiceProvider.challengesService
+                        .updateChallenge(widget.challenge);
+
+            updateChallengeResponseFuture.then((response) {
               if (response.hasError()) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(response.error.errorMessage),

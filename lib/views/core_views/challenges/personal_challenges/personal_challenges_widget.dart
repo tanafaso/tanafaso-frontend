@@ -78,6 +78,9 @@ class _PersonalChallengesWidgetState extends State<PersonalChallengesWidget> {
       itemBuilder: (context, index) {
         return PersonalChallengesListItemWidget(
           challenge: challenges[index],
+          challengeChangedCallback: (_) {
+            setState(() {});
+          },
         );
       },
     );
