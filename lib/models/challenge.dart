@@ -17,6 +17,7 @@ class Challenge {
   String creatingUserId;
   String motivation;
   String name;
+  // In seconds since epoch
   int expiryDate;
   List<String> usersFinished;
   List<SubChallenge> subChallenges;
@@ -55,25 +56,25 @@ class Challenge {
   }
 
   bool deadlinePassed() {
-    int currentTime = DateTime.now().millisecondsSinceEpoch;
-    return currentTime >= expiryDate;
+    int secondsSinceEpoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+    return secondsSinceEpoch >= expiryDate;
   }
 
   int hoursLeft() {
     if (deadlinePassed()) {
       return 0;
     }
-    int currentTime = DateTime.now().millisecondsSinceEpoch;
-    int millisecondsLeft = expiryDate - currentTime;
-    return millisecondsLeft ~/ 1000 ~/ 60 ~/ 60;
+    int secondsSinceEpoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+    int secondsLeft = expiryDate - secondsSinceEpoch;
+    return secondsLeft ~/ 60 ~/ 60;
   }
 
   int minutesLeft() {
     if (deadlinePassed()) {
       return 0;
     }
-    int currentTime = DateTime.now().millisecondsSinceEpoch;
-    int millisecondsLeft = expiryDate - currentTime;
-    return millisecondsLeft ~/ 1000 ~/ 60;
+    int secondsSinceEpoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+    int secondsLeft = expiryDate - secondsSinceEpoch;
+    return secondsLeft ~/ 60;
   }
 }

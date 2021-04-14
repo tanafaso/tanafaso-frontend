@@ -10,22 +10,22 @@ import 'package:flutter/material.dart';
 
 typedef ChallengeChangedCallback = void Function(Challenge newChallenge);
 
-class ChallengeListItemWidget extends StatefulWidget {
+class GroupChallengeListItemWidget extends StatefulWidget {
   final Challenge challenge;
   final bool showName;
   final ChallengeChangedCallback challengeChangedCallback;
 
-  ChallengeListItemWidget(
+  GroupChallengeListItemWidget(
       {@required this.challenge,
       this.showName = true,
       @required this.challengeChangedCallback});
 
   @override
-  _ChallengeListItemWidgetState createState() =>
-      _ChallengeListItemWidgetState();
+  _GroupChallengeListItemWidgetState createState() =>
+      _GroupChallengeListItemWidgetState();
 }
 
-class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget> {
+class _GroupChallengeListItemWidgetState extends State<GroupChallengeListItemWidget> {
   Group _group;
   User _friend;
 
@@ -70,9 +70,17 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget> {
                   '${AppLocalizations.of(context).error}: ${response.error.errorMessage}')));
           return;
         }
+        if (response.challenge.deadlinePassed()) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(AppLocalizations.of(context)
+                .theDeadlineHasAlreadyPassedForThisChallenge),
+          ));
+          return;
+        }
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => DoChallengeScreen(
                 challenge: response.challenge,
+                isPersonalChallenge: false,
                 challengeChangedCallback: (changedChallenge) {
                   widget.challengeChangedCallback(changedChallenge);
                 })));
@@ -181,7 +189,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget> {
       int minutesLeft = widget.challenge.minutesLeft();
       if (minutesLeft == 0) {
         return Text(
-            '${AppLocalizations.of(context).endsAfterLessThan} $minutesLeft ${AppLocalizations.of(context).minute}');
+            '${AppLocalizations.of(context).endsAfterLessThan} 1 ${AppLocalizations.of(context).minute}');
       }
       return Text(
           '${AppLocalizations.of(context).endsAfter} $minutesLeft ${AppLocalizations.of(context).minute}');

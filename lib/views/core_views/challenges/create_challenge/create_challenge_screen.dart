@@ -594,8 +594,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       groupId: groupId,
       motivation: _motivationController.value.text,
       name: _challengeNameController.value.text,
-      expiryDate: DateTime.now().millisecondsSinceEpoch +
-          Duration.millisecondsPerDay *
+      expiryDate: DateTime.now().millisecondsSinceEpoch ~/ 1000 +
+          Duration.secondsPerDay *
               int.parse(_expiresAfterDayNumController.value.text),
       subChallenges: _subChallenges,
     );
