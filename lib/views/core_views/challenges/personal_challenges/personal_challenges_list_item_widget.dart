@@ -1,63 +1,85 @@
 import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
+import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
 import 'package:flutter/material.dart';
 
 class PersonalChallengesListItemWidget extends StatelessWidget {
   final Challenge challenge;
+  final ChallengeChangedCallback challengeChangedCallback;
 
-  PersonalChallengesListItemWidget({@required this.challenge});
+  PersonalChallengesListItemWidget(
+      {@required this.challenge, @required this.challengeChangedCallback});
 
   Widget build(BuildContext context) {
-    return Card(
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            getIconConditionally(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: VerticalDivider(
-                width: 3,
-                color: Colors.black,
+    return GestureDetector(
+      onTap: () async {
+        if (challenge.deadlinePassed()) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(AppLocalizations.of(context)
+                .theDeadlineHasAlreadyPassedForThisChallenge),
+          ));
+          return;
+        }
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => DoChallengeScreen(
+                challenge: challenge,
+                isPersonalChallenge: true,
+                challengeChangedCallback: (changedChallenge) {
+                  challengeChangedCallback.call(changedChallenge);
+                })));
+      },
+      child: Card(
+        child: IntrinsicHeight(
+          child: Row(
+            children: [
+              getIconConditionally(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: VerticalDivider(
+                  width: 3,
+                  color: Colors.black,
+                ),
               ),
-            ),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      challenge.name,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                  ),
-                ],
-              ),
-              Visibility(
-                visible: (challenge?.motivation?.length ?? 0) != 0,
-                child: Row(
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.directions_run),
-                    ),
-                    Text(
-                      challenge.motivation,
+                      child: Text(
+                        challenge.name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
                     ),
                   ],
                 ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.alarm),
+                Visibility(
+                  visible: (challenge?.motivation?.length ?? 0) != 0,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.directions_run),
+                      ),
+                      Text(
+                        challenge.motivation,
+                      ),
+                    ],
                   ),
-                  getDeadlineText(context),
-                ],
-              ),
-            ]),
-          ],
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.alarm),
+                    ),
+                    getDeadlineText(context),
+                  ],
+                ),
+              ]),
+            ],
+          ),
         ),
       ),
     );
@@ -91,7 +113,7 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
       int minutesLeft = challenge.minutesLeft();
       if (minutesLeft == 0) {
         return Text(
-            '${AppLocalizations.of(context).endsAfterLessThan} $minutesLeft ${AppLocalizations.of(context).minute}');
+            '${AppLocalizations.of(context).endsAfterLessThan} 1 ${AppLocalizations.of(context).minute}');
       }
       return Text(
           '${AppLocalizations.of(context).endsAfter} $minutesLeft ${AppLocalizations.of(context).minute}');

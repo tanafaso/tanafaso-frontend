@@ -64,4 +64,17 @@ class ChallengesService {
     return UpdateChallengeResponse.fromJson(
         jsonDecode(utf8.decode(response.body.codeUnits)));
   }
+
+  Future<UpdateChallengeResponse> updatePersonalChallenge(
+      Challenge challenge) async {
+    UpdateChallengeRequestBody requestBody =
+        UpdateChallengeRequestBody(challenge: challenge);
+    http.Response response = await ApiCaller.put(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.UPDATE_PERSONAL_CHALLENGE,
+            pathVariables: [challenge.id]),
+        requestBody: requestBody);
+    return UpdateChallengeResponse.fromJson(
+        jsonDecode(utf8.decode(response.body.codeUnits)));
+  }
 }
