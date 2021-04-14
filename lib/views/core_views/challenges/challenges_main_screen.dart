@@ -18,6 +18,7 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
   List<Tab> challengesTabs;
   TabController _tabController;
 
+
   @override
   Widget build(BuildContext context) {
     HomePage.setAppBarTitle(AppLocalizations.of(context).theChallenges);
