@@ -11,7 +11,7 @@ import 'package:azkar/net/payload/authentication/responses/email_login_response.
 import 'package:azkar/net/payload/authentication/responses/email_registration_response.dart';
 import 'package:azkar/net/payload/authentication/responses/email_verification_response.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
-import 'package:azkar/net/payload/response_error.dart';
+import 'package:azkar/net/payload/status.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:http/http.dart' as http;
@@ -38,14 +38,14 @@ class AuthenticationService {
 
         return _loginWithFacebookAccessToken(_facebookAccessToken);
       case FacebookLoginStatus.cancelledByUser:
-        facebookAuthenticationResponse.error = new Error("Cancelled by user.");
+        facebookAuthenticationResponse.error = new Status(Status.API_DEFAULT_ERROR);
         return new Future.value(facebookAuthenticationResponse);
       case FacebookLoginStatus.error:
         facebookAuthenticationResponse.error =
-            new Error("Facebook login error.");
+            new Status(Status.API_DEFAULT_ERROR);
         return new Future.value(facebookAuthenticationResponse);
       default:
-        facebookAuthenticationResponse.error = new Error("Internal Error");
+        facebookAuthenticationResponse.error = new Status(Status.API_DEFAULT_ERROR);
         return new Future.value(facebookAuthenticationResponse);
     }
   }
@@ -93,14 +93,14 @@ class AuthenticationService {
 
         return _connectFacebookWithFacebookAccessToken(facebookAccessToken);
       case FacebookLoginStatus.cancelledByUser:
-        facebookAuthenticationResponse.error = new Error("Cancelled by user.");
+        facebookAuthenticationResponse.error = new Status(Status.API_DEFAULT_ERROR);
         return facebookAuthenticationResponse;
       case FacebookLoginStatus.error:
         facebookAuthenticationResponse.error =
-            new Error("Facebook login error.");
+            new Status(Status.API_DEFAULT_ERROR);
         return facebookAuthenticationResponse;
       default:
-        facebookAuthenticationResponse.error = new Error("Internal Error");
+        facebookAuthenticationResponse.error = new Status(Status.API_DEFAULT_ERROR);
         return facebookAuthenticationResponse;
     }
   }
@@ -174,7 +174,7 @@ class AuthenticationService {
           'with stack trace: ${e.toString()}');
       emailLoginResponse = new EmailLoginResponse();
       emailLoginResponse.setErrorMessage(
-          "Can't connect to the server. Please check your internet connection.");
+          Status.API_DEFAULT_ERROR);
       return emailLoginResponse;
     }
 
