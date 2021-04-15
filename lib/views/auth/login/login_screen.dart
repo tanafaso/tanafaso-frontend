@@ -176,28 +176,28 @@ class _LoginScreenState extends State<LoginScreen> {
                         Divider(
                           height: 20.0,
                         ),
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Padding(
-                              // internalize that
-                              padding: const EdgeInsets.only(left: 20.0),
-                              // ignore: deprecated_member_use
-                              child: new FlatButton(
-                                child: new Text(
-                                  AppLocalizations.of(context).forgotPassword,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 15.0,
-                                  ),
-                                  textAlign: TextAlign.end,
-                                ),
-                                onPressed: () => {},
-                              ),
-                            ),
-                          ],
-                        ),
+                        // new Row(
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   children: <Widget>[
+                        //     Padding(
+                        //       // internalize that
+                        //       padding: const EdgeInsets.only(left: 20.0),
+                        //       // ignore: deprecated_member_use
+                        //       child: new FlatButton(
+                        //         child: new Text(
+                        //           AppLocalizations.of(context).forgotPassword,
+                        //           style: TextStyle(
+                        //             fontWeight: FontWeight.bold,
+                        //             color: Colors.black,
+                        //             fontSize: 15.0,
+                        //           ),
+                        //           textAlign: TextAlign.end,
+                        //         ),
+                        //         onPressed: () => {},
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         new Container(
                           width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.only(
