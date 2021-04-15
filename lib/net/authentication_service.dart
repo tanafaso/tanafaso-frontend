@@ -38,14 +38,16 @@ class AuthenticationService {
 
         return _loginWithFacebookAccessToken(_facebookAccessToken);
       case FacebookLoginStatus.cancelledByUser:
-        facebookAuthenticationResponse.error = new Status(Status.API_DEFAULT_ERROR);
+        facebookAuthenticationResponse.error =
+            new Status(Status.API_DEFAULT_ERROR);
         return new Future.value(facebookAuthenticationResponse);
       case FacebookLoginStatus.error:
         facebookAuthenticationResponse.error =
             new Status(Status.API_DEFAULT_ERROR);
         return new Future.value(facebookAuthenticationResponse);
       default:
-        facebookAuthenticationResponse.error = new Status(Status.API_DEFAULT_ERROR);
+        facebookAuthenticationResponse.error =
+            new Status(Status.API_DEFAULT_ERROR);
         return new Future.value(facebookAuthenticationResponse);
     }
   }
@@ -93,14 +95,16 @@ class AuthenticationService {
 
         return _connectFacebookWithFacebookAccessToken(facebookAccessToken);
       case FacebookLoginStatus.cancelledByUser:
-        facebookAuthenticationResponse.error = new Status(Status.API_DEFAULT_ERROR);
+        facebookAuthenticationResponse.error =
+            new Status(Status.API_DEFAULT_ERROR);
         return facebookAuthenticationResponse;
       case FacebookLoginStatus.error:
         facebookAuthenticationResponse.error =
             new Status(Status.API_DEFAULT_ERROR);
         return facebookAuthenticationResponse;
       default:
-        facebookAuthenticationResponse.error = new Status(Status.API_DEFAULT_ERROR);
+        facebookAuthenticationResponse.error =
+            new Status(Status.API_DEFAULT_ERROR);
         return facebookAuthenticationResponse;
     }
   }
@@ -173,8 +177,7 @@ class AuthenticationService {
           '${ApiRoutesUtil.apiRouteToString(Endpoint(endpointRoute: EndpointRoute.LOGIN_WITH_EMAIL))} '
           'with stack trace: ${e.toString()}');
       emailLoginResponse = new EmailLoginResponse();
-      emailLoginResponse.setErrorMessage(
-          Status.API_DEFAULT_ERROR);
+      emailLoginResponse.setErrorMessage(Status.API_DEFAULT_ERROR);
       return emailLoginResponse;
     }
 

@@ -95,7 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         new RegExp('^[\\w-_\\.+]*[\\w-_\\.]\\@'
                                             '([\\w]+\\.)+[\\w]+[\\w]\$');
                                     if (regex.stringMatch(email) != email) {
-                                      return AppLocalizations.of(context).emailIsInvalid;
+                                      return AppLocalizations.of(context)
+                                          .emailIsInvalid;
                                     }
                                     return null;
                                   },
