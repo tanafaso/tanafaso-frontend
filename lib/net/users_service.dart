@@ -47,7 +47,7 @@ class UsersService {
 
     if (getUserResponse.hasError()) {
       AddFriendResponse addFriendResponse = AddFriendResponse();
-      addFriendResponse.setErrorMessage(getUserResponse.error.errorMessage);
+      addFriendResponse.setErrorMessage(getUserResponse.error.code);
       return addFriendResponse;
     }
 

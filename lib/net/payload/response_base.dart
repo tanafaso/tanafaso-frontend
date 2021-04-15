@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-import 'response_error.dart';
+import 'status.dart';
 
 abstract class ResponseBase {
-  Error error;
+  Status error;
 
   @protected
   setError(Map<String, dynamic> json) {
-    error = new Error((json['error'] ?? const {})['message']);
+    error = new Status((json['status'] ?? const {})['code']);
   }
 
-  void setErrorMessage(String errorMessage) {
-    error = Error(errorMessage);
+  void setErrorMessage(int errorCode) {
+    error = Status(errorCode);
   }
 
   bool hasError() {
-    return error?.errorMessage?.isNotEmpty ?? false;
+    return error?.code != Status.API_SUCCESS;
   }
 }
