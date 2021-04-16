@@ -362,7 +362,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
-                              testing(),
                             ],
                           ),
                         ),
@@ -371,27 +370,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               )))),
-    );
-  }
-
-  Widget testing() {
-    return Row(
-      children: [
-        // ignore: deprecated_member_use
-        FlatButton(
-            onPressed: () {
-              loginWithEmail(new EmailLoginRequestBody(
-                  email: 'oyaraouf@gmail.com', password: 'omaromar'));
-            },
-            child: Text('oyaraouf')),
-        // ignore: deprecated_member_use
-        FlatButton(
-            onPressed: () {
-              loginWithEmail(new EmailLoginRequestBody(
-                  email: 'oyasser826@gmail.com', password: 'omaromar'));
-            },
-            child: Text('oyasser826'))
-      ],
     );
   }
 
@@ -413,8 +391,10 @@ class _LoginScreenState extends State<LoginScreen> {
         await ServiceProvider.authenticationService.login(request);
 
     if (!response.hasError()) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => new HomePage()));
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => new HomePage()),
+          (_) => false);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error.errorMessage),
