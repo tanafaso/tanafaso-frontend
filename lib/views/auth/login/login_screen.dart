@@ -365,11 +365,33 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                         ),
+                        testing(),
                       ],
                     ),
                   ),
                 ),
               )))),
+    );
+  }
+
+  Widget testing() {
+    return Row(
+      children: [
+        // ignore: deprecated_member_use
+        FlatButton(
+            onPressed: () {
+              loginWithEmail(new EmailLoginRequestBody(
+                  email: 'oyaraouf@gmail.com', password: 'omaromar'));
+            },
+            child: Text('oyaraouf')),
+        // ignore: deprecated_member_use
+        FlatButton(
+            onPressed: () {
+              loginWithEmail(new EmailLoginRequestBody(
+                  email: 'oyasser826@gmail.com', password: 'omaromar'));
+            },
+            child: Text('oyasser826'))
+      ],
     );
   }
 
