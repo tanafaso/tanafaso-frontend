@@ -153,8 +153,19 @@ class AppLocalizations {
       'search for a zekr': 'ابحث عن ذكر',
       'the deadline has already passed for this challenge':
           'لقد انقضى الموعد النهائي لهذا التحدي',
+      'logout': 'تسجيل خروج',
+      'you have logged out successfully': 'لقد قمت بتسجيل الخروج بنجاح',
     },
   };
+
+  String get youHaveLoggedOutSuccessfully {
+    return _localizedValues[locale.languageCode]
+        ['you have logged out successfully'];
+  }
+
+  String get logout {
+    return _localizedValues[locale.languageCode]['logout'];
+  }
 
   String get theDeadlineHasAlreadyPassedForThisChallenge {
     return _localizedValues[locale.languageCode]
