@@ -49,6 +49,7 @@ class Status {
   static const int API_EMAIL_NOT_VALID_ERROR = 43;
   static const int API_NAME_EMPTY_ERROR = 44;
   static const int API_PASSWORD_CHARACTERS_LESS_THAN_8_ERROR = 45;
+  static const int CHALLENGE_CREATION_DUPLICATE_ZEKR_ERROR = 46;
   Map<int, String> conversions = const {
     API_USER_ALREADY_LOGGED_IN_ERROR: "لقد قمت بتسجيل الدخول بالفعل",
     API_EMAIL_PASSWORD_COMBINATION_ERROR:
@@ -107,6 +108,7 @@ class Status {
     API_NAME_EMPTY_ERROR: "لا يمكن أن يكون الاسم فارغًا",
     API_PASSWORD_CHARACTERS_LESS_THAN_8_ERROR:
         "لا يمكن أن تكون كلمة المرور أقل من 8 أحرف",
+    CHALLENGE_CREATION_DUPLICATE_ZEKR_ERROR: "يجب ألا يتكرر الذكر",
   };
 
   Status(int errorCode) {

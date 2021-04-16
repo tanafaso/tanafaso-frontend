@@ -334,12 +334,17 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                     ));
                                     return;
                                   }
+                                  List<Zekr> azkar = response.azkar;
+                                  // Remove already selected azkar
+                                  azkar.removeWhere((zekr) =>
+                                      _subChallenges.any((subChallenge) =>
+                                          subChallenge.zekr.id == zekr.id));
                                   Zekr selectedZekr = await Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               SelectZekrScreen(
-                                                azkar: response.azkar,
+                                                azkar: azkar,
                                               ))) as Zekr;
                                   if ((selectedZekr.zekr?.length ?? 0) != 0) {
                                     setState(() {
