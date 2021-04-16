@@ -25,4 +25,10 @@ class SecureStorageService {
     final _storage = FlutterSecureStorage();
     await _storage.write(key: JWT_TOKEN_STORAGE_KEY, value: jwtToken);
   }
+
+  Future<void> forgetAll() async {
+    final _storage = FlutterSecureStorage();
+    await _storage.delete(key: JWT_TOKEN_STORAGE_KEY);
+    await _storage.delete(key: FACEBOOK_TOKEN_STORAGE_KEY);
+  }
 }
