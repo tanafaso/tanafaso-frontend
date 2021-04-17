@@ -35,12 +35,12 @@ class ProfileMainWidget extends StatelessWidget {
                         },
                         child: Center(
                             child: Text(
-                              AppLocalizations.of(context).logout,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            )),
+                          AppLocalizations.of(context).logout,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        )),
                       ),
                     ),
                     decoration: BoxDecoration(
@@ -247,12 +247,12 @@ class ProfileMainWidget extends StatelessWidget {
                       },
                       child: Center(
                           child: Text(
-                            AppLocalizations.of(context).logout,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          )),
+                        AppLocalizations.of(context).logout,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      )),
                     ),
                   ),
                   decoration: BoxDecoration(
