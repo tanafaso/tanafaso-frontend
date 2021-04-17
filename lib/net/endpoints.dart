@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 
 enum EndpointRoute {
@@ -12,6 +14,7 @@ enum EndpointRoute {
   GET_USER_BY_ID,
   GET_USER_BY_USERNAME,
   GET_USER_BY_FACEBOOK_USER_ID,
+  SET_NOTIFICATIONS_TOKEN,
   ADD_FRIEND_BY_USERNAME,
   GET_FRIENDS,
   ACCEPT_FRIEND,
@@ -44,7 +47,14 @@ class ApiRoutesUtil {
   static String apiRouteToString(Endpoint route) {
     switch (route.endpointRoute) {
       case EndpointRoute.LOCAL_HOST_BASE_URL:
-        return 'localhost:8080';
+        if (Platform.isAndroid) {
+          return '10.0.2.2:8080';
+        }
+        if (Platform.isIOS) {
+          return 'localhost:8080';
+        }
+        assert(false);
+        break;
       case EndpointRoute.LOGIN_WITH_FACEBOOK:
         return '/login/facebook';
       case EndpointRoute.CONNECT_FACEBOOK:
@@ -70,6 +80,8 @@ class ApiRoutesUtil {
         assert(route.requestParams.length == 1);
         assert(route.requestParams.keys.first == 'facebook_user_id');
         return '/users/search';
+      case EndpointRoute.SET_NOTIFICATIONS_TOKEN:
+        return '/users/notifications/token';
       case EndpointRoute.ADD_FRIEND_BY_USERNAME:
         assert(route.pathVariables.length == 1);
         return '/friends/${route.pathVariables[0]}';
