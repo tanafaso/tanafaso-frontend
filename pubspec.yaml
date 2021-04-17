@@ -34,6 +34,8 @@ dependencies:
   sprintf: "^4.0.0"
   flutter_localizations:
     sdk: flutter
+  firebase_core: ^1.0.3
+  firebase_messaging: ^9.1.1
 
 dev_dependencies:
   flutter_test:
