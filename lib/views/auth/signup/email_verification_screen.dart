@@ -10,7 +10,6 @@ import 'package:azkar/views/auth/signup/pin_theme.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   final String phoneNumber;
@@ -269,14 +268,12 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
   void onEmailVerificationSuccess() {
-    Fluttertoast.showToast(
-        msg: AppLocalizations.of(context).verificationSuccessful,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: new Color.fromARGB(180, 105, 240, 174),
-        textColor: Colors.white,
-        fontSize: 16.0);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.green.shade300,
+      content: Text(
+        AppLocalizations.of(context).verificationSuccessful,
+      ),
+    ));
     hasError = false;
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => new LoginScreen()));

@@ -29,7 +29,6 @@ dependencies:
   flutter_login: ^1.0.14
   flutter_secure_storage: ^3.3.3
   flare_flutter: ^2.0.3
-  fluttertoast: ^7.0.4
   progress_state_button: ^1.0.1
   sprintf: "^4.0.0"
   flutter_localizations:
