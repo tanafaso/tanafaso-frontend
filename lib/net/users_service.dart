@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/endpoints.dart';
+import 'package:azkar/net/payload/users/requests/set_notifications_token_request_body.dart';
 import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/payload/users/responses/resolve_friend_request_response.dart';
+import 'package:azkar/net/payload/users/responses/set_notifications_token_response.dart';
 import 'package:http/http.dart' as http;
 
 class UsersService {
@@ -83,6 +85,15 @@ class UsersService {
             endpointRoute: EndpointRoute.REJECT_FRIEND,
             pathVariables: [friendId]));
     return ResolveFriendRequestResponse.fromJson(
+        jsonDecode(utf8.decode(response.body.codeUnits)));
+  }
+
+  Future<SetNotificationsTokenResponse> setNotificationsToken(
+      SetNotificationsTokenRequestBody requestBody) async {
+    http.Response response = await ApiCaller.put(
+        route: Endpoint(endpointRoute: EndpointRoute.SET_NOTIFICATIONS_TOKEN),
+        requestBody: requestBody);
+    return SetNotificationsTokenResponse.fromJson(
         jsonDecode(utf8.decode(response.body.codeUnits)));
   }
 }

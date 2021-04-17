@@ -5,12 +5,16 @@
 import 'dart:ui';
 
 import 'package:azkar/views/auth/auth_main_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
 class AppLocalizations {
   AppLocalizations(this.locale);
@@ -155,8 +159,15 @@ class AppLocalizations {
           'لقد انقضى الموعد النهائي لهذا التحدي',
       'logout': 'تسجيل خروج',
       'you have logged out successfully': 'لقد قمت بتسجيل الخروج بنجاح',
+      'an error happened while setting up this device to receive notifications':
+          'حدث خطأ أثناء إعداد هذا الجهاز لتلقي الإخطارات',
     },
   };
+
+  String get anErrorHappenedWhileSettingUpThisDeviceToReceiveNotifications {
+    return _localizedValues[locale.languageCode][
+        'an error happened while setting up this device to receive notifications'];
+  }
 
   String get youHaveLoggedOutSuccessfully {
     return _localizedValues[locale.languageCode]
@@ -694,9 +705,39 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   bool shouldReload(AppLocalizationsDelegate old) => false;
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: _initialization,
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return getMaterialAppWithBody(AuthMainScreen());
+          } else if (snapshot.hasError) {
+            return getMaterialAppWithBody(Text(AppLocalizations(
+                    Locale('ar', ''))
+                .anErrorHappenedWhileSettingUpThisDeviceToReceiveNotifications));
+          } else {
+            // TODO(omorsi): Show loader
+            return getMaterialAppWithBody(
+                Text(AppLocalizations(Locale('ar', '')).loading));
+          }
+        });
+  }
+
+  Widget getMaterialAppWithBody(Widget body) {
     return MaterialApp(
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context).title,
@@ -711,7 +752,7 @@ class MyApp extends StatelessWidget {
         const Locale('ar', ''),
       ],
       home: Scaffold(
-        body: AuthMainScreen(),
+        body: body,
       ),
       theme: ThemeData(
         primaryColor: Color(0xffcef5ce),
