@@ -106,6 +106,7 @@ class _HomePageState extends State<HomePage> {
     getNotificationsToken();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     List<Topic> topics = getTopics(context);

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
+
+import 'package:flutter/material.dart';
 
 enum EndpointRoute {
   LOCAL_HOST_BASE_URL,
