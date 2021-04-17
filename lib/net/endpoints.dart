@@ -80,7 +80,7 @@ class ApiRoutesUtil {
         assert(route.requestParams.keys.first == 'facebook_user_id');
         return '/users/search';
       case EndpointRoute.SET_NOTIFICATIONS_TOKEN:
-        return 'notifications/token';
+        return '/users/notifications/token';
       case EndpointRoute.ADD_FRIEND_BY_USERNAME:
         assert(route.pathVariables.length == 1);
         return '/friends/${route.pathVariables[0]}';

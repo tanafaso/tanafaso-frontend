@@ -90,7 +90,7 @@ class UsersService {
 
   Future<SetNotificationsTokenResponse> setNotificationsToken(
       SetNotificationsTokenRequestBody requestBody) async {
-    http.Response response = await ApiCaller.post(
+    http.Response response = await ApiCaller.put(
         route: Endpoint(endpointRoute: EndpointRoute.SET_NOTIFICATIONS_TOKEN),
         requestBody: requestBody);
     return SetNotificationsTokenResponse.fromJson(
