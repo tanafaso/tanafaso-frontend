@@ -1,6 +1,7 @@
 import 'package:azkar/main.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,45 @@ class ProfileMainWidget extends StatelessWidget {
             GetUserResponse response = snapshot.data;
 
             if (response.hasError()) {
-              return Text(response.error.errorMessage);
+              return Column(
+                children: [
+                  Text(response.error.errorMessage),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 30),
+                    child: ButtonTheme(
+                      height: 50,
+                      // ignore: deprecated_member_use
+                      child: FlatButton(
+                        onPressed: () async {
+                          performLogout(context);
+                        },
+                        child: Center(
+                            child: Text(
+                              AppLocalizations.of(context).logout,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.red.shade700,
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.red.shade200,
+                              offset: Offset(1, -2),
+                              blurRadius: 5),
+                          BoxShadow(
+                              color: Colors.red.shade200,
+                              offset: Offset(-1, 2),
+                              blurRadius: 5)
+                        ]),
+                  ),
+                ],
+              );
             }
 
             return Padding(
@@ -190,7 +229,48 @@ class ProfileMainWidget extends StatelessWidget {
             );
           } else if (snapshot.hasError) {
             // TODO(omorsi): Handle error
-            return Text('Error');
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SnapshotUtils.getErrorWidget(context, snapshot),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 16.0, horizontal: 30),
+                  child: ButtonTheme(
+                    height: 50,
+                    // ignore: deprecated_member_use
+                    child: FlatButton(
+                      onPressed: () async {
+                        performLogout(context);
+                      },
+                      child: Center(
+                          child: Text(
+                            AppLocalizations.of(context).logout,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      color: Colors.red.shade700,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.red.shade200,
+                            offset: Offset(1, -2),
+                            blurRadius: 5),
+                        BoxShadow(
+                            color: Colors.red.shade200,
+                            offset: Offset(-1, 2),
+                            blurRadius: 5)
+                      ]),
+                ),
+              ],
+            );
           } else {
             // TODO(omorsi): Show loader
             return Text(AppLocalizations.of(context).loading);
