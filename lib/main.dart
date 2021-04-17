@@ -162,9 +162,13 @@ class AppLocalizations {
       'an error happened while setting up this device to receive notifications':
           'حدث خطأ أثناء إعداد هذا الجهاز لتلقي الإخطارات',
       'you do not have an account?': 'ليس لديك حساب بعد؟',
+      'please connect to internet and try again': 'حدث خطأ أثناء محاولة الاتصال بالإنترنت',
     },
   };
 
+  String get pleaseConnectToInternetAndTryAgain {
+    return _localizedValues[locale.languageCode]['please connect to internet and try again'];
+  }
   String get youDoNotHaveAnAccount {
     return _localizedValues[locale.languageCode]['you do not have an account?'];
   }

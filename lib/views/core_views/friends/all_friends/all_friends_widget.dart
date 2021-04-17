@@ -3,6 +3,7 @@ import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/friends/all_friends/friends_list_item_widget.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,8 +34,7 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text(
-                    '${AppLocalizations.of(context).error}: ${snapshot.error}'),
+                child: SnapshotUtils.getErrorWidget(context, snapshot),
               )
             ];
           } else {
