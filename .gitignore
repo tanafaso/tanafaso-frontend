@@ -10,3 +10,5 @@ ios/.generated
 .flutter-plugins
 .DS_Store
 .dart_tool
+ android/app/google-services.json
+
