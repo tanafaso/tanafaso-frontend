@@ -2,6 +2,7 @@ import 'package:azkar/main.dart';
 import 'package:azkar/net/payload/authentication/requests/email_registration_request_body.dart';
 import 'package:azkar/net/payload/authentication/responses/email_registration_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:azkar/views/auth/signup/email_verification_screen.dart';
 import 'package:azkar/views/keys.dart';
@@ -441,6 +442,10 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
   }
 
   void performSignUp() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => new EmailVerificationScreen(_email)));
     ServiceProvider.authenticationService
         .signUp(new EmailRegistrationRequestBody(
       email: _email,
@@ -450,31 +455,14 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
     ))
         .then<void>((EmailRegistrationResponse response) {
       if (response.hasError()) {
-        onSignUpError(response.error.errorMessage);
-      } else {
-        Navigator.push(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.error.errorMessage),
+        ));
+        Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(
-                builder: (context) => new EmailVerificationScreen(_email)));
+            MaterialPageRoute(builder: (context) => new AuthMainScreen()),
+            (_) => false);
       }
     });
-  }
-
-  void onSignUpError(String errorMessage) {
-    showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-              title: Text(AppLocalizations.of(context).error),
-              content: Text(errorMessage),
-              actions: <Widget>[
-                // ignore: deprecated_member_use
-                new FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(AppLocalizations.of(context).ok),
-                )
-              ],
-            ));
   }
 }

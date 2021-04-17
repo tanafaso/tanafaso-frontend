@@ -161,8 +161,13 @@ class AppLocalizations {
       'you have logged out successfully': 'لقد قمت بتسجيل الخروج بنجاح',
       'an error happened while setting up this device to receive notifications':
           'حدث خطأ أثناء إعداد هذا الجهاز لتلقي الإخطارات',
+      'you do not have an account?': 'ليس لديك حساب بعد؟',
     },
   };
+
+  String get youDoNotHaveAnAccount {
+    return _localizedValues[locale.languageCode]['you do not have an account?'];
+  }
 
   String get anErrorHappenedWhileSettingUpThisDeviceToReceiveNotifications {
     return _localizedValues[locale.languageCode][
@@ -711,7 +716,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  Future<void> asyncInitialization(BuildContext context) async {
+    await Firebase.initializeApp();
+  }
 
   @override
   void initState() {
@@ -721,7 +728,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _initialization,
+        future: asyncInitialization(context),
         builder: (BuildContext context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return getMaterialAppWithBody(AuthMainScreen());
