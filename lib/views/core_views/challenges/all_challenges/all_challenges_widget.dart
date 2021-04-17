@@ -2,6 +2,7 @@ import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/net/payload/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
+                child: SnapshotUtils.getErrorWidget(context, snapshot),
               )
             ];
           } else {
