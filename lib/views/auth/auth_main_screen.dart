@@ -7,7 +7,25 @@ import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 
-class AuthMainScreen extends StatelessWidget {
+class AuthMainScreen extends StatefulWidget {
+  @override
+  _AuthMainScreenState createState() => _AuthMainScreenState();
+}
+
+class _AuthMainScreenState extends State<AuthMainScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      bool isSignedIn =
+          await ServiceProvider.secureStorageService.userSignedIn();
+      if (isSignedIn) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()), (_) => false);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,11 +94,12 @@ class AuthMainScreen extends StatelessWidget {
                                   color: Theme.of(context).primaryColor,
                                   highlightedBorderColor: Colors.white,
                                   onPressed: () {
-                                    Navigator.push(
+                                    Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                SignUpMainScreen()));
+                                                SignUpMainScreen()),
+                                        (_) => false);
                                   },
                                   child: new Container(
                                     height: double.infinity,

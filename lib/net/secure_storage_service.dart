@@ -31,4 +31,10 @@ class SecureStorageService {
     await _storage.delete(key: JWT_TOKEN_STORAGE_KEY);
     await _storage.delete(key: FACEBOOK_TOKEN_STORAGE_KEY);
   }
+
+  Future<bool> userSignedIn() async {
+    final _storage = FlutterSecureStorage();
+    String token = await _storage.read(key: JWT_TOKEN_STORAGE_KEY);
+    return (token?.length ?? 0) != 0;
+  }
 }
