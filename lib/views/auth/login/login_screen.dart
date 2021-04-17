@@ -3,6 +3,7 @@ import 'package:azkar/net/payload/authentication/requests/email_login_request_bo
 import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/views/auth/signup/signup_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
@@ -177,28 +178,36 @@ class _LoginScreenState extends State<LoginScreen> {
                         Divider(
                           height: 20.0,
                         ),
-                        // new Row(
-                        //   mainAxisAlignment: MainAxisAlignment.end,
-                        //   children: <Widget>[
-                        //     Padding(
-                        //       // internalize that
-                        //       padding: const EdgeInsets.only(left: 20.0),
-                        //       // ignore: deprecated_member_use
-                        //       child: new FlatButton(
-                        //         child: new Text(
-                        //           AppLocalizations.of(context).forgotPassword,
-                        //           style: TextStyle(
-                        //             fontWeight: FontWeight.bold,
-                        //             color: Colors.black,
-                        //             fontSize: 15.0,
-                        //           ),
-                        //           textAlign: TextAlign.end,
-                        //         ),
-                        //         onPressed: () => {},
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Padding(
+                              // internalize that
+                              padding: const EdgeInsets.only(left: 20.0),
+                              // ignore: deprecated_member_use
+                              child: new FlatButton(
+                                child: new Text(
+                                  AppLocalizations.of(context)
+                                      .youDoNotHaveAnAccount,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15.0,
+                                  ),
+                                  textAlign: TextAlign.end,
+                                ),
+                                onPressed: () {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              new SignUpMainScreen()),
+                                      (_) => false);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                         new Container(
                           width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.only(
