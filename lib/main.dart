@@ -727,7 +727,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Future<FirebaseApp> asyncInitialization(BuildContext context) async {
     FirebaseApp app = await Firebase.initializeApp();
-    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
       alert: true, // Required to display a heads up notification
       badge: true,
       sound: true,
