@@ -2,10 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
@@ -723,8 +725,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Future<void> asyncInitialization(BuildContext context) async {
-    await Firebase.initializeApp();
+  Future<FirebaseApp> asyncInitialization(BuildContext context) async {
+    FirebaseApp app = await Firebase.initializeApp();
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true, // Required to display a heads up notification
+      badge: true,
+      sound: true,
+    );
+    if (Platform.isIOS) {
+      FirebaseMessaging.instance.requestPermission();
+    }
+    return app;
   }
 
   @override
@@ -737,7 +748,7 @@ class _MyAppState extends State<MyApp> {
     return FutureBuilder(
         future: asyncInitialization(context),
         builder: (BuildContext context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
             return getMaterialAppWithBody(AuthMainScreen());
           } else if (snapshot.hasError) {
             return getMaterialAppWithBody(Text(AppLocalizations(
