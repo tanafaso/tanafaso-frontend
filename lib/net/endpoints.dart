@@ -51,7 +51,8 @@ class ApiRoutesUtil {
           return '10.0.2.2:8080';
         }
         if (Platform.isIOS) {
-          return 'localhost:8080';
+          // return 'localhost:8080';
+          return '192.168.2.102:8080';
         }
         assert(false);
         break;
