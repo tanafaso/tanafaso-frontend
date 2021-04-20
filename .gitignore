@@ -6,6 +6,8 @@ build
 ios/.generated
 .packages
 .android/.idea
+android/app/google-services.json
+ios/GoogleService-Info.plist
 .flutter-plugins-dependencies
 .flutter-plugins
 .DS_Store
