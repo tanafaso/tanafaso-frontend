@@ -13,4 +13,4 @@ ios/GoogleService-Info.plist
 .DS_Store
 .dart_tool
  android/app/google-services.json
-
+ios/GoogleService-Info.plist
