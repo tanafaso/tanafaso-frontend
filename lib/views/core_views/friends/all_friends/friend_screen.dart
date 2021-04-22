@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 
 class FriendScreen extends StatefulWidget {
   final Friend friend;
-  List<UserScore> userScores;
+  final List<UserScore> userScores;
 
   FriendScreen({
     @required this.friend,
