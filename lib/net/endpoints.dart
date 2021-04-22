@@ -52,7 +52,8 @@ class ApiRoutesUtil {
           return 'www.tanafaso.com';
         }
         if (Platform.isIOS) {
-          // Use '192.168.2.102:8080' for localhost testing
+          // return 'localhost:8080';
+          // return '192.168.2.102:8080';
           return 'www.tanafaso.com';
         }
         assert(false);
