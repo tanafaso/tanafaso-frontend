@@ -171,12 +171,12 @@ class AppLocalizations {
   };
 
   String get noEmailProvided {
-    return _localizedValues[locale.languageCode]
-    ['no email provided'];
+    return _localizedValues[locale.languageCode]['no email provided'];
   }
+
   String get pleaseConnectToInternetAndTryAgain {
     return _localizedValues[locale.languageCode]
-    ['please connect to internet and try again'];
+        ['please connect to internet and try again'];
   }
 
   String get youDoNotHaveAnAccount {

@@ -136,7 +136,7 @@ class ProfileMainWidget extends StatelessWidget {
                       child: Container(
                         alignment: Alignment.center,
                         child: Visibility(
-                          visible: (response?.user?.email??null) != null,
+                          visible: (response?.user?.email ?? null) != null,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -146,7 +146,9 @@ class ProfileMainWidget extends StatelessWidget {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text(response?.user?.email?? AppLocalizations.of(context).noEmailProvided),
+                                child: Text(response?.user?.email ??
+                                    AppLocalizations.of(context)
+                                        .noEmailProvided),
                               ),
                             ],
                           ),
