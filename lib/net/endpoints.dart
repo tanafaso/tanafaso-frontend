@@ -48,11 +48,12 @@ class ApiRoutesUtil {
     switch (route.endpointRoute) {
       case EndpointRoute.LOCAL_HOST_BASE_URL:
         if (Platform.isAndroid) {
-          return '18.192.186.22:80';
+          return 'tanafaso.com:80';
         }
         if (Platform.isIOS) {
           // return 'localhost:8080';
-          return '192.168.2.102:8080';
+          // return '192.168.2.102:8080';
+          return '18.192.186.22';
         }
         assert(false);
         break;
