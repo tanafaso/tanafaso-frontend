@@ -10,6 +10,7 @@ import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/challenges/requests/add_challenge_request_body.dart';
 import 'package:azkar/net/payload/challenges/responses/add_challenge_response.dart';
 import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
+import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_zekr_screen.dart';
@@ -270,13 +271,26 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(30)))),
                                   onPressed: () async {
+                                    GetFriendsResponse response =
+                                        await ServiceProvider.usersService
+                                            .getFriends();
+                                    if (response.hasError()) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content:
+                                            Text(response.error.errorMessage),
+                                      ));
+                                      return;
+                                    }
                                     Friend selectedFriend =
                                         await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        SelectFriendScreen()))
-                                            as Friend;
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SelectFriendScreen(
+                                                      friendship:
+                                                          response.friendship,
+                                                    ))) as Friend;
                                     if (selectedFriend != null) {
                                       setState(() {
                                         widget.selectedFriend = selectedFriend;
