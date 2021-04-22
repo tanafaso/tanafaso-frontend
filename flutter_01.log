@@ -1,0 +1,62 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter --no-color run --machine --track-widget-creation --device-id=06bb3998a299573d7d4ee6dd5a98341880d125fb --start-paused --dart-define=flutter.inspector.structuredErrors=true lib/main.dart
+
+## exception
+
+SentinelException: [Sentinel kind: Collected, valueAsString: <collected>] from getIsolate()
+
+```
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel beta, 2.2.0-10.1.pre, on Mac OS X 10.15.7 19H524 darwin-x64, locale en-EG)
+    • Flutter version 2.2.0-10.1.pre at /Users/omar/Documents/Projects/flutter
+    • Framework revision 0941968447 (7 days ago), 2021-04-15 12:01:02 -0700
+    • Engine revision d2a2e93510
+    • Dart version 2.13.0 (build 2.13.0-211.6.beta)
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 29.0.1)
+    • Android SDK at /Users/omar/Library/Android/sdk
+    • Platform android-29, build-tools 29.0.1
+    • Java binary at: /Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/bin/java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_242-release-1644-b3-6915495)
+    • All Android licenses accepted.
+
+[✓] Xcode - develop for iOS and macOS
+    • Xcode at /Applications/Xcode.app/Contents/Developer
+    • Xcode 12.4, Build version 12D4e
+    • CocoaPods version 1.10.1
+
+[✓] Chrome - develop for the web
+    • Chrome at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+
+[✓] Android Studio (version 4.1)
+    • Android Studio at /Applications/Android Studio.app/Contents
+    • Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    • Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+    • Java version OpenJDK Runtime Environment (build 1.8.0_242-release-1644-b3-6915495)
+
+[✓] IntelliJ IDEA Community Edition (version 2019.3.4)
+    • IntelliJ at /Applications/IntelliJ IDEA CE.app
+    • Flutter plugin version 45.1.2
+    • Dart plugin version 193.6911.31
+
+[✓] VS Code (version 1.55.2)
+    • VS Code at /Applications/Visual Studio Code.app/Contents
+    • Flutter extension version 3.21.0
+
+[✓] Connected device (3 available)
+    • Omar’s iPhone (mobile) • 06bb3998a299573d7d4ee6dd5a98341880d125fb • ios            • iOS 13.3
+    • iPhone 12 Pro (mobile) • CA12E058-9004-43BC-87E9-EAB0CDA419B2     • ios            • com.apple.CoreSimulator.SimRuntime.iOS-14-4 (simulator)
+    • Chrome (web)           • chrome                                   • web-javascript • Google Chrome 90.0.4430.85
+
+• No issues found!
+```

@@ -1,4 +1,4 @@
-package com.example.azkar
+package com.tanafaso.azkar
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
