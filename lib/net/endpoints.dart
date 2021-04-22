@@ -3,7 +3,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 
 enum EndpointRoute {
-  LOCAL_HOST_BASE_URL,
+  BASE_URL,
   LOGIN_WITH_FACEBOOK,
   CONNECT_FACEBOOK,
   REGISTER_WITH_EMAIL,
@@ -46,14 +46,14 @@ class ApiRoutesUtil {
   // ignore: missing_return
   static String apiRouteToString(Endpoint route) {
     switch (route.endpointRoute) {
-      case EndpointRoute.LOCAL_HOST_BASE_URL:
+      case EndpointRoute.BASE_URL:
         if (Platform.isAndroid) {
-          return 'tanafaso.com:80';
+          // Use 10.0.2.2:8080 for localhost testing
+          return 'www.tanafaso.com';
         }
         if (Platform.isIOS) {
-          // return 'localhost:8080';
-          // return '192.168.2.102:8080';
-          return '18.192.186.22';
+          // Use '192.168.2.102:8080' for localhost testing
+          return 'www.tanafaso.com';
         }
         assert(false);
         break;
