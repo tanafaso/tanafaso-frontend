@@ -12,7 +12,7 @@ class ApiCaller {
     return await ServiceProvider.httpClient.get(
       Uri.http(
           ApiRoutesUtil.apiRouteToString(
-              Endpoint(endpointRoute: EndpointRoute.LOCAL_HOST_BASE_URL)),
+              Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
           ApiRoutesUtil.apiRouteToString(route),
           route.requestParams),
       headers: await getHeaders(),
@@ -24,7 +24,7 @@ class ApiCaller {
     return await ServiceProvider.httpClient.put(
       Uri.http(
           ApiRoutesUtil.apiRouteToString(
-              Endpoint(endpointRoute: EndpointRoute.LOCAL_HOST_BASE_URL)),
+              Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
           ApiRoutesUtil.apiRouteToString(route)),
       headers: await getHeaders(),
       body: jsonEncode(requestBody?.toJson()),
@@ -36,7 +36,7 @@ class ApiCaller {
     return await ServiceProvider.httpClient.post(
       Uri.http(
           ApiRoutesUtil.apiRouteToString(
-              Endpoint(endpointRoute: EndpointRoute.LOCAL_HOST_BASE_URL)),
+              Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
           ApiRoutesUtil.apiRouteToString(route)),
       headers: await getHeaders(),
       body: jsonEncode(requestBody?.toJson()),
