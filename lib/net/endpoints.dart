@@ -48,7 +48,7 @@ class ApiRoutesUtil {
     switch (route.endpointRoute) {
       case EndpointRoute.LOCAL_HOST_BASE_URL:
         if (Platform.isAndroid) {
-          return '10.0.2.2:8080';
+          return '18.192.186.22:80';
         }
         if (Platform.isIOS) {
           // return 'localhost:8080';
