@@ -18,7 +18,6 @@ class ProfileMainWidget extends StatelessWidget {
             (BuildContext context, AsyncSnapshot<GetUserResponse> snapshot) {
           if (snapshot.hasData) {
             GetUserResponse response = snapshot.data;
-
             if (response.hasError()) {
               return Column(
                 children: [
@@ -136,18 +135,21 @@ class ProfileMainWidget extends StatelessWidget {
                           left: 8.0, right: 8, top: 20, bottom: 8),
                       child: Container(
                         alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.email,
-                              size: 30,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(response.user.email),
-                            ),
-                          ],
+                        child: Visibility(
+                          visible: (response?.user?.email??null) != null,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.email,
+                                size: 30,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(response?.user?.email?? AppLocalizations.of(context).noEmailProvided),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
