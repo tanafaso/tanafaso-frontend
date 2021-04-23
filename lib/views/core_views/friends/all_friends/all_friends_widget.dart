@@ -78,16 +78,12 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
     List<Friend> nonPendingFriends =
         friendship.friends.where((friend) => !friend.pending).toList();
     if (nonPendingFriends.length == 0) {
-      if (friendship == null ||
-          friendship.friends == null ||
-          friendship.friends.isEmpty) {
-        return Center(
-          child: Text(
-            AppLocalizations.of(context).noFriendsFound,
-            key: Keys.allFriendsWidgetNoFriendsFoundKey,
-          ),
-        );
-      }
+      return Center(
+        child: Text(
+          AppLocalizations.of(context).noFriendsFound,
+          key: Keys.allFriendsWidgetNoFriendsFoundKey,
+        ),
+      );
     }
 
     return ListView.builder(
