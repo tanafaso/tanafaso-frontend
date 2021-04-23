@@ -25,7 +25,6 @@ class FriendsListItemWidget extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (_) => FriendScreen(
                   friend: friend,
-                  userScores: response.userScores,
                 )));
       },
       child: Card(

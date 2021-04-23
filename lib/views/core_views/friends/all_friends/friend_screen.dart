@@ -206,8 +206,8 @@ class _FriendScreenState extends State<FriendScreen> {
                   onPressed: () async {
                     await Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CreateChallengeScreen(
-                          selectedFriend: widget.friend,
-                        )));
+                              selectedFriend: widget.friend,
+                            )));
                     setState(() {});
                   }),
             );
