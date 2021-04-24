@@ -11,10 +11,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ByteData data = await rootBundle.load('assets/servercert.crt');
+  SecurityContext context = SecurityContext.defaultContext;
+  context.setTrustedCertificatesBytes(data.buffer.asUint8List());
   runApp(MyApp());
 }
 
@@ -770,6 +774,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget getMaterialAppWithBody(Widget body) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context).title,
       localizationsDelegates: [
