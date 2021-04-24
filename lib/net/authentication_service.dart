@@ -55,7 +55,7 @@ class AuthenticationService {
   Future<FacebookAuthenticationResponse> _loginWithFacebookAccessToken(
       FacebookAccessToken facebookAccessToken) async {
     final http.Response apiResponse = await http.put(
-        Uri.http(
+        Uri.https(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(
@@ -143,7 +143,7 @@ class AuthenticationService {
   Future<EmailRegistrationResponse> signUp(
       EmailRegistrationRequestBody request) async {
     final http.Response apiResponse = await http.put(
-      Uri.http(
+      Uri.https(
           ApiRoutesUtil.apiRouteToString(
               Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
           ApiRoutesUtil.apiRouteToString(
@@ -163,7 +163,7 @@ class AuthenticationService {
     http.Response apiResponse;
     try {
       apiResponse = await http.put(
-        Uri.http(
+        Uri.https(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(
@@ -195,7 +195,7 @@ class AuthenticationService {
   Future<EmailVerificationResponse> verifyEmail(
       EmailVerificationRequestBody request) async {
     final http.Response apiResponse = await http.put(
-      Uri.http(
+      Uri.https(
           ApiRoutesUtil.apiRouteToString(
               Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
           ApiRoutesUtil.apiRouteToString(
