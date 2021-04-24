@@ -41,14 +41,8 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                 ),
                 child: new Column(
                   children: <Widget>[
+                    Expanded(flex: 3, child: Container(),),
                     Container(
-                      padding: EdgeInsets.only(top: 200.0),
-                      child: Center(
-                          // TODO: Add icon
-                          ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 20.0),
                       child: new Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -62,6 +56,14 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                         ],
                       ),
                     ),
+                    Padding(padding: EdgeInsets.all(8 * 2.0)),
+                    Container(
+                      child: Center(
+                        child: Image.asset('assets/images/logo.png'),
+                      ),
+                    ),
+                    Expanded(flex: 4, child: Container()),
+                    Padding(padding: EdgeInsets.all(8)),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.only(left: 30.0, right: 30.0),
@@ -86,9 +88,8 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                                     (_) => false);
                               },
                               child: new Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 20.0,
-                                  horizontal: 20.0,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: MediaQuery.of(context).size.width / 20,
                                 ),
                                 child: new Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -112,6 +113,9 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                       ),
                     ),
                     Container(
+                      padding: EdgeInsets.all(8),
+                    ),
+                    Container(
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.only(left: 30.0, right: 30.0),
                       alignment: Alignment.center,
@@ -130,8 +134,8 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                                   MaterialPageRoute(
                                       builder: (context) => LoginScreen())),
                               child: new Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 20.0,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: MediaQuery.of(context).size.width / 20,
                                   horizontal: 20.0,
                                 ),
                                 child: new Row(
@@ -155,6 +159,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                         ],
                       ),
                     ),
+                    Flexible(flex: 1,child: Container()),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.only(
@@ -188,6 +193,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                         ],
                       ),
                     ),
+                    Padding(padding: EdgeInsets.all(8)),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.only(left: 30.0, right: 30.0),
@@ -212,7 +218,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                                         onPressed: () =>
                                             loginWithFacebook(context),
                                         padding: EdgeInsets.symmetric(
-                                          vertical: 20.0,
+                                          vertical: MediaQuery.of(context).size.width / 20,
                                           horizontal: 20.0,
                                         ),
                                         child: new Row(
@@ -255,7 +261,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                         ],
                       ),
                     ),
-                    Container(),
+                    Flexible(flex: 2,child: Container()),
                   ],
                 ),
               )))),
