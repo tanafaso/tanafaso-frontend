@@ -135,28 +135,22 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
         return DoChallengeSubChallengeListItemWidget(
           subChallenge: widget.challenge.subChallenges[index],
           challenge: widget.challenge,
-          callback: (SubChallenge newSubChallenge) {
+          callback: (SubChallenge newSubChallenge) async {
             widget.challenge.subChallenges[index] = newSubChallenge;
-            Future<UpdateChallengeResponse> updateChallengeResponseFuture =
+            UpdateChallengeResponse updateChallengeResponse =
                 widget.isPersonalChallenge
-                    ? ServiceProvider.challengesService
+                    ? await ServiceProvider.challengesService
                         .updatePersonalChallenge(widget.challenge)
-                    : ServiceProvider.challengesService
+                    : await ServiceProvider.challengesService
                         .updateChallenge(widget.challenge);
 
-            updateChallengeResponseFuture.then((response) {
-              if (response.hasError()) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(response.error.errorMessage),
-                ));
-              }
-            }, onError: (error) {
-              // TODO(omorsi): Print something useful if an error occurred.
-              // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              //   content: Text(response.error.errorMessage),
-              // ));
-            });
+            if (updateChallengeResponse.hasError()) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(updateChallengeResponse.error.errorMessage),
+              ));
+            }
 
+            widget.challengeChangedCallback(widget.challenge);
             if (widget.challenge.done()) {
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -165,7 +159,6 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                 backgroundColor: Colors.green.shade400,
               ));
             }
-            widget.challengeChangedCallback(widget.challenge);
           },
         );
       },
