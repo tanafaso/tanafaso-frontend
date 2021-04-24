@@ -218,6 +218,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                               ],
                             ),
                             RadioListTile<ChallengeTarget>(
+                              activeColor: Colors.green,
                               title: Text(
                                   AppLocalizations.of(context).challengeMyself),
                               dense: false,
@@ -230,6 +231,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                               },
                             ),
                             RadioListTile<ChallengeTarget>(
+                              activeColor: Colors.green,
                               title: Text(AppLocalizations.of(context)
                                   .challengeAFriend),
                               dense: false,

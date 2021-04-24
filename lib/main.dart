@@ -76,7 +76,7 @@ class AppLocalizations {
       'accept': 'قبول',
       'no friends found': 'لم يتم العثور على أصدقاء',
       'invited': 'مدعو',
-      'invite': 'ادع',
+      'invite': 'أضف',
       'invite facebook Friends': 'دعوة أصدقاء الفيسبوك',
       'an invitation has been sent to': 'تم إرسال دعوة إلى',
       'connected facebook Successfully': 'تم ربط الفيسبوك بنجاح',
