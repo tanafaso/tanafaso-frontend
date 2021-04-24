@@ -47,6 +47,9 @@
       android:value="2" />
 
     <meta-data
+        android:name="com.google.firebase.messaging.default_notification_icon"
+        android:resource="@mipmap/test" />
+    <meta-data
       android:name="com.facebook.sdk.ApplicationId"
       android:value="@string/facebook_app_id" />
   </application>
