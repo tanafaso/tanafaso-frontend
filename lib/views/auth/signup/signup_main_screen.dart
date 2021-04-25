@@ -22,6 +22,8 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
   String _lastName;
   String _email;
   String _password;
+  bool _passwordObscure = true;
+  bool _repeatedPasswordObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -267,11 +269,24 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                 children: <Widget>[
                                   new Expanded(
                                     child: TextFormField(
-                                      obscureText: true,
+                                      obscureText: _passwordObscure,
                                       textDirection: TextDirection.ltr,
                                       textAlign: TextAlign.left,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
+                                        icon: GestureDetector(
+                                          onTap: () {
+                                            setState(() => _passwordObscure =
+                                                !_passwordObscure);
+                                          },
+                                          child: const Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 15.0),
+                                              child: const Icon(
+                                                Icons.remove_red_eye,
+                                                color: Colors.grey,
+                                              )),
+                                        ),
                                         hintText: AppLocalizations.of(context)
                                             .passwordHintText,
                                       ),
@@ -330,11 +345,25 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                 children: <Widget>[
                                   new Expanded(
                                     child: TextFormField(
-                                      obscureText: true,
+                                      obscureText: _repeatedPasswordObscure,
                                       textAlign: TextAlign.left,
                                       textDirection: TextDirection.ltr,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
+                                        icon: GestureDetector(
+                                          onTap: () {
+                                            setState(() =>
+                                                _repeatedPasswordObscure =
+                                                    !_repeatedPasswordObscure);
+                                          },
+                                          child: const Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 15.0),
+                                              child: const Icon(
+                                                Icons.remove_red_eye,
+                                                color: Colors.grey,
+                                              )),
+                                        ),
                                         hintText: AppLocalizations.of(context)
                                             .passwordHintText,
                                       ),

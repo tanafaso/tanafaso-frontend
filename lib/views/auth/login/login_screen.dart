@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _loginFormKey = GlobalKey<FormState>();
   String _email;
   String _password;
+  bool _passwordObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: <Widget>[
                               new Expanded(
                                 child: TextFormField(
-                                  obscureText: true,
+                                  obscureText: _passwordObscure,
                                   textDirection: TextDirection.ltr,
                                   textAlign: TextAlign.left,
                                   onChanged: (password) => _password = password,
@@ -166,6 +167,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
+                                    icon: GestureDetector(
+                                      onTap: () {
+                                        setState(() => _passwordObscure =
+                                            !_passwordObscure);
+                                      },
+                                      child: const Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 15.0),
+                                          child: const Icon(
+                                            Icons.remove_red_eye,
+                                            color: Colors.grey,
+                                          )),
+                                    ),
                                     hintText: AppLocalizations.of(context)
                                         .passwordHintText,
                                     hintStyle: TextStyle(color: Colors.grey),
