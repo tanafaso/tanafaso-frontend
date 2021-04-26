@@ -35,7 +35,7 @@ class AppLocalizations {
     'ar': {
       'title': 'تنافسوا',
       'email': 'البريد الإلكتروني',
-      'password': 'كلمة المرور (باللغة الإنجليزية)',
+      'password': 'كلمة المرور',
       'forgot password': 'هل نسيت كلمة السر؟',
       'or login with': 'أو تسجيل الدخول باستخدام',
       'login': 'تسجيل الدخول',
