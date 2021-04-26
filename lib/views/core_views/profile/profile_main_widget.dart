@@ -1,6 +1,7 @@
 import 'package:azkar/main.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/arabic_numbers_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
@@ -173,9 +174,9 @@ class ProfileMainWidget extends StatelessWidget {
                               ),
                             ),
                             Text(
-                                response.user
+                                ArabicNumbersUtils.englishToArabic(response.user
                                     .getFinishedChallengesCount()
-                                    .toString(),
+                                    .toString()),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 50,

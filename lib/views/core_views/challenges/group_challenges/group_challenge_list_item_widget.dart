@@ -5,6 +5,7 @@ import 'package:azkar/models/user.dart';
 import 'package:azkar/net/payload/challenges/responses/get_challenge_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/arabic_numbers_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -190,12 +191,12 @@ class _GroupChallengeListItemWidgetState
       int minutesLeft = widget.challenge.minutesLeft();
       if (minutesLeft == 0) {
         return Text(
-            '${AppLocalizations.of(context).endsAfterLessThan} 1 ${AppLocalizations.of(context).minute}');
+            '${AppLocalizations.of(context).endsAfterLessThan} ١ ${AppLocalizations.of(context).minute}');
       }
       return Text(
-          '${AppLocalizations.of(context).endsAfter} $minutesLeft ${AppLocalizations.of(context).minute}');
+          '${AppLocalizations.of(context).endsAfter} ${ArabicNumbersUtils.englishToArabic(minutesLeft.toString())} ${AppLocalizations.of(context).minute}');
     }
     return Text(
-        '${AppLocalizations.of(context).endsAfter} ${widget.challenge.hoursLeft()} ${AppLocalizations.of(context).hour}');
+        '${AppLocalizations.of(context).endsAfter} ${ArabicNumbersUtils.englishToArabic(widget.challenge.hoursLeft().toString())} ${AppLocalizations.of(context).hour}');
   }
 }

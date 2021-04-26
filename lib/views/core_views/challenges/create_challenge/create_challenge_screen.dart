@@ -12,6 +12,7 @@ import 'package:azkar/net/payload/challenges/responses/add_challenge_response.da
 import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/arabic_numbers_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_zekr_screen.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +95,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   bool validateRepetition(String repetition, bool showWarning) {
     int repetitionsNum = 0;
     try {
-      repetitionsNum = int.parse(repetition);
+      repetitionsNum = stringToNumber(repetition);
     } on FormatException {
       if (showWarning) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -140,7 +141,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
 
     int newExpiresAfterDaysNumInt = 0;
     try {
-      newExpiresAfterDaysNumInt = int.parse(newExpiresAfterDayNum);
+      newExpiresAfterDaysNumInt = stringToNumber(newExpiresAfterDayNum);
     } on FormatException {
       if (showWarning) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -166,6 +167,15 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       return false;
     }
     return true;
+  }
+
+  int stringToNumber(String number) {
+    try {
+      return int.parse(number);
+    } on FormatException {
+      // Maybe it is in arabic?!.
+      return ArabicNumbersUtils.arabicToEnglish(number);
+    }
   }
 
   @override
@@ -382,7 +392,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                         if (validateRepetition(
                                             controller.value.text, true)) {
                                           subChallenge.repetitions =
-                                              int.parse(controller.value.text);
+                                              stringToNumber(
+                                                  controller.value.text);
                                         }
                                       });
                                       _repetitionsControllers.add(controller);
@@ -617,7 +628,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       name: _challengeNameController.value.text,
       expiryDate: DateTime.now().millisecondsSinceEpoch ~/ 1000 +
           Duration.secondsPerDay *
-              int.parse(_expiresAfterDayNumController.value.text),
+              stringToNumber(_expiresAfterDayNumController.value.text),
       subChallenges: _subChallenges,
     );
 
