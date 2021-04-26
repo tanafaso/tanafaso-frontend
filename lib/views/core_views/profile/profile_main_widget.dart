@@ -261,17 +261,17 @@ class ProfileMainWidget extends StatelessWidget {
                     ),
                   ),
                   decoration: BoxDecoration(
-                      color: Colors.red.shade700,
+                      color: Colors.grey,
                       borderRadius: BorderRadius.circular(5),
                       boxShadow: [
-                        BoxShadow(
-                            color: Colors.red.shade200,
-                            offset: Offset(1, -2),
-                            blurRadius: 5),
-                        BoxShadow(
-                            color: Colors.red.shade200,
-                            offset: Offset(-1, 2),
-                            blurRadius: 5)
+                        // BoxShadow(
+                        //     color: Colors.red.shade200,
+                        //     offset: Offset(1, -2),
+                        //     blurRadius: 5),
+                        // BoxShadow(
+                        //     color: Colors.red.shade200,
+                        //     offset: Offset(-1, 2),
+                        //     blurRadius: 5)
                       ]),
                 ),
               ],

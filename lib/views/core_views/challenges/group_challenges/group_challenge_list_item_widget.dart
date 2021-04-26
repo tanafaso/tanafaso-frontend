@@ -27,7 +27,8 @@ class GroupChallengeListItemWidget extends StatefulWidget {
 }
 
 class _GroupChallengeListItemWidgetState
-    extends State<GroupChallengeListItemWidget> {
+    extends State<GroupChallengeListItemWidget>
+    with AutomaticKeepAliveClientMixin {
   Group _group;
   User _friend;
 
@@ -62,6 +63,7 @@ class _GroupChallengeListItemWidgetState
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return GestureDetector(
       onTap: () async {
         GetChallengeResponse response = await ServiceProvider.challengesService
@@ -199,4 +201,7 @@ class _GroupChallengeListItemWidgetState
     return Text(
         '${AppLocalizations.of(context).endsAfter} ${ArabicNumbersUtils.englishToArabic(widget.challenge.hoursLeft().toString())} ${AppLocalizations.of(context).hour}');
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

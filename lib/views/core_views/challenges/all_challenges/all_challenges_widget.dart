@@ -14,11 +14,6 @@ class AllChallengesWidget extends StatefulWidget {
 
 class _AllChallengesWidgetState extends State<AllChallengesWidget> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -79,6 +74,9 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
 
     return ListView.builder(
       key: Keys.allChallengesWidgetListKey,
+      addAutomaticKeepAlives: true,
+      // Cache half screen after and half screen before the current screen.
+      cacheExtent: MediaQuery.of(context).size.height * 0.5,
       itemCount: challenges.length,
       itemBuilder: (context, index) {
         return GroupChallengeListItemWidget(
