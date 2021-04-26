@@ -41,7 +41,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   TextEditingController _motivationController;
   String _lastMotivation = '';
   TextEditingController _expiresAfterDayNumController;
-  String _lastExpiresAfterDayNum = '1';
+  String _lastExpiresAfterDayNum = '١';
   List<TextEditingController> _repetitionsControllers = [];
 
   initChallengeNameController() {
@@ -125,7 +125,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   }
 
   initExpiresAfterDayNumController() {
-    _expiresAfterDayNumController = TextEditingController(text: '1');
+    _expiresAfterDayNumController = TextEditingController(text: '١');
     _expiresAfterDayNumController.addListener(() {
       if (_lastExpiresAfterDayNum == _expiresAfterDayNumController.value.text) {
         return;
