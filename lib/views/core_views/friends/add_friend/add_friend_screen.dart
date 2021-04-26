@@ -69,9 +69,6 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                   ),
                 ),
               ),
-              // new Padding(
-              //   padding: EdgeInsets.all(5),
-              // ),
               buildTextWithIcon(),
               new Padding(
                 padding: EdgeInsets.all(20),
