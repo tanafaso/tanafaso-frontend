@@ -85,16 +85,6 @@ class _DoChallengeSubChallengeListItemWidgetState
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: const Divider(
-            //     color: Colors.grey,
-            //     height: 0,
-            //     thickness: 3,
-            //     indent: 3,
-            //     endIndent: 3,
-            //   ),
-            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: getRepetitionsTextConditionally(),
