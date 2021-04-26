@@ -17,11 +17,6 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (mounted) {
-     print ('mounted');
-    } else {
-     print('not mounted');
-    }
     return Container(
       child: FutureBuilder<GetChallengesResponse>(
         future: ServiceProvider.challengesService.getAllChallenges(),
