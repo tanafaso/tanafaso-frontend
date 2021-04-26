@@ -53,7 +53,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: <Widget>[
                             new Expanded(
                               child: new Padding(
-                                // Internalize that
                                 padding: const EdgeInsets.only(right: 40.0),
                                 child: new Text(
                                   AppLocalizations.of(context).email,
@@ -81,7 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           padding:
-                              // Internalize that
                               const EdgeInsets.only(left: 10.0, right: 0.0),
                           child: new Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -146,7 +144,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           padding:
-                              // Internalize that
                               const EdgeInsets.only(left: 10.0, right: 0.0),
                           child: new Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -196,7 +193,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Padding(
-                              // internalize that
                               padding: const EdgeInsets.only(left: 20.0),
                               // ignore: deprecated_member_use
                               child: new FlatButton(
@@ -372,7 +368,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 ),
                                                 new Container(
                                                   padding: EdgeInsets.only(
-                                                    // internalize that
                                                     left: 20.0,
                                                   ),
                                                 ),

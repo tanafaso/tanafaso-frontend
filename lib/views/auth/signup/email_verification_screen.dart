@@ -123,7 +123,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                       backgroundColor: Theme.of(context).primaryColor,
                       enableActiveFill: false,
                       errorAnimationController: errorController,
-//                    controller: textEditingController,
                       onCompleted: (v) {
                         print("Completed");
                       },
@@ -152,24 +151,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               SizedBox(
                 height: 20,
               ),
-              // RichText(
-              //   textAlign: TextAlign.center,
-              //   text: TextSpan(
-              //       text: AppLocalizations.of(context).didNotReceiveTheCjode,
-              //       style: TextStyle(color: Colors.black54, fontSize: 15),
-              //       children: [
-              //         TextSpan(
-              //             text: AppLocalizations.of(context).resend,
-              //             recognizer: onTapRecognizer,
-              //             style: TextStyle(
-              //                 color: Color(0xFF91D3B3),
-              //                 fontWeight: FontWeight.bold,
-              //                 fontSize: 16))
-              //       ]),
-              // ),
-              // SizedBox(
-              //   height: 14,
-              // ),
               Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
@@ -216,25 +197,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               SizedBox(
                 height: 16,
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[
-              //     // ignore: deprecated_member_use
-              //     FlatButton(
-              //       child: Text(AppLocalizations.of(context).clear),
-              //       onPressed: () {
-              //         textEditingController.clear();
-              //       },
-              //     ),
-              //     // ignore: deprecated_member_use
-              //     // FlatButton(
-              //     //   child: Text("Set Text"),
-              //     //   onPressed: () {
-              //     //     textEditingController.text = "123456";
-              //     //   },
-              //     // ),
-              //   ],
-              // )
             ],
           ),
         ),
