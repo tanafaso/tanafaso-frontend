@@ -70,17 +70,6 @@ class ProfileMainWidget extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // Icon(
-                          //   Icons.person,
-                          //   size: 40,
-                          // ),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(8.0),
-                          //   child: VerticalDivider(
-                          //     width: 3,
-                          //     color: Colors.black,
-                          //   ),
-                          // ),
                           Column(
                             children: [
                               Container(
@@ -215,18 +204,9 @@ class ProfileMainWidget extends StatelessWidget {
                         ),
                       ),
                       decoration: BoxDecoration(
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
-                            // BoxShadow(
-                            //     color: Colors.red.shade200,
-                            //     offset: Offset(1, -2),
-                            //     blurRadius: 5),
-                            // BoxShadow(
-                            //     color: Colors.red.shade200,
-                            //     offset: Offset(-1, 2),
-                            //     blurRadius: 5)
-                          ]),
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                     ),
                   ],
                 ),
@@ -261,18 +241,9 @@ class ProfileMainWidget extends StatelessWidget {
                     ),
                   ),
                   decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
-                        // BoxShadow(
-                        //     color: Colors.red.shade200,
-                        //     offset: Offset(1, -2),
-                        //     blurRadius: 5),
-                        // BoxShadow(
-                        //     color: Colors.red.shade200,
-                        //     offset: Offset(-1, 2),
-                        //     blurRadius: 5)
-                      ]),
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
               ],
             );
