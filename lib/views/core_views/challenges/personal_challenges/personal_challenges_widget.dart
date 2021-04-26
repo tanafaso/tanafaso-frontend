@@ -74,6 +74,8 @@ class _PersonalChallengesWidgetState extends State<PersonalChallengesWidget> {
 
     return ListView.builder(
       key: Keys.personalChallengesWidgetListKey,
+      // Cache half screen after and half screen before the current screen.
+      cacheExtent: MediaQuery.of(context).size.height * 0.5,
       itemCount: challenges.length,
       itemBuilder: (context, index) {
         return PersonalChallengesListItemWidget(

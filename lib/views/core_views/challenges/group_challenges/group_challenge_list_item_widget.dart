@@ -27,7 +27,7 @@ class GroupChallengeListItemWidget extends StatefulWidget {
 }
 
 class _GroupChallengeListItemWidgetState
-    extends State<GroupChallengeListItemWidget> {
+    extends State<GroupChallengeListItemWidget> with AutomaticKeepAliveClientMixin {
   Group _group;
   User _friend;
 
@@ -161,6 +161,7 @@ class _GroupChallengeListItemWidgetState
         ),
       ),
     );
+    super.build(context);
   }
 
   Widget getIconConditionally() {
@@ -199,4 +200,7 @@ class _GroupChallengeListItemWidgetState
     return Text(
         '${AppLocalizations.of(context).endsAfter} ${ArabicNumbersUtils.englishToArabic(widget.challenge.hoursLeft().toString())} ${AppLocalizations.of(context).hour}');
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

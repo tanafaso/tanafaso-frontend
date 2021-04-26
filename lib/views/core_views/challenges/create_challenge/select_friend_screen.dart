@@ -30,6 +30,7 @@ class SelectFriendScreen extends StatelessWidget {
 
     return ListView.builder(
       itemCount: friends.length,
+      addAutomaticKeepAlives: true,
       padding: EdgeInsets.only(bottom: 8),
       itemBuilder: (context, index) {
         return getFriendCard(context, friends[index]);
