@@ -14,7 +14,6 @@ class AllChallengesWidget extends StatefulWidget {
 
 class _AllChallengesWidgetState extends State<AllChallengesWidget> {
   @override
-
   @override
   Widget build(BuildContext context) {
     return Container(
