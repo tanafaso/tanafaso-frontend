@@ -209,7 +209,8 @@ class ProfileMainWidget extends StatelessWidget {
   }
 
   performLogout(BuildContext context) async {
-    await ServiceProvider.secureStorageService.forgetAll();
+    await ServiceProvider.secureStorageService.clear();
+    await ServiceProvider.cacheManager.clearPreferences();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(AppLocalizations.of(context).youHaveLoggedOutSuccessfully),
     ));
