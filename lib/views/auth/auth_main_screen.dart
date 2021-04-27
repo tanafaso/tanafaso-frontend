@@ -304,6 +304,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(e.error),
       ));
+      return;
     }
 
     Navigator.push(
