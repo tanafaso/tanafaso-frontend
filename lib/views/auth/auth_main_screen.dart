@@ -34,245 +34,266 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
           child: Container(
               height: MediaQuery.of(context).size.height,
               child: new SingleChildScrollView(
-                  child: new Container(
-                height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                ),
-                child: new Column(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Container(),
-                    ),
-                    Container(
-                      child: new Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            AppLocalizations.of(context).title,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.all(8 * 2.0)),
-                    Container(
-                      child: Center(
-                        child: Image.asset('assets/images/logo.png'),
-                      ),
-                    ),
-                    Expanded(flex: 4, child: Container()),
-                    Padding(padding: EdgeInsets.all(8)),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.only(left: 30.0, right: 30.0),
-                      alignment: Alignment.center,
-                      child: new Row(
-                        children: <Widget>[
-                          new Expanded(
-                            // ignore: deprecated_member_use
-                            child: new OutlineButton(
-                              key: Keys.authMainScreenSignUpButton,
-                              shape: new RoundedRectangleBorder(
-                                  borderRadius:
-                                      new BorderRadius.circular(30.0)),
-                              color: Theme.of(context).primaryColor,
-                              highlightedBorderColor: Colors.white,
-                              onPressed: () {
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SignUpMainScreen()),
-                                    (_) => false);
-                              },
-                              child: new Container(
-                                padding: EdgeInsets.symmetric(
-                                  vertical:
-                                      MediaQuery.of(context).size.width / 20,
-                                ),
-                                child: new Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                child: new Container(
+                  height: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  child: new Column(
+                    children: <Widget>[
+                      Flexible(
+                          flex: 2,
+                          fit: FlexFit.tight,
+                          child: Column(children: [
+                            Padding(padding: EdgeInsets.all(16)),
+                            Expanded(
+                              flex: 1,
+                              child: new Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    AppLocalizations.of(context).title,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Center(
+                                child: Image.asset('assets/images/logo.png'),
+                              ),
+                            ),
+                          ])),
+                      Flexible(
+                          fit: FlexFit.tight,
+                          flex: 1,
+                          child: Column(children: [
+                            Expanded(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: const EdgeInsets.only(
+                                    left: 30.0, right: 30.0),
+                                alignment: Alignment.center,
+                                child: new Column(
                                   children: <Widget>[
                                     new Expanded(
-                                      child: Text(
-                                        AppLocalizations.of(context).signUp,
-                                        key: Keys.authMainScreenSignUpText,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
+                                      // ignore: deprecated_member_use
+                                      child: new OutlineButton(
+                                        key: Keys.authMainScreenSignUpButton,
+                                        shape: new RoundedRectangleBorder(
+                                            borderRadius:
+                                                new BorderRadius.circular(
+                                                    30.0)),
+                                        color: Theme.of(context).primaryColor,
+                                        highlightedBorderColor: Colors.white,
+                                        onPressed: () {
+                                          Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SignUpMainScreen()),
+                                              (_) => false);
+                                        },
+                                        child: new Container(
+                                          child: new Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              new Expanded(
+                                                child: Text(
+                                                  AppLocalizations.of(context)
+                                                      .signUp,
+                                                  key: Keys
+                                                      .authMainScreenSignUpText,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(8),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.only(left: 30.0, right: 30.0),
-                      alignment: Alignment.center,
-                      child: new Row(
-                        children: <Widget>[
-                          new Expanded(
-                            // ignore: deprecated_member_use
-                            child: new FlatButton(
-                              key: Keys.authMainScreenLoginButton,
-                              shape: new RoundedRectangleBorder(
-                                  borderRadius:
-                                      new BorderRadius.circular(30.0)),
-                              color: Colors.white,
-                              onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginScreen())),
-                              child: new Container(
-                                padding: EdgeInsets.symmetric(
-                                  vertical:
-                                      MediaQuery.of(context).size.width / 20,
-                                  horizontal: 20.0,
-                                ),
-                                child: new Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Expanded(
-                                      child: Text(
-                                        AppLocalizations.of(context).login,
-                                        key: Keys.authMainScreenLoginText,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            Padding(
+                              padding: EdgeInsets.all(8),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(flex: 1, child: Container()),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.only(
-                          left: 30.0, right: 30.0, top: 30.0),
-                      alignment: Alignment.center,
-                      child: Row(
-                        children: <Widget>[
-                          new Expanded(
-                            child: new Container(
-                              height: 1,
-                              margin: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(width: 0.25)),
-                            ),
-                          ),
-                          Text(
-                            AppLocalizations.of(context).orLoginWith,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          new Expanded(
-                            child: new Container(
-                              height: 1,
-                              margin: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(width: 0.25)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.all(8)),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.only(left: 30.0, right: 30.0),
-                      child: new Row(
-                        children: <Widget>[
-                          new Expanded(
-                            // ignore: deprecated_member_use
-                            child: new FlatButton(
-                              key: Keys.authMainScreenFacebookButton,
-                              shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0),
-                              ),
-                              color: Color(0Xff3B5998),
-                              onPressed: () => {},
-                              child: new Container(
-                                child: new Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                            Expanded(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: const EdgeInsets.only(
+                                    left: 30.0, right: 30.0),
+                                alignment: Alignment.center,
+                                child: new Column(
                                   children: <Widget>[
                                     new Expanded(
                                       // ignore: deprecated_member_use
                                       child: new FlatButton(
-                                        onPressed: () =>
-                                            loginWithFacebook(context),
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              20,
-                                          horizontal: 20.0,
-                                        ),
-                                        child: new Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            Icon(
-                                              const IconData(0xea90,
-                                                  fontFamily: 'icomoon'),
-                                              color: Colors.white,
-                                              size: 20.0,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                AppLocalizations.of(context)
-                                                    .facebook,
-                                                key: Keys
-                                                    .authMainScreenFacebookText,
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                        key: Keys.authMainScreenLoginButton,
+                                        shape: new RoundedRectangleBorder(
+                                            borderRadius:
+                                                new BorderRadius.circular(
+                                                    30.0)),
+                                        color: Colors.white,
+                                        onPressed: () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LoginScreen())),
+                                        child: new Container(
+                                          child: new Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              new Expanded(
+                                                child: Text(
+                                                  AppLocalizations.of(context)
+                                                      .login,
+                                                  key: Keys
+                                                      .authMainScreenLoginText,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    new Container(
-                                      padding: EdgeInsets.only(
-                                        right: 20.0,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(flex: 2, child: Container()),
-                  ],
+                            Expanded(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: const EdgeInsets.only(
+                                    left: 30.0, right: 30.0),
+                                alignment: Alignment.center,
+                                child: Row(
+                                  children: <Widget>[
+                                    new Expanded(
+                                      child: new Container(
+                                        height: 1,
+                                        margin: EdgeInsets.all(8.0),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(width: 0.25)),
+                                      ),
+                                    ),
+                                    Text(
+                                      AppLocalizations.of(context).orLoginWith,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    new Expanded(
+                                      child: new Container(
+                                        height: 1,
+                                        margin: EdgeInsets.all(8.0),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(width: 0.25)),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: const EdgeInsets.only(
+                                    left: 30.0, right: 30.0),
+                                child: new Row(
+                                  children: <Widget>[
+                                    new Expanded(
+                                      // ignore: deprecated_member_use
+                                      child: new FlatButton(
+                                        key: Keys.authMainScreenFacebookButton,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius:
+                                              new BorderRadius.circular(30.0),
+                                        ),
+                                        color: Color(0Xff3B5998),
+                                        onPressed: () => {},
+                                        child: new Container(
+                                          child: new Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              new Expanded(
+                                                // ignore: deprecated_member_use
+                                                child: new FlatButton(
+                                                  onPressed: () =>
+                                                      loginWithFacebook(
+                                                          context),
+                                                  child: new Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Icon(
+                                                        const IconData(0xea90,
+                                                            fontFamily:
+                                                                'icomoon'),
+                                                        color: Colors.white,
+                                                        size: 20.0,
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          AppLocalizations.of(
+                                                                  context)
+                                                              .facebook,
+                                                          key: Keys
+                                                              .authMainScreenFacebookText,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              new Container(
+                                                padding: EdgeInsets.only(
+                                                  right: 20.0,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(16),
+                            )
+                          ]))
+                    ],
+                  ),
                 ),
-              )))),
+              ))),
     ));
   }
 
