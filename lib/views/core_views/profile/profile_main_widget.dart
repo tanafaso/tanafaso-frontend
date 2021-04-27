@@ -1,4 +1,4 @@
-import 'package:azkar/net/payload/users/responses/get_user_response.dart';
+import 'package:azkar/models/user.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
@@ -15,52 +15,9 @@ class ProfileMainWidget extends StatelessWidget {
 
     return FutureBuilder(
         future: ServiceProvider.usersService.getCurrentUser(),
-        builder:
-            (BuildContext context, AsyncSnapshot<GetUserResponse> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
           if (snapshot.hasData) {
-            GetUserResponse response = snapshot.data;
-            if (response.hasError()) {
-              return Column(
-                children: [
-                  Text(response.error.errorMessage),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 16.0, horizontal: 30),
-                    child: ButtonTheme(
-                      height: 50,
-                      // ignore: deprecated_member_use
-                      child: FlatButton(
-                        onPressed: () async {
-                          performLogout(context);
-                        },
-                        child: Center(
-                            child: Text(
-                          AppLocalizations.of(context).logout,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        )),
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                        color: Colors.red.shade700,
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.red.shade200,
-                              offset: Offset(1, -2),
-                              blurRadius: 5),
-                          BoxShadow(
-                              color: Colors.red.shade200,
-                              offset: Offset(-1, 2),
-                              blurRadius: 5)
-                        ]),
-                  ),
-                ],
-              );
-            }
-
+            User user = snapshot.data;
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: SingleChildScrollView(
@@ -75,9 +32,7 @@ class ProfileMainWidget extends StatelessWidget {
                               Container(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  response.user.firstName +
-                                      " " +
-                                      response.user.lastName,
+                                  user.firstName + " " + user.lastName,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 30,
@@ -91,7 +46,7 @@ class ProfileMainWidget extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        response.user.username + "@",
+                                        user.username + "@",
                                         style: TextStyle(
                                           color: Colors.black54,
                                         ),
@@ -100,7 +55,7 @@ class ProfileMainWidget extends StatelessWidget {
                                     GestureDetector(
                                       onTapDown: (_) {
                                         Clipboard.setData(ClipboardData(
-                                          text: response.user.username,
+                                          text: user.username,
                                         )).then((_) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(SnackBar(
@@ -126,7 +81,7 @@ class ProfileMainWidget extends StatelessWidget {
                       child: Container(
                         alignment: Alignment.center,
                         child: Visibility(
-                          visible: (response?.user?.email ?? null) != null,
+                          visible: (user?.email ?? null) != null,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -136,7 +91,7 @@ class ProfileMainWidget extends StatelessWidget {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text(response?.user?.email ??
+                                child: Text(user?.email ??
                                     AppLocalizations.of(context)
                                         .noEmailProvided),
                               ),
@@ -163,7 +118,7 @@ class ProfileMainWidget extends StatelessWidget {
                               ),
                             ),
                             Text(
-                                ArabicNumbersUtils.englishToArabic(response.user
+                                ArabicNumbersUtils.englishToArabic(user
                                     .getFinishedChallengesCount()
                                     .toString()),
                                 style: TextStyle(
@@ -213,7 +168,6 @@ class ProfileMainWidget extends StatelessWidget {
               ),
             );
           } else if (snapshot.hasError) {
-            // TODO(omorsi): Handle error
             return Column(
               children: [
                 Padding(

@@ -1,5 +1,5 @@
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/net/payload/users/responses/resolve_friend_request_response.dart';
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -92,35 +92,35 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
   }
 
   void onAcceptedPressed() async {
-    ResolveFriendRequestResponse response =
-        await ServiceProvider.usersService.acceptFriend(widget.friend.userId);
-    if (response.hasError()) {
+    try {
+      await ServiceProvider.usersService.acceptFriend(widget.friend.userId);
+    } on ApiException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(response.error.errorMessage),
+        content: Text(e.error),
       ));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.green.shade400,
-        content: Text(
-            '${widget.friend.firstName} ${widget.friend.lastName} ${AppLocalizations.of(context).isNowYourFriend}'),
-      ));
-      widget.parentState.setState(() {});
+      return;
     }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.green.shade400,
+      content: Text(
+          '${widget.friend.firstName} ${widget.friend.lastName} ${AppLocalizations.of(context).isNowYourFriend}'),
+    ));
+    widget.parentState.setState(() {});
   }
 
   void onRejectedPressed() async {
-    ResolveFriendRequestResponse response =
-        await ServiceProvider.usersService.rejectFriend(widget.friend.userId);
-    if (response.hasError()) {
+    try {
+      await ServiceProvider.usersService.rejectFriend(widget.friend.userId);
+    } on ApiException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(response.error.errorMessage),
+        content: Text(e.error),
       ));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-            "${AppLocalizations.of(context).friendRequest} ${widget.friend.firstName} ${widget.friend.lastName} ${AppLocalizations.of(context).isIgnored}"),
-      ));
-      widget.parentState.setState(() {});
+      return;
     }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+          "${AppLocalizations.of(context).friendRequest} ${widget.friend.firstName} ${widget.friend.lastName} ${AppLocalizations.of(context).isIgnored}"),
+    ));
+    widget.parentState.setState(() {});
   }
 }

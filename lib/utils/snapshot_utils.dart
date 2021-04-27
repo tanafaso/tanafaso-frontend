@@ -1,16 +1,16 @@
-import 'package:azkar/net/payload/response_base.dart';
-import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/net/api_exception.dart';
+import 'package:azkar/net/payload/status.dart';
 import 'package:flutter/material.dart';
 
 class SnapshotUtils {
   static Widget getErrorWidget(
-      BuildContext context, AsyncSnapshot<ResponseBase> snapshot) {
-    if ((snapshot?.data?.error?.errorMessage?.length ?? 0) != 0) {
-      return Text(
-          '${AppLocalizations.of(context).error}: ${snapshot.data.error.errorMessage}');
+      BuildContext context, AsyncSnapshot<Object> snapshot) {
+    String error;
+    if (snapshot.error is ApiException) {
+      error = (snapshot.error as ApiException).error;
     } else {
-      return Text(
-          AppLocalizations.of(context).pleaseConnectToInternetAndTryAgain);
+      error = Status.getDefaultApiErrorStatus().errorMessage;
     }
+    return Text(error);
   }
 }

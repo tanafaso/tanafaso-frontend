@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/payload/authentication/requests/email_verification_request_body.dart';
-import 'package:azkar/net/payload/authentication/responses/email_verification_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
@@ -204,17 +204,16 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     );
   }
 
-  void performEmailVerification() {
-    ServiceProvider.authenticationService
-        .verifyEmail(new EmailVerificationRequestBody(
-            email: widget.phoneNumber, pin: int.parse(currentText)))
-        .then<void>((EmailVerificationResponse value) {
-      if (value.hasError()) {
-        onEmailVerificationError();
-      } else {
-        onEmailVerificationSuccess();
-      }
-    });
+  void performEmailVerification() async {
+    try {
+      await ServiceProvider.authenticationService.verifyEmail(
+          new EmailVerificationRequestBody(
+              email: widget.phoneNumber, pin: int.parse(currentText)));
+    } on ApiException catch (_) {
+      onEmailVerificationError();
+    }
+
+    onEmailVerificationSuccess();
 
     setState(() {
       hasError = false;

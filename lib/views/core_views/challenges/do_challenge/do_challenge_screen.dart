@@ -2,8 +2,7 @@ import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/models/user.dart';
-import 'package:azkar/net/payload/challenges/responses/update_challenge_response.dart';
-import 'package:azkar/net/payload/users/responses/get_user_response.dart';
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
@@ -28,36 +27,36 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
   Group _group;
   User _friend;
 
-  @override
-  void initState() {
+  void asyncInit() async {
     if (!widget.isPersonalChallenge) {
-      ServiceProvider.groupsService
-          .getGroup(widget.challenge.groupId)
-          .then((getGroupResponse) async {
-        if (getGroupResponse.hasError()) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(getGroupResponse.error.errorMessage),
-          ));
-          return;
-        }
+      try {
+        Group group = await ServiceProvider.groupsService
+            .getGroup(widget.challenge.groupId);
 
-        if (getGroupResponse.group.binary) {
-          GetUserResponse currentUserResponse =
-              await ServiceProvider.usersService.getCurrentUser();
-          String otherUserId = getGroupResponse.group.usersIds.singleWhere(
-              (userId) => userId != currentUserResponse.user.id,
-              orElse: null);
+        if (group.binary) {
+          String currentUserId =
+              await ServiceProvider.usersService.getCurrentUserId();
+          String otherUserId = group.usersIds
+              .singleWhere((userId) => userId != currentUserId, orElse: null);
           if (otherUserId != null) {
-            GetUserResponse otherUserResponse =
+            _friend =
                 await ServiceProvider.usersService.getUserById(otherUserId);
-            _friend = otherUserResponse.user;
           }
         }
 
-        _group = getGroupResponse.group;
-        setState(() {});
-      });
+        _group = group;
+      } on ApiException catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(e.error),
+        ));
+      }
+      setState(() {});
     }
+  }
+
+  @override
+  void initState() {
+    asyncInit();
 
     super.initState();
   }
@@ -137,16 +136,15 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
           challenge: widget.challenge,
           callback: (SubChallenge newSubChallenge) async {
             widget.challenge.subChallenges[index] = newSubChallenge;
-            UpdateChallengeResponse updateChallengeResponse =
-                widget.isPersonalChallenge
-                    ? await ServiceProvider.challengesService
-                        .updatePersonalChallenge(widget.challenge)
-                    : await ServiceProvider.challengesService
-                        .updateChallenge(widget.challenge);
-
-            if (updateChallengeResponse.hasError()) {
+            try {
+              widget.isPersonalChallenge
+                  ? await ServiceProvider.challengesService
+                      .updatePersonalChallenge(widget.challenge)
+                  : await ServiceProvider.challengesService
+                      .updateChallenge(widget.challenge);
+            } on ApiException catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(updateChallengeResponse.error.errorMessage),
+                content: Text(e.error),
               ));
             }
 

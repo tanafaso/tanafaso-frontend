@@ -1,5 +1,5 @@
 import 'package:azkar/models/user.dart';
-import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -62,13 +62,12 @@ class _InviteFacebookFriendWidgetState
   }
 
   void onInvitePressed() async {
-    AddFriendResponse response = await ServiceProvider.usersService
-        .addFriend(widget.facebookFriend.username);
-    if (response.hasError()) {
+    try {
+      await ServiceProvider.usersService
+          .addFriend(widget.facebookFriend.username);
+    } on ApiException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(response.error.errorMessage),
-      ));
-      return;
+          content: Text('${AppLocalizations.of(context).error}: ${e.error}')));
     }
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

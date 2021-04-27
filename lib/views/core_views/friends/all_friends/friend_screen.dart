@@ -1,8 +1,9 @@
+import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/net/payload/challenges/responses/get_challenges_response.dart';
-import 'package:azkar/net/payload/groups/responses/get_group_leaderboard_response.dart';
+import 'package:azkar/models/user_score.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/home_page.dart';
@@ -28,19 +29,14 @@ class _FriendScreenState extends State<FriendScreen> {
     return FutureBuilder(
         future: ServiceProvider.groupsService
             .getGroupLeaderboard(widget.friend.groupId),
-        builder: (BuildContext context,
-            AsyncSnapshot<GetGroupLeaderboardResponse> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<UserScore>> snapshot) {
           if (snapshot.hasData) {
-            GetGroupLeaderboardResponse response = snapshot.data;
-            if (response.hasError()) {
-              return Text(response.error.errorMessage);
-            }
-
-            int friendScore = response.userScores
+            int friendScore = snapshot.data
                 .firstWhere(
                     (userScore) => userScore.username == widget.friend.username)
                 .totalScore;
-            int currentUserScore = response.userScores
+            int currentUserScore = snapshot.data
                 .firstWhere(
                     (userScore) => userScore.username != widget.friend.username)
                 .totalScore;
@@ -188,8 +184,14 @@ class _FriendScreenState extends State<FriendScreen> {
                   }),
             );
           } else if (snapshot.hasError) {
-            // TODO(omorsi): Handle error
-            return Text('Error');
+            return Scaffold(
+                appBar: AppBar(
+                  title: Text(
+                      widget.friend.firstName + " " + widget.friend.lastName),
+                ),
+                body: Center(
+                  child: SnapshotUtils.getErrorWidget(context, snapshot),
+                ));
           } else {
             return Scaffold(
               appBar: AppBar(
@@ -219,18 +221,14 @@ class _FriendScreenState extends State<FriendScreen> {
     return FutureBuilder(
         future: ServiceProvider.groupsService
             .getAllChallengesInGroup(widget.friend.groupId),
-        builder: (BuildContext context,
-            AsyncSnapshot<GetChallengesResponse> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<Challenge>> snapshot) {
           if (snapshot.hasData) {
-            GetChallengesResponse response = snapshot.data;
-            if (response.hasError()) {
-              return Text(response.error.errorMessage);
-            }
             return ListView.builder(
-              itemCount: response.challenges.length,
+              itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
                 return GroupChallengeListItemWidget(
-                  challenge: response.challenges[index],
+                  challenge: snapshot.data[index],
                   showName: false,
                   challengeChangedCallback: (_) {
                     setState(() {});
@@ -239,8 +237,7 @@ class _FriendScreenState extends State<FriendScreen> {
               },
             );
           } else if (snapshot.hasError) {
-            // TODO(omorsi): Handle error
-            return Text('Error');
+            return SnapshotUtils.getErrorWidget(context, snapshot);
           } else {
             // TODO(omorsi): Show loader
             return Text(AppLocalizations.of(context).loading);

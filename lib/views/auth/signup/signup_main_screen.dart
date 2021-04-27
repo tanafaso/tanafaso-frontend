@@ -1,5 +1,5 @@
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/payload/authentication/requests/email_registration_request_body.dart';
-import 'package:azkar/net/payload/authentication/responses/email_registration_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/auth/auth_main_screen.dart';
@@ -475,23 +475,22 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
         context,
         MaterialPageRoute(
             builder: (context) => new EmailVerificationScreen(_email)));
-    ServiceProvider.authenticationService
-        .signUp(new EmailRegistrationRequestBody(
-      email: _email,
-      password: _password,
-      firstName: _firstName,
-      lastName: _lastName,
-    ))
-        .then<void>((EmailRegistrationResponse response) {
-      if (response.hasError()) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(response.error.errorMessage),
-        ));
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => new AuthMainScreen()),
-            (_) => false);
-      }
-    });
+    try {
+      await ServiceProvider.authenticationService
+          .signUp(new EmailRegistrationRequestBody(
+        email: _email,
+        password: _password,
+        firstName: _firstName,
+        lastName: _lastName,
+      ));
+    } on ApiException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.error),
+      ));
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => new AuthMainScreen()),
+          (_) => false);
+    }
   }
 }

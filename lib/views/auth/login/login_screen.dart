@@ -1,6 +1,5 @@
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/payload/authentication/requests/email_login_request_body.dart';
-import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
-import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/auth/signup/signup_main_screen.dart';
@@ -392,31 +391,28 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   loginWithFacebook() async {
-    FacebookAuthenticationResponse response =
-        await ServiceProvider.authenticationService.loginWithFacebook();
-    if (response.hasError()) {
+    try {
+      ServiceProvider.authenticationService.loginWithFacebook();
+    } on ApiException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(response.error.errorMessage),
+        content: Text(e.error),
       ));
-    } else {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => new HomePage()));
     }
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => new HomePage()));
   }
 
   loginWithEmail(EmailLoginRequestBody request) async {
-    EmailLoginResponse response =
-        await ServiceProvider.authenticationService.login(request);
-
-    if (!response.hasError()) {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => new HomePage()),
-          (_) => false);
-    } else {
+    try {
+      await ServiceProvider.authenticationService.login(request);
+    } on ApiException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(response.error.errorMessage),
+        content: Text(e.error),
       ));
     }
+
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => new HomePage()), (_) => false);
   }
 }
