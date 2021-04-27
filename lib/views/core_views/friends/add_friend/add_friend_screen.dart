@@ -308,7 +308,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
             color: Theme.of(context).buttonColor),
         ButtonState.loading: IconedButton(
             text: AppLocalizations.of(context).sending,
-            color: Colors.deepPurple.shade700),
+            color: Colors.yellow.shade200),
         ButtonState.fail: IconedButton(
             text: AppLocalizations.of(context).failed,
             icon: Icon(Icons.cancel, color: Colors.white),
