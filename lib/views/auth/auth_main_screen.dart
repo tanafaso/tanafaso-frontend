@@ -1,6 +1,6 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:azkar/views/auth/signup/signup_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';

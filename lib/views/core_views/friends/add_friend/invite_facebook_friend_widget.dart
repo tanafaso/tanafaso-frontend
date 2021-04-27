@@ -1,7 +1,7 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class InviteFacebookFriendWidget extends StatefulWidget {

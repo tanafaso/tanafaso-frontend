@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/sub_challenge.dart';
@@ -12,6 +11,7 @@ import 'package:azkar/net/payload/challenges/responses/add_challenge_response.da
 import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_zekr_screen.dart';

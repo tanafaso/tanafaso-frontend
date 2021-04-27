@@ -1,5 +1,5 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/net/payload/response_base.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class SnapshotUtils {
