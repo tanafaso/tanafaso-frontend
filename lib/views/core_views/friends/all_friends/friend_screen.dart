@@ -1,8 +1,8 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/payload/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/payload/groups/responses/get_group_leaderboard_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/home_page.dart';

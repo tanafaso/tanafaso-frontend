@@ -1,4 +1,4 @@
-import 'package:azkar/main.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/challenges/all_challenges/all_challenges_widget.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/personal_challenges/personal_challenges_widget.dart';

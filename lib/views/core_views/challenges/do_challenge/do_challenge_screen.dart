@@ -1,4 +1,3 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/sub_challenge.dart';
@@ -6,6 +5,7 @@ import 'package:azkar/models/user.dart';
 import 'package:azkar/net/payload/challenges/responses/update_challenge_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:flutter/material.dart';

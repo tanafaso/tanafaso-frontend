@@ -1,7 +1,7 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/payload/users/responses/resolve_friend_request_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class FriendRequestWidget extends StatefulWidget {

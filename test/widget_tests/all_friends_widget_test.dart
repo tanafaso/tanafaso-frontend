@@ -1,9 +1,9 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/net/users_service.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/friends/all_friends/all_friends_widget.dart';
 import 'package:azkar/views/core_views/friends/all_friends/friends_list_item_widget.dart';
 import 'package:azkar/views/keys.dart';
@@ -68,7 +68,7 @@ void main() {
 
     await tester.pumpWidget(new MaterialApp(
       home: AllFriendsWidget(),
-      localizationsDelegates: [const AppLocalizationsDelegate()],
+      localizationsDelegates: [AppLocalizationsDelegate()],
       supportedLocales: [
         const Locale('ar', ''),
       ],
@@ -105,7 +105,7 @@ void main() {
 
     await tester.pumpWidget(new MaterialApp(
       home: AllFriendsWidget(),
-      localizationsDelegates: [const AppLocalizationsDelegate()],
+      localizationsDelegates: [AppLocalizationsDelegate()],
       supportedLocales: [
         const Locale('ar', ''),
       ],

@@ -1,6 +1,6 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/auth/auth_main_screen.dart';

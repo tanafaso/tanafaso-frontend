@@ -1,10 +1,10 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/payload/challenges/responses/get_challenge_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
 import 'package:flutter/material.dart';
