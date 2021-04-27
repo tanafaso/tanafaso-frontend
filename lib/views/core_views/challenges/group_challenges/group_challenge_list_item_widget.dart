@@ -45,10 +45,10 @@ class _GroupChallengeListItemWidgetState
       }
 
       if (getGroupResponse.group.binary) {
-        GetUserResponse currentUserResponse =
-            await ServiceProvider.usersService.getCurrentUser();
+        String currentUserId =
+            await ServiceProvider.usersService.getCurrentUserId();
         String otherUserId = getGroupResponse.group.usersIds
-            .singleWhere((userId) => userId != currentUserResponse.user.id);
+            .singleWhere((userId) => userId != currentUserId);
         GetUserResponse otherUserResponse =
             await ServiceProvider.usersService.getUserById(otherUserId);
         _friend = otherUserResponse.user;
