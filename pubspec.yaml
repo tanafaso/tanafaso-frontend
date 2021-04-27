@@ -60,6 +60,7 @@ flutter:
     - assets/images/mountains.jpg
     - assets/images/otp.flr
     - assets/images/verify.png
+    - assets/images/icon.png
     - assets/images/logo.png
     - assets/servercert.crt
   # To add assets to your application, add an assets section, like this:
