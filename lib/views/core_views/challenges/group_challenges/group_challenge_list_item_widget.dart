@@ -1,6 +1,5 @@
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/group.dart';
-import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
@@ -29,7 +28,7 @@ class _GroupChallengeListItemWidgetState
     extends State<GroupChallengeListItemWidget>
     with AutomaticKeepAliveClientMixin {
   Group _group;
-  User _friend;
+  String _friendFullName;
 
   void asyncInit() async {
     try {
@@ -41,7 +40,8 @@ class _GroupChallengeListItemWidgetState
             await ServiceProvider.usersService.getCurrentUserId();
         String otherUserId =
             group.usersIds.singleWhere((userId) => userId != currentUserId);
-        _friend = await ServiceProvider.usersService.getUserById(otherUserId);
+        _friendFullName =
+            await ServiceProvider.usersService.getUserFullNameById(otherUserId);
       }
       setState(() {});
       _group = group;
@@ -148,7 +148,7 @@ class _GroupChallengeListItemWidgetState
                               : Icons.group),
                         ),
                         Text(_group?.binary ?? false
-                            ? '${_friend.firstName} ${_friend.lastName}'
+                            ? '$_friendFullName'
                             : _group?.name ??
                                 AppLocalizations.of(context).nameNotFound),
                       ],

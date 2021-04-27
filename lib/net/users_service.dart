@@ -17,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UsersService {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   static const String CACHE_KEY_CURRENT_USER_ID = "0";
+  static const String CACHE_KEY_USER_FIRST_AND_LAST_NAME = "1";
 
   Future<User> getCurrentUser() async {
     http.Response httpResponse = await ApiCaller.get(
@@ -50,6 +51,18 @@ class UsersService {
       throw new ApiException(response.getErrorMessage());
     }
     return response.user;
+  }
+
+  Future<String> getUserFullNameById(String id) async {
+    SharedPreferences prefs = await _prefs;
+    String key = CACHE_KEY_USER_FIRST_AND_LAST_NAME + id;
+    if (prefs.containsKey(key)) {
+      return prefs.getString(key);
+    }
+    User user = await getUserById(id);
+    String fullName = user.firstName + " " + user.lastName;
+    prefs.setString(key, fullName);
+    return fullName;
   }
 
   Future<User> getUserByUsername(String username) async {
