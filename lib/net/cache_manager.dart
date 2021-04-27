@@ -12,4 +12,9 @@ class CacheManager {
   Future<SharedPreferences> getPrefs() async {
     return await _prefs;
   }
+
+  Future<void> clearPreferences() async {
+    SharedPreferences prefs = await _prefs;
+    await prefs.clear();
+  }
 }
