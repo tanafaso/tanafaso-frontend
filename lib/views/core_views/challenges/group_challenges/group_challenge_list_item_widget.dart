@@ -1,8 +1,7 @@
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/user.dart';
-import 'package:azkar/net/payload/challenges/responses/get_challenge_response.dart';
-import 'package:azkar/net/payload/users/responses/get_user_response.dart';
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
@@ -32,32 +31,30 @@ class _GroupChallengeListItemWidgetState
   Group _group;
   User _friend;
 
-  @override
-  void initState() {
-    ServiceProvider.groupsService
-        .getGroup(widget.challenge.groupId)
-        .then((getGroupResponse) async {
-      if (getGroupResponse.hasError()) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(getGroupResponse.error.errorMessage),
-        ));
-        return;
-      }
+  void asyncInit() async {
+    try {
+      Group group = await ServiceProvider.groupsService
+          .getGroup(widget.challenge.groupId);
 
-      if (getGroupResponse.group.binary) {
+      if (group.binary) {
         String currentUserId =
             await ServiceProvider.usersService.getCurrentUserId();
-        String otherUserId = getGroupResponse.group.usersIds
-            .singleWhere((userId) => userId != currentUserId);
-        GetUserResponse otherUserResponse =
-            await ServiceProvider.usersService.getUserById(otherUserId);
-        _friend = otherUserResponse.user;
+        String otherUserId =
+            group.usersIds.singleWhere((userId) => userId != currentUserId);
+        _friend = await ServiceProvider.usersService.getUserById(otherUserId);
       }
-
-      _group = getGroupResponse.group;
       setState(() {});
-    });
+      _group = group;
+    } on ApiException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.error),
+      ));
+    }
+  }
 
+  @override
+  void initState() {
+    asyncInit();
     super.initState();
   }
 
@@ -66,15 +63,16 @@ class _GroupChallengeListItemWidgetState
     super.build(context);
     return GestureDetector(
       onTap: () async {
-        GetChallengeResponse response = await ServiceProvider.challengesService
-            .getChallenge(widget.challenge.id);
-        if (response.hasError()) {
+        Challenge challenge;
+        try {
+          challenge = await ServiceProvider.challengesService
+              .getChallenge(widget.challenge.id);
+        } on ApiException catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(
-                  '${AppLocalizations.of(context).error}: ${response.error.errorMessage}')));
-          return;
+              content:
+                  Text('${AppLocalizations.of(context).error}: ${e.error}')));
         }
-        if (response.challenge.deadlinePassed()) {
+        if (challenge.deadlinePassed()) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(AppLocalizations.of(context)
                 .theDeadlineHasAlreadyPassedForThisChallenge),
@@ -83,7 +81,7 @@ class _GroupChallengeListItemWidgetState
         }
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => DoChallengeScreen(
-                challenge: response.challenge,
+                challenge: challenge,
                 isPersonalChallenge: false,
                 challengeChangedCallback: (changedChallenge) {
                   widget.challengeChangedCallback(changedChallenge);

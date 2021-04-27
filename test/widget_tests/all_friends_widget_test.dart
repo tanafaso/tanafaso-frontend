@@ -1,6 +1,5 @@
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
-import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/net/users_service.dart';
 import 'package:azkar/utils/app_localizations.dart';
@@ -55,16 +54,13 @@ void main() {
 
     List<Friend> allFriends = pendingFriends + nonPendingFriends;
 
-    var friendsResponse = GetFriendsResponse(
-      friendship: Friendship(
-        id: 'friendshipId',
-        userId: 'userId',
-        friends: allFriends,
-      ),
+    var friendship = Friendship(
+      id: 'friendshipId',
+      userId: 'userId',
+      friends: allFriends,
     );
 
-    when(usersService.getFriends())
-        .thenAnswer((_) => Future.value(friendsResponse));
+    when(usersService.getFriends()).thenAnswer((_) => Future.value(friendship));
 
     await tester.pumpWidget(new MaterialApp(
       home: AllFriendsWidget(),
@@ -100,8 +96,11 @@ void main() {
   testWidgets(
       'a message showing that the friend list is empty is shown when the user has no friends',
       (WidgetTester tester) async {
-    when(usersService.getFriends())
-        .thenAnswer((_) => Future.value(GetFriendsResponse()));
+    when(usersService.getFriends()).thenAnswer((_) => Future.value(Friendship(
+          id: "example-id",
+          userId: "example-user-id",
+          friends: [],
+        )));
 
     await tester.pumpWidget(new MaterialApp(
       home: AllFriendsWidget(),

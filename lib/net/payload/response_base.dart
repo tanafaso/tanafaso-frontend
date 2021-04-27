@@ -14,6 +14,10 @@ abstract class ResponseBase {
     error = Status(errorCode);
   }
 
+  String getErrorMessage() {
+    return error.errorMessage;
+  }
+
   bool hasError() {
     return error?.code != Status.API_SUCCESS;
   }

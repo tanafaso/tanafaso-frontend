@@ -1,6 +1,5 @@
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
-import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
@@ -17,14 +16,12 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder<GetFriendsResponse>(
+      child: FutureBuilder<Friendship>(
         future: ServiceProvider.usersService.getFriends(),
-        builder:
-            (BuildContext context, AsyncSnapshot<GetFriendsResponse> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<Friendship> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            return getFriendRequestsListWidget(
-                context, snapshot.data.friendship);
+            return getFriendRequestsListWidget(context, snapshot.data);
           } else if (snapshot.hasError) {
             children = <Widget>[
               Icon(

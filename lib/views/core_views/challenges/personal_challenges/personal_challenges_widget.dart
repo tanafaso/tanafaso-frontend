@@ -1,5 +1,4 @@
 import 'package:azkar/models/challenge.dart';
-import 'package:azkar/net/payload/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
@@ -17,13 +16,13 @@ class _PersonalChallengesWidgetState extends State<PersonalChallengesWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder<GetChallengesResponse>(
+      child: FutureBuilder<List<Challenge>>(
         future: ServiceProvider.challengesService.getPersonalChallenges(),
-        builder: (BuildContext context,
-            AsyncSnapshot<GetChallengesResponse> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<Challenge>> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            return getPersonalChallengesListWidget(snapshot.data.challenges);
+            return getPersonalChallengesListWidget(snapshot.data);
           } else if (snapshot.hasError) {
             children = <Widget>[
               Icon(

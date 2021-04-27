@@ -1,9 +1,7 @@
+import 'package:azkar/models/friendship.dart';
 import 'package:azkar/models/user.dart';
-import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
-import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
-import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
-import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/friends/add_friend/facebook_friends_screen.dart';
@@ -356,15 +354,14 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
   }
 
   void addFriend() async {
-    AddFriendResponse response =
-        await ServiceProvider.usersService.addFriend(_friendUsername);
-    if (response.hasError()) {
+    try {
+      await ServiceProvider.usersService.addFriend(_friendUsername);
+    } on ApiException catch (e) {
       setState(() {
         stateTextWithIcon = ButtonState.fail;
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(response.error.errorMessage),
-      ));
+          content: Text('${AppLocalizations.of(context).error}: ${e.error}')));
       return;
     }
 
@@ -379,59 +376,58 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
   }
 
   void onConnectFacebookPressed() async {
-    FacebookAuthenticationResponse response =
-        await ServiceProvider.authenticationService.connectFacebook();
-    if (response.hasError()) {
+    try {
+      await ServiceProvider.authenticationService.connectFacebook();
+    } on ApiException catch (e) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(response.error.errorMessage)));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Colors.green.shade400,
-          content: Text(
-              AppLocalizations.of(context).connectedFacebookSuccessfully)));
+          .showSnackBar(SnackBar(content: Text(e.error)));
+      return;
     }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.green.shade400,
+        content:
+            Text(AppLocalizations.of(context).connectedFacebookSuccessfully)));
   }
 
   void onFindFriendsWithFacebookPressed() async {
-    List<User> friends = await getFacebookFriends();
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                FacebookFriendsScreen(facebookFriends: friends)));
+    try {
+      List<User> friends = await getFacebookFriends();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  FacebookFriendsScreen(facebookFriends: friends)));
+    } on ApiException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${AppLocalizations.of(context).error}: ${e.error}')));
+    }
   }
 
   Future<List<User>> getFacebookFriends() async {
-    FacebookFriendsResponse getFacebookFriendsResponse =
+    List<FacebookFriend> facebookFriends =
         await ServiceProvider.authenticationService.getFacebookFriends();
-    List<User> facebookFriends = [];
-    for (var facebookFriend in getFacebookFriendsResponse.facebookFriends) {
-      GetUserResponse getUserResponse = await ServiceProvider.usersService
+    List<User> checkedFacebookFriends = [];
+    for (var facebookFriend in facebookFriends) {
+      User user = await ServiceProvider.usersService
           .getUserByFacebookUserId(facebookFriend.id);
-      if (getUserResponse.hasError()) {
-      } else {
-        facebookFriends.add(getUserResponse.user);
-      }
+      checkedFacebookFriends.add(user);
     }
-
-    return getNotYetInvitedAppFriends(facebookFriends);
+    return getNotYetInvitedAppFriends(checkedFacebookFriends);
   }
 
   Future<List<User>> getNotYetInvitedAppFriends(
       List<User> facebookFriends) async {
-    GetFriendsResponse response =
-        await ServiceProvider.usersService.getFriends();
-
-    if (response.hasError()) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(response.error.errorMessage)));
-      return facebookFriends;
+    Friendship friendship;
+    try {
+      friendship = await ServiceProvider.usersService.getFriends();
+    } on ApiException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${AppLocalizations.of(context).error}: ${e.error}')));
     }
 
     List<User> notYetAppFriends = [];
     for (User user in facebookFriends) {
-      if (!response.friendship.friends
-          .any((friend) => friend.userId == user.id)) {
+      if (!friendship.friends.any((friend) => friend.userId == user.id)) {
         notYetAppFriends.add(user);
       }
     }

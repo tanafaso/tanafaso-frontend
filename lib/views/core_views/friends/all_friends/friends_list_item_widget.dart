@@ -1,6 +1,4 @@
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/net/payload/groups/responses/get_group_leaderboard_response.dart';
-import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/views/core_views/friends/all_friends/friend_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,15 +11,6 @@ class FriendsListItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTapDown: (_) async {
-        GetGroupLeaderboardResponse response = await ServiceProvider
-            .groupsService
-            .getGroupLeaderboard(friend.groupId);
-        if (response.hasError()) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(response.error.errorMessage),
-          ));
-          return;
-        }
         Navigator.of(context).push(MaterialPageRoute(
             builder: (_) => FriendScreen(
                   friend: friend,

@@ -123,4 +123,8 @@ class Status {
       errorMessage = conversions[API_DEFAULT_ERROR];
     }
   }
+
+  static Status getDefaultApiErrorStatus() {
+    return new Status(Status.API_DEFAULT_ERROR);
+  }
 }
