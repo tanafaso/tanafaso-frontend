@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:azkar/net/api_caller.dart';
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/users/requests/set_notifications_token_request_body.dart';
 import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
@@ -9,13 +10,31 @@ import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/payload/users/responses/resolve_friend_request_response.dart';
 import 'package:azkar/net/payload/users/responses/set_notifications_token_response.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UsersService {
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  static const String CACHE_KEY_CURRENT_USER_ID = "0";
+
   Future<GetUserResponse> getCurrentUser() async {
     http.Response response = await ApiCaller.get(
         route: Endpoint(endpointRoute: EndpointRoute.GET_CURRENT_USER_PROFILE));
     return GetUserResponse.fromJson(
         jsonDecode(utf8.decode(response.body.codeUnits)));
+  }
+
+  // Either returns the current user's ID or throws an ApiException.
+  Future<String> getCurrentUserId() async {
+    SharedPreferences prefs = await _prefs;
+    if (prefs.containsKey(CACHE_KEY_CURRENT_USER_ID)) {
+      return prefs.getString(CACHE_KEY_CURRENT_USER_ID);
+    }
+    GetUserResponse response = await getCurrentUser();
+    if (response.hasError()) {
+      throw new ApiException(response.error.errorMessage);
+    }
+    prefs.setString(CACHE_KEY_CURRENT_USER_ID, response.user.id);
+    return response.user.id;
   }
 
   Future<GetUserResponse> getUserById(String id) async {
