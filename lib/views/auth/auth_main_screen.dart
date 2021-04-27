@@ -55,7 +55,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                                     AppLocalizations.of(context).title,
                                     style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 20.0,
+                                        fontSize: 30.0,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ],
