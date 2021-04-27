@@ -27,24 +27,23 @@ class GroupChallengeListItemWidget extends StatefulWidget {
 class _GroupChallengeListItemWidgetState
     extends State<GroupChallengeListItemWidget>
     with AutomaticKeepAliveClientMixin {
-  Group _group;
+  CachedGroupInfo _group;
   String _friendFullName;
 
   void asyncInit() async {
     try {
-      Group group = await ServiceProvider.groupsService
-          .getGroup(widget.challenge.groupId);
+      _group = await ServiceProvider.groupsService
+          .getCachedGroupInfo(widget.challenge.groupId);
 
-      if (group.binary) {
+      if (_group.binary) {
         String currentUserId =
             await ServiceProvider.usersService.getCurrentUserId();
         String otherUserId =
-            group.usersIds.singleWhere((userId) => userId != currentUserId);
+            _group.usersIds.singleWhere((userId) => userId != currentUserId);
         _friendFullName =
             await ServiceProvider.usersService.getUserFullNameById(otherUserId);
       }
       setState(() {});
-      _group = group;
     } on ApiException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(e.error),
