@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
+import 'package:azkar/models/friendship.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/models/zekr.dart';
 import 'package:azkar/net/api_caller.dart';
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/challenges/requests/add_challenge_request_body.dart';
-import 'package:azkar/net/payload/challenges/responses/add_challenge_response.dart';
 import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
-import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
@@ -283,14 +283,15 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(30)))),
                                   onPressed: () async {
-                                    GetFriendsResponse response =
-                                        await ServiceProvider.usersService
-                                            .getFriends();
-                                    if (response.hasError()) {
+                                    Friendship friendship;
+                                    try {
+                                      friendship = await ServiceProvider
+                                          .usersService
+                                          .getFriends();
+                                    } on ApiException catch (e) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
-                                        content:
-                                            Text(response.error.errorMessage),
+                                        content: Text(e.error),
                                       ));
                                       return;
                                     }
@@ -300,8 +301,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     SelectFriendScreen(
-                                                      friendship:
-                                                          response.friendship,
+                                                      friendship: friendship,
                                                     ))) as Friend;
                                     if (selectedFriend != null) {
                                       setState(() {
@@ -344,23 +344,26 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(30)))),
                                 onPressed: () async {
-                                  http.Response apiResponse =
-                                      await ApiCaller.get(
-                                          route: Endpoint(
-                                              endpointRoute:
-                                                  EndpointRoute.GET_AZKAR));
-                                  GetAzkarResponse response =
-                                      GetAzkarResponse.fromJson(jsonDecode(utf8
-                                          .decode(apiResponse.body.codeUnits)));
-                                  if (response.hasError()) {
+                                  List<Zekr> azkar;
+                                  print('here');
+                                  try {
+                                    http.Response apiResponse =
+                                        await ApiCaller.get(
+                                            route: Endpoint(
+                                                endpointRoute:
+                                                    EndpointRoute.GET_AZKAR));
+                                    GetAzkarResponse response =
+                                        GetAzkarResponse.fromJson(jsonDecode(
+                                            utf8.decode(
+                                                apiResponse.body.codeUnits)));
+                                    azkar = response.azkar;
+                                  } on ApiException catch (e) {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
-                                      content:
-                                          Text(response.error.errorMessage),
+                                      content: Text(e.error),
                                     ));
                                     return;
                                   }
-                                  List<Zekr> azkar = response.azkar;
                                   // Remove already selected azkar
                                   azkar.removeWhere((zekr) =>
                                       _subChallenges.any((subChallenge) =>
@@ -636,18 +639,16 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       challenge: challenge,
     );
 
-    AddChallengeResponse response;
-    if (_challengeTarget == ChallengeTarget.SELF) {
-      response = await ServiceProvider.challengesService
-          .addPersonalChallenge(requestBody);
-    } else {
-      response = await ServiceProvider.challengesService
-          .addGroupChallenge(requestBody);
-    }
-
-    if (response.hasError()) {
+    try {
+      if (_challengeTarget == ChallengeTarget.SELF) {
+        await ServiceProvider.challengesService
+            .addPersonalChallenge(requestBody);
+      } else {
+        await ServiceProvider.challengesService.addGroupChallenge(requestBody);
+      }
+    } on ApiException catch (e) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(response.error.errorMessage)));
+          .showSnackBar(SnackBar(content: Text(e.error)));
       return;
     }
 

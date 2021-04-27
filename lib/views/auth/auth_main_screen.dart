@@ -1,4 +1,4 @@
-import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
@@ -277,15 +277,15 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
   }
 
   loginWithFacebook(BuildContext context) async {
-    FacebookAuthenticationResponse response =
-        await ServiceProvider.authenticationService.loginWithFacebook();
-    if (response.hasError()) {
+    try {
+      await ServiceProvider.authenticationService.loginWithFacebook();
+    } on ApiException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(response.error.errorMessage),
+        content: Text(e.error),
       ));
-    } else {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => new HomePage()));
     }
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => new HomePage()));
   }
 }
