@@ -1,6 +1,6 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class SelectFriendScreen extends StatelessWidget {

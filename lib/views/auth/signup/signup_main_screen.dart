@@ -1,7 +1,7 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/net/payload/authentication/requests/email_registration_request_body.dart';
 import 'package:azkar/net/payload/authentication/responses/email_registration_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:azkar/views/auth/signup/email_verification_screen.dart';

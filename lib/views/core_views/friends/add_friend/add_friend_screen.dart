@@ -1,4 +1,3 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
@@ -6,6 +5,7 @@ import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/friends/add_friend/facebook_friends_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

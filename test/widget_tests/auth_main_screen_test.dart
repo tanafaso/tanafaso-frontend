@@ -1,4 +1,4 @@
-import 'package:azkar/main.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +11,7 @@ void main() {
     await tester.pumpWidget(new MaterialApp(
       home: AuthMainScreen(),
       localizationsDelegates: [
-        const AppLocalizationsDelegate(),
+        AppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         DefaultCupertinoLocalizations.delegate,
@@ -35,7 +35,7 @@ void main() {
     await tester.pumpWidget(new MaterialApp(
       home: AuthMainScreen(),
       localizationsDelegates: [
-        const AppLocalizationsDelegate(),
+        AppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         DefaultCupertinoLocalizations.delegate,
@@ -57,7 +57,7 @@ void main() {
     await tester.pumpWidget(new MaterialApp(
       home: AuthMainScreen(),
       localizationsDelegates: [
-        const AppLocalizationsDelegate(),
+        AppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         DefaultCupertinoLocalizations.delegate,

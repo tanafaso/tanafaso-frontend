@@ -1,5 +1,5 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/models/zekr.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/zekr_widget.dart';
 import 'package:flutter/material.dart';
 

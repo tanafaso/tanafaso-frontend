@@ -1,6 +1,6 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/sub_challenge.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
 import 'package:flutter/material.dart';
 

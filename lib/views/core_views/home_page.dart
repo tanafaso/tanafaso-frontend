@@ -1,7 +1,7 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/net/payload/users/requests/set_notifications_token_request_body.dart';
 import 'package:azkar/net/payload/users/responses/set_notifications_token_response.dart';
 import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/challenges/challenges_main_screen.dart';
 import 'package:azkar/views/core_views/friends/friends_main_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_main_widget.dart';

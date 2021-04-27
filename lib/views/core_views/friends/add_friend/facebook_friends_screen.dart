@@ -1,5 +1,5 @@
-import 'package:azkar/main.dart';
 import 'package:azkar/models/user.dart';
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/friends/add_friend/invite_facebook_friend_widget.dart';
 import 'package:flutter/material.dart';
 
