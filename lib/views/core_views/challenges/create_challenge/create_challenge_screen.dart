@@ -195,6 +195,14 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                             Row(
                               children: [
                                 Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Text(
+                                    '*',
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 17),
+                                  ),
+                                ),
+                                Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Icon(Icons.grading),
                                 ),
@@ -242,6 +250,14 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                             children: [
                               Row(
                                 children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Text(
+                                      '*',
+                                      style: TextStyle(
+                                          color: Colors.red, fontSize: 17),
+                                    ),
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Icon(Icons.person),
@@ -300,6 +316,14 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                           children: [
                             Row(
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Text(
+                                    '*',
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 17),
+                                  ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Icon(Icons.list),
@@ -413,6 +437,15 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                 Row(
                                   children: [
                                     Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: Text(
+                                        '*',
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 17),
+                                      ),
+                                    ),
+                                    Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child:
                                           Icon(Icons.drive_file_rename_outline),
@@ -426,7 +459,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                     ),
                                     Expanded(
                                         child: Padding(
-                                            padding: EdgeInsets.all(8))),
+                                      padding: EdgeInsets.only(left: 8),
+                                    )),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Tooltip(
@@ -464,6 +498,14 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                           children: [
                             Row(
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Text(
+                                    '*',
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 17),
+                                  ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Icon(Icons.date_range),
@@ -543,18 +585,12 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                         ),
                                         Padding(
                                             padding: EdgeInsets.only(left: 8)),
-                                        Text(
-                                          AppLocalizations.of(context).optional,
-                                          style: TextStyle(
-                                              color: Colors.green,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        ),
                                       ],
                                     ),
                                     Expanded(
                                         child: Padding(
-                                            padding: EdgeInsets.all(8))),
+                                      padding: EdgeInsets.only(left: 8),
+                                    )),
                                     Tooltip(
                                       message: AppLocalizations.of(context)
                                           .writeSomethingToMotivateYourFriendToSayTheZekr,
