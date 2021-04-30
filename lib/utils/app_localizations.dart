@@ -150,8 +150,32 @@ class AppLocalizations {
       'no email provided': 'لم يتم تقديم بريد إلكتروني',
       'please connect to internet and try again':
           'حدث خطأ أثناء محاولة الاتصال بالإنترنت',
+      'write something to motivate your friend to say the zekr':
+          'اكتب شيئًا لتحفيز صديقك على قول الذكر',
+      '(optional)': '(إختياري)',
+      'the motivation message': 'رسالة التحفيز',
+      'write a name with which you can distinguish the challenge':
+          'اكتب اسمًا يمكنك من خلاله تمييز التحدي',
     },
   };
+
+  String get optional {
+    return _localizedValues[locale.languageCode]['(optional)'];
+  }
+
+  String get writeANameWithWhichYouCanDistinguishTheChallenge {
+    return _localizedValues[locale.languageCode]
+        ['write a name with which you can distinguish the challenge'];
+  }
+
+  String get theMotivationMessage {
+    return _localizedValues[locale.languageCode]['the motivation message'];
+  }
+
+  String get writeSomethingToMotivateYourFriendToSayTheZekr {
+    return _localizedValues[locale.languageCode]
+        ['write something to motivate your friend to say the zekr'];
+  }
 
   String get noEmailProvided {
     return _localizedValues[locale.languageCode]['no email provided'];

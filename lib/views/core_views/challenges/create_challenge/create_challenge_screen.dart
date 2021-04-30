@@ -35,11 +35,9 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
 
   ChallengeTarget _challengeTarget = ChallengeTarget.FRIEND;
   List<SubChallenge> _subChallenges = [];
-  bool _motivateFriend = false;
   TextEditingController _challengeNameController;
   String _lastChallengeName = '';
   TextEditingController _motivationController;
-  String _lastMotivation = '';
   TextEditingController _expiresAfterDayNumController;
   String _lastExpiresAfterDayNum = '١';
   List<TextEditingController> _repetitionsControllers = [];
@@ -68,28 +66,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   }
 
   initMotivationController() {
-    _motivationController = TextEditingController(text: _lastMotivation);
-
-    _motivationController.addListener(() {
-      if (_lastMotivation == _motivationController.value.text) {
-        return;
-      }
-      _lastMotivation = _motivationController.value.text;
-      validateMotivation(true);
-    });
-  }
-
-  bool validateMotivation(bool showWarning) {
-    final String newMotivation = _motivationController.value.text;
-    if (newMotivation.isEmpty) {
-      if (showWarning) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content:
-                Text(AppLocalizations.of(context).motivationShouldNotBeEmpty)));
-      }
-      return false;
-    }
-    return true;
+    _motivationController = TextEditingController(text: '');
   }
 
   bool validateRepetition(String repetition, bool showWarning) {
@@ -223,7 +200,9 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                 ),
                                 Text(
                                   '${AppLocalizations.of(context).iWantTo} ...',
-                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
                                 ),
                               ],
                             ),
@@ -429,15 +408,37 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                       Card(
                         child: Column(
                           children: [
-                            Row(
+                            Column(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(Icons.drive_file_rename_outline),
-                                ),
-                                Text(
-                                  AppLocalizations.of(context).challengeName,
-                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child:
+                                          Icon(Icons.drive_file_rename_outline),
+                                    ),
+                                    Text(
+                                      AppLocalizations.of(context)
+                                          .challengeName,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17),
+                                    ),
+                                    Expanded(
+                                        child: Padding(
+                                            padding: EdgeInsets.all(8))),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Tooltip(
+                                        message: AppLocalizations.of(context)
+                                            .writeANameWithWhichYouCanDistinguishTheChallenge,
+                                        child: Icon(
+                                          Icons.info_outline,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ],
                             ),
@@ -469,7 +470,9 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                 ),
                                 Text(
                                   AppLocalizations.of(context).deadline,
-                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
                                 ),
                               ],
                             ),
@@ -522,42 +525,59 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                       Card(
                         child: Column(
                           children: [
-                            CheckboxListTile(
-                              controlAffinity: ListTileControlAffinity.leading,
-                              title: Row(
-                                children: [
-                                  Icon(Icons.directions_run),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      AppLocalizations.of(context).motivation,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              value: _motivateFriend,
-                              onChanged: (value) {
-                                setState(() {
-                                  _motivateFriend = !_motivateFriend;
-                                });
-                              },
-                            ),
-                            Visibility(
-                              visible: _motivateFriend,
-                              child: Padding(
+                            Column(children: [
+                              Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  decoration: new InputDecoration(
-                                    alignLabelWithHint: true,
-                                    border: new OutlineInputBorder(
-                                        borderSide:
-                                            new BorderSide(color: Colors.teal)),
-                                  ),
-                                  controller: _motivationController,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.directions_run),
+                                    Padding(padding: EdgeInsets.only(left: 8)),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)
+                                              .theMotivationMessage,
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Padding(
+                                            padding: EdgeInsets.only(left: 8)),
+                                        Text(
+                                          AppLocalizations.of(context).optional,
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    Expanded(
+                                        child: Padding(
+                                            padding: EdgeInsets.all(8))),
+                                    Tooltip(
+                                      message: AppLocalizations.of(context)
+                                          .writeSomethingToMotivateYourFriendToSayTheZekr,
+                                      child: Icon(
+                                        Icons.info_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  ],
                                 ),
+                              ),
+                            ]),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextField(
+                                textAlign: TextAlign.center,
+                                decoration: new InputDecoration(
+                                  alignLabelWithHint: true,
+                                  border: new OutlineInputBorder(
+                                      borderSide:
+                                          new BorderSide(color: Colors.teal)),
+                                ),
+                                controller: _motivationController,
                               ),
                             )
                           ],
@@ -674,10 +694,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       return false;
     }
 
-    if (_motivateFriend && !validateMotivation(showWarnings)) {
-      return false;
-    }
-
     for (TextEditingController repetitionsController
         in _repetitionsControllers) {
       if (!validateRepetition(repetitionsController.value.text, showWarnings)) {
@@ -695,7 +711,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     Color color = widget.selectedFriend == null ? Colors.pink : Colors.black;
     return Text(
       text,
-      style: TextStyle(fontWeight: FontWeight.w700, color: color),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: color),
     );
   }
 
@@ -716,7 +732,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     Color color = _subChallenges.length == 0 ? Colors.pink : Colors.black;
     return Text(
       text,
-      style: TextStyle(fontWeight: FontWeight.w700, color: color),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: color),
     );
   }
 
