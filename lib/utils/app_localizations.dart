@@ -156,8 +156,13 @@ class AppLocalizations {
       'the motivation message': 'رسالة التحفيز',
       'write a name with which you can distinguish the challenge':
           'اكتب اسمًا يمكنك من خلاله تمييز التحدي',
+      'challenges of friends': 'تحديات الأصدقاء',
     },
   };
+
+  String get challengesOfFriends {
+    return _localizedValues[locale.languageCode]['challenges of friends'];
+  }
 
   String get optional {
     return _localizedValues[locale.languageCode]['(optional)'];
