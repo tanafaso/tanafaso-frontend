@@ -24,272 +24,281 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).inviteFriends),
-      ),
-      body: Container(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: new TextFormField(
-                  decoration: new InputDecoration(
-                    hintStyle: TextStyle(color: Colors.black),
-                    hintText: AppLocalizations.of(context).enterAUsername,
-                    enabledBorder: new OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(25.0),
-                      borderSide: new BorderSide(),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context).inviteFriends),
+        ),
+        body: Container(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: new TextFormField(
+                    decoration: new InputDecoration(
+                      hintStyle: TextStyle(color: Colors.black),
+                      hintText: AppLocalizations.of(context).enterAUsername,
+                      enabledBorder: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.circular(25.0),
+                        borderSide: new BorderSide(),
+                      ),
+                      focusedBorder: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.circular(25.0),
+                        borderSide: new BorderSide(),
+                      ),
                     ),
-                    focusedBorder: new OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(25.0),
-                      borderSide: new BorderSide(),
+                    onChanged: (String username) {
+                      _friendUsername = username;
+                    },
+                    validator: (val) {
+                      if (val.contains(" ")) {
+                        return AppLocalizations.of(context)
+                            .usernameShouldHaveNoSpaces;
+                      } else {
+                        return null;
+                      }
+                    },
+                    keyboardType: TextInputType.text,
+                    style: new TextStyle(
+                      fontFamily: "Poppins",
                     ),
                   ),
-                  onChanged: (String username) {
-                    _friendUsername = username;
-                  },
-                  validator: (val) {
-                    if (val.contains(" ")) {
-                      return AppLocalizations.of(context)
-                          .usernameShouldHaveNoSpaces;
-                    } else {
-                      return null;
-                    }
-                  },
-                  keyboardType: TextInputType.text,
-                  style: new TextStyle(
-                    fontFamily: "Poppins",
+                ),
+                buildTextWithIcon(),
+                new Padding(
+                  padding: EdgeInsets.all(20),
+                ),
+                new Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin:
+                      const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+                  alignment: Alignment.center,
+                  child: Row(
+                    children: <Widget>[
+                      new Expanded(
+                        child: new Container(
+                          margin: EdgeInsets.all(8.0),
+                          decoration:
+                              BoxDecoration(border: Border.all(width: 0.25)),
+                        ),
+                      ),
+                      Text(
+                        AppLocalizations.of(context).orAddFriendsBy,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      new Expanded(
+                        child: new Container(
+                          margin: EdgeInsets.all(8.0),
+                          decoration:
+                              BoxDecoration(border: Border.all(width: 0.25)),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              buildTextWithIcon(),
-              new Padding(
-                padding: EdgeInsets.all(20),
-              ),
-              new Container(
-                width: MediaQuery.of(context).size.width,
-                margin:
-                    const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-                alignment: Alignment.center,
-                child: Row(
-                  children: <Widget>[
-                    new Expanded(
-                      child: new Container(
-                        margin: EdgeInsets.all(8.0),
-                        decoration:
-                            BoxDecoration(border: Border.all(width: 0.25)),
-                      ),
-                    ),
-                    Text(
-                      AppLocalizations.of(context).orAddFriendsBy,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    new Expanded(
-                      child: new Container(
-                        margin: EdgeInsets.all(8.0),
-                        decoration:
-                            BoxDecoration(border: Border.all(width: 0.25)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              new Container(
-                width: MediaQuery.of(context).size.width,
-                margin:
-                    const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-                child: new Row(
-                  children: <Widget>[
-                    new Expanded(
-                      child: new Container(
-                        alignment: Alignment.center,
-                        child: new Row(
-                          children: <Widget>[
-                            new Expanded(
-                              // ignore: deprecated_member_use
-                              child: new FlatButton(
-                                shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(30.0),
-                                ),
-                                color: Color(0Xff3B5998),
-                                onPressed: () => {},
-                                child: new Container(
-                                  child: new Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      new Container(
-                                        padding: EdgeInsets.only(
-                                          left: 20.0,
-                                        ),
-                                      ),
-                                      new Expanded(
-                                        // ignore: deprecated_member_use
-                                        child: new FlatButton(
-                                          onPressed: () =>
-                                              onConnectFacebookPressed(),
+                new Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin:
+                      const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+                  child: new Row(
+                    children: <Widget>[
+                      new Expanded(
+                        child: new Container(
+                          alignment: Alignment.center,
+                          child: new Row(
+                            children: <Widget>[
+                              new Expanded(
+                                // ignore: deprecated_member_use
+                                child: new FlatButton(
+                                  shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(30.0),
+                                  ),
+                                  color: Color(0Xff3B5998),
+                                  onPressed: () => {},
+                                  child: new Container(
+                                    child: new Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        new Container(
                                           padding: EdgeInsets.only(
-                                            top: 20.0,
-                                            bottom: 20.0,
+                                            left: 20.0,
                                           ),
-                                          child: new Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: <Widget>[
-                                              Icon(
-                                                const IconData(0xea90,
-                                                    fontFamily: 'icomoon'),
-                                                color: Colors.white,
-                                                size: 20.0,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  AppLocalizations.of(context)
-                                                      .connectYourAccountWithFacebook,
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                        ),
+                                        new Expanded(
+                                          // ignore: deprecated_member_use
+                                          child: new FlatButton(
+                                            onPressed: () =>
+                                                onConnectFacebookPressed(),
+                                            padding: EdgeInsets.only(
+                                              top: 20.0,
+                                              bottom: 20.0,
+                                            ),
+                                            child: new Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: <Widget>[
+                                                Icon(
+                                                  const IconData(0xea90,
+                                                      fontFamily: 'icomoon'),
+                                                  color: Colors.white,
+                                                  size: 20.0,
                                                 ),
-                                              ),
-                                            ],
+                                                Expanded(
+                                                  child: Text(
+                                                    AppLocalizations.of(context)
+                                                        .connectYourAccountWithFacebook,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      new Container(
-                                        padding: EdgeInsets.only(
-                                          right: 20.0,
+                                        new Container(
+                                          padding: EdgeInsets.only(
+                                            right: 20.0,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              new Container(
-                width: MediaQuery.of(context).size.width,
-                margin:
-                    const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-                alignment: Alignment.center,
-                child: Row(
-                  children: <Widget>[
-                    new Expanded(
-                      child: new Container(
-                        margin: EdgeInsets.all(8.0),
-                        decoration:
-                            BoxDecoration(border: Border.all(width: 0.25)),
+                new Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin:
+                      const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+                  alignment: Alignment.center,
+                  child: Row(
+                    children: <Widget>[
+                      new Expanded(
+                        child: new Container(
+                          margin: EdgeInsets.all(8.0),
+                          decoration:
+                              BoxDecoration(border: Border.all(width: 0.25)),
+                        ),
                       ),
-                    ),
-                    Text(
-                      AppLocalizations.of(context).then,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                      Text(
+                        AppLocalizations.of(context).then,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    new Expanded(
-                      child: new Container(
-                        margin: EdgeInsets.all(8.0),
-                        decoration:
-                            BoxDecoration(border: Border.all(width: 0.25)),
+                      new Expanded(
+                        child: new Container(
+                          margin: EdgeInsets.all(8.0),
+                          decoration:
+                              BoxDecoration(border: Border.all(width: 0.25)),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              new Container(
-                width: MediaQuery.of(context).size.width,
-                margin:
-                    const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-                child: new Row(
-                  children: <Widget>[
-                    new Expanded(
-                      child: new Container(
-                        alignment: Alignment.center,
-                        child: new Row(
-                          children: <Widget>[
-                            new Expanded(
-                              // ignore: deprecated_member_use
-                              child: new FlatButton(
-                                shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(30.0),
-                                ),
-                                color: Color(0Xff3B5998),
-                                onPressed: () => {},
-                                child: new Container(
-                                  child: new Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      new Container(
-                                        padding: EdgeInsets.only(
-                                          left: 20.0,
-                                        ),
-                                      ),
-                                      new Expanded(
-                                        // ignore: deprecated_member_use
-                                        child: new FlatButton(
-                                          onPressed: () =>
-                                              onFindFriendsWithFacebookPressed(),
+                new Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin:
+                      const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+                  child: new Row(
+                    children: <Widget>[
+                      new Expanded(
+                        child: new Container(
+                          alignment: Alignment.center,
+                          child: new Row(
+                            children: <Widget>[
+                              new Expanded(
+                                // ignore: deprecated_member_use
+                                child: new FlatButton(
+                                  shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(30.0),
+                                  ),
+                                  color: Color(0Xff3B5998),
+                                  onPressed: () => {},
+                                  child: new Container(
+                                    child: new Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        new Container(
                                           padding: EdgeInsets.only(
-                                            top: 20.0,
-                                            bottom: 20.0,
+                                            left: 20.0,
                                           ),
-                                          child: new Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: <Widget>[
-                                              Icon(
-                                                const IconData(0xea90,
-                                                    fontFamily: 'icomoon'),
-                                                color: Colors.white,
-                                                size: 20.0,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  AppLocalizations.of(context)
-                                                      .addFacebookFriend,
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                        ),
+                                        new Expanded(
+                                          // ignore: deprecated_member_use
+                                          child: new FlatButton(
+                                            onPressed: () =>
+                                                onFindFriendsWithFacebookPressed(),
+                                            padding: EdgeInsets.only(
+                                              top: 20.0,
+                                              bottom: 20.0,
+                                            ),
+                                            child: new Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: <Widget>[
+                                                Icon(
+                                                  const IconData(0xea90,
+                                                      fontFamily: 'icomoon'),
+                                                  color: Colors.white,
+                                                  size: 20.0,
                                                 ),
-                                              ),
-                                            ],
+                                                Expanded(
+                                                  child: Text(
+                                                    AppLocalizations.of(context)
+                                                        .addFacebookFriend,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      new Container(
-                                        padding: EdgeInsets.only(
-                                          right: 20.0,
+                                        new Container(
+                                          padding: EdgeInsets.only(
+                                            right: 20.0,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
