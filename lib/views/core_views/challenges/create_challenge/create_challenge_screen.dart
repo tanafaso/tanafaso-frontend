@@ -348,7 +348,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                                 BorderRadius.circular(30)))),
                                 onPressed: () async {
                                   List<Zekr> azkar;
-                                  print('here');
                                   try {
                                     http.Response apiResponse =
                                         await ApiCaller.get(
@@ -795,7 +794,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
         child: Column(
           children: [
             Card(
-              elevation: 5,
+              elevation: 3,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -822,12 +821,16 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
               ),
             ),
             Card(
-              elevation: 5,
+              elevation: 3,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Expanded(
+                        child: Padding(
+                      padding: EdgeInsets.only(left: 1),
+                    )),
                     Text(
                       AppLocalizations.of(context).repetitions,
                       textAlign: TextAlign.center,
@@ -855,6 +858,21 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                             controller: _repetitionsControllers[index],
                           ),
                         ),
+                      ),
+                    ),
+                    Expanded(
+                        child: Padding(
+                      padding: EdgeInsets.only(left: 1),
+                    )),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _subChallenges.removeAt(index);
+                        });
+                      },
+                      child: Icon(
+                        Icons.delete_outline_rounded,
+                        color: Colors.grey,
                       ),
                     ),
                   ],
