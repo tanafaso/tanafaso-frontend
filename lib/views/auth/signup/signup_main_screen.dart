@@ -2,6 +2,7 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/payload/authentication/requests/email_registration_request_body.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:azkar/views/auth/signup/email_verification_screen.dart';
@@ -497,9 +498,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
         lastName: _lastName,
       ));
     } on ApiException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(e.error),
-      ));
+      SnackBarUtils.showSnackBar(context, e.error);
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => new AuthMainScreen()),

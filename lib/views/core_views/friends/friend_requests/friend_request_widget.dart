@@ -2,6 +2,7 @@ import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:flutter/material.dart';
 
 class FriendRequestWidget extends StatefulWidget {
@@ -95,16 +96,12 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
     try {
       await ServiceProvider.usersService.acceptFriend(widget.friend.userId);
     } on ApiException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(e.error),
-      ));
+      SnackBarUtils.showSnackBar(context, e.error);
       return;
     }
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.green.shade400,
-      content: Text(
-          '${widget.friend.firstName} ${widget.friend.lastName} ${AppLocalizations.of(context).isNowYourFriend}'),
-    ));
+    SnackBarUtils.showSnackBar(context,
+        '${widget.friend.firstName} ${widget.friend.lastName} ${AppLocalizations.of(context).isNowYourFriend}',
+        color: Colors.green.shade400);
     widget.parentState.setState(() {});
   }
 
@@ -112,15 +109,13 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
     try {
       await ServiceProvider.usersService.rejectFriend(widget.friend.userId);
     } on ApiException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(e.error),
-      ));
+      SnackBarUtils.showSnackBar(context, e.error);
       return;
     }
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-          "${AppLocalizations.of(context).friendRequest} ${widget.friend.firstName} ${widget.friend.lastName} ${AppLocalizations.of(context).isIgnored}"),
-    ));
+    SnackBarUtils.showSnackBar(
+      context,
+      "${AppLocalizations.of(context).friendRequest} ${widget.friend.firstName} ${widget.friend.lastName} ${AppLocalizations.of(context).isIgnored}",
+    );
     widget.parentState.setState(() {});
   }
 }

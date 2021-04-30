@@ -2,6 +2,7 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/payload/authentication/requests/email_login_request_body.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/auth/signup/signup_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/keys.dart';
@@ -407,9 +408,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       ServiceProvider.authenticationService.loginWithFacebook();
     } on ApiException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(e.error),
-      ));
+      SnackBarUtils.showSnackBar(context, e.error);
     }
 
     Navigator.push(
@@ -420,9 +419,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await ServiceProvider.authenticationService.login(request);
     } on ApiException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(e.error),
-      ));
+      SnackBarUtils.showSnackBar(context, e.error);
     }
 
     Navigator.pushAndRemoveUntil(context,
