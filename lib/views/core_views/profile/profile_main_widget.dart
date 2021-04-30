@@ -2,6 +2,7 @@ import 'package:azkar/models/user.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
@@ -57,12 +58,10 @@ class ProfileMainWidget extends StatelessWidget {
                                         Clipboard.setData(ClipboardData(
                                           text: user.username,
                                         )).then((_) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                            content: Text(AppLocalizations.of(
-                                                    context)
-                                                .usernameCopiedSuccessfully),
-                                          ));
+                                          SnackBarUtils.showSnackBar(
+                                              context,
+                                              AppLocalizations.of(context)
+                                                  .usernameCopiedSuccessfully);
                                         });
                                       },
                                       child: Icon(Icons.copy),
@@ -211,9 +210,8 @@ class ProfileMainWidget extends StatelessWidget {
   performLogout(BuildContext context) async {
     await ServiceProvider.secureStorageService.clear();
     await ServiceProvider.cacheManager.clearPreferences();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(AppLocalizations.of(context).youHaveLoggedOutSuccessfully),
-    ));
+    SnackBarUtils.showSnackBar(
+        context, AppLocalizations.of(context).youHaveLoggedOutSuccessfully);
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => new AuthMainScreen()),

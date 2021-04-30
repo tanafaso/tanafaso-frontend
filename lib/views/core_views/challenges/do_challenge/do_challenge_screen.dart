@@ -5,6 +5,7 @@ import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:flutter/material.dart';
@@ -46,9 +47,7 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
 
         _group = group;
       } on ApiException catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(e.error),
-        ));
+        SnackBarUtils.showSnackBar(context, e.error);
       }
       setState(() {});
     }
@@ -143,19 +142,17 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                   : await ServiceProvider.challengesService
                       .updateChallenge(widget.challenge);
             } on ApiException catch (e) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(e.error),
-              ));
+              SnackBarUtils.showSnackBar(context, e.error);
             }
 
             widget.challengeChangedCallback(widget.challenge);
             if (widget.challenge.done()) {
               Navigator.of(context).pop();
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(AppLocalizations.of(context)
-                    .youHaveFinishedTheChallengeSuccessfully),
-                backgroundColor: Colors.green.shade400,
-              ));
+              SnackBarUtils.showSnackBar(
+                  context,
+                  AppLocalizations.of(context)
+                      .youHaveFinishedTheChallengeSuccessfully,
+                  color: Colors.green.shade400);
             }
           },
         );

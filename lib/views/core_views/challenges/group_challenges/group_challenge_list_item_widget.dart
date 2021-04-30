@@ -4,6 +4,7 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -45,9 +46,7 @@ class _GroupChallengeListItemWidgetState
       }
       setState(() {});
     } on ApiException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(e.error),
-      ));
+      SnackBarUtils.showSnackBar(context, e.error);
     }
   }
 
@@ -67,15 +66,14 @@ class _GroupChallengeListItemWidgetState
           challenge = await ServiceProvider.challengesService
               .getChallenge(widget.challenge.id);
         } on ApiException catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content:
-                  Text('${AppLocalizations.of(context).error}: ${e.error}')));
+          SnackBarUtils.showSnackBar(
+              context, '${AppLocalizations.of(context).error}: ${e.error}');
         }
         if (challenge.deadlinePassed()) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(AppLocalizations.of(context)
-                .theDeadlineHasAlreadyPassedForThisChallenge),
-          ));
+          SnackBarUtils.showSnackBar(
+              context,
+              AppLocalizations.of(context)
+                  .theDeadlineHasAlreadyPassedForThisChallenge);
           return;
         }
         Navigator.of(context).push(MaterialPageRoute(

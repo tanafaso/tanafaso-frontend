@@ -4,6 +4,7 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/payload/authentication/requests/email_verification_request_body.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:azkar/views/auth/signup/pin_code_text_field.dart';
 import 'package:azkar/views/auth/signup/pin_theme.dart';
@@ -229,12 +230,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
   void onEmailVerificationSuccess() {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.green.shade300,
-      content: Text(
-        AppLocalizations.of(context).verificationSuccessful,
-      ),
-    ));
+    SnackBarUtils.showSnackBar(
+        context, AppLocalizations.of(context).verificationSuccessful,
+        color: Colors.green.shade300);
+
     hasError = false;
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => new LoginScreen()));

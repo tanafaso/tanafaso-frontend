@@ -2,6 +2,7 @@ import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:flutter/material.dart';
 
 typedef SubChallengeChangedCallback = void Function(
@@ -51,10 +52,11 @@ class _DoChallengeSubChallengeListItemWidgetState
           return;
         }
         if (widget.challenge.deadlinePassed()) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(AppLocalizations.of(context)
-                .theDeadlineHasAlreadyPassedForThisChallenge),
-          ));
+          SnackBarUtils.showSnackBar(
+            context,
+            AppLocalizations.of(context)
+                .theDeadlineHasAlreadyPassedForThisChallenge,
+          );
           Navigator.of(context).pop();
           return;
         }
