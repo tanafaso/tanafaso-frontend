@@ -24,7 +24,7 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
     challengesTabs = <Tab>[
       Tab(
           key: allChallengesTabKey,
-          text: AppLocalizations.of(context).allChallenges),
+          text: AppLocalizations.of(context).challengesOfFriends),
       Tab(
           key: personalChallengesTabKey,
           text: AppLocalizations.of(context).personalChallenges),
