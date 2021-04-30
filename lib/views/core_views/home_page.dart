@@ -2,6 +2,7 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/payload/users/requests/set_notifications_token_request_body.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/challenges_main_screen.dart';
 import 'package:azkar/views/core_views/friends/friends_main_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_main_widget.dart';
@@ -84,10 +85,12 @@ class _HomePageState extends State<HomePage> {
       await ServiceProvider.usersService.setNotificationsToken(
           SetNotificationsTokenRequestBody(token: token));
     } on ApiException catch (_) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context)
-            .anErrorHappenedWhileSettingUpThisDeviceToReceiveNotifications),
-      ));
+      SnackBarUtils.showSnackBar(
+        context,
+        AppLocalizations.of(context)
+            .anErrorHappenedWhileSettingUpThisDeviceToReceiveNotifications,
+      );
+
       return;
     }
   }

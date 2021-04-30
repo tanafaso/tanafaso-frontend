@@ -1,6 +1,7 @@
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,10 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (challenge.deadlinePassed()) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(AppLocalizations.of(context)
-                .theDeadlineHasAlreadyPassedForThisChallenge),
-          ));
+          SnackBarUtils.showSnackBar(
+              context,
+              AppLocalizations.of(context)
+                  .theDeadlineHasAlreadyPassedForThisChallenge);
           return;
         }
         Navigator.of(context).push(MaterialPageRoute(

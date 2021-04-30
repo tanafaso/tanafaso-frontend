@@ -2,6 +2,7 @@ import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:flutter/material.dart';
 
 class InviteFacebookFriendWidget extends StatefulWidget {
@@ -66,15 +67,17 @@ class _InviteFacebookFriendWidgetState
       await ServiceProvider.usersService
           .addFriend(widget.facebookFriend.username);
     } on ApiException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('${AppLocalizations.of(context).error}: ${e.error}')));
+      SnackBarUtils.showSnackBar(
+        context,
+        '${AppLocalizations.of(context).error}: ${e.error}',
+      );
     }
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.green.shade400,
-      content: Text(
-          '${AppLocalizations.of(context).anInvitationHasBeenSentTo} ${widget.facebookFriend.firstName} ${widget.facebookFriend.lastName}'),
-    ));
+    SnackBarUtils.showSnackBar(
+      context,
+      '${AppLocalizations.of(context).anInvitationHasBeenSentTo} ${widget.facebookFriend.firstName} ${widget.facebookFriend.lastName}',
+      color: Colors.green.shade400,
+    );
 
     setState(() {
       invited = true;

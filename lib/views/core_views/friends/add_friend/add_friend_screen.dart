@@ -4,6 +4,7 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/friends/add_friend/facebook_friends_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -369,8 +370,10 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
       setState(() {
         stateTextWithIcon = ButtonState.fail;
       });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('${AppLocalizations.of(context).error}: ${e.error}')));
+      SnackBarUtils.showSnackBar(
+        context,
+        '${AppLocalizations.of(context).error}: ${e.error}',
+      );
       return;
     }
 
@@ -378,24 +381,25 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
       stateTextWithIcon = ButtonState.success;
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-          '${AppLocalizations.of(context).anInvitationHasBeenSentTo} $_friendUsername'),
-    ));
+    SnackBarUtils.showSnackBar(
+      context,
+      '${AppLocalizations.of(context).anInvitationHasBeenSentTo} $_friendUsername',
+    );
   }
 
   void onConnectFacebookPressed() async {
     try {
       await ServiceProvider.authenticationService.connectFacebook();
     } on ApiException catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.error)));
+      SnackBarUtils.showSnackBar(
+        context,
+        e.error,
+      );
       return;
     }
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.green.shade400,
-        content:
-            Text(AppLocalizations.of(context).connectedFacebookSuccessfully)));
+    SnackBarUtils.showSnackBar(
+        context, AppLocalizations.of(context).connectedFacebookSuccessfully,
+        color: Colors.green.shade400);
   }
 
   void onFindFriendsWithFacebookPressed() async {
@@ -407,8 +411,10 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
               builder: (context) =>
                   FacebookFriendsScreen(facebookFriends: friends)));
     } on ApiException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('${AppLocalizations.of(context).error}: ${e.error}')));
+      SnackBarUtils.showSnackBar(
+        context,
+        '${AppLocalizations.of(context).error}: ${e.error}',
+      );
     }
   }
 
@@ -430,8 +436,10 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
     try {
       friendship = await ServiceProvider.usersService.getFriends();
     } on ApiException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('${AppLocalizations.of(context).error}: ${e.error}')));
+      SnackBarUtils.showSnackBar(
+        context,
+        '${AppLocalizations.of(context).error}: ${e.error}',
+      );
     }
 
     List<User> notYetAppFriends = [];

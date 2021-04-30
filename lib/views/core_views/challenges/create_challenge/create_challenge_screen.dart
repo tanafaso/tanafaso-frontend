@@ -13,6 +13,7 @@ import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_zekr_screen.dart';
 import 'package:flutter/material.dart';
@@ -57,8 +58,10 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     final String newChallengeName = _challengeNameController.value.text;
     if (newChallengeName.isEmpty) {
       if (showWarning) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(AppLocalizations.of(context).nameShouldNotBeEmpty)));
+        SnackBarUtils.showSnackBar(
+          context,
+          AppLocalizations.of(context).nameShouldNotBeEmpty,
+        );
       }
       return false;
     }
@@ -75,26 +78,29 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       repetitionsNum = stringToNumber(repetition);
     } on FormatException {
       if (showWarning) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(AppLocalizations.of(context)
-                .repetitionsMustBeANumberFrom1to100)));
+        SnackBarUtils.showSnackBar(
+          context,
+          AppLocalizations.of(context).repetitionsMustBeANumberFrom1to100,
+        );
       }
       return false;
     }
     if (repetitionsNum <= 0) {
       if (showWarning) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content:
-                Text(AppLocalizations.of(context).repetitionsMustBeMoreThan0)));
+        SnackBarUtils.showSnackBar(
+          context,
+          AppLocalizations.of(context).repetitionsMustBeMoreThan0,
+        );
       }
       return false;
     }
 
     if (repetitionsNum > 100) {
       if (showWarning) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(AppLocalizations.of(context)
-                .repetitionsMustBeLessThanOrEqual100)));
+        SnackBarUtils.showSnackBar(
+          context,
+          AppLocalizations.of(context).repetitionsMustBeLessThanOrEqual100,
+        );
       }
       return false;
     }
@@ -121,25 +127,23 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       newExpiresAfterDaysNumInt = stringToNumber(newExpiresAfterDayNum);
     } on FormatException {
       if (showWarning) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-                AppLocalizations.of(context).daysMustBeANumberFrom1to100)));
+        SnackBarUtils.showSnackBar(
+            context, AppLocalizations.of(context).daysMustBeANumberFrom1to100);
       }
       return false;
     }
     if (newExpiresAfterDaysNumInt <= 0) {
       if (showWarning) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(AppLocalizations.of(context).daysMustBeMoreThan0)));
+        SnackBarUtils.showSnackBar(
+            context, AppLocalizations.of(context).daysMustBeMoreThan0);
       }
       return false;
     }
 
     if (newExpiresAfterDaysNumInt > 100) {
       if (showWarning) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-                AppLocalizations.of(context).daysMustBeLessThanOrEqual100)));
+        SnackBarUtils.showSnackBar(
+            context, AppLocalizations.of(context).daysMustBeLessThanOrEqual100);
       }
       return false;
     }
@@ -284,10 +288,10 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                           .usersService
                                           .getFriends();
                                     } on ApiException catch (e) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text(e.error),
-                                      ));
+                                      SnackBarUtils.showSnackBar(
+                                        context,
+                                        e.error,
+                                      );
                                       return;
                                     }
                                     Friend selectedFriend =
@@ -360,10 +364,10 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                                 apiResponse.body.codeUnits)));
                                     azkar = response.azkar;
                                   } on ApiException catch (e) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text(e.error),
-                                    ));
+                                    SnackBarUtils.showSnackBar(
+                                      context,
+                                      e.error,
+                                    );
                                     return;
                                   }
                                   // Remove already selected azkar
@@ -670,9 +674,10 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
 
   onCreatePressed() async {
     if (!readyToFinishChallenge(true)) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-              AppLocalizations.of(context).pleaseFillUpAllTheCellsProperly)));
+      SnackBarUtils.showSnackBar(
+        context,
+        AppLocalizations.of(context).pleaseFillUpAllTheCellsProperly,
+      );
       return;
     }
 
@@ -702,16 +707,18 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
         await ServiceProvider.challengesService.addGroupChallenge(requestBody);
       }
     } on ApiException catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.error)));
+      SnackBarUtils.showSnackBar(
+        context,
+        e.error,
+      );
       return;
     }
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content:
-          Text(AppLocalizations.of(context).challengeHasBeenAddedSuccessfully),
-      backgroundColor: Colors.green.shade400,
-    ));
+    SnackBarUtils.showSnackBar(
+      context,
+      AppLocalizations.of(context).challengeHasBeenAddedSuccessfully,
+      color: Colors.green.shade400,
+    );
     Navigator.of(context).pop();
   }
 
