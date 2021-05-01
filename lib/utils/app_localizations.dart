@@ -87,7 +87,7 @@ class AppLocalizations {
       'passed': 'انتهى',
       'deadline': 'الموعد الأخير',
       'motivation': 'تحفيز',
-      'no challenges found': 'لا توجد تحديات',
+      'no challenges found': 'لم يتم العثور على تحديات للأصدقاء',
       'name not found': 'لم يتم العثور على الاسم',
       'the friend': 'الصديق',
       'the group': 'المجموعة',
