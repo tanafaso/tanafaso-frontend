@@ -93,6 +93,7 @@ class _DoChallengeSubChallengeListItemWidgetState
             ),
             LinearProgressIndicator(
               minHeight: 10,
+              color: Colors.white,
               backgroundColor: Colors.green,
               value: initialRepetitions == 0
                   ? 1
