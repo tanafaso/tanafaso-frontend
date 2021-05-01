@@ -84,7 +84,7 @@ class AppLocalizations {
       'minutes': 'دقائق',
       'minute': 'دقيقة',
       'ends after less than': 'ينتهي بعد أقل من',
-      'passed': 'انقضى',
+      'passed': 'انتهى',
       'deadline': 'الموعد الأخير',
       'motivation': 'تحفيز',
       'no challenges found': 'لا توجد تحديات',
