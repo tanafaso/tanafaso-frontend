@@ -51,6 +51,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       }
       _lastChallengeName = _challengeNameController.value.text;
       validateChallengeName(true);
+      setState(() {});
     });
   }
 
@@ -115,6 +116,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       }
       _lastExpiresAfterDayNum = _expiresAfterDayNumController.value.text;
       validateExpiresAfterDaysNum(true);
+      setState(() {});
     });
   }
 
@@ -404,6 +406,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                               stringToNumber(
                                                   controller.value.text);
                                         }
+                                        setState(() {});
                                       });
                                       _repetitionsControllers.add(controller);
                                     });
