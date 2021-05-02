@@ -158,7 +158,8 @@ class AppLocalizations {
       'write a name with which you can distinguish the challenge':
           'اكتب اسمًا يمكنك من خلاله تمييز التحدي',
       'challenges of friends': 'تحديات الأصدقاء',
-      'challenge target hint': 'في تحدي الصديق، يمكنك انت وصديقك التنافس على القيام به وسيساهم إكماله في النتيجة بينك وبين صديقك وإجمالي نقاطك',
+      'challenge target hint':
+          'في تحدي الصديق، يمكنك انت وصديقك التنافس على القيام به وسيساهم إكماله في النتيجة بينك وبين صديقك وإجمالي نقاطك',
     },
   };
 
