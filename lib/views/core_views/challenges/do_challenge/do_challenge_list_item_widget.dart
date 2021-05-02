@@ -93,10 +93,12 @@ class _DoChallengeSubChallengeListItemWidgetState
             ),
             LinearProgressIndicator(
               minHeight: 10,
+              // Reversed them. This is just a hack as I am afraid that
+              // widget.subChallenge.repetitions maybe zero at some point.
               color: Colors.white,
               backgroundColor: Colors.green,
               value: initialRepetitions == 0
-                  ? 1
+                  ? 0
                   : widget.subChallenge.repetitions.toDouble() /
                       initialRepetitions.toDouble(),
             ),
