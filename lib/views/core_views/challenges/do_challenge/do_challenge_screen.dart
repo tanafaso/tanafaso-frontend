@@ -103,19 +103,25 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                   ),
                 ),
               ),
-              Card(
-                  child: Container(
-                      width: double.maxFinite,
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .clickOnZekrAfterReadingIt,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
-                      ))),
+              Visibility(
+                visible: !widget.challenge.done(),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                      child: Container(
+                          width: double.maxFinite,
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              AppLocalizations.of(context)
+                                  .clickOnZekrAfterReadingIt,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
+                          ))),
+                ),
+              ),
               Expanded(
                   child: Container(
                 child: getSubChallenges(),
