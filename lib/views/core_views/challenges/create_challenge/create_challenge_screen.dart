@@ -289,7 +289,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                 Row(
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
                                       child: Text(
                                         '*',
                                         style: TextStyle(
@@ -311,10 +312,12 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                         elevation:
                                             MaterialStateProperty.resolveWith(
                                                 (states) => 10),
-                                        shape: MaterialStateProperty.resolveWith(
-                                            (_) => RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30)))),
+                                        shape:
+                                            MaterialStateProperty.resolveWith(
+                                                (_) => RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30)))),
                                     onPressed: () async {
                                       Friendship friendship;
                                       try {
@@ -338,7 +341,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                                       ))) as Friend;
                                       if (selectedFriend != null) {
                                         setState(() {
-                                          widget.selectedFriend = selectedFriend;
+                                          widget.selectedFriend =
+                                              selectedFriend;
                                         });
                                       }
                                     },
@@ -446,7 +450,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                   },
                                   child: Container(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Icon(
                                           Icons.add,
@@ -456,8 +461,9 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                         Padding(padding: EdgeInsets.all(8)),
                                         Text(
                                           AppLocalizations.of(context).addZekr,
-                                          style:
-                                              Theme.of(context).textTheme.button,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .button,
                                         ),
                                       ],
                                     ),
@@ -485,8 +491,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child:
-                                            Icon(Icons.drive_file_rename_outline),
+                                        child: Icon(
+                                            Icons.drive_file_rename_outline),
                                       ),
                                       Text(
                                         AppLocalizations.of(context)
@@ -611,7 +617,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                   child: Row(
                                     children: [
                                       Icon(Icons.directions_run),
-                                      Padding(padding: EdgeInsets.only(left: 8)),
+                                      Padding(
+                                          padding: EdgeInsets.only(left: 8)),
                                       Row(
                                         children: [
                                           Text(
@@ -622,7 +629,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Padding(
-                                              padding: EdgeInsets.only(left: 8)),
+                                              padding:
+                                                  EdgeInsets.only(left: 8)),
                                         ],
                                       ),
                                       Expanded(
