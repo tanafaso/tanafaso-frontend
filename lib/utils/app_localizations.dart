@@ -158,19 +158,12 @@ class AppLocalizations {
       'write a name with which you can distinguish the challenge':
           'اكتب اسمًا يمكنك من خلاله تمييز التحدي',
       'challenges of friends': 'تحديات الأصدقاء',
-      'personal challenges hint':
-          'هذا تحد يمكنك أنت فقط رؤيته وإكماله سيساهم في نقاط التحديات الإجمالية الخاصة بك',
-      'all challenges hint':
-          'هذا تحد ستتمكن أنت وصديقك من القيام به وسيساهم إكماله في النتيجة بينك وبين صديقك وإجمالي نقاطك',
+      'challenge target hint': 'في تحدي الصديق، يمكنك انت وصديقك التنافس على القيام به وسيساهم إكماله في النتيجة بينك وبين صديقك وإجمالي نقاطك',
     },
   };
 
-  String get allChallengesHint {
-    return _localizedValues[locale.languageCode]['all challenges hint'];
-  }
-
-  String get personalChallengesHint {
-    return _localizedValues[locale.languageCode]['personal challenges hint'];
+  String get challengeTargetHint {
+    return _localizedValues[locale.languageCode]['challenge target hint'];
   }
 
   String get challengesOfFriends {
