@@ -110,6 +110,6 @@ class ArabicUtils {
         // and with Madda Above by Alif
         .replaceAll('\u0622', '\u0627')
         .replaceAll('\u0623', '\u0627');
-        // .replaceAll('\u0625', '\u0627');
+    // .replaceAll('\u0625', '\u0627');
   }
 }
