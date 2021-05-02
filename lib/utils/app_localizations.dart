@@ -78,6 +78,7 @@ class AppLocalizations {
       'personal challenges': 'التحديات الشخصية',
       'no personal challenges found': 'لم يتم العثور على تحديات شخصية',
       'loading the challenges': 'تحميل التحديات',
+      'loading the challenge': 'تحميل التحدي',
       'ends after': 'ينتهي بعد',
       'hours': 'ساعات',
       'hour': 'ساعة',
@@ -481,6 +482,10 @@ class AppLocalizations {
 
   String get loadingTheChallenges {
     return _localizedValues[locale.languageCode]['loading the challenges'];
+  }
+
+  String get loadingTheChallenge {
+    return _localizedValues[locale.languageCode]['loading the challenge'];
   }
 
   String get allChallenges {

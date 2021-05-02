@@ -5,6 +5,7 @@ import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_numbers_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
+import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,7 @@ class _GroupChallengeListItemWidgetState
   String _friendFullName;
   String _friendId;
 
-  void asyncInit() async {
+  Future<void> getNeededData() async {
     try {
       _group = await ServiceProvider.groupsService
           .getCachedGroupInfo(widget.challenge.groupId);
@@ -45,130 +46,170 @@ class _GroupChallengeListItemWidgetState
         _friendFullName =
             await ServiceProvider.usersService.getUserFullNameById(_friendId);
       }
-      setState(() {});
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.error);
     }
   }
 
   @override
-  void initState() {
-    asyncInit();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     super.build(context);
-    return GestureDetector(
-      onTap: () async {
-        Challenge challenge;
-        try {
-          challenge = await ServiceProvider.challengesService
-              .getChallenge(widget.challenge.id);
-        } on ApiException catch (e) {
-          SnackBarUtils.showSnackBar(
-              context, '${AppLocalizations.of(context).error}: ${e.error}');
-        }
-        if (challenge.deadlinePassed()) {
-          SnackBarUtils.showSnackBar(
-              context,
-              AppLocalizations.of(context)
-                  .theDeadlineHasAlreadyPassedForThisChallenge);
-          return;
-        }
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => DoChallengeScreen(
-                challenge: challenge,
-                isPersonalChallenge: false,
-                challengeChangedCallback: (changedChallenge) {
-                  widget.challengeChangedCallback(changedChallenge);
-                })));
-      },
-      child: Card(
-        child: IntrinsicHeight(
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: getIconConditionally(),
+    return FutureBuilder(
+        future: getNeededData(),
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return GestureDetector(
+              onTap: () async {
+                Challenge challenge;
+                try {
+                  challenge = await ServiceProvider.challengesService
+                      .getChallenge(widget.challenge.id);
+                } on ApiException catch (e) {
+                  SnackBarUtils.showSnackBar(context,
+                      '${AppLocalizations.of(context).error}: ${e.error}');
+                }
+                if (challenge.deadlinePassed()) {
+                  SnackBarUtils.showSnackBar(
+                      context,
+                      AppLocalizations.of(context)
+                          .theDeadlineHasAlreadyPassedForThisChallenge);
+                  return;
+                }
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DoChallengeScreen(
+                        challenge: challenge,
+                        isPersonalChallenge: false,
+                        challengeChangedCallback: (changedChallenge) {
+                          widget.challengeChangedCallback(changedChallenge);
+                        })));
+              },
+              child: Card(
+                child: IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: getIconConditionally(),
+                      ),
+                      VerticalDivider(
+                        width: 3,
+                        color: Colors.black,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  widget.challenge.name,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Visibility(
+                            visible:
+                                (widget.challenge?.motivation?.length ?? 0) !=
+                                    0,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(Icons.directions_run),
+                                ),
+                                Text(
+                                  widget.challenge.motivation,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.alarm),
+                              ),
+                              getDeadlineText(context),
+                            ],
+                          ),
+                          Visibility(
+                            visible: _group != null && widget.showName,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: getFriendProgressOnChallengeIcon(),
+                                ),
+                                Text(_group?.binary ?? false
+                                    ? '$_friendFullName'
+                                    : _group?.name ??
+                                        AppLocalizations.of(context)
+                                            .nameNotFound),
+                              ],
+                            ),
+                          ),
+                          Visibility(
+                            visible: _group != null && !widget.showName,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: getFriendProgressOnChallengeIcon(),
+                                ),
+                                Text(AppLocalizations.of(context).yourFriend),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              VerticalDivider(
-                width: 3,
-                color: Colors.black,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          widget.challenge.name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
-                      ),
-                    ],
+                  Icon(
+                    Icons.error_outline,
+                    color: Colors.red,
+                    size: 60,
                   ),
-                  Visibility(
-                    visible: (widget.challenge?.motivation?.length ?? 0) != 0,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.directions_run),
-                        ),
-                        Text(
-                          widget.challenge.motivation,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.alarm),
-                      ),
-                      getDeadlineText(context),
-                    ],
-                  ),
-                  Visibility(
-                    visible: _group != null && widget.showName,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: getFriendProgressOnChallengeIcon(),
-                        ),
-                        Text(_group?.binary ?? false
-                            ? '$_friendFullName'
-                            : _group?.name ??
-                                AppLocalizations.of(context).nameNotFound),
-                      ],
-                    ),
-                  ),
-                  Visibility(
-                    visible: _group != null && !widget.showName,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: getFriendProgressOnChallengeIcon(),
-                        ),
-                        Text(AppLocalizations.of(context).yourFriend),
-                      ],
-                    ),
-                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: SnapshotUtils.getErrorWidget(context, snapshot),
+                  )
                 ],
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            );
+          } else {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    child: CircularProgressIndicator(),
+                    width: 60,
+                    height: 60,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 16),
+                    child: Text(
+                        '${AppLocalizations.of(context).loadingTheChallenge}...'),
+                  )
+                ],
+              ),
+            );
+          }
+        });
   }
 
   // Note: This skews the idea of having this widget ready for group challenges.
