@@ -12,7 +12,7 @@ import 'package:azkar/net/payload/challenges/requests/add_challenge_request_body
 import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
-import 'package:azkar/utils/arabic_numbers_utils.dart';
+import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_zekr_screen.dart';
@@ -160,7 +160,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       return int.parse(number);
     } on FormatException {
       // Maybe it is in arabic?!.
-      return ArabicNumbersUtils.arabicToEnglish(number);
+      return ArabicUtils.arabicToEnglish(number);
     }
   }
 

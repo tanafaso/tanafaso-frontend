@@ -1,5 +1,6 @@
 import 'package:azkar/models/zekr.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/zekr_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,7 @@ class _SelectZekrScreenState extends State<SelectZekrScreen> {
   void filterBy(String sequence) {
     filteredAzkar = [];
     for (Zekr zekr in widget.azkar) {
-      if (zekr.zekr.contains(sequence)) {
+      if (ArabicUtils.normalize(zekr.zekr).contains(sequence)) {
         filteredAzkar.add(zekr);
       }
     }
