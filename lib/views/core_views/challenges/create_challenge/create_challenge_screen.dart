@@ -19,7 +19,6 @@ import 'package:azkar/views/core_views/challenges/create_challenge/select_zekr_s
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
 enum ChallengeTarget { SELF, FRIEND }
 
 // ignore: must_be_immutable
@@ -228,8 +227,26 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                             ),
                             RadioListTile<ChallengeTarget>(
                               activeColor: Colors.green,
-                              title: Text(
-                                  AppLocalizations.of(context).challengeMyself),
+                              title: Row(
+                                children: [
+                                  Text(AppLocalizations.of(context)
+                                      .challengeMyself),
+                                  Expanded(
+                                      child:
+                                          Padding(padding: EdgeInsets.all(1))),
+                                  Tooltip(
+                                    margin: EdgeInsets.all(8),
+                                    padding: EdgeInsets.all(8),
+                                    message: AppLocalizations.of(context)
+                                        .personalChallengesHint,
+                                    showDuration: Duration(seconds: 4),
+                                    child: Icon(
+                                      Icons.info_outline,
+                                      color: Colors.grey,
+                                    ),
+                                  )
+                                ],
+                              ),
                               dense: false,
                               value: ChallengeTarget.SELF,
                               groupValue: _challengeTarget,
@@ -241,8 +258,26 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                             ),
                             RadioListTile<ChallengeTarget>(
                               activeColor: Colors.green,
-                              title: Text(AppLocalizations.of(context)
-                                  .challengeAFriend),
+                              title: Row(
+                                children: [
+                                  Text(AppLocalizations.of(context)
+                                      .challengeAFriend),
+                                  Expanded(
+                                      child:
+                                          Padding(padding: EdgeInsets.all(1))),
+                                  Tooltip(
+                                    margin: EdgeInsets.all(8),
+                                    padding: EdgeInsets.all(8),
+                                    message: AppLocalizations.of(context)
+                                        .allChallengesHint,
+                                    showDuration: Duration(seconds: 5),
+                                    child: Icon(
+                                      Icons.info_outline,
+                                      color: Colors.grey,
+                                    ),
+                                  )
+                                ],
+                              ),
                               dense: false,
                               value: ChallengeTarget.FRIEND,
                               groupValue: _challengeTarget,
