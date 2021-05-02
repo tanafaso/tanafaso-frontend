@@ -30,6 +30,7 @@ class _GroupChallengeListItemWidgetState
     with AutomaticKeepAliveClientMixin {
   CachedGroupInfo _group;
   String _friendFullName;
+  String _friendId;
 
   void asyncInit() async {
     try {
@@ -39,10 +40,10 @@ class _GroupChallengeListItemWidgetState
       if (_group.binary) {
         String currentUserId =
             await ServiceProvider.usersService.getCurrentUserId();
-        String otherUserId =
+        _friendId =
             _group.usersIds.singleWhere((userId) => userId != currentUserId);
         _friendFullName =
-            await ServiceProvider.usersService.getUserFullNameById(otherUserId);
+            await ServiceProvider.usersService.getUserFullNameById(_friendId);
       }
       setState(() {});
     } on ApiException catch (e) {
@@ -140,14 +141,24 @@ class _GroupChallengeListItemWidgetState
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Icon((_group?.binary ?? false)
-                              ? Icons.person
-                              : Icons.group),
+                          child: getFriendProgressOnChallengeIcon(),
                         ),
                         Text(_group?.binary ?? false
                             ? '$_friendFullName'
                             : _group?.name ??
                                 AppLocalizations.of(context).nameNotFound),
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                    visible: _group != null && !widget.showName,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: getFriendProgressOnChallengeIcon(),
+                        ),
+                        Text(AppLocalizations.of(context).yourFriend),
                       ],
                     ),
                   ),
@@ -157,6 +168,32 @@ class _GroupChallengeListItemWidgetState
           ),
         ),
       ),
+    );
+  }
+
+  // Note: This skews the idea of having this widget ready for group challenges.
+  Widget getFriendProgressOnChallengeIcon() {
+    if (widget.challenge.usersFinished
+        .any((userFinished) => userFinished == _friendId)) {
+      return Icon(
+        Icons.done_outline,
+        size: 15,
+        color: Colors.green,
+      );
+    }
+
+    if (widget.challenge.deadlinePassed()) {
+      return Icon(
+        Icons.error_outline,
+        size: 15,
+        color: Colors.red,
+      );
+    }
+
+    return Icon(
+      Icons.not_started,
+      size: 15,
+      color: Colors.yellow,
     );
   }
 
