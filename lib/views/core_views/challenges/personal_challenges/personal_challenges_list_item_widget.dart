@@ -33,60 +33,57 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
       },
       child: Card(
         child: IntrinsicHeight(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                getIconConditionally(),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: VerticalDivider(
-                    width: 3,
-                    color: Colors.black,
-                  ),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: getIconConditionally(),
+              ),
+              VerticalDivider(
+                width: 3,
+                color: Colors.black,
+              ),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        challenge.name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                    ),
+                  ],
                 ),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Row(
+                Visibility(
+                  visible: (challenge?.motivation?.length ?? 0) != 0,
+                  child: Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          challenge.name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
+                        child: Icon(Icons.directions_run),
+                      ),
+                      Text(
+                        challenge.motivation,
                       ),
                     ],
                   ),
-                  Visibility(
-                    visible: (challenge?.motivation?.length ?? 0) != 0,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.directions_run),
-                        ),
-                        Text(
-                          challenge.motivation,
-                        ),
-                      ],
-                    ),
+                ),
+                Visibility(
+                  visible: !challenge.done(),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.alarm),
+                      ),
+                      getDeadlineText(context),
+                    ],
                   ),
-                  Visibility(
-                    visible: !challenge.done(),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.alarm),
-                        ),
-                        getDeadlineText(context),
-                      ],
-                    ),
-                  ),
-                ]),
-              ],
-            ),
+                ),
+              ]),
+            ],
           ),
         ),
       ),
