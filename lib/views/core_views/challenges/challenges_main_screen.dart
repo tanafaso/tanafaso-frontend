@@ -17,10 +17,13 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
 
   List<Tab> challengesTabs;
   TabController _tabController;
+  int _currentTappedIndex;
 
   @override
   void initState() {
     super.initState();
+
+    _currentTappedIndex = 0;
     challengesTabs = <Tab>[
       Tab(
           key: allChallengesTabKey,
@@ -42,6 +45,9 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
       appBar: AppBar(
           automaticallyImplyLeading: false,
           title: TabBar(
+            onTap: (index) {
+              _currentTappedIndex = index;
+            },
             controller: _tabController,
             tabs: challengesTabs,
           )),
@@ -62,10 +68,15 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
           icon: Icon(Icons.create),
           label: Text(AppLocalizations.of(context).createAChallenge),
           onPressed: () {
+            ChallengeTarget target = _currentTappedIndex == 0
+                ? ChallengeTarget.FRIEND
+                : ChallengeTarget.SELF;
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CreateChallengeScreen()));
+                    builder: (context) => CreateChallengeScreen(
+                          defaultChallengeTarget: target,
+                        )));
           }),
     );
   }

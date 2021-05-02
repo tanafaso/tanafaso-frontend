@@ -19,17 +19,21 @@ import 'package:azkar/views/core_views/challenges/create_challenge/select_zekr_s
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+
+enum ChallengeTarget { SELF, FRIEND }
+
 // ignore: must_be_immutable
 class CreateChallengeScreen extends StatefulWidget {
   Friend selectedFriend;
+  ChallengeTarget defaultChallengeTarget;
 
-  CreateChallengeScreen({this.selectedFriend});
+  CreateChallengeScreen(
+      {this.selectedFriend,
+      this.defaultChallengeTarget = ChallengeTarget.FRIEND});
 
   @override
   _CreateChallengeScreenState createState() => _CreateChallengeScreenState();
 }
-
-enum ChallengeTarget { SELF, FRIEND }
 
 class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   static const int DEFAULT_ORIGINAL_REPETITIONS = 1;
@@ -166,6 +170,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     initChallengeNameController();
     initMotivationController();
     initExpiresAfterDayNumController();
+    _challengeTarget = widget.defaultChallengeTarget;
+
     super.initState();
   }
 

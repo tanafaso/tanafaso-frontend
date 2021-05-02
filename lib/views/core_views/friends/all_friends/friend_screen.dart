@@ -179,6 +179,7 @@ class _FriendScreenState extends State<FriendScreen> {
                     await Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CreateChallengeScreen(
                               selectedFriend: widget.friend,
+                            defaultChallengeTarget: ChallengeTarget.FRIEND,
                             )));
                     setState(() {});
                   }),
@@ -209,6 +210,7 @@ class _FriendScreenState extends State<FriendScreen> {
                     await Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CreateChallengeScreen(
                               selectedFriend: widget.friend,
+                              defaultChallengeTarget: ChallengeTarget.FRIEND,
                             )));
                     setState(() {});
                   }),
