@@ -28,16 +28,13 @@ class SelectFriendScreen extends StatelessWidget {
       );
     }
 
-    return Scrollbar(
-      thickness: 5,
-      child: ListView.builder(
-        itemCount: friends.length,
-        addAutomaticKeepAlives: true,
-        padding: EdgeInsets.only(bottom: 8),
-        itemBuilder: (context, index) {
-          return getFriendCard(context, friends[index]);
-        },
-      ),
+    return ListView.builder(
+      itemCount: friends.length,
+      addAutomaticKeepAlives: true,
+      padding: EdgeInsets.only(bottom: 8),
+      itemBuilder: (context, index) {
+        return getFriendCard(context, friends[index]);
+      },
     );
   }
 
