@@ -6,7 +6,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:azkar/utils/app_localizations.dart';
-import 'package:azkar/views/auth/auth_main_screen.dart';
+import 'package:azkar/views/auth/landing_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,15 +48,18 @@ class _MyAppState extends State<MyApp> {
         future: asyncInitialization(context),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
-            return getMaterialAppWithBody(AuthMainScreen());
+            return getMaterialAppWithBody(LandingWidget());
           } else if (snapshot.hasError) {
             return getMaterialAppWithBody(Text(AppLocalizations(
                     Locale('ar', ''))
                 .anErrorHappenedWhileSettingUpThisDeviceToReceiveNotifications));
           } else {
             // TODO(omorsi): Show loader
-            return getMaterialAppWithBody(
-                Text(AppLocalizations(Locale('ar', '')).loading));
+            return getMaterialAppWithBody(Container(
+              child: Center(
+                child: Image.asset('assets/images/logo.png'),
+              ),
+            ));
           }
         });
   }
