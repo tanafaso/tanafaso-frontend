@@ -62,6 +62,8 @@ class _SelectZekrScreenState extends State<SelectZekrScreen> {
             ),
             Flexible(
               child: Scrollbar(
+                thickness: 5,
+                isAlwaysShown: true,
                 child: ListView.builder(
                   itemCount: filteredAzkar.length,
                   itemBuilder: (context, index) {
