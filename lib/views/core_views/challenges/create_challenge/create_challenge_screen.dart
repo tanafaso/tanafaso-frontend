@@ -194,95 +194,14 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
             child: Container(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: [
-                      Card(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Text(
-                                    '*',
-                                    style: TextStyle(
-                                        color: Colors.red, fontSize: 17),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(Icons.grading),
-                                ),
-                                Text(
-                                  '${AppLocalizations.of(context).iWantTo} ...',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17),
-                                ),
-                                Expanded(
-                                    child: Padding(
-                                  padding: EdgeInsets.only(left: 1),
-                                )),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Tooltip(
-                                    margin: EdgeInsets.all(8),
-                                    padding: EdgeInsets.all(8),
-                                    message: AppLocalizations.of(context)
-                                        .challengeTargetHint,
-                                    showDuration: Duration(seconds: 5),
-                                    child: Icon(
-                                      Icons.info_outline,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            RadioListTile<ChallengeTarget>(
-                              activeColor: Colors.green,
-                              title: Row(
-                                children: [
-                                  Text(AppLocalizations.of(context)
-                                      .challengeMyself),
-                                ],
-                              ),
-                              dense: false,
-                              value: ChallengeTarget.SELF,
-                              groupValue: _challengeTarget,
-                              onChanged: (ChallengeTarget value) {
-                                setState(() {
-                                  _challengeTarget = value;
-                                });
-                              },
-                            ),
-                            RadioListTile<ChallengeTarget>(
-                              activeColor: Colors.green,
-                              title: Row(
-                                children: [
-                                  Text(AppLocalizations.of(context)
-                                      .challengeAFriend),
-                                ],
-                              ),
-                              dense: false,
-                              value: ChallengeTarget.FRIEND,
-                              groupValue: _challengeTarget,
-                              onChanged: (ChallengeTarget value) {
-                                setState(() {
-                                  _challengeTarget = value;
-                                });
-                              },
-                            )
-                          ],
-                        ),
-                      ),
-                      Visibility(
-                        visible: _challengeTarget == ChallengeTarget.FRIEND,
-                        child: Card(
+            child: Scrollbar(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: [
+                        Card(
                           child: Column(
                             children: [
                               Row(
@@ -297,11 +216,162 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Icon(Icons.person),
+                                    child: Icon(Icons.grading),
                                   ),
-                                  getSelectedFriendNameConditionally(),
+                                  Text(
+                                    '${AppLocalizations.of(context).iWantTo} ...',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                  Expanded(
+                                      child: Padding(
+                                    padding: EdgeInsets.only(left: 1),
+                                  )),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Tooltip(
+                                      margin: EdgeInsets.all(8),
+                                      padding: EdgeInsets.all(8),
+                                      message: AppLocalizations.of(context)
+                                          .challengeTargetHint,
+                                      showDuration: Duration(seconds: 5),
+                                      child: Icon(
+                                        Icons.info_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
+                              RadioListTile<ChallengeTarget>(
+                                activeColor: Colors.green,
+                                title: Row(
+                                  children: [
+                                    Text(AppLocalizations.of(context)
+                                        .challengeMyself),
+                                  ],
+                                ),
+                                dense: false,
+                                value: ChallengeTarget.SELF,
+                                groupValue: _challengeTarget,
+                                onChanged: (ChallengeTarget value) {
+                                  setState(() {
+                                    _challengeTarget = value;
+                                  });
+                                },
+                              ),
+                              RadioListTile<ChallengeTarget>(
+                                activeColor: Colors.green,
+                                title: Row(
+                                  children: [
+                                    Text(AppLocalizations.of(context)
+                                        .challengeAFriend),
+                                  ],
+                                ),
+                                dense: false,
+                                value: ChallengeTarget.FRIEND,
+                                groupValue: _challengeTarget,
+                                onChanged: (ChallengeTarget value) {
+                                  setState(() {
+                                    _challengeTarget = value;
+                                  });
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                        Visibility(
+                          visible: _challengeTarget == ChallengeTarget.FRIEND,
+                          child: Card(
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child: Text(
+                                        '*',
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 17),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(Icons.person),
+                                    ),
+                                    getSelectedFriendNameConditionally(),
+                                  ],
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding: EdgeInsets.all(8),
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        elevation:
+                                            MaterialStateProperty.resolveWith(
+                                                (states) => 10),
+                                        shape: MaterialStateProperty.resolveWith(
+                                            (_) => RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30)))),
+                                    onPressed: () async {
+                                      Friendship friendship;
+                                      try {
+                                        friendship = await ServiceProvider
+                                            .usersService
+                                            .getFriends();
+                                      } on ApiException catch (e) {
+                                        SnackBarUtils.showSnackBar(
+                                          context,
+                                          e.error,
+                                        );
+                                        return;
+                                      }
+                                      Friend selectedFriend =
+                                          await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SelectFriendScreen(
+                                                        friendship: friendship,
+                                                      ))) as Friend;
+                                      if (selectedFriend != null) {
+                                        setState(() {
+                                          widget.selectedFriend = selectedFriend;
+                                        });
+                                      }
+                                    },
+                                    child: getSelectFriendTextConditionally(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Card(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Text(
+                                      '*',
+                                      style: TextStyle(
+                                          color: Colors.red, fontSize: 17),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(Icons.list),
+                                  ),
+                                  getAzkarSelectedTitleConditionally(),
+                                ],
+                              ),
+                              Visibility(
+                                  visible: _subChallenges.length > 0,
+                                  child: getSubChallenges()),
                               Container(
                                 width: MediaQuery.of(context).size.width,
                                 padding: EdgeInsets.all(8),
@@ -315,11 +385,18 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(30)))),
                                   onPressed: () async {
-                                    Friendship friendship;
+                                    List<Zekr> azkar;
                                     try {
-                                      friendship = await ServiceProvider
-                                          .usersService
-                                          .getFriends();
+                                      http.Response apiResponse =
+                                          await ApiCaller.get(
+                                              route: Endpoint(
+                                                  endpointRoute:
+                                                      EndpointRoute.GET_AZKAR));
+                                      GetAzkarResponse response =
+                                          GetAzkarResponse.fromJson(jsonDecode(
+                                              utf8.decode(
+                                                  apiResponse.body.codeUnits)));
+                                      azkar = response.azkar;
                                     } on ApiException catch (e) {
                                       SnackBarUtils.showSnackBar(
                                         context,
@@ -327,377 +404,302 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                       );
                                       return;
                                     }
-                                    Friend selectedFriend =
-                                        await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SelectFriendScreen(
-                                                      friendship: friendship,
-                                                    ))) as Friend;
-                                    if (selectedFriend != null) {
+                                    // Remove already selected azkar
+                                    azkar.removeWhere((zekr) =>
+                                        _subChallenges.any((subChallenge) =>
+                                            subChallenge.zekr.id == zekr.id));
+                                    Zekr selectedZekr = await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelectZekrScreen(
+                                                  azkar: azkar,
+                                                ))) as Zekr;
+                                    if ((selectedZekr.zekr?.length ?? 0) != 0) {
                                       setState(() {
-                                        widget.selectedFriend = selectedFriend;
+                                        SubChallenge subChallenge = SubChallenge(
+                                            zekr: selectedZekr,
+                                            repetitions:
+                                                DEFAULT_ORIGINAL_REPETITIONS);
+                                        _subChallenges.add(subChallenge);
+                                        TextEditingController controller =
+                                            TextEditingController(
+                                                text:
+                                                    "$DEFAULT_ORIGINAL_REPETITIONS");
+                                        controller.addListener(() {
+                                          if (subChallenge.repetitions
+                                                  .toString() ==
+                                              controller.value.text) {
+                                            return;
+                                          }
+                                          if (validateRepetition(
+                                              controller.value.text, true)) {
+                                            subChallenge.repetitions =
+                                                stringToNumber(
+                                                    controller.value.text);
+                                          }
+                                          setState(() {});
+                                        });
+                                        _repetitionsControllers.add(controller);
                                       });
                                     }
                                   },
-                                  child: getSelectFriendTextConditionally(),
+                                  child: Container(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.add,
+                                          color:
+                                              Theme.of(context).iconTheme.color,
+                                        ),
+                                        Padding(padding: EdgeInsets.all(8)),
+                                        Text(
+                                          AppLocalizations.of(context).addZekr,
+                                          style:
+                                              Theme.of(context).textTheme.button,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ),
-                      Card(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Text(
-                                    '*',
-                                    style: TextStyle(
-                                        color: Colors.red, fontSize: 17),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(Icons.list),
-                                ),
-                                getAzkarSelectedTitleConditionally(),
-                              ],
-                            ),
-                            Visibility(
-                                visible: _subChallenges.length > 0,
-                                child: getSubChallenges()),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: EdgeInsets.all(8),
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                    elevation:
-                                        MaterialStateProperty.resolveWith(
-                                            (states) => 10),
-                                    shape: MaterialStateProperty.resolveWith(
-                                        (_) => RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30)))),
-                                onPressed: () async {
-                                  List<Zekr> azkar;
-                                  try {
-                                    http.Response apiResponse =
-                                        await ApiCaller.get(
-                                            route: Endpoint(
-                                                endpointRoute:
-                                                    EndpointRoute.GET_AZKAR));
-                                    GetAzkarResponse response =
-                                        GetAzkarResponse.fromJson(jsonDecode(
-                                            utf8.decode(
-                                                apiResponse.body.codeUnits)));
-                                    azkar = response.azkar;
-                                  } on ApiException catch (e) {
-                                    SnackBarUtils.showSnackBar(
-                                      context,
-                                      e.error,
-                                    );
-                                    return;
-                                  }
-                                  // Remove already selected azkar
-                                  azkar.removeWhere((zekr) =>
-                                      _subChallenges.any((subChallenge) =>
-                                          subChallenge.zekr.id == zekr.id));
-                                  Zekr selectedZekr = await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SelectZekrScreen(
-                                                azkar: azkar,
-                                              ))) as Zekr;
-                                  if ((selectedZekr.zekr?.length ?? 0) != 0) {
-                                    setState(() {
-                                      SubChallenge subChallenge = SubChallenge(
-                                          zekr: selectedZekr,
-                                          repetitions:
-                                              DEFAULT_ORIGINAL_REPETITIONS);
-                                      _subChallenges.add(subChallenge);
-                                      TextEditingController controller =
-                                          TextEditingController(
-                                              text:
-                                                  "$DEFAULT_ORIGINAL_REPETITIONS");
-                                      controller.addListener(() {
-                                        if (subChallenge.repetitions
-                                                .toString() ==
-                                            controller.value.text) {
-                                          return;
-                                        }
-                                        if (validateRepetition(
-                                            controller.value.text, true)) {
-                                          subChallenge.repetitions =
-                                              stringToNumber(
-                                                  controller.value.text);
-                                        }
-                                        setState(() {});
-                                      });
-                                      _repetitionsControllers.add(controller);
-                                    });
-                                  }
-                                },
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                        Card(
+                          child: Column(
+                            children: [
+                              Column(
+                                children: [
+                                  Row(
                                     children: [
-                                      Icon(
-                                        Icons.add,
-                                        color:
-                                            Theme.of(context).iconTheme.color,
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 8.0),
+                                        child: Text(
+                                          '*',
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 17),
+                                        ),
                                       ),
-                                      Padding(padding: EdgeInsets.all(8)),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child:
+                                            Icon(Icons.drive_file_rename_outline),
+                                      ),
                                       Text(
-                                        AppLocalizations.of(context).addZekr,
-                                        style:
-                                            Theme.of(context).textTheme.button,
+                                        AppLocalizations.of(context)
+                                            .challengeName,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17),
                                       ),
+                                      Expanded(
+                                          child: Padding(
+                                        padding: EdgeInsets.only(left: 8),
+                                      )),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Tooltip(
+                                          message: AppLocalizations.of(context)
+                                              .writeANameWithWhichYouCanDistinguishTheChallenge,
+                                          child: Icon(
+                                            Icons.info_outline,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      )
                                     ],
                                   ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextField(
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  decoration: new InputDecoration(
+                                    alignLabelWithHint: true,
+                                    border: new OutlineInputBorder(
+                                        borderSide:
+                                            new BorderSide(color: Colors.teal)),
+                                  ),
+                                  controller: _challengeNameController,
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Card(
-                        child: Column(
-                          children: [
-                            Column(
-                              children: [
-                                Row(
+                        Card(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Text(
+                                      '*',
+                                      style: TextStyle(
+                                          color: Colors.red, fontSize: 17),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(Icons.date_range),
+                                  ),
+                                  Text(
+                                    AppLocalizations.of(context).deadline,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 8.0),
-                                      child: Text(
-                                        '*',
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 17),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child:
-                                          Icon(Icons.drive_file_rename_outline),
-                                    ),
                                     Text(
                                       AppLocalizations.of(context)
-                                          .challengeName,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17),
+                                          .challengeExpiresAfter,
+                                      textAlign: TextAlign.center,
+                                      textDirection: TextDirection.rtl,
                                     ),
-                                    Expanded(
-                                        child: Padding(
-                                      padding: EdgeInsets.only(left: 8),
-                                    )),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Tooltip(
+                                      child: Container(
+                                        width: 70,
+                                        height: 30,
+                                        alignment: Alignment.center,
+                                        child: Card(
+                                          elevation: 1,
+                                          child: TextField(
+                                            textAlign: TextAlign.center,
+                                            decoration: new InputDecoration(
+                                              alignLabelWithHint: true,
+                                              border: new OutlineInputBorder(
+                                                  borderSide: new BorderSide(
+                                                      color: Colors.teal)),
+                                            ),
+                                            // textInputAction: TextInputAction.done,
+                                            keyboardType: TextInputType.number,
+                                            controller:
+                                                _expiresAfterDayNumController,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      AppLocalizations.of(context).day,
+                                      textAlign: TextAlign.center,
+                                      textDirection: TextDirection.rtl,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Card(
+                          child: Column(
+                            children: [
+                              Column(children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.directions_run),
+                                      Padding(padding: EdgeInsets.only(left: 8)),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)
+                                                .theMotivationMessage,
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Padding(
+                                              padding: EdgeInsets.only(left: 8)),
+                                        ],
+                                      ),
+                                      Expanded(
+                                          child: Padding(
+                                        padding: EdgeInsets.only(left: 8),
+                                      )),
+                                      Tooltip(
                                         message: AppLocalizations.of(context)
-                                            .writeANameWithWhichYouCanDistinguishTheChallenge,
+                                            .writeSomethingToMotivateYourFriendToSayTheZekr,
                                         child: Icon(
                                           Icons.info_outline,
                                           color: Colors.grey,
                                         ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextField(
-                                textDirection: TextDirection.rtl,
-                                textAlign: TextAlign.center,
-                                decoration: new InputDecoration(
-                                  alignLabelWithHint: true,
-                                  border: new OutlineInputBorder(
-                                      borderSide:
-                                          new BorderSide(color: Colors.teal)),
-                                ),
-                                controller: _challengeNameController,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Card(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Text(
-                                    '*',
-                                    style: TextStyle(
-                                        color: Colors.red, fontSize: 17),
+                                      )
+                                    ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(Icons.date_range),
-                                ),
-                                Text(
-                                  AppLocalizations.of(context).deadline,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)
-                                        .challengeExpiresAfter,
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: 70,
-                                      height: 30,
-                                      alignment: Alignment.center,
-                                      child: Card(
-                                        elevation: 1,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: new InputDecoration(
-                                            alignLabelWithHint: true,
-                                            border: new OutlineInputBorder(
-                                                borderSide: new BorderSide(
-                                                    color: Colors.teal)),
-                                          ),
-                                          // textInputAction: TextInputAction.done,
-                                          keyboardType: TextInputType.number,
-                                          controller:
-                                              _expiresAfterDayNumController,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    AppLocalizations.of(context).day,
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Card(
-                        child: Column(
-                          children: [
-                            Column(children: [
+                              ]),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.directions_run),
-                                    Padding(padding: EdgeInsets.only(left: 8)),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          AppLocalizations.of(context)
-                                              .theMotivationMessage,
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Padding(
-                                            padding: EdgeInsets.only(left: 8)),
-                                      ],
-                                    ),
-                                    Expanded(
-                                        child: Padding(
-                                      padding: EdgeInsets.only(left: 8),
-                                    )),
-                                    Tooltip(
-                                      message: AppLocalizations.of(context)
-                                          .writeSomethingToMotivateYourFriendToSayTheZekr,
-                                      child: Icon(
-                                        Icons.info_outline,
-                                        color: Colors.grey,
-                                      ),
-                                    )
-                                  ],
+                                child: TextField(
+                                  textAlign: TextAlign.center,
+                                  decoration: new InputDecoration(
+                                    alignLabelWithHint: true,
+                                    border: new OutlineInputBorder(
+                                        borderSide:
+                                            new BorderSide(color: Colors.teal)),
+                                  ),
+                                  controller: _motivationController,
                                 ),
-                              ),
-                            ]),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                decoration: new InputDecoration(
-                                  alignLabelWithHint: true,
-                                  border: new OutlineInputBorder(
-                                      borderSide:
-                                          new BorderSide(color: Colors.teal)),
-                                ),
-                                controller: _motivationController,
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Container(
+                      margin: const EdgeInsets.all(8),
+                      child: ButtonTheme(
+                        height: 50,
+                        // ignore: deprecated_member_use
+                        child: FlatButton(
+                          onPressed: () async => onCreatePressed(),
+                          child: Center(
+                              child: Text(
+                            readyToFinishChallenge(false)
+                                ? AppLocalizations.of(context).add
+                                : AppLocalizations.of(context).addNotReady,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          )),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Container(
-                    margin: const EdgeInsets.all(8),
-                    child: ButtonTheme(
-                      height: 50,
-                      // ignore: deprecated_member_use
-                      child: FlatButton(
-                        onPressed: () async => onCreatePressed(),
-                        child: Center(
-                            child: Text(
-                          readyToFinishChallenge(false)
-                              ? AppLocalizations.of(context).add
-                              : AppLocalizations.of(context).addNotReady,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        )),
-                      ),
+                      decoration: BoxDecoration(
+                          color: readyToFinishChallenge(false)
+                              ? Colors.green.shade300
+                              : Colors.grey,
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.green.shade200,
+                                offset: Offset(1, -2),
+                                blurRadius: 5),
+                            BoxShadow(
+                                color: Colors.green.shade200,
+                                offset: Offset(-1, 2),
+                                blurRadius: 5)
+                          ]),
                     ),
-                    decoration: BoxDecoration(
-                        color: readyToFinishChallenge(false)
-                            ? Colors.green.shade300
-                            : Colors.grey,
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.green.shade200,
-                              offset: Offset(1, -2),
-                              blurRadius: 5),
-                          BoxShadow(
-                              color: Colors.green.shade200,
-                              offset: Offset(-1, 2),
-                              blurRadius: 5)
-                        ]),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             // ignore: deprecated_member_use
           ),
