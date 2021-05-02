@@ -19,18 +19,24 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
   TabController _tabController;
 
   @override
-  Widget build(BuildContext context) {
-    HomePage.setAppBarTitle(AppLocalizations.of(context).theChallenges);
+  void initState() {
+    super.initState();
     challengesTabs = <Tab>[
       Tab(
           key: allChallengesTabKey,
-          text: AppLocalizations.of(context).challengesOfFriends),
+          // Hack
+          text: AppLocalizations(Locale('ar', '')).challengesOfFriends),
       Tab(
           key: personalChallengesTabKey,
-          text: AppLocalizations.of(context).personalChallenges),
+          // Hack
+          text: AppLocalizations(Locale('ar', '')).personalChallenges),
     ];
-
     _tabController = TabController(vsync: this, length: challengesTabs.length);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    HomePage.setAppBarTitle(AppLocalizations.of(context).theChallenges);
 
     return Scaffold(
       appBar: AppBar(
