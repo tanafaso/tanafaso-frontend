@@ -223,6 +223,24 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 17),
                                 ),
+                                Expanded(
+                                    child: Padding(
+                                  padding: EdgeInsets.only(left: 1),
+                                )),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Tooltip(
+                                    margin: EdgeInsets.all(8),
+                                    padding: EdgeInsets.all(8),
+                                    message: AppLocalizations.of(context)
+                                        .challengeTargetHint,
+                                    showDuration: Duration(seconds: 5),
+                                    child: Icon(
+                                      Icons.info_outline,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                             RadioListTile<ChallengeTarget>(
@@ -231,20 +249,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                 children: [
                                   Text(AppLocalizations.of(context)
                                       .challengeMyself),
-                                  Expanded(
-                                      child:
-                                          Padding(padding: EdgeInsets.all(1))),
-                                  Tooltip(
-                                    margin: EdgeInsets.all(8),
-                                    padding: EdgeInsets.all(8),
-                                    message: AppLocalizations.of(context)
-                                        .personalChallengesHint,
-                                    showDuration: Duration(seconds: 4),
-                                    child: Icon(
-                                      Icons.info_outline,
-                                      color: Colors.grey,
-                                    ),
-                                  )
                                 ],
                               ),
                               dense: false,
@@ -262,20 +266,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                 children: [
                                   Text(AppLocalizations.of(context)
                                       .challengeAFriend),
-                                  Expanded(
-                                      child:
-                                          Padding(padding: EdgeInsets.all(1))),
-                                  Tooltip(
-                                    margin: EdgeInsets.all(8),
-                                    padding: EdgeInsets.all(8),
-                                    message: AppLocalizations.of(context)
-                                        .allChallengesHint,
-                                    showDuration: Duration(seconds: 5),
-                                    child: Icon(
-                                      Icons.info_outline,
-                                      color: Colors.grey,
-                                    ),
-                                  )
                                 ],
                               ),
                               dense: false,
