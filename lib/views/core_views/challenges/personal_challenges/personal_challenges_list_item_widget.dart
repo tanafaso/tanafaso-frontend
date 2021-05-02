@@ -1,6 +1,6 @@
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/utils/app_localizations.dart';
-import 'package:azkar/utils/arabic_numbers_utils.dart';
+import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
@@ -121,9 +121,9 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
             '${AppLocalizations.of(context).endsAfterLessThan} ١ ${AppLocalizations.of(context).minute}');
       }
       return Text(
-          '${AppLocalizations.of(context).endsAfter} ${ArabicNumbersUtils.englishToArabic(minutesLeft.toString())} ${AppLocalizations.of(context).minute}');
+          '${AppLocalizations.of(context).endsAfter} ${ArabicUtils.englishToArabic(minutesLeft.toString())} ${AppLocalizations.of(context).minute}');
     }
     return Text(
-        '${AppLocalizations.of(context).endsAfter} ${ArabicNumbersUtils.englishToArabic(challenge.hoursLeft().toString())} ${AppLocalizations.of(context).hour}');
+        '${AppLocalizations.of(context).endsAfter} ${ArabicUtils.englishToArabic(challenge.hoursLeft().toString())} ${AppLocalizations.of(context).hour}');
   }
 }

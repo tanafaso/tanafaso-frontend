@@ -1,7 +1,7 @@
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/utils/app_localizations.dart';
-import 'package:azkar/utils/arabic_numbers_utils.dart';
+import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -122,7 +122,7 @@ class _DoChallengeSubChallengeListItemWidgetState
     }
 
     return Text(
-      '${AppLocalizations.of(context).theRemainingRepetitions}: ${ArabicNumbersUtils.englishToArabic(widget.subChallenge.repetitions.toString())}',
+      '${AppLocalizations.of(context).theRemainingRepetitions}: ${ArabicUtils.englishToArabic(widget.subChallenge.repetitions.toString())}',
     );
   }
 }
