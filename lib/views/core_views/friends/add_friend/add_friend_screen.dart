@@ -56,48 +56,8 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 17),
                             ),
-                          ],
-                        ),
-                        Row(
-                          children: [
                             Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: new TextFormField(
-                                  decoration: new InputDecoration(
-                                    contentPadding: EdgeInsets.all(16),
-                                    hintStyle: TextStyle(color: Colors.grey),
-                                    // hintText: AppLocalizations.of(context).enterAUsername,
-                                    enabledBorder: new OutlineInputBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(30.0),
-                                      borderSide:
-                                          new BorderSide(color: Colors.black),
-                                    ),
-                                    focusedBorder: new OutlineInputBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(15.0),
-                                      borderSide:
-                                          new BorderSide(color: Colors.black),
-                                    ),
-                                  ),
-                                  onChanged: (String username) {
-                                    _friendUsername = username;
-                                  },
-                                  validator: (val) {
-                                    if (val.contains(" ")) {
-                                      return AppLocalizations.of(context)
-                                          .usernameShouldHaveNoSpaces;
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  keyboardType: TextInputType.text,
-                                  style: new TextStyle(
-                                    fontFamily: "Poppins",
-                                  ),
-                                ),
-                              ),
+                              child: Padding(padding: EdgeInsets.only(left: 8)),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0),
@@ -114,6 +74,39 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                               ),
                             ),
                           ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: new TextFormField(
+                            decoration: new InputDecoration(
+                              contentPadding: EdgeInsets.all(16),
+                              hintStyle: TextStyle(color: Colors.grey),
+                              // hintText: AppLocalizations.of(context).enterAUsername,
+                              enabledBorder: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(30.0),
+                                borderSide: new BorderSide(color: Colors.black),
+                              ),
+                              focusedBorder: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(15.0),
+                                borderSide: new BorderSide(color: Colors.black),
+                              ),
+                            ),
+                            onChanged: (String username) {
+                              _friendUsername = username;
+                            },
+                            validator: (val) {
+                              if (val.contains(" ")) {
+                                return AppLocalizations.of(context)
+                                    .usernameShouldHaveNoSpaces;
+                              } else {
+                                return null;
+                              }
+                            },
+                            keyboardType: TextInputType.text,
+                            style: new TextStyle(
+                              fontFamily: "Poppins",
+                            ),
+                          ),
                         ),
                         buildTextWithIcon(),
                         Padding(padding: EdgeInsets.all(8)),
