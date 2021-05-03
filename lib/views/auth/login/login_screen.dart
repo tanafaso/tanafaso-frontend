@@ -420,6 +420,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await ServiceProvider.authenticationService.login(request);
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.error);
+      return;
     }
 
     Navigator.pushAndRemoveUntil(context,
