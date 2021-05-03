@@ -158,6 +158,8 @@ class AppLocalizations {
       'write a name with which you can distinguish the challenge':
           'اكتب اسمًا يمكنك من خلاله تمييز التحدي',
       'challenges of friends': 'تحديات الأصدقاء',
+      'your friend can find his user code on his profile page':
+          'يمكن لصديقك العثور على رمز المستخدم الخاص به على صفحة ملفه الشخصي',
       'challenge target hint':
           'في تحدي الصديق، يمكنك انت وصديقك التنافس على القيام به وسيساهم إكماله في النتيجة بينك وبين صديقك وإجمالي نقاطك',
     },
@@ -165,6 +167,11 @@ class AppLocalizations {
 
   String get challengeTargetHint {
     return _localizedValues[locale.languageCode]['challenge target hint'];
+  }
+
+  String get yourFriendCanFindHisUserCodeOnHisProfilePage {
+    return _localizedValues[locale.languageCode]
+        ['your friend can find his user code on his profile page'];
   }
 
   String get challengesOfFriends {
