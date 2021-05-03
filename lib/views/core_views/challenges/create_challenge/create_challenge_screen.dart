@@ -192,9 +192,9 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
         },
         child: Center(
             child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Scrollbar(
+          child: Scrollbar(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
                   Expanded(
@@ -709,7 +709,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                 ],
               ),
             ),
-            // ignore: deprecated_member_use
           ),
         )),
       ),
