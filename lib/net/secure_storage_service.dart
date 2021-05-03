@@ -13,7 +13,8 @@ class SecureStorageService {
 
   Future<String> getFacebookUserId() async {
     final _storage = FlutterSecureStorage();
-    String facebookUserId = await _storage.read(key: FACEBOOK_USER_ID_STORAGE_KEY);
+    String facebookUserId =
+        await _storage.read(key: FACEBOOK_USER_ID_STORAGE_KEY);
     return facebookUserId;
   }
 

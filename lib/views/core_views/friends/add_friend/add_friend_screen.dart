@@ -290,9 +290,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
         return;
       }
       SnackBarUtils.showSnackBar(
-          context, AppLocalizations
-          .of(context)
-          .connectedFacebookSuccessfully,
+          context, AppLocalizations.of(context).connectedFacebookSuccessfully,
           color: Colors.green.shade400);
     }
 
