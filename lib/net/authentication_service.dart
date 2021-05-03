@@ -35,6 +35,8 @@ class AuthenticationService {
             facebookGraphApiResponse.accessToken;
         await ServiceProvider.secureStorageService
             .setFacebookToken(_facebookAccessToken.token);
+        await ServiceProvider.secureStorageService
+            .setFacebookUserId(_facebookAccessToken.userId);
 
         _loginWithFacebookAccessToken(_facebookAccessToken);
         break;
@@ -89,6 +91,8 @@ class AuthenticationService {
             facebookGraphApiResponse.accessToken;
         await ServiceProvider.secureStorageService
             .setFacebookToken(facebookAccessToken.token);
+        await ServiceProvider.secureStorageService
+            .setFacebookUserId(facebookAccessToken.userId);
 
         _connectFacebookWithFacebookAccessToken(facebookAccessToken);
         break;
@@ -121,16 +125,20 @@ class AuthenticationService {
   Future<List<FacebookFriend>> getFacebookFriends() async {
     String facebookToken =
         await ServiceProvider.secureStorageService.getFacebookToken();
-    http.Response response = await http.get(Uri(
-        path:
-            "https://graph.facebook.com/v9.0/me/friends?access_token=$facebookToken&limit=$MAXIMUM_FRIENDS_USING_APP_COUNT"));
+    String facebookUserId =
+        await ServiceProvider.secureStorageService.getFacebookUserId();
+    http.Response response = await http.get(Uri.https("graph.facebook.com",
+        "v9.0/$facebookUserId/friends/", {'access_token': facebookToken}));
     if (response.statusCode == FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE) {
       throw ApiException.withDefaultError();
     }
+    var responseJson = jsonDecode(utf8.decode(response.body.codeUnits));
+    if ((responseJson['error'] ?? null) != null) {
+      await connectFacebook();
+      throw ApiException.withDefaultError();
+    }
 
-    return FacebookFriendsResponse.fromJson(
-            jsonDecode(utf8.decode(response.body.codeUnits)))
-        .facebookFriends;
+    return FacebookFriendsResponse.fromJson(responseJson).facebookFriends;
   }
 
   Future<void> signUp(EmailRegistrationRequestBody request) async {
@@ -148,7 +156,6 @@ class AuthenticationService {
         body: jsonEncode(request.toJson()),
       );
     } catch (e) {
-      print(e);
       throw ApiException.withDefaultError();
     }
 
@@ -206,7 +213,6 @@ class AuthenticationService {
         body: jsonEncode(request.toJson()),
       );
     } catch (e) {
-      print(e);
       throw ApiException.withDefaultError();
     }
 
