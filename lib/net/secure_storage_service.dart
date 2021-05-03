@@ -3,12 +3,18 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class SecureStorageService {
   static const String JWT_TOKEN_STORAGE_KEY = 'jwtToken';
   static const String FACEBOOK_TOKEN_STORAGE_KEY = 'facebookAccessToken';
+  static const String FACEBOOK_USER_ID_STORAGE_KEY = 'facebookUserId';
 
   Future<String> getFacebookToken() async {
     final _storage = FlutterSecureStorage();
     String facebookToken = await _storage.read(key: FACEBOOK_TOKEN_STORAGE_KEY);
-    // TODO(omar): Check that the token is not expired.
     return facebookToken;
+  }
+
+  Future<String> getFacebookUserId() async {
+    final _storage = FlutterSecureStorage();
+    String facebookUserId = await _storage.read(key: FACEBOOK_USER_ID_STORAGE_KEY);
+    return facebookUserId;
   }
 
   Future<String> getJwtToken() async {
@@ -19,6 +25,11 @@ class SecureStorageService {
   Future<void> setFacebookToken(String facebookToken) async {
     final _storage = FlutterSecureStorage();
     await _storage.write(key: FACEBOOK_TOKEN_STORAGE_KEY, value: facebookToken);
+  }
+
+  Future<void> setFacebookUserId(String userId) async {
+    final _storage = FlutterSecureStorage();
+    await _storage.write(key: FACEBOOK_USER_ID_STORAGE_KEY, value: userId);
   }
 
   Future<void> setJwtToken(String jwtToken) async {

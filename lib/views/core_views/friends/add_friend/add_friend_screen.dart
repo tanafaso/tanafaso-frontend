@@ -140,117 +140,6 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                           // ignore: deprecated_member_use
                                           child: new FlatButton(
                                             onPressed: () =>
-                                                onConnectFacebookPressed(),
-                                            padding: EdgeInsets.only(
-                                              top: 20.0,
-                                              bottom: 20.0,
-                                            ),
-                                            child: new Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: <Widget>[
-                                                Icon(
-                                                  const IconData(0xea90,
-                                                      fontFamily: 'icomoon'),
-                                                  color: Colors.white,
-                                                  size: 20.0,
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    AppLocalizations.of(context)
-                                                        .connectYourAccountWithFacebook,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        new Container(
-                                          padding: EdgeInsets.only(
-                                            right: 20.0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                new Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin:
-                      const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-                  alignment: Alignment.center,
-                  child: Row(
-                    children: <Widget>[
-                      new Expanded(
-                        child: new Container(
-                          margin: EdgeInsets.all(8.0),
-                          decoration:
-                              BoxDecoration(border: Border.all(width: 0.25)),
-                        ),
-                      ),
-                      Text(
-                        AppLocalizations.of(context).then,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      new Expanded(
-                        child: new Container(
-                          margin: EdgeInsets.all(8.0),
-                          decoration:
-                              BoxDecoration(border: Border.all(width: 0.25)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                new Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin:
-                      const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-                  child: new Row(
-                    children: <Widget>[
-                      new Expanded(
-                        child: new Container(
-                          alignment: Alignment.center,
-                          child: new Row(
-                            children: <Widget>[
-                              new Expanded(
-                                // ignore: deprecated_member_use
-                                child: new FlatButton(
-                                  shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(30.0),
-                                  ),
-                                  color: Color(0Xff3B5998),
-                                  onPressed: () => {},
-                                  child: new Container(
-                                    child: new Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        new Container(
-                                          padding: EdgeInsets.only(
-                                            left: 20.0,
-                                          ),
-                                        ),
-                                        new Expanded(
-                                          // ignore: deprecated_member_use
-                                          child: new FlatButton(
-                                            onPressed: () =>
                                                 onFindFriendsWithFacebookPressed(),
                                             padding: EdgeInsets.only(
                                               top: 20.0,
@@ -269,7 +158,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                                 Expanded(
                                                   child: Text(
                                                     AppLocalizations.of(context)
-                                                        .addFacebookFriend,
+                                                        .facebook,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         color: Colors.white,
@@ -387,22 +276,26 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
     );
   }
 
-  void onConnectFacebookPressed() async {
-    try {
-      await ServiceProvider.authenticationService.connectFacebook();
-    } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(
-        context,
-        e.error,
-      );
-      return;
-    }
-    SnackBarUtils.showSnackBar(
-        context, AppLocalizations.of(context).connectedFacebookSuccessfully,
-        color: Colors.green.shade400);
-  }
-
   void onFindFriendsWithFacebookPressed() async {
+    String facebookToken =
+        await ServiceProvider.secureStorageService.getFacebookToken();
+    if ((facebookToken?.length ?? 0) == 0) {
+      try {
+        await ServiceProvider.authenticationService.connectFacebook();
+      } on ApiException catch (e) {
+        SnackBarUtils.showSnackBar(
+          context,
+          e.error,
+        );
+        return;
+      }
+      SnackBarUtils.showSnackBar(
+          context, AppLocalizations
+          .of(context)
+          .connectedFacebookSuccessfully,
+          color: Colors.green.shade400);
+    }
+
     try {
       List<User> friends = await getFacebookFriends();
       Navigator.push(
@@ -421,6 +314,10 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
   Future<List<User>> getFacebookFriends() async {
     List<FacebookFriend> facebookFriends =
         await ServiceProvider.authenticationService.getFacebookFriends();
+    if (facebookFriends?.isEmpty ?? true) {
+      return [];
+    }
+
     List<User> checkedFacebookFriends = [];
     for (var facebookFriend in facebookFriends) {
       User user = await ServiceProvider.usersService
