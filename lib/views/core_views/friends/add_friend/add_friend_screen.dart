@@ -128,16 +128,16 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                       children: [
                         new Container(
                           width: MediaQuery.of(context).size.width,
-                          margin:
-                              const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+                          margin: const EdgeInsets.only(
+                              left: 30.0, right: 30.0, top: 20.0),
                           alignment: Alignment.center,
                           child: Row(
                             children: <Widget>[
                               new Expanded(
                                 child: new Container(
                                   margin: EdgeInsets.all(8.0),
-                                  decoration:
-                                      BoxDecoration(border: Border.all(width: 0.25)),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(width: 0.25)),
                                 ),
                               ),
                               Text(
@@ -149,8 +149,8 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                               new Expanded(
                                 child: new Container(
                                   margin: EdgeInsets.all(8.0),
-                                  decoration:
-                                      BoxDecoration(border: Border.all(width: 0.25)),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(width: 0.25)),
                                 ),
                               ),
                             ],
@@ -158,8 +158,8 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                         ),
                         new Container(
                           width: MediaQuery.of(context).size.width,
-                          margin:
-                          const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+                          margin: const EdgeInsets.only(
+                              left: 30.0, right: 30.0, top: 20.0),
                           child: new Row(
                             children: <Widget>[
                               new Expanded(
@@ -172,14 +172,14 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                         child: new FlatButton(
                                           shape: new RoundedRectangleBorder(
                                             borderRadius:
-                                            new BorderRadius.circular(30.0),
+                                                new BorderRadius.circular(30.0),
                                           ),
                                           color: Color(0Xff3B5998),
                                           onPressed: () => {},
                                           child: new Container(
                                             child: new Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                                  MainAxisAlignment.center,
                                               children: <Widget>[
                                                 new Container(
                                                   padding: EdgeInsets.only(
@@ -197,23 +197,29 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                                     ),
                                                     child: new Row(
                                                       mainAxisAlignment:
-                                                      MainAxisAlignment.start,
+                                                          MainAxisAlignment
+                                                              .start,
                                                       children: <Widget>[
                                                         Icon(
                                                           const IconData(0xea90,
-                                                              fontFamily: 'icomoon'),
+                                                              fontFamily:
+                                                                  'icomoon'),
                                                           color: Colors.white,
                                                           size: 20.0,
                                                         ),
                                                         Expanded(
                                                           child: Text(
-                                                            AppLocalizations.of(context)
+                                                            AppLocalizations.of(
+                                                                    context)
                                                                 .facebook,
-                                                            textAlign: TextAlign.center,
+                                                            textAlign: TextAlign
+                                                                .center,
                                                             style: TextStyle(
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                                 fontWeight:
-                                                                FontWeight.bold),
+                                                                    FontWeight
+                                                                        .bold),
                                                           ),
                                                         ),
                                                       ],
@@ -242,7 +248,6 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
