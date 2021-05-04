@@ -379,6 +379,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
             .getUserByFacebookUserId(facebookFriend.id);
         checkedFacebookFriends.add(user);
       } on ApiException catch (e) {
+        print(e);
         // It's ok of their friend is not an app user.
       }
     }
