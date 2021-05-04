@@ -374,9 +374,13 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
 
     List<User> checkedFacebookFriends = [];
     for (var facebookFriend in facebookFriends) {
-      User user = await ServiceProvider.usersService
-          .getUserByFacebookUserId(facebookFriend.id);
-      checkedFacebookFriends.add(user);
+      try {
+        User user = await ServiceProvider.usersService
+            .getUserByFacebookUserId(facebookFriend.id);
+        checkedFacebookFriends.add(user);
+      } on ApiException catch (e) {
+        // It's ok of their friend is not an app user.
+      }
     }
     return getNotYetInvitedAppFriends(checkedFacebookFriends);
   }

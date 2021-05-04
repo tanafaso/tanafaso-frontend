@@ -30,7 +30,7 @@ class AuthenticationService {
     _facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
 
     final facebookGraphApiResponse =
-        await _facebookLogin.logIn(['email']);
+        await _facebookLogin.logIn(['email',  'user_friends']);
 
     switch (facebookGraphApiResponse.status) {
       case FacebookLoginStatus.loggedIn:
