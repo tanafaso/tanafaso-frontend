@@ -372,6 +372,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: new Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
+                                // ignore: deprecated_member_use
                                 new FlatButton(
                                   child: new Text(
                                     AppLocalizations.of(context)
@@ -399,6 +400,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 new Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: <Widget>[
+                                    // ignore: deprecated_member_use
                                     new FlatButton(
                                       child: new Text(
                                         AppLocalizations.of(context)
