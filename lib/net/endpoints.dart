@@ -9,6 +9,7 @@ enum EndpointRoute {
   REGISTER_WITH_EMAIL,
   VERIFY_EMAIL,
   LOGIN_WITH_EMAIL,
+  RESET_PASSWORD,
   GET_AZKAR,
   GET_CURRENT_USER_PROFILE,
   GET_USER_BY_ID,
@@ -68,6 +69,8 @@ class ApiRoutesUtil {
         return '/verify/email';
       case EndpointRoute.LOGIN_WITH_EMAIL:
         return '/login/email';
+      case EndpointRoute.RESET_PASSWORD:
+        return '/reset_password';
       case EndpointRoute.GET_AZKAR:
         return '/azkar';
       case EndpointRoute.GET_CURRENT_USER_PROFILE:
