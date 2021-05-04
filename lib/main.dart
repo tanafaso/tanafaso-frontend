@@ -13,12 +13,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ByteData data = await rootBundle.load('assets/servercert.crt');
   SecurityContext context = SecurityContext.defaultContext;
   context.setTrustedCertificatesBytes(data.buffer.asUint8List());
+  FlutterStatusbarcolor.setStatusBarColor(Color(0xffcef5ce));
   runApp(MyApp());
 }
 
