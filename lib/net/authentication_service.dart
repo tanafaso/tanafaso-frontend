@@ -40,7 +40,7 @@ class AuthenticationService {
         await ServiceProvider.secureStorageService
             .setFacebookUserId(_facebookAccessToken.userId);
 
-        _loginWithFacebookAccessToken(_facebookAccessToken);
+        await _loginWithFacebookAccessToken(_facebookAccessToken);
         break;
       case FacebookLoginStatus.cancelledByUser:
         throw ApiException.withDefaultError();
