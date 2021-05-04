@@ -29,7 +29,8 @@ class AuthenticationService {
     final _facebookLogin = FacebookLogin();
     _facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
 
-    final facebookGraphApiResponse = await _facebookLogin.logIn(['email']);
+    final facebookGraphApiResponse =
+        await _facebookLogin.logIn(['email']);
 
     switch (facebookGraphApiResponse.status) {
       case FacebookLoginStatus.loggedIn:
@@ -71,6 +72,7 @@ class AuthenticationService {
     FacebookAuthenticationResponse response =
         FacebookAuthenticationResponse.fromJson(
             jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
+
     if (!response.hasError()) {
       final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
       await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
@@ -207,7 +209,6 @@ class AuthenticationService {
         route: Endpoint(endpointRoute: EndpointRoute.RESET_PASSWORD),
         requestBody: requestBody);
 
-    print(utf8.decode(httpResponse.body.codeUnits));
     var response = ResetPasswordResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
