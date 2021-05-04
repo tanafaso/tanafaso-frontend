@@ -3,6 +3,7 @@ import 'package:azkar/net/payload/authentication/requests/email_login_request_bo
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
+import 'package:azkar/views/auth/login/reset_password_screen.dart';
 import 'package:azkar/views/auth/signup/signup_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/keys.dart';
@@ -194,35 +195,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           Divider(
                             height: 20.0,
                           ),
-                          new Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20.0),
-                                // ignore: deprecated_member_use
-                                child: new FlatButton(
-                                  child: new Text(
-                                    AppLocalizations.of(context)
-                                        .youDoNotHaveAnAccount,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: 15.0,
-                                    ),
-                                    textAlign: TextAlign.end,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                new SignUpMainScreen()),
-                                        (_) => false);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
                           new Container(
                             width: MediaQuery.of(context).size.width,
                             margin: const EdgeInsets.only(
@@ -395,6 +367,62 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: new Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                new FlatButton(
+                                  child: new Text(
+                                    AppLocalizations.of(context)
+                                        .youDoNotHaveAnAccount,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 15.0,
+                                    ),
+                                    textAlign: TextAlign.end,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                new SignUpMainScreen()),
+                                        (_) => false);
+                                  },
+                                ),
+                                Expanded(
+                                    child: Padding(
+                                  padding: EdgeInsets.all(1),
+                                )),
+                                new Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    new FlatButton(
+                                      child: new Text(
+                                        AppLocalizations.of(context)
+                                            .forgotPassword,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          fontSize: 15.0,
+                                        ),
+                                        textAlign: TextAlign.end,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    new ResetPasswordScreen()));
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),

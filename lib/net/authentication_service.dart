@@ -8,10 +8,12 @@ import 'package:azkar/net/payload/authentication/requests/email_login_request_bo
 import 'package:azkar/net/payload/authentication/requests/email_registration_request_body.dart';
 import 'package:azkar/net/payload/authentication/requests/email_verification_request_body.dart';
 import 'package:azkar/net/payload/authentication/requests/facebook_authentication_request_body.dart';
+import 'package:azkar/net/payload/authentication/requests/reset_password_request_body.dart';
 import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
 import 'package:azkar/net/payload/authentication/responses/email_registration_response.dart';
 import 'package:azkar/net/payload/authentication/responses/email_verification_response.dart';
 import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
+import 'package:azkar/net/payload/authentication/responses/reset_password_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:http/http.dart' as http;
@@ -195,6 +197,21 @@ class AuthenticationService {
       await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
     } else {
       throw new ApiException(emailLoginResponse.getErrorMessage());
+    }
+  }
+
+  Future<void> resetPassword(String email) async {
+    ResetPasswordRequestBody requestBody =
+        ResetPasswordRequestBody(email: email);
+    http.Response httpResponse = await ApiCaller.post(
+        route: Endpoint(endpointRoute: EndpointRoute.RESET_PASSWORD),
+        requestBody: requestBody);
+
+    print(utf8.decode(httpResponse.body.codeUnits));
+    var response = ResetPasswordResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.getErrorMessage());
     }
   }
 

@@ -15,7 +15,7 @@ class AppLocalizations {
       'title': 'تنافسوا',
       'email': 'البريد الإلكتروني',
       'password': 'كلمة المرور',
-      'forgot password': 'هل نسيت كلمة السر؟',
+      'forgot password': 'هل نسيت كلمة مرور؟',
       'or login with': 'أو تسجيل الدخول باستخدام',
       'login': 'تسجيل الدخول',
       'sign up': 'اشتراك',
@@ -162,8 +162,37 @@ class AppLocalizations {
           'يمكن لصديقك العثور على رمز المستخدم الخاص به على صفحة ملفه الشخصي',
       'challenge target hint':
           'في تحدي الصديق، يمكنك انت وصديقك التنافس على القيام به وسيساهم إكماله في النتيجة بينك وبين صديقك وإجمالي نقاطك',
+      'reset password': 'إعادة تعيين كلمة المرور',
+      'enter your email address': 'أدخل عنوان بريدك الالكتروني',
+      'send': 'إرسال',
+      'an email will be sent to you so that you can reset your password':
+          'سيتم إرسال بريد إلكتروني إليك حتى تتمكن من إعادة تعيين كلمة المرور الخاصة بك.',
+      'an email has been sent to you, please check your inbox':
+          'تم إرسال بريد إلكتروني إليك ، يرجى التحقق من صندوق الوارد الخاص بك',
     },
   };
+
+  String get anEmailHasBeenSentToYouPleaseCheckYourInbox {
+    return _localizedValues[locale.languageCode]
+        ['an email has been sent to you, please check your inbox'];
+  }
+
+  String get anEmailWillBeSentToYouSoThatYouCanResetYourPassword {
+    return _localizedValues[locale.languageCode]
+        ['an email will be sent to you so that you can reset your password'];
+  }
+
+  String get send {
+    return _localizedValues[locale.languageCode]['send'];
+  }
+
+  String get enterYourEmailAddress {
+    return _localizedValues[locale.languageCode]['enter your email address'];
+  }
+
+  String get resetPassword {
+    return _localizedValues[locale.languageCode]['reset password'];
+  }
 
   String get challengeTargetHint {
     return _localizedValues[locale.languageCode]['challenge target hint'];
