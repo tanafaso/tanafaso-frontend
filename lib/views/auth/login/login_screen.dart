@@ -436,9 +436,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   loginWithFacebook() async {
     try {
-      ServiceProvider.authenticationService.loginWithFacebook();
+      await ServiceProvider.authenticationService.loginWithFacebook();
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.error);
+      return;
     }
 
     Navigator.push(
