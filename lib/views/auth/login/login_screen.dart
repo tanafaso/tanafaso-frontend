@@ -320,7 +320,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       child: new FlatButton(
                                                         onPressed: () =>
                                                             loginWithFacebook(),
-                                                        padding: EdgeInsets.only(
+                                                        padding:
+                                                            EdgeInsets.only(
                                                           top: 20.0,
                                                           bottom: 20.0,
                                                         ),
@@ -350,7 +351,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                   0xea90,
                                                                   fontFamily:
                                                                       'icomoon'),
-                                                              color: Colors.white,
+                                                              color:
+                                                                  Colors.white,
                                                               size: 20.0,
                                                             ),
                                                           ],
