@@ -199,7 +199,8 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                                         ),
                                       ),
                                       Text(
-                                        AppLocalizations.of(context).orLoginWith,
+                                        AppLocalizations.of(context)
+                                            .orLoginWith,
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -230,7 +231,8 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                                       new Expanded(
                                         // ignore: deprecated_member_use
                                         child: new FlatButton(
-                                          key: Keys.authMainScreenFacebookButton,
+                                          key:
+                                              Keys.authMainScreenFacebookButton,
                                           shape: new RoundedRectangleBorder(
                                             borderRadius:
                                                 new BorderRadius.circular(30.0),
@@ -250,7 +252,8 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                                                             context),
                                                     child: new Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment.start,
+                                                          MainAxisAlignment
+                                                              .start,
                                                       children: <Widget>[
                                                         Icon(
                                                           const IconData(0xea90,
@@ -266,11 +269,11 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                                                                 .facebook,
                                                             key: Keys
                                                                 .authMainScreenFacebookText,
-                                                            textAlign:
-                                                                TextAlign.center,
+                                                            textAlign: TextAlign
+                                                                .center,
                                                             style: TextStyle(
-                                                                color:
-                                                                    Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold),
