@@ -116,13 +116,19 @@ class _GroupChallengeListItemWidgetState
                                 (widget.challenge?.motivation?.length ?? 0) !=
                                     0,
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Icon(Icons.directions_run),
                                 ),
-                                Text(
-                                  widget.challenge.motivation,
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 2 / 3,
+                                  child: Text(
+                                    widget.challenge.motivation,
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: false,
+                                  ),
                                 ),
                               ],
                             ),
