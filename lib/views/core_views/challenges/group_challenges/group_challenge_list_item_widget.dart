@@ -123,7 +123,8 @@ class _GroupChallengeListItemWidgetState
                                   child: Icon(Icons.directions_run),
                                 ),
                                 Container(
-                                  width: MediaQuery.of(context).size.width * 2 / 3,
+                                  width:
+                                      MediaQuery.of(context).size.width * 2 / 3,
                                   child: Text(
                                     widget.challenge.motivation,
                                     overflow: TextOverflow.ellipsis,
