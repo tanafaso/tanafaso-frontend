@@ -95,10 +95,19 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.only(right: 8.0),
                         child: Icon(Icons.directions_run),
                       ),
-                      Text(widget.challenge.motivation),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 3 / 4,
+                          child: Text(
+                            widget.challenge.motivation,
+                            softWrap: true,
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
