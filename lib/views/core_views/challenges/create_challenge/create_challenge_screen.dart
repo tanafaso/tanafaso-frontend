@@ -531,6 +531,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextField(
+                                  maxLength: 25,
+                                  maxLines: 1,
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.center,
                                   decoration: new InputDecoration(
@@ -661,7 +663,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextField(
                                   maxLength: 100,
-                                  maxLines: 2,
+                                  maxLines: 1,
                                   textAlign: TextAlign.center,
                                   decoration: new InputDecoration(
                                     alignLabelWithHint: true,
