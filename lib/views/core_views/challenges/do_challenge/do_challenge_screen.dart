@@ -1,4 +1,5 @@
 import 'package:azkar/models/challenge.dart';
+import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/models/user.dart';
@@ -8,6 +9,7 @@ import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
+import 'package:azkar/views/core_views/friends/all_friends/friend_screen.dart';
 import 'package:flutter/material.dart';
 
 class DoChallengeScreen extends StatefulWidget {
@@ -72,20 +74,36 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
               Card(
                 child: Visibility(
                   visible: !widget.isPersonalChallenge && _group != null,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon((_group?.binary ?? false)
-                            ? Icons.person
-                            : Icons.group),
-                      ),
-                      Text(_group?.binary ?? false
-                          ? _friend?.username ??
-                              AppLocalizations.of(context).nameNotFound
-                          : _group?.name ??
-                              AppLocalizations.of(context).nameNotFound),
-                    ],
+                  child: GestureDetector(
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon((_group?.binary ?? false)
+                              ? Icons.person
+                              : Icons.group),
+                        ),
+                        Text(_group?.binary ?? false
+                            ? _friend.firstName + " " + _friend.lastName
+                            : _group?.name ??
+                                AppLocalizations.of(context).nameNotFound),
+                      ],
+                    ),
+                    onTapDown: (_) {
+                      if ((_group.binary ?? false)) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => FriendScreen(
+                                  friend: Friend(
+                                    userId: _friend.id,
+                                    groupId: _group.id,
+                                    username: _friend.username,
+                                    firstName: _friend.firstName,
+                                    lastName: _friend.lastName,
+                                    pending: false,
+                                  ),
+                                )));
+                      }
+                    },
                   ),
                 ),
               ),
