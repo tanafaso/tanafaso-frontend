@@ -937,6 +937,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                       onTap: () {
                         setState(() {
                           _subChallenges.removeAt(index);
+                          _repetitionsControllers.removeAt(index);
                         });
                       },
                       child: Icon(
