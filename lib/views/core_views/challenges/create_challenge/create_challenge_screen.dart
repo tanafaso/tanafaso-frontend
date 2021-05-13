@@ -76,6 +76,14 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     _motivationController = TextEditingController(text: '');
   }
 
+  bool validateMotivation() {
+    final String motivation = _motivationController.value.text;
+    if (motivation.length > 100) {
+      return false;
+    }
+    return true;
+  }
+
   bool validateRepetition(String repetition, bool showWarning) {
     int repetitionsNum = 0;
     try {
@@ -652,6 +660,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextField(
+                                  maxLength: 100,
+                                  maxLines: 2,
                                   textAlign: TextAlign.center,
                                   decoration: new InputDecoration(
                                     alignLabelWithHint: true,
@@ -774,8 +784,15 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       return false;
     }
 
-    if (!validateChallengeName(showWarnings) ||
-        !validateExpiresAfterDaysNum(showWarnings)) {
+    if (!validateMotivation()) {
+      return false;
+    }
+
+    if (!validateChallengeName(showWarnings)) {
+      return false;
+    }
+
+    if (!validateExpiresAfterDaysNum(showWarnings)) {
       return false;
     }
 
