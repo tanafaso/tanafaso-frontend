@@ -47,7 +47,9 @@ class SelectCategoryScreen extends StatelessWidget {
                                 builder: (context) => SelectAzkarScreen(
                                       azkar: categories[index].azkar,
                                     ))) as List<SubChallenge>;
-                    Navigator.pop(context, selectedSubChallenges);
+                    if ((selectedSubChallenges?.length ?? 0) != 0) {
+                      Navigator.pop(context, selectedSubChallenges);
+                    }
                   },
                 );
               }),
