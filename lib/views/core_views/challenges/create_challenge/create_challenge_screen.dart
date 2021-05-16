@@ -1,23 +1,18 @@
-import 'dart:convert';
-
+import 'package:azkar/models/category.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
 import 'package:azkar/models/sub_challenge.dart';
-import 'package:azkar/models/zekr.dart';
-import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/endpoints.dart';
+import 'package:azkar/net/payload/azkar/requests/get_categories_response.dart';
 import 'package:azkar/net/payload/challenges/requests/add_challenge_request_body.dart';
-import 'package:azkar/net/payload/challenges/responses/get_azkar_response.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/select_azkar/select_category_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend_screen.dart';
-import 'package:azkar/views/core_views/challenges/create_challenge/select_zekr_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 enum ChallengeTarget { SELF, FRIEND }
 
@@ -35,10 +30,8 @@ class CreateChallengeScreen extends StatefulWidget {
 }
 
 class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
-  static const int DEFAULT_ORIGINAL_REPETITIONS = 1;
-
   ChallengeTarget _challengeTarget = ChallengeTarget.FRIEND;
-  List<SubChallenge> _subChallenges = [];
+  List<SubChallenge> _subChallenges;
   TextEditingController _challengeNameController;
   String _lastChallengeName = '';
   TextEditingController _motivationController;
@@ -87,7 +80,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   bool validateRepetition(String repetition, bool showWarning) {
     int repetitionsNum = 0;
     try {
-      repetitionsNum = stringToNumber(repetition);
+      repetitionsNum = ArabicUtils.stringToNumber(repetition);
     } on FormatException {
       if (showWarning) {
         SnackBarUtils.showSnackBar(
@@ -137,7 +130,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
 
     int newExpiresAfterDaysNumInt = 0;
     try {
-      newExpiresAfterDaysNumInt = stringToNumber(newExpiresAfterDayNum);
+      newExpiresAfterDaysNumInt =
+          ArabicUtils.stringToNumber(newExpiresAfterDayNum);
     } on FormatException {
       if (showWarning) {
         SnackBarUtils.showSnackBar(
@@ -163,20 +157,12 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     return true;
   }
 
-  int stringToNumber(String number) {
-    try {
-      return int.parse(number);
-    } on FormatException {
-      // Maybe it is in arabic?!.
-      return ArabicUtils.arabicToEnglish(number);
-    }
-  }
-
   @override
   void initState() {
     initChallengeNameController();
     initMotivationController();
     initExpiresAfterDayNumController();
+    _subChallenges = [];
     _challengeTarget = widget.defaultChallengeTarget;
 
     super.initState();
@@ -396,79 +382,20 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                           (_) => RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(30)))),
-                                  onPressed: () async {
-                                    List<Zekr> azkar;
-                                    try {
-                                      http.Response apiResponse =
-                                          await ApiCaller.get(
-                                              route: Endpoint(
-                                                  endpointRoute:
-                                                      EndpointRoute.GET_AZKAR));
-                                      GetAzkarResponse response =
-                                          GetAzkarResponse.fromJson(jsonDecode(
-                                              utf8.decode(
-                                                  apiResponse.body.codeUnits)));
-                                      azkar = response.azkar;
-                                    } on ApiException catch (e) {
-                                      SnackBarUtils.showSnackBar(
-                                        context,
-                                        e.error,
-                                      );
-                                      return;
-                                    }
-                                    // Remove already selected azkar
-                                    azkar.removeWhere((zekr) =>
-                                        _subChallenges.any((subChallenge) =>
-                                            subChallenge.zekr.id == zekr.id));
-                                    Zekr selectedZekr = await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SelectZekrScreen(
-                                                  azkar: azkar,
-                                                ))) as Zekr;
-                                    if ((selectedZekr.zekr?.length ?? 0) != 0) {
-                                      setState(() {
-                                        SubChallenge subChallenge = SubChallenge(
-                                            zekr: selectedZekr,
-                                            repetitions:
-                                                DEFAULT_ORIGINAL_REPETITIONS);
-                                        _subChallenges.add(subChallenge);
-                                        TextEditingController controller =
-                                            TextEditingController(
-                                                text:
-                                                    "$DEFAULT_ORIGINAL_REPETITIONS");
-                                        controller.addListener(() {
-                                          if (subChallenge.repetitions
-                                                  .toString() ==
-                                              controller.value.text) {
-                                            return;
-                                          }
-                                          if (validateRepetition(
-                                              controller.value.text, true)) {
-                                            subChallenge.repetitions =
-                                                stringToNumber(
-                                                    controller.value.text);
-                                          }
-                                          setState(() {});
-                                        });
-                                        _repetitionsControllers.add(controller);
-                                      });
-                                    }
+                                  onPressed: () {
+                                    onAddAzkarPressed();
                                   },
                                   child: Container(
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Icon(
-                                          Icons.add,
-                                          color:
-                                              Theme.of(context).iconTheme.color,
-                                        ),
-                                        Padding(padding: EdgeInsets.all(8)),
                                         Text(
-                                          AppLocalizations.of(context).addZekr,
+                                          (_subChallenges?.length ?? 0) == 0
+                                              ? AppLocalizations.of(context)
+                                                  .selectAzkar
+                                              : AppLocalizations.of(context)
+                                                  .changeSelectedAzkar,
                                           style: Theme.of(context)
                                               .textTheme
                                               .button,
@@ -727,6 +654,48 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     );
   }
 
+  onAddAzkarPressed() async {
+    List<Category> categories;
+    try {
+      GetCategoriesResponse response =
+          await ServiceProvider.azkarService.getCategories();
+      categories = response.categories;
+    } on ApiException catch (e) {
+      SnackBarUtils.showSnackBar(
+        context,
+        e.error,
+      );
+      return;
+    }
+    List<SubChallenge> selectedAzkar = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SelectCategoryScreen(
+                  categories: categories,
+                ))) as List<SubChallenge>;
+
+    if ((selectedAzkar?.length ?? 0) == 0) {
+      return;
+    }
+
+    setState(() {
+      _subChallenges = selectedAzkar;
+      _repetitionsControllers = [];
+      _subChallenges.forEach((subChallenge) {
+        TextEditingController controller = TextEditingController(
+            text: ArabicUtils.englishToArabic(
+                subChallenge.repetitions.toString()));
+        controller.addListener(() {
+          if (validateRepetition(controller.value.text, true)) {
+            subChallenge.repetitions =
+                ArabicUtils.stringToNumber(controller.value.text);
+          }
+        });
+        _repetitionsControllers.add(controller);
+      });
+    });
+  }
+
   onCreatePressed() async {
     if (!readyToFinishChallenge(true)) {
       SnackBarUtils.showSnackBar(
@@ -746,7 +715,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       name: _challengeNameController.value.text,
       expiryDate: DateTime.now().millisecondsSinceEpoch ~/ 1000 +
           Duration.secondsPerDay *
-              stringToNumber(_expiresAfterDayNumController.value.text),
+              ArabicUtils.stringToNumber(
+                  _expiresAfterDayNumController.value.text),
       subChallenges: _subChallenges,
     );
 
