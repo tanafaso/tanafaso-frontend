@@ -54,6 +54,7 @@ class CachedGroupInfo {
   String name;
   String adminId;
   List<String> usersIds;
+
   // List<String> challengesIds;
   bool binary;
 

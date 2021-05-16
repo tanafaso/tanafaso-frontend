@@ -24,6 +24,16 @@ class ArabicUtils {
     }
   }
 
+  // Converts the arabic/english string number into an integer.
+  static int stringToNumber(String number) {
+    try {
+      return int.parse(number);
+    } on FormatException {
+      // Maybe it is in arabic?!.
+      return ArabicUtils.arabicToEnglish(number);
+    }
+  }
+
   // Normalize removes tashkeel from arabic text: https://stackoverflow.com/a/54026878/7662977
   static String normalize(String arabicText) {
     return arabicText

@@ -169,8 +169,28 @@ class AppLocalizations {
           'سيتم إرسال بريد إلكتروني إليك حتى تتمكن من إعادة تعيين كلمة المرور الخاصة بك.',
       'an email has been sent to you, please check your inbox':
           'تم إرسال بريد إلكتروني إليك ، يرجى التحقق من صندوق الوارد الخاص بك',
+      'please select azkar first': 'الرجاء اختيار الأذكار أولا',
+      'select azkar': 'اختر الأذكار',
+      'select azkar category': 'اختر فئة الأذكار',
+      'change selected azkar': 'تغيير الأذكار المختارة',
     },
   };
+
+  String get changeSelectedAzkar {
+    return _localizedValues[locale.languageCode]['change selected azkar'];
+  }
+
+  String get selectAzkarCategory {
+    return _localizedValues[locale.languageCode]['select azkar category'];
+  }
+
+  String get selectAzkar {
+    return _localizedValues[locale.languageCode]['select azkar'];
+  }
+
+  String get pleaseSelectAzkarFirst {
+    return _localizedValues[locale.languageCode]['please select azkar first'];
+  }
 
   String get anEmailHasBeenSentToYouPleaseCheckYourInbox {
     return _localizedValues[locale.languageCode]

@@ -83,6 +83,7 @@ class _DoChallengeSubChallengeListItemWidgetState
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   widget.subChallenge.zekr.zekr,
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20),
                 ),
               ),
