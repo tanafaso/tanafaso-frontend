@@ -65,8 +65,7 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
                         child: Icon(Icons.directions_run),
                       ),
                       Container(
-                        width:
-                        MediaQuery.of(context).size.width * 2 / 3,
+                        width: MediaQuery.of(context).size.width * 2 / 3,
                         child: Text(
                           challenge.motivation,
                           overflow: TextOverflow.ellipsis,

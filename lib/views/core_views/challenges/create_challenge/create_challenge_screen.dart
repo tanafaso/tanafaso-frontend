@@ -71,7 +71,11 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
 
   bool validateMotivation() {
     final String motivation = _motivationController.value.text;
-    if (motivation.length > 100) {
+    // Note: Characters function is used here so as to count the actual number
+    // of runes and not only the number of UTF-16 code points, because our
+    // use-case with arabic language, there are some letters with tashkeel that
+    // can only be represented in UTF-8 in 4 bytes.
+    if (motivation.characters.length > 100) {
       return false;
     }
     return true;
