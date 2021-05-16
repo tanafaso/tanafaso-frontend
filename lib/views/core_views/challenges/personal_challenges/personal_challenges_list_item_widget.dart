@@ -64,8 +64,14 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(Icons.directions_run),
                       ),
-                      Text(
-                        challenge.motivation,
+                      Container(
+                        width:
+                        MediaQuery.of(context).size.width * 2 / 3,
+                        child: Text(
+                          challenge.motivation,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: false,
+                        ),
                       ),
                     ],
                   ),
