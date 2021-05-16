@@ -253,7 +253,7 @@ class ZekrWidgetState extends State<ZekrWidget>
   void onSelected() {
     setState(() {
       _selected = true;
-      _repetitions = 1;
+      _repetitions = max(_repetitions, 1);
     });
     onRepetitionsChanged();
   }
