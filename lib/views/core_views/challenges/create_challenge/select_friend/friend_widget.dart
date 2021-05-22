@@ -1,48 +1,42 @@
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/models/friendship.dart';
-import 'package:azkar/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-class SelectFriendScreen extends StatelessWidget {
-  final Friendship friendship;
+typedef OnFriendSelectedChanged = Function(bool selected);
 
-  SelectFriendScreen({@required this.friendship});
+class FriendWidget extends StatefulWidget {
+  final Friend friend;
+  final OnFriendSelectedChanged onFriendSelectedChanged;
+
+  FriendWidget({
+    @required this.friend,
+    @required this.onFriendSelectedChanged,
+  });
+
+  @override
+  _FriendWidgetState createState() => _FriendWidgetState();
+}
+
+class _FriendWidgetState extends State<FriendWidget> {
+  bool _selected;
+
+  @override
+  void initState() {
+    super.initState();
+    _selected = false;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).selectAFriend),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: buildWidgetWithFriends(context, friendship?.friends ?? []),
-      ),
-    );
-  }
-
-  Widget buildWidgetWithFriends(BuildContext context, List<Friend> friends) {
-    if (friends?.isEmpty ?? false) {
-      return Center(
-        child: Text(AppLocalizations.of(context).youHaveNotAddedAnyFriendsYet),
-      );
-    }
-
-    return ListView.builder(
-      itemCount: friends.length,
-      addAutomaticKeepAlives: true,
-      padding: EdgeInsets.only(bottom: 8),
-      itemBuilder: (context, index) {
-        return getFriendCard(context, friends[index]);
-      },
-    );
-  }
-
-  Widget getFriendCard(BuildContext context, Friend friend) {
     return Container(
       child: GestureDetector(
-        onTap: () => Navigator.pop(context, friend),
+        onTap: () {
+          setState(() {
+            _selected = !_selected;
+            widget.onFriendSelectedChanged(_selected);
+          });
+        },
         child: Card(
+          color: _selected ? Colors.green.shade600 : Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: IntrinsicHeight(
@@ -64,7 +58,9 @@ class SelectFriendScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              friend.firstName + " " + friend.lastName,
+                              widget.friend.firstName +
+                                  " " +
+                                  widget.friend.lastName,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20),
                             ),
@@ -77,7 +73,7 @@ class SelectFriendScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              friend.username,
+                              widget.friend.username,
                               style: TextStyle(fontSize: 15),
                             ),
                           ),

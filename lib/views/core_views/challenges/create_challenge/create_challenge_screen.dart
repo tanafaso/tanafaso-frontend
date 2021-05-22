@@ -3,31 +3,32 @@ import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/payload/challenges/requests/add_challenge_request_body.dart';
+import 'package:azkar/net/payload/challenges/requests/add_friends_challenge_request_body.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_azkar/selected_azkar_widget.dart';
-import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/selected_friend_widget.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/selected_friends_widget.dart';
 import 'package:flutter/material.dart';
 
-enum ChallengeTarget { SELF, FRIEND }
+enum ChallengeTarget { SELF, FRIENDS }
 
 // ignore: must_be_immutable
 class CreateChallengeScreen extends StatefulWidget {
-  Friend selectedFriend;
+  Friend initiallySelectedFriend;
   ChallengeTarget defaultChallengeTarget;
 
   CreateChallengeScreen(
-      {this.selectedFriend,
-      this.defaultChallengeTarget = ChallengeTarget.FRIEND});
+      {this.initiallySelectedFriend,
+      this.defaultChallengeTarget = ChallengeTarget.FRIENDS});
 
   @override
   _CreateChallengeScreenState createState() => _CreateChallengeScreenState();
 }
 
 class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
-  ChallengeTarget _challengeTarget = ChallengeTarget.FRIEND;
+  ChallengeTarget _challengeTarget = ChallengeTarget.FRIENDS;
   TextEditingController _challengeNameController;
   String _lastChallengeName = '';
   TextEditingController _motivationController;
@@ -35,6 +36,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   String _lastExpiresAfterDayNum = '١';
   List<SubChallenge> _subChallenges;
   bool _subChallengesValid;
+  List<Friend> _selectedFriends;
 
   initChallengeNameController() {
     _challengeNameController = TextEditingController(text: _lastChallengeName);
@@ -131,6 +133,11 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     _subChallenges = [];
     _subChallengesValid = false;
     _challengeTarget = widget.defaultChallengeTarget;
+    if (widget.initiallySelectedFriend != null) {
+      _selectedFriends = [widget.initiallySelectedFriend];
+    } else {
+      _selectedFriends = [];
+    }
 
     super.initState();
   }
@@ -227,11 +234,11 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                 title: Row(
                                   children: [
                                     Text(AppLocalizations.of(context)
-                                        .challengeAFriend),
+                                        .challengeFriends),
                                   ],
                                 ),
                                 dense: false,
-                                value: ChallengeTarget.FRIEND,
+                                value: ChallengeTarget.FRIENDS,
                                 groupValue: _challengeTarget,
                                 onChanged: (ChallengeTarget value) {
                                   setState(() {
@@ -243,12 +250,15 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                           ),
                         ),
                         Visibility(
-                          visible: _challengeTarget == ChallengeTarget.FRIEND,
+                          visible: _challengeTarget == ChallengeTarget.FRIENDS,
                           maintainState: true,
-                          child: SelectedFriendWidget(
-                            onSelectedFriendChanged: (newFriend) {
+                          child: SelectedFriendsWidget(
+                            initiallySelectedFriend:
+                                widget.initiallySelectedFriend,
+                            onSelectedFriendsChanged: (newFriends) {
                               setState(() {
-                                widget.selectedFriend = newFriend;
+                                print('changed');
+                                _selectedFriends = newFriends;
                               });
                             },
                           ),
@@ -521,9 +531,10 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       return;
     }
 
-    final String groupId = _challengeTarget == ChallengeTarget.FRIEND
-        ? widget.selectedFriend.groupId
-        : null;
+    bool challengingOneFriend = _challengeTarget == ChallengeTarget.FRIENDS &&
+        (_selectedFriends?.length ?? 0) == 1;
+    final String groupId =
+        challengingOneFriend ? _selectedFriends[0].groupId : null;
 
     Challenge challenge = Challenge(
       groupId: groupId,
@@ -536,16 +547,22 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       subChallenges: _subChallenges,
     );
 
-    AddChallengeRequestBody requestBody = AddChallengeRequestBody(
-      challenge: challenge,
-    );
-
     try {
       if (_challengeTarget == ChallengeTarget.SELF) {
-        await ServiceProvider.challengesService
-            .addPersonalChallenge(requestBody);
+        await ServiceProvider.challengesService.addPersonalChallenge(
+            AddChallengeRequestBody(challenge: challenge));
       } else {
-        await ServiceProvider.challengesService.addGroupChallenge(requestBody);
+        if (challengingOneFriend) {
+          await ServiceProvider.challengesService
+              .addGroupChallenge(AddChallengeRequestBody(challenge: challenge));
+        } else {
+          await ServiceProvider.challengesService.addFriendsChallenge(
+              AddFriendsChallengeRequestBody(
+                  challenge: challenge,
+                  friendsIds: _selectedFriends
+                      .map((friend) => friend.userId)
+                      .toList()));
+        }
       }
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(
@@ -564,8 +581,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   }
 
   bool readyToFinishChallenge(bool showWarnings) {
-    if (_challengeTarget == ChallengeTarget.FRIEND &&
-        widget.selectedFriend == null) {
+    if (_challengeTarget == ChallengeTarget.FRIENDS &&
+        (_selectedFriends?.length ?? 0) == 0) {
       return false;
     }
     if (_subChallenges.length == 0) {

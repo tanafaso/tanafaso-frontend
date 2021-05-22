@@ -94,7 +94,7 @@ class AppLocalizations {
       'the group': 'المجموعة',
       'select zekr': 'اختر ذِكر',
       'add zekr': 'أضف ذِكر',
-      'select a friend': 'اختر صديقًا',
+      'select friends': 'إختر أصدقاء',
       'you have not added any friends yet': 'لم تقم بإضافة أي أصدقاء بعد',
       'repetitions': 'التكرار',
       'no azkar selected': 'لم يتم اختيار أذكار',
@@ -109,7 +109,7 @@ class AppLocalizations {
       'day': 'يوم',
       'challenge expires after': 'التحدي ينتهي بعد',
       'challenge name': 'اسم التحدي',
-      'challenge a friend': 'أتحدى صديق',
+      'challenge friends': 'أتحدى أصدقائي',
       'challenge myself': 'أتحدى نفسي',
       'i want to': 'أريد أن',
       'days must be less than or equal 100':
@@ -173,8 +173,33 @@ class AppLocalizations {
       'select azkar': 'اختر الأذكار',
       'select azkar category': 'اختر فئة الأذكار',
       'change selected azkar': 'تغيير الأذكار المختارة',
+      'please choose friends first': 'الرجاء اختيار الأصدقاء أولاً',
+      'selected friends': 'الأصدقاء الذين تم اختيارهم',
+      'and': 'و',
+      'others': 'آخرون',
+      'other': 'آخر',
     },
   };
+
+  String get other {
+    return _localizedValues[locale.languageCode]['other'];
+  }
+
+  String get and {
+    return _localizedValues[locale.languageCode]['and'];
+  }
+
+  String get selectedFriends {
+    return _localizedValues[locale.languageCode]['selected friends'];
+  }
+
+  String get others {
+    return _localizedValues[locale.languageCode]['others'];
+  }
+
+  String get pleaseChooseFriendsFirst {
+    return _localizedValues[locale.languageCode]['please choose friends first'];
+  }
 
   String get changeSelectedAzkar {
     return _localizedValues[locale.languageCode]['change selected azkar'];
@@ -389,7 +414,7 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]['you will challenge'];
   }
 
-  String get noFriendSelected {
+  String get noFriendsSelected {
     return _localizedValues[locale.languageCode]['no friend selected'];
   }
 
@@ -418,16 +443,16 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]['challenge name'];
   }
 
-  String get challengeAFriend {
-    return _localizedValues[locale.languageCode]['challenge a friend'];
+  String get challengeFriends {
+    return _localizedValues[locale.languageCode]['challenge friends'];
   }
 
   String get iWantTo {
     return _localizedValues[locale.languageCode]['i want to'];
   }
 
-  String get selectAFriend {
-    return _localizedValues[locale.languageCode]['select a friend'];
+  String get selectFriends {
+    return _localizedValues[locale.languageCode]['select friends'];
   }
 
   String get daysMustBeLessThanOrEqual100 {

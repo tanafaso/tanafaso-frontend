@@ -1,24 +1,27 @@
 import 'package:azkar/models/challenge.dart';
-import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/sub_challenge.dart';
-import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
-import 'package:azkar/views/core_views/friends/all_friends/friend_screen.dart';
 import 'package:flutter/material.dart';
 
 class DoChallengeScreen extends StatefulWidget {
   final Challenge challenge;
   final ChallengeChangedCallback challengeChangedCallback;
+  final Group group;
+  final List<String> friendsIds;
+  final List<String> friendsFullNames;
   final bool isPersonalChallenge;
 
   DoChallengeScreen(
       {@required this.challenge,
+      this.group,
+      this.friendsIds,
+      this.friendsFullNames,
       @required this.challengeChangedCallback,
       @required this.isPersonalChallenge});
 
@@ -27,41 +30,6 @@ class DoChallengeScreen extends StatefulWidget {
 }
 
 class _DoChallengeScreenState extends State<DoChallengeScreen> {
-  Group _group;
-  User _friend;
-
-  void asyncInit() async {
-    if (!widget.isPersonalChallenge) {
-      try {
-        Group group = await ServiceProvider.groupsService
-            .getGroup(widget.challenge.groupId);
-
-        if (group.binary) {
-          String currentUserId =
-              await ServiceProvider.usersService.getCurrentUserId();
-          String otherUserId = group.usersIds
-              .singleWhere((userId) => userId != currentUserId, orElse: null);
-          if (otherUserId != null) {
-            _friend =
-                await ServiceProvider.usersService.getUserById(otherUserId);
-          }
-        }
-
-        _group = group;
-      } on ApiException catch (e) {
-        SnackBarUtils.showSnackBar(context, e.error);
-      }
-      setState(() {});
-    }
-  }
-
-  @override
-  void initState() {
-    asyncInit();
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,43 +41,37 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
             children: [
               Card(
                 child: Visibility(
-                  visible: !widget.isPersonalChallenge && _group != null,
-                  child: GestureDetector(
-                    child: Row(
-                      children: [
-                        Padding(
+                  visible: !widget.isPersonalChallenge && widget.group != null,
+                  child: !(!widget.isPersonalChallenge && widget.group != null)
+                      ? Container()
+                      : Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Icon((_group?.binary ?? false)
-                              ? Icons.person
-                              : Icons.group),
-                        ),
-                        Text(_group?.binary ?? false
-                            ? _friend.firstName + " " + _friend.lastName
-                            : _group?.name ??
-                                AppLocalizations.of(context).nameNotFound),
-                      ],
-                    ),
-                    onTapDown: (_) {
-                      if ((_group.binary ?? false)) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => FriendScreen(
-                                  friend: Friend(
-                                    userId: _friend.id,
-                                    groupId: _group.id,
-                                    username: _friend.username,
-                                    firstName: _friend.firstName,
-                                    lastName: _friend.lastName,
-                                    pending: false,
+                          child: ListView.separated(
+                            padding: EdgeInsets.all(0),
+                            separatorBuilder:
+                                (BuildContext context, int index) => Divider(),
+                            shrinkWrap: true,
+                            itemCount: widget.friendsIds.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: getFriendProgressOnChallengeIcon(
+                                        widget.friendsIds[index]),
                                   ),
-                                )));
-                      }
-                    },
-                  ),
+                                  Text(widget.friendsFullNames[index]),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
                 ),
               ),
               Card(
                 child: Visibility(
                   visible: (widget.challenge.motivation?.length ?? 0) != 0,
+                  maintainSize: false,
                   child: Row(
                     children: [
                       Padding(
@@ -156,6 +118,54 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
             ],
           ),
         ));
+  }
+
+  Widget getFriendProgressOnChallengeIcon(String userId) {
+    if (userId == null) {
+      return Container();
+    }
+
+    if (widget.challenge.usersFinished
+        .any((userFinished) => userFinished == userId)) {
+      return Icon(
+        Icons.done_outline,
+        size: 15,
+        color: Colors.green,
+      );
+    }
+
+    if (widget.challenge.deadlinePassed()) {
+      return Icon(
+        Icons.error_outline,
+        size: 15,
+        color: Colors.red,
+      );
+    }
+
+    return Icon(
+      Icons.not_started,
+      size: 15,
+      color: Colors.yellow,
+    );
+  }
+
+  Widget getIconConditionally() {
+    if (widget.challenge.done()) {
+      return Icon(
+        Icons.done_outline,
+        color: Colors.green,
+      );
+    }
+    if (widget.challenge.deadlinePassed()) {
+      return Icon(
+        Icons.error_outline,
+        color: Colors.red,
+      );
+    }
+    return Icon(
+      Icons.not_started,
+      color: Colors.yellow,
+    );
   }
 
   Widget getSubChallenges() {
