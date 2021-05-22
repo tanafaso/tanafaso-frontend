@@ -1,17 +1,14 @@
-import 'package:azkar/models/category.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/models/friendship.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/payload/azkar/requests/get_categories_response.dart';
 import 'package:azkar/net/payload/challenges/requests/add_challenge_request_body.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
-import 'package:azkar/views/core_views/challenges/create_challenge/select_azkar/select_category_screen.dart';
-import 'package:azkar/views/core_views/challenges/create_challenge/select_friend_screen.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/select_azkar/selected_azkar_widget.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/selected_friend_widget.dart';
 import 'package:flutter/material.dart';
 
 enum ChallengeTarget { SELF, FRIEND }
@@ -31,13 +28,13 @@ class CreateChallengeScreen extends StatefulWidget {
 
 class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   ChallengeTarget _challengeTarget = ChallengeTarget.FRIEND;
-  List<SubChallenge> _subChallenges;
   TextEditingController _challengeNameController;
   String _lastChallengeName = '';
   TextEditingController _motivationController;
   TextEditingController _expiresAfterDayNumController;
   String _lastExpiresAfterDayNum = '١';
-  List<TextEditingController> _repetitionsControllers = [];
+  List<SubChallenge> _subChallenges;
+  bool _subChallengesValid;
 
   initChallengeNameController() {
     _challengeNameController = TextEditingController(text: _lastChallengeName);
@@ -76,41 +73,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     // use-case with arabic language, there are some letters with tashkeel that
     // can only be represented in UTF-8 in 4 bytes.
     if (motivation.characters.length > 100) {
-      return false;
-    }
-    return true;
-  }
-
-  bool validateRepetition(String repetition, bool showWarning) {
-    int repetitionsNum = 0;
-    try {
-      repetitionsNum = ArabicUtils.stringToNumber(repetition);
-    } on FormatException {
-      if (showWarning) {
-        SnackBarUtils.showSnackBar(
-          context,
-          AppLocalizations.of(context).repetitionsMustBeANumberFrom1to100,
-        );
-      }
-      return false;
-    }
-    if (repetitionsNum <= 0) {
-      if (showWarning) {
-        SnackBarUtils.showSnackBar(
-          context,
-          AppLocalizations.of(context).repetitionsMustBeMoreThan0,
-        );
-      }
-      return false;
-    }
-
-    if (repetitionsNum > 100) {
-      if (showWarning) {
-        SnackBarUtils.showSnackBar(
-          context,
-          AppLocalizations.of(context).repetitionsMustBeLessThanOrEqual100,
-        );
-      }
       return false;
     }
     return true;
@@ -167,6 +129,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     initMotivationController();
     initExpiresAfterDayNumController();
     _subChallenges = [];
+    _subChallengesValid = false;
     _challengeTarget = widget.defaultChallengeTarget;
 
     super.initState();
@@ -281,136 +244,27 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                         ),
                         Visibility(
                           visible: _challengeTarget == ChallengeTarget.FRIEND,
-                          child: Card(
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 8.0),
-                                      child: Text(
-                                        '*',
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 17),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(Icons.person),
-                                    ),
-                                    getSelectedFriendNameConditionally(),
-                                  ],
-                                ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  padding: EdgeInsets.all(8),
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                        elevation:
-                                            MaterialStateProperty.resolveWith(
-                                                (states) => 10),
-                                        shape:
-                                            MaterialStateProperty.resolveWith(
-                                                (_) => RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30)))),
-                                    onPressed: () async {
-                                      Friendship friendship;
-                                      try {
-                                        friendship = await ServiceProvider
-                                            .usersService
-                                            .getFriends();
-                                      } on ApiException catch (e) {
-                                        SnackBarUtils.showSnackBar(
-                                          context,
-                                          e.error,
-                                        );
-                                        return;
-                                      }
-                                      Friend selectedFriend =
-                                          await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SelectFriendScreen(
-                                                        friendship: friendship,
-                                                      ))) as Friend;
-                                      if (selectedFriend != null) {
-                                        setState(() {
-                                          widget.selectedFriend =
-                                              selectedFriend;
-                                        });
-                                      }
-                                    },
-                                    child: getSelectFriendTextConditionally(),
-                                  ),
-                                ),
-                              ],
-                            ),
+                          maintainState: true,
+                          child: SelectedFriendWidget(
+                            onSelectedFriendChanged: (newFriend) {
+                              setState(() {
+                                widget.selectedFriend = newFriend;
+                              });
+                            },
                           ),
                         ),
-                        Card(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Text(
-                                      '*',
-                                      style: TextStyle(
-                                          color: Colors.red, fontSize: 17),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Icon(Icons.list),
-                                  ),
-                                  getAzkarSelectedTitleConditionally(),
-                                ],
-                              ),
-                              Visibility(
-                                  visible: _subChallenges.length > 0,
-                                  child: getSubChallenges()),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                padding: EdgeInsets.all(8),
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      elevation:
-                                          MaterialStateProperty.resolveWith(
-                                              (states) => 10),
-                                      shape: MaterialStateProperty.resolveWith(
-                                          (_) => RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)))),
-                                  onPressed: () {
-                                    onAddAzkarPressed();
-                                  },
-                                  child: Container(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          (_subChallenges?.length ?? 0) == 0
-                                              ? AppLocalizations.of(context)
-                                                  .selectAzkar
-                                              : AppLocalizations.of(context)
-                                                  .changeSelectedAzkar,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .button,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        SelectedAzkarWidget(
+                          onSelectedAzkarChangedCallback: (newSubChallenges) {
+                            setState(() {
+                              _subChallenges = newSubChallenges;
+                            });
+                          },
+                          onSelectedAzkarValidityChangedCallback:
+                              (subChallengesValid) {
+                            setState(() {
+                              _subChallengesValid = subChallengesValid;
+                            });
+                          },
                         ),
                         Card(
                           child: Column(
@@ -658,48 +512,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     );
   }
 
-  onAddAzkarPressed() async {
-    List<Category> categories;
-    try {
-      GetCategoriesResponse response =
-          await ServiceProvider.azkarService.getCategories();
-      categories = response.categories;
-    } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(
-        context,
-        e.error,
-      );
-      return;
-    }
-    List<SubChallenge> selectedAzkar = await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => SelectCategoryScreen(
-                  categories: categories,
-                ))) as List<SubChallenge>;
-
-    if ((selectedAzkar?.length ?? 0) == 0) {
-      return;
-    }
-
-    setState(() {
-      _subChallenges = selectedAzkar;
-      _repetitionsControllers = [];
-      _subChallenges.forEach((subChallenge) {
-        TextEditingController controller = TextEditingController(
-            text: ArabicUtils.englishToArabic(
-                subChallenge.repetitions.toString()));
-        controller.addListener(() {
-          if (validateRepetition(controller.value.text, true)) {
-            subChallenge.repetitions =
-                ArabicUtils.stringToNumber(controller.value.text);
-          }
-        });
-        _repetitionsControllers.add(controller);
-      });
-    });
-  }
-
   onCreatePressed() async {
     if (!readyToFinishChallenge(true)) {
       SnackBarUtils.showSnackBar(
@@ -772,160 +584,10 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       return false;
     }
 
-    for (TextEditingController repetitionsController
-        in _repetitionsControllers) {
-      if (!validateRepetition(repetitionsController.value.text, showWarnings)) {
-        return false;
-      }
+    if (!_subChallengesValid) {
+      return false;
     }
 
     return true;
-  }
-
-  Widget getSelectedFriendNameConditionally() {
-    String text = widget.selectedFriend == null
-        ? AppLocalizations.of(context).noFriendSelected
-        : '${AppLocalizations.of(context).youWillChallenge}: ${widget.selectedFriend.firstName} ${widget.selectedFriend.lastName}';
-    Color color = widget.selectedFriend == null ? Colors.pink : Colors.black;
-    return Text(
-      text,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: color),
-    );
-  }
-
-  getSelectFriendTextConditionally() {
-    final String text = widget.selectedFriend == null
-        ? AppLocalizations.of(context).selectAFriend
-        : AppLocalizations.of(context).changeSelectedFriend;
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.button,
-    );
-  }
-
-  getAzkarSelectedTitleConditionally() {
-    final String text = _subChallenges.length == 0
-        ? AppLocalizations.of(context).noAzkarSelected
-        : AppLocalizations.of(context).theSelectedAzkar;
-    Color color = _subChallenges.length == 0 ? Colors.pink : Colors.black;
-    return Text(
-      text,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: color),
-    );
-  }
-
-  getSubChallenges() {
-    return Container(
-      height: 310,
-      child: Scrollbar(
-        child: ListView.builder(
-          itemCount: _subChallenges.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return zekrItem(context, index);
-          },
-        ),
-      ),
-    );
-  }
-
-  zekrItem(BuildContext context, int index) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: 2 * MediaQuery.of(context).size.width / 3,
-        child: Column(
-          children: [
-            Card(
-              elevation: 3,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 200,
-                        alignment: Alignment.center,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Text(
-                            _subChallenges[index].zekr.zekr,
-                            textAlign: TextAlign.center,
-                            textDirection: TextDirection.rtl,
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Card(
-              elevation: 3,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        child: Padding(
-                      padding: EdgeInsets.only(left: 1),
-                    )),
-                    Text(
-                      AppLocalizations.of(context).repetitions,
-                      textAlign: TextAlign.center,
-                      textDirection: TextDirection.rtl,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: 70,
-                        height: 30,
-                        alignment: Alignment.center,
-                        child: Card(
-                          elevation: 1,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            textDirection: TextDirection.ltr,
-                            decoration: new InputDecoration(
-                              alignLabelWithHint: true,
-                              border: new OutlineInputBorder(
-                                  borderSide:
-                                      new BorderSide(color: Colors.teal)),
-                            ),
-                            // textInputAction: TextInputAction.done,
-                            keyboardType: TextInputType.number,
-                            controller: _repetitionsControllers[index],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                        child: Padding(
-                      padding: EdgeInsets.only(left: 1),
-                    )),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _subChallenges.removeAt(index);
-                          _repetitionsControllers.removeAt(index);
-                        });
-                      },
-                      child: Icon(
-                        Icons.delete_outline_rounded,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }
