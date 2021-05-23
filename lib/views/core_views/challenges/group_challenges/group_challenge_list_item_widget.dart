@@ -236,8 +236,9 @@ class _GroupChallengeListItemWidgetState
       String otherOrOthers = _friendsFullNames.length - 2 > 1
           ? AppLocalizations.of(context).others
           : AppLocalizations.of(context).other;
-      text =
-          '${_friendsFullNames[0]}, ${_friendsFullNames[1]} ${AppLocalizations.of(context).and} ${ArabicUtils.englishToArabic((_friendsFullNames.length - 2).toString())} $otherOrOthers';
+      text = _friendsFullNames.length - 2 == 0
+          ? '${_friendsFullNames[0]} ${AppLocalizations.of(context).and} ${_friendsFullNames[1]}'
+          : '${_friendsFullNames[0]}, ${_friendsFullNames[1]} ${AppLocalizations.of(context).and} ${ArabicUtils.englishToArabic((_friendsFullNames.length - 2).toString())} $otherOrOthers';
     }
     return Text(
       text,
