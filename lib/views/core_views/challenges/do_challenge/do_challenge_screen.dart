@@ -1,12 +1,17 @@
+import 'dart:math';
+
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/sub_challenge.dart';
+import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 
 class DoChallengeScreen extends StatefulWidget {
@@ -30,6 +35,21 @@ class DoChallengeScreen extends StatefulWidget {
 }
 
 class _DoChallengeScreenState extends State<DoChallengeScreen> {
+  ConfettiController confettiControler;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      initConfettiController();
+    });
+  }
+
+  void initConfettiController() {
+    confettiControler =
+        ConfettiController(duration: const Duration(seconds: 1));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +59,7 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
         body: Center(
           child: Column(
             children: [
+              getConfettiWidget(),
               Card(
                 child: Visibility(
                   visible: !widget.isPersonalChallenge && widget.group != null,
@@ -120,6 +141,24 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
         ));
   }
 
+  Align getConfettiWidget() {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: ConfettiWidget(
+        maximumSize: Size(30, 30),
+        shouldLoop: false,
+        confettiController: confettiControler,
+        blastDirection: pi,
+        blastDirectionality: BlastDirectionality.explosive,
+        maxBlastForce: 10,
+        minBlastForce: 3,
+        emissionFrequency: 0.5,
+        numberOfParticles: 5,
+        gravity: 1,
+      ),
+    );
+  }
+
   Widget getFriendProgressOnChallengeIcon(String userId) {
     if (userId == null) {
       return Container();
@@ -190,12 +229,14 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
 
             widget.challengeChangedCallback(widget.challenge);
             if (widget.challenge.done()) {
-              Navigator.of(context).pop();
-              SnackBarUtils.showSnackBar(
-                  context,
-                  AppLocalizations.of(context)
-                      .youHaveFinishedTheChallengeSuccessfully,
-                  color: Colors.green.shade400);
+              confettiControler.addListener(() {
+                if (confettiControler.state ==
+                    ConfettiControllerState.stopped) {
+                  Navigator.of(context).pop();
+                }
+              });
+
+              confettiControler.play();
             }
           },
         );
