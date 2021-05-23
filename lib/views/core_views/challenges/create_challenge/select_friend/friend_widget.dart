@@ -16,7 +16,8 @@ class FriendWidget extends StatefulWidget {
   _FriendWidgetState createState() => _FriendWidgetState();
 }
 
-class _FriendWidgetState extends State<FriendWidget> with AutomaticKeepAliveClientMixin {
+class _FriendWidgetState extends State<FriendWidget>
+    with AutomaticKeepAliveClientMixin {
   bool _selected;
 
   @override
