@@ -232,13 +232,15 @@ class _GroupChallengeListItemWidgetState
       text = _friendsFullNames[0];
     } else {
       assert(_friendsFullNames.length > 0);
-      _friendsFullNames.shuffle();
-      String otherOrOthers = _friendsFullNames.length - 2 > 1
+      List<String> friendsFullNamesCopy =
+          new List<String>.from(_friendsFullNames);
+      friendsFullNamesCopy.shuffle();
+      String otherOrOthers = friendsFullNamesCopy.length - 2 > 1
           ? AppLocalizations.of(context).others
           : AppLocalizations.of(context).other;
-      text = _friendsFullNames.length - 2 == 0
-          ? '${_friendsFullNames[0]} ،${_friendsFullNames[1]}'
-          : '${_friendsFullNames[0]} ،${_friendsFullNames[1]} ${AppLocalizations.of(context).and} ${ArabicUtils.englishToArabic((_friendsFullNames.length - 2).toString())} $otherOrOthers';
+      text = friendsFullNamesCopy.length - 2 == 0
+          ? '${friendsFullNamesCopy[0]} ،${friendsFullNamesCopy[1]}'
+          : '${friendsFullNamesCopy[0]} ،${friendsFullNamesCopy[1]} ${AppLocalizations.of(context).and} ${ArabicUtils.englishToArabic((friendsFullNamesCopy.length - 2).toString())} $otherOrOthers';
     }
     return Text(
       text,
