@@ -7,13 +7,13 @@ import 'package:azkar/utils/arabic_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-typedef ZekrRepetitionsChangedCallback = void Function(
+typedef OnZekrRepetitionsChangedCallback = void Function(
     SubChallenge newSubChallenge);
 
 class ZekrWidget extends StatefulWidget {
   final Zekr zekr;
   final bool visible;
-  final ZekrRepetitionsChangedCallback onRepetitionsChangedCallback;
+  final OnZekrRepetitionsChangedCallback onRepetitionsChangedCallback;
 
   ZekrWidget({
     @required this.visible,

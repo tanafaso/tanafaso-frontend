@@ -1,6 +1,6 @@
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/models/user_score.dart';
+import 'package:azkar/models/group.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
@@ -21,22 +21,27 @@ class FriendScreen extends StatefulWidget {
 }
 
 class _FriendScreenState extends State<FriendScreen> {
+  Group _group;
+
   @override
   Widget build(BuildContext context) {
     HomePage.setAppBarTitle(
         widget.friend.firstName + " " + widget.friend.lastName);
 
     return FutureBuilder(
-        future: ServiceProvider.groupsService
-            .getGroupLeaderboard(widget.friend.groupId),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<UserScore>> snapshot) {
+        future: Future.wait([
+          ServiceProvider.groupsService
+              .getGroupLeaderboard(widget.friend.groupId),
+          ServiceProvider.groupsService.getGroup(widget.friend.groupId)
+        ]),
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.hasData) {
-            int friendScore = snapshot.data
+            _group = snapshot.data[1];
+            int friendScore = snapshot.data[0]
                 .firstWhere(
                     (userScore) => userScore.username == widget.friend.username)
                 .totalScore;
-            int currentUserScore = snapshot.data
+            int currentUserScore = snapshot.data[0]
                 .firstWhere(
                     (userScore) => userScore.username != widget.friend.username)
                 .totalScore;
@@ -178,8 +183,8 @@ class _FriendScreenState extends State<FriendScreen> {
                   onPressed: () async {
                     await Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CreateChallengeScreen(
-                              selectedFriend: widget.friend,
-                              defaultChallengeTarget: ChallengeTarget.FRIEND,
+                              initiallySelectedFriend: widget.friend,
+                              defaultChallengeTarget: ChallengeTarget.FRIENDS,
                             )));
                     setState(() {});
                   }),
@@ -209,8 +214,8 @@ class _FriendScreenState extends State<FriendScreen> {
                   onPressed: () async {
                     await Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CreateChallengeScreen(
-                              selectedFriend: widget.friend,
-                              defaultChallengeTarget: ChallengeTarget.FRIEND,
+                              initiallySelectedFriend: widget.friend,
+                              defaultChallengeTarget: ChallengeTarget.FRIENDS,
                             )));
                     setState(() {});
                   }),
@@ -231,6 +236,7 @@ class _FriendScreenState extends State<FriendScreen> {
               itemBuilder: (context, index) {
                 return GroupChallengeListItemWidget(
                   challenge: snapshot.data[index],
+                  group: _group,
                   showName: false,
                   challengeChangedCallback: (_) {
                     setState(() {});

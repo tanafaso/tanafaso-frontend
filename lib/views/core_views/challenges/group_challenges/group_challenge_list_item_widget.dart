@@ -13,11 +13,13 @@ typedef ChallengeChangedCallback = void Function(Challenge newChallenge);
 
 class GroupChallengeListItemWidget extends StatefulWidget {
   final Challenge challenge;
+  final Group group;
   final bool showName;
   final ChallengeChangedCallback challengeChangedCallback;
 
   GroupChallengeListItemWidget(
       {@required this.challenge,
+      @required this.group,
       this.showName = true,
       @required this.challengeChangedCallback});
 
@@ -29,26 +31,35 @@ class GroupChallengeListItemWidget extends StatefulWidget {
 class _GroupChallengeListItemWidgetState
     extends State<GroupChallengeListItemWidget>
     with AutomaticKeepAliveClientMixin {
-  CachedGroupInfo _group;
-  String _friendFullName;
-  String _friendId;
+  List<String> _friendsFullNames;
+  List<String> _friendsIds;
+  bool _binary;
 
   Future<void> getNeededData() async {
     try {
-      _group = await ServiceProvider.groupsService
-          .getCachedGroupInfo(widget.challenge.groupId);
-
-      if (_group.binary) {
-        String currentUserId =
-            await ServiceProvider.usersService.getCurrentUserId();
-        _friendId =
-            _group.usersIds.singleWhere((userId) => userId != currentUserId);
-        _friendFullName =
-            await ServiceProvider.usersService.getUserFullNameById(_friendId);
+      String currentUserId =
+          await ServiceProvider.usersService.getCurrentUserId();
+      _friendsFullNames = [];
+      _friendsIds = widget.group.usersIds
+          .where((userId) => userId != currentUserId)
+          .toList();
+      for (String friendId in _friendsIds) {
+        String friendFullName =
+            await ServiceProvider.usersService.getUserFullNameById(friendId);
+        _friendsFullNames.add(friendFullName);
       }
+      _binary = _friendsIds.length == 1;
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.error);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _binary = true;
+    _friendsFullNames = [];
   }
 
   @override
@@ -68,16 +79,12 @@ class _GroupChallengeListItemWidgetState
                   SnackBarUtils.showSnackBar(context,
                       '${AppLocalizations.of(context).error}: ${e.error}');
                 }
-                if (challenge.deadlinePassed()) {
-                  SnackBarUtils.showSnackBar(
-                      context,
-                      AppLocalizations.of(context)
-                          .theDeadlineHasAlreadyPassedForThisChallenge);
-                  return;
-                }
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => DoChallengeScreen(
                         challenge: challenge,
+                        group: widget.group,
+                        friendsIds: _friendsIds,
+                        friendsFullNames: _friendsFullNames,
                         isPersonalChallenge: false,
                         challengeChangedCallback: (changedChallenge) {
                           widget.challengeChangedCallback(changedChallenge);
@@ -87,9 +94,11 @@ class _GroupChallengeListItemWidgetState
                 child: IntrinsicHeight(
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: getIconConditionally(),
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                          child: getIconConditionally(),
+                        ),
                       ),
                       VerticalDivider(
                         width: 3,
@@ -143,31 +152,24 @@ class _GroupChallengeListItemWidgetState
                               getDeadlineText(context),
                             ],
                           ),
-                          Visibility(
-                            visible: _group != null && widget.showName,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: getFriendProgressOnChallengeIcon(),
+                                Visibility(
+                                  visible: _binary,
+                                  maintainSize: false,
+                                  maintainState: false,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: getFriendProgressOnChallengeIcon(),
+                                  ),
                                 ),
-                                Text(_group?.binary ?? false
-                                    ? '$_friendFullName'
-                                    : _group?.name ??
-                                        AppLocalizations.of(context)
-                                            .nameNotFound),
-                              ],
-                            ),
-                          ),
-                          Visibility(
-                            visible: _group != null && !widget.showName,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: getFriendProgressOnChallengeIcon(),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 3 / 4,
+                                  child: getFriendsNames(),
                                 ),
-                                Text(AppLocalizations.of(context).yourFriend),
                               ],
                             ),
                           ),
@@ -222,10 +224,34 @@ class _GroupChallengeListItemWidgetState
         });
   }
 
-  // Note: This skews the idea of having this widget ready for group challenges.
+  Widget getFriendsNames() {
+    String text;
+    if (!widget.showName) {
+      text = AppLocalizations.of(context).yourFriend;
+    } else if (_binary) {
+      text = _friendsFullNames[0];
+    } else {
+      assert(_friendsFullNames.length > 0);
+      _friendsFullNames.shuffle();
+      String otherOrOthers = _friendsFullNames.length - 2 > 1
+          ? AppLocalizations.of(context).others
+          : AppLocalizations.of(context).other;
+      text =
+          '${_friendsFullNames[0]}, ${_friendsFullNames[1]} ${AppLocalizations.of(context).and} ${ArabicUtils.englishToArabic((_friendsFullNames.length - 2).toString())} $otherOrOthers';
+    }
+    return Text(
+      text,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
   Widget getFriendProgressOnChallengeIcon() {
+    if (!_binary) {
+      return Container();
+    }
+
     if (widget.challenge.usersFinished
-        .any((userFinished) => userFinished == _friendId)) {
+        .any((userFinished) => userFinished == _friendsIds[0])) {
       return Icon(
         Icons.done_outline,
         size: 15,

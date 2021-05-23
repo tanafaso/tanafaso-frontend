@@ -1,4 +1,5 @@
 import 'package:azkar/models/challenge.dart';
+import 'package:azkar/models/group.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
@@ -13,16 +14,17 @@ class AllChallengesWidget extends StatefulWidget {
 
 class _AllChallengesWidgetState extends State<AllChallengesWidget> {
   @override
-  @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder<List<Challenge>>(
-        future: ServiceProvider.challengesService.getAllChallenges(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<Challenge>> snapshot) {
+      child: FutureBuilder<List<dynamic>>(
+        future: Future.wait([
+          ServiceProvider.challengesService.getAllChallenges(),
+          ServiceProvider.groupsService.getGroups()
+        ]),
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            return getChallengesListWidget(snapshot.data);
+            return getChallengesListWidget(snapshot.data[0], snapshot.data[1]);
           } else if (snapshot.hasError) {
             children = <Widget>[
               Icon(
@@ -61,7 +63,8 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
     );
   }
 
-  Widget getChallengesListWidget(List<Challenge> challenges) {
+  Widget getChallengesListWidget(
+      List<Challenge> challenges, List<Group> groups) {
     if (challenges == null || challenges.isEmpty) {
       return Center(
         child: Text(
@@ -80,6 +83,8 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
       itemBuilder: (context, index) {
         return GroupChallengeListItemWidget(
           challenge: challenges[index],
+          group: groups
+              .firstWhere((group) => group.id == challenges[index].groupId),
           challengeChangedCallback: (_) {
             setState(() {});
           },

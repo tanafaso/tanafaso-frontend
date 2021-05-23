@@ -57,7 +57,6 @@ class _DoChallengeSubChallengeListItemWidgetState
             AppLocalizations.of(context)
                 .theDeadlineHasAlreadyPassedForThisChallenge,
           );
-          Navigator.of(context).pop();
           return;
         }
         setState(() {

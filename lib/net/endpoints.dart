@@ -25,6 +25,7 @@ enum EndpointRoute {
   GET_GROUP_LEADERBOARD,
   GET_GROUPS,
   ADD_GROUP_CHALLENGE,
+  ADD_FRIENDS_CHALLENGE,
   ADD_PERSONAL_CHALLENGE,
   GET_ALL_CHALLENGES,
   GET_ALL_CHALLENGES_IN_GROUP,
@@ -49,7 +50,7 @@ class ApiRoutesUtil {
     switch (route.endpointRoute) {
       case EndpointRoute.BASE_URL:
         if (Platform.isAndroid) {
-          // Use 10.0.2.2:8080 for localhost testing
+          // return '10.0.2.2:8080';
           return 'www.tanafaso.com';
         }
         if (Platform.isIOS) {
@@ -111,6 +112,8 @@ class ApiRoutesUtil {
         return '/groups';
       case EndpointRoute.ADD_GROUP_CHALLENGE:
         return '/challenges';
+      case EndpointRoute.ADD_FRIENDS_CHALLENGE:
+        return '/challenges/friends';
       case EndpointRoute.ADD_PERSONAL_CHALLENGE:
         return '/challenges/personal';
       case EndpointRoute.GET_ALL_CHALLENGES:
