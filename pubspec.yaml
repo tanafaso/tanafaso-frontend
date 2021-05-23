@@ -38,6 +38,7 @@ dependencies:
   shared_preferences: ^2.0.5
   optional: ^5.0.0+1
   flutter_statusbarcolor: ^0.2.3
+  confetti: ^0.5.5
 
 dev_dependencies:
   flutter_test:
