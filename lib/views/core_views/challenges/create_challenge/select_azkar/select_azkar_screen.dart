@@ -79,8 +79,8 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
                         itemCount: widget.azkar.length,
                         itemBuilder: (context, index) {
                           return ZekrWidget(
-                            visible:
-                                filteredAzkarIds.contains(widget.azkar[index].id),
+                            visible: filteredAzkarIds
+                                .contains(widget.azkar[index].id),
                             zekr: widget.azkar[index],
                             onRepetitionsChangedCallback: onRepetitionsChanged,
                           );

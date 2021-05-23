@@ -10,7 +10,6 @@ import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:confetti/confetti.dart';
-import 'dart:math';
 import 'package:flutter/material.dart';
 
 class DoChallengeScreen extends StatefulWidget {
