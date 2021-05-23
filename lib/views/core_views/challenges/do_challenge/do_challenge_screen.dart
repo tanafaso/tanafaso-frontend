@@ -54,88 +54,97 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
         appBar: AppBar(
           title: Text(widget.challenge.name),
         ),
-        body: Center(
-          child: Column(
-            children: [
-              getConfettiWidget(),
-              Card(
-                child: Visibility(
-                  visible: !widget.isPersonalChallenge && widget.group != null,
-                  child: !(!widget.isPersonalChallenge && widget.group != null)
-                      ? Container()
-                      : Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ListView.separated(
-                            padding: EdgeInsets.all(0),
-                            separatorBuilder:
-                                (BuildContext context, int index) => Divider(),
-                            shrinkWrap: true,
-                            itemCount: widget.friendsIds.length,
-                            itemBuilder: (context, index) {
-                              return Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: getFriendProgressOnChallengeIcon(
-                                        widget.friendsIds[index]),
-                                  ),
-                                  Text(widget.friendsFullNames[index]),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                ),
-              ),
-              Card(
-                child: Visibility(
-                  visible: (widget.challenge.motivation?.length ?? 0) != 0,
-                  maintainSize: false,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Icon(Icons.directions_run),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 3 / 4,
-                          child: Text(
-                            widget.challenge.motivation,
-                            softWrap: true,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: !widget.challenge.done(),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                      child: Container(
-                          width: double.maxFinite,
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              AppLocalizations.of(context)
-                                  .clickOnZekrAfterReadingIt,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
+        body: Stack(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  Card(
+                    child: Visibility(
+                      visible:
+                          !widget.isPersonalChallenge && widget.group != null,
+                      child: !(!widget.isPersonalChallenge &&
+                              widget.group != null)
+                          ? Container()
+                          : Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListView.separated(
+                                padding: EdgeInsets.all(0),
+                                separatorBuilder:
+                                    (BuildContext context, int index) =>
+                                        Divider(),
+                                shrinkWrap: true,
+                                itemCount: widget.friendsIds.length,
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: getFriendProgressOnChallengeIcon(
+                                            widget.friendsIds[index]),
+                                      ),
+                                      Text(widget.friendsFullNames[index]),
+                                    ],
+                                  );
+                                },
+                              ),
                             ),
-                          ))),
-                ),
+                    ),
+                  ),
+                  Card(
+                    child: Visibility(
+                      visible: (widget.challenge.motivation?.length ?? 0) != 0,
+                      maintainSize: false,
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Icon(Icons.directions_run),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 3 / 4,
+                              child: Text(
+                                widget.challenge.motivation,
+                                softWrap: true,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: !widget.challenge.done(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                          child: Container(
+                              width: double.maxFinite,
+                              alignment: Alignment.center,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                      .clickOnZekrAfterReadingIt,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                              ))),
+                    ),
+                  ),
+                  Expanded(
+                      child: Container(
+                    child: getSubChallenges(),
+                  )),
+                ],
               ),
-              Expanded(
-                  child: Container(
-                child: getSubChallenges(),
-              )),
-            ],
-          ),
+            ),
+            getConfettiWidget(),
+          ],
         ));
   }
 

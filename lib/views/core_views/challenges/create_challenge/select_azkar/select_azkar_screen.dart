@@ -72,18 +72,20 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
               ),
               Expanded(
                 child: Container(
-                  child: ListView.builder(
-                      padding: EdgeInsets.all(0),
-                      shrinkWrap: true,
-                      itemCount: widget.azkar.length,
-                      itemBuilder: (context, index) {
-                        return ZekrWidget(
-                          visible:
-                              filteredAzkarIds.contains(widget.azkar[index].id),
-                          zekr: widget.azkar[index],
-                          onRepetitionsChangedCallback: onRepetitionsChanged,
-                        );
-                      }),
+                  child: Card(
+                    child: ListView.builder(
+                        padding: EdgeInsets.all(0),
+                        shrinkWrap: true,
+                        itemCount: widget.azkar.length,
+                        itemBuilder: (context, index) {
+                          return ZekrWidget(
+                            visible: filteredAzkarIds
+                                .contains(widget.azkar[index].id),
+                            zekr: widget.azkar[index],
+                            onRepetitionsChangedCallback: onRepetitionsChanged,
+                          );
+                        }),
+                  ),
                 ),
               ),
               Padding(

@@ -44,7 +44,7 @@ class _DoChallengeSubChallengeListItemWidgetState
 
     if (buttonColor == null) {
       buttonColor = widget.subChallenge.done()
-          ? Colors.green
+          ? Theme.of(context).primaryColor
           : Theme.of(context).buttonColor;
     }
 
@@ -62,7 +62,7 @@ class _DoChallengeSubChallengeListItemWidgetState
           return;
         }
         setState(() {
-          buttonColor = Colors.green;
+          buttonColor = Theme.of(context).primaryColor;
           widget.subChallenge.repetitions -= 1;
           widget.callback.call(widget.subChallenge);
         });
@@ -98,7 +98,7 @@ class _DoChallengeSubChallengeListItemWidgetState
               // Reversed them. This is just a hack as I am afraid that
               // widget.subChallenge.repetitions maybe zero at some point.
               color: Colors.white,
-              backgroundColor: Colors.green,
+              backgroundColor: Theme.of(context).primaryColor,
               value: initialRepetitions == 0
                   ? 0
                   : widget.subChallenge.repetitions.toDouble() /
