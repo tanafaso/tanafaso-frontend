@@ -16,7 +16,7 @@ class FriendWidget extends StatefulWidget {
   _FriendWidgetState createState() => _FriendWidgetState();
 }
 
-class _FriendWidgetState extends State<FriendWidget> {
+class _FriendWidgetState extends State<FriendWidget> with AutomaticKeepAliveClientMixin {
   bool _selected;
 
   @override
@@ -27,6 +27,8 @@ class _FriendWidgetState extends State<FriendWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Container(
       child: GestureDetector(
         onTap: () {
@@ -89,4 +91,7 @@ class _FriendWidgetState extends State<FriendWidget> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
