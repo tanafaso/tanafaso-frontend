@@ -73,10 +73,8 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
               Expanded(
                 child: Container(
                   child: Card(
-                    child: ListView.separated(
+                    child: ListView.builder(
                         padding: EdgeInsets.all(0),
-                        separatorBuilder: (BuildContext context, int index) =>
-                            Divider(thickness: 3, height: 1,),
                         shrinkWrap: true,
                         itemCount: widget.azkar.length,
                         itemBuilder: (context, index) {
