@@ -45,186 +45,167 @@ class ZekrWidgetState extends State<ZekrWidget>
           FocusScope.of(context).unfocus();
           onSelected();
         },
-        child: Card(
-          elevation: 10,
-          color: _selected ? Colors.green.shade600 : Colors.white,
-          child: Padding(
-            padding: _selected ? const EdgeInsets.all(8.0) : EdgeInsets.all(0),
-            child: Container(
-              child: IntrinsicHeight(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Card(
-                            elevation: 3,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: IntrinsicHeight(
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.vertical,
-                                          child: Text(
-                                            widget.zekr.zekr,
-                                            textAlign: TextAlign.center,
-                                            textDirection: TextDirection.rtl,
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Visibility(
-                      visible: _selected,
-                      maintainSize: false,
-                      child: Container(
-                        child: Card(
-                          child: Row(
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(
+            color: _selected ? Colors.green.shade300 : Colors.white,
+            width: 5,
+          )),
+          child: Container(
+            child: IntrinsicHeight(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        SingleChildScrollView(
+                          child: Column(
                             children: [
-                              Flexible(
-                                child: GestureDetector(
-                                  child: Card(
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.add,
-                                            color: Colors.green,
-                                          ),
-                                          Text(
-                                            ArabicUtils.englishToArabic("10"),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    add(10);
-                                  },
-                                ),
-                              ),
-                              Flexible(
-                                child: GestureDetector(
-                                  child: Card(
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.add,
-                                            color: Colors.green,
-                                          ),
-                                          Text(
-                                            ArabicUtils.englishToArabic("1"),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    add(1);
-                                  },
-                                ),
-                              ),
-                              Flexible(
-                                flex: 2,
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        AppLocalizations.of(context)
-                                            .repetitions,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: IntrinsicHeight(
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.vertical,
+                                      child: Text(
+                                        widget.zekr.zekr,
                                         textAlign: TextAlign.center,
                                         textDirection: TextDirection.rtl,
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(right: 8)),
-                                      Text(
-                                        ArabicUtils.englishToArabic(
-                                            _repetitions.toString()),
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Flexible(
-                                child: GestureDetector(
-                                  child: Card(
-                                    child: Center(
-                                        child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.remove,
-                                          color: Colors.red,
+                                        style: TextStyle(
+                                          fontSize: 20,
                                         ),
-                                        Text(
-                                          ArabicUtils.englishToArabic("1"),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ],
-                                    )),
-                                  ),
-                                  onTap: () {
-                                    subtract(1);
-                                  },
-                                ),
-                              ),
-                              Flexible(
-                                child: GestureDetector(
-                                  child: Card(
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.remove,
-                                            color: Colors.red,
-                                          ),
-                                          Text(
-                                            ArabicUtils.englishToArabic("10"),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
                                       ),
                                     ),
                                   ),
-                                  onTap: () {
-                                    subtract(10);
-                                  },
                                 ),
                               ),
                             ],
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                    visible: _selected,
+                    maintainSize: false,
+                    child: Container(
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: GestureDetector(
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.add,
+                                      color: Colors.green,
+                                    ),
+                                    Text(
+                                      ArabicUtils.englishToArabic("10"),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              onTap: () {
+                                add(10);
+                              },
+                            ),
+                          ),
+                          Flexible(
+                            child: GestureDetector(
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.add,
+                                      color: Colors.green,
+                                    ),
+                                    Text(
+                                      ArabicUtils.englishToArabic("1"),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              onTap: () {
+                                add(1);
+                              },
+                            ),
+                          ),
+                          Flexible(
+                            flex: 2,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context).repetitions,
+                                    textAlign: TextAlign.center,
+                                    textDirection: TextDirection.rtl,
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  Padding(padding: EdgeInsets.only(right: 8)),
+                                  Text(
+                                    ArabicUtils.englishToArabic(
+                                        _repetitions.toString()),
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            child: GestureDetector(
+                              child: Center(
+                                  child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.remove,
+                                    color: Colors.red,
+                                  ),
+                                  Text(
+                                    ArabicUtils.englishToArabic("1"),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              )),
+                              onTap: () {
+                                subtract(1);
+                              },
+                            ),
+                          ),
+                          Flexible(
+                            child: GestureDetector(
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.remove,
+                                      color: Colors.red,
+                                    ),
+                                    Text(
+                                      ArabicUtils.englishToArabic("10"),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              onTap: () {
+                                subtract(10);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
