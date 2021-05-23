@@ -69,7 +69,7 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
           label: Text(AppLocalizations.of(context).createAChallenge),
           onPressed: () {
             ChallengeTarget target = _currentTappedIndex == 0
-                ? ChallengeTarget.FRIEND
+                ? ChallengeTarget.FRIENDS
                 : ChallengeTarget.SELF;
             Navigator.push(
                 context,
