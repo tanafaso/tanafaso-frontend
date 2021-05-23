@@ -28,7 +28,7 @@ class DoChallengeSubChallengeListItemWidget extends StatefulWidget {
 
 class _DoChallengeSubChallengeListItemWidgetState
     extends State<DoChallengeSubChallengeListItemWidget>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   Color buttonColor;
   int initialRepetitions;
 
@@ -40,6 +40,8 @@ class _DoChallengeSubChallengeListItemWidgetState
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     if (buttonColor == null) {
       buttonColor = widget.subChallenge.done()
           ? Colors.green
@@ -127,4 +129,7 @@ class _DoChallengeSubChallengeListItemWidgetState
       '${AppLocalizations.of(context).theRemainingRepetitions}: ${ArabicUtils.englishToArabic(widget.subChallenge.repetitions.toString())}',
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
