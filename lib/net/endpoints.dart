@@ -30,6 +30,7 @@ enum EndpointRoute {
   GET_ALL_CHALLENGES,
   GET_ALL_CHALLENGES_IN_GROUP,
   GET_CHALLENGE,
+  DELETE_CHALLENGE,
   GET_ORIGINAL_CHALLENGE,
   UPDATE_CHALLENGE,
   UPDATE_PERSONAL_CHALLENGE,
@@ -123,6 +124,9 @@ class ApiRoutesUtil {
         assert(route.pathVariables.length == 1);
         return '/challenges/groups/${route.pathVariables[0]}/';
       case EndpointRoute.GET_CHALLENGE:
+        assert(route.pathVariables.length == 1);
+        return '/challenges/${route.pathVariables[0]}';
+      case EndpointRoute.DELETE_CHALLENGE:
         assert(route.pathVariables.length == 1);
         return '/challenges/${route.pathVariables[0]}';
       case EndpointRoute.GET_ORIGINAL_CHALLENGE:
