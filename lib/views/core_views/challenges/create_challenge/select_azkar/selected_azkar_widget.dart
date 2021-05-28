@@ -17,10 +17,12 @@ class SelectedAzkarWidget extends StatefulWidget {
   final OnSelectedAzkarChangedCallback onSelectedAzkarChangedCallback;
   final OnSelectedAzkarValidityChangedCallback
       onSelectedAzkarValidityChangedCallback;
+  final List<SubChallenge> initiallySelectedSubChallenges;
 
-  const SelectedAzkarWidget({
+  SelectedAzkarWidget({
     @required this.onSelectedAzkarChangedCallback,
     @required this.onSelectedAzkarValidityChangedCallback,
+    this.initiallySelectedSubChallenges = const [],
   });
 
   @override
@@ -33,9 +35,12 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget> {
 
   @override
   void initState() {
-    _subChallenges = [];
-
     super.initState();
+    _subChallenges = widget.initiallySelectedSubChallenges;
+    for (var subChallenge in _subChallenges) {
+      _repetitionsControllers.add(
+          TextEditingController(text: subChallenge.repetitions.toString()));
+    }
   }
 
   @override

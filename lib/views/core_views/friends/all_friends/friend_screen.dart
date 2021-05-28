@@ -183,7 +183,7 @@ class _FriendScreenState extends State<FriendScreen> {
                   onPressed: () async {
                     await Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CreateChallengeScreen(
-                              initiallySelectedFriend: widget.friend,
+                              initiallySelectedFriends: [widget.friend],
                               defaultChallengeTarget: ChallengeTarget.FRIENDS,
                             )));
                     setState(() {});
@@ -214,7 +214,7 @@ class _FriendScreenState extends State<FriendScreen> {
                   onPressed: () async {
                     await Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CreateChallengeScreen(
-                              initiallySelectedFriend: widget.friend,
+                              initiallySelectedFriends: [widget.friend],
                               defaultChallengeTarget: ChallengeTarget.FRIENDS,
                             )));
                     setState(() {});

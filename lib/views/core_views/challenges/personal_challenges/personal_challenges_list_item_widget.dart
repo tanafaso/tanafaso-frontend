@@ -32,6 +32,7 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
                 })));
       },
       child: Card(
+        margin: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
         child: IntrinsicHeight(
           child: Row(
             children: [

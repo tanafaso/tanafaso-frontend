@@ -1,4 +1,6 @@
 import 'package:azkar/models/challenge.dart';
+import 'package:azkar/models/friend.dart';
+import 'package:azkar/models/friendship.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
@@ -6,8 +8,10 @@ import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/create_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 typedef ChallengeChangedCallback = void Function(Challenge newChallenge);
 
@@ -90,92 +94,156 @@ class _GroupChallengeListItemWidgetState
                           widget.challengeChangedCallback(changedChallenge);
                         })));
               },
-              child: Card(
-                child: IntrinsicHeight(
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                          child: getIconConditionally(),
+              child: Slidable(
+                actionPane: SlidableDrawerActionPane(),
+                actionExtentRatio: 0.25,
+                actions: <Widget>[
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 4.0, top: 4.0, right: 4.0),
+                    child: Card(
+                      margin: EdgeInsets.all(0),
+                      child: IconSlideAction(
+                        caption: AppLocalizations.of(context).delete,
+                        foregroundColor: Colors.white,
+                        color: Colors.red.shade400,
+                        iconWidget: Icon(
+                          Icons.delete_outline_rounded,
+                          color: Colors.white,
                         ),
+                        onTap: () => {},
                       ),
-                      VerticalDivider(
-                        width: 3,
-                        color: Colors.black,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: Card(
+                      margin: EdgeInsets.all(0),
+                      child: IconSlideAction(
+                        caption: AppLocalizations.of(context).copy,
+                        color: Colors.green.shade600,
+                        icon: Icons.copy,
+                        onTap: () async {
+                          // Get original challenge
+                          Challenge challenge = await ServiceProvider
+                              .challengesService
+                              .getOriginalChallenge(widget.challenge.id);
+                          Friendship friends =
+                              await ServiceProvider.usersService.getFriends();
+                          List<Friend> currentChallengeFriends = friends.friends
+                              .where((friend) =>
+                                  _friendsIds.contains(friend.userId))
+                              .toList();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreateChallengeScreen(
+                                        initiallySelectedFriends:
+                                            currentChallengeFriends,
+                                        initiallySelectedSubChallenges:
+                                            challenge.subChallenges,
+                                        initiallyChosenName: challenge.name,
+                                        initiallyChosenMotivation:
+                                            challenge.motivation,
+                                        defaultChallengeTarget:
+                                            ChallengeTarget.FRIENDS,
+                                      )));
+                        },
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  widget.challenge.name,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
-                              ),
-                            ],
+                    ),
+                  ),
+                ],
+                child: Card(
+                  margin: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(left: 8.0, right: 8.0),
+                            child: getIconConditionally(),
                           ),
-                          Visibility(
-                            visible:
-                                (widget.challenge?.motivation?.length ?? 0) !=
-                                    0,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                        ),
+                        VerticalDivider(
+                          width: 3,
+                          color: Colors.black,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Icon(Icons.directions_run),
-                                ),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 2 / 3,
                                   child: Text(
-                                    widget.challenge.motivation,
-                                    overflow: TextOverflow.ellipsis,
-                                    softWrap: false,
+                                    widget.challenge.name,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(Icons.alarm),
+                            Visibility(
+                              visible:
+                                  (widget.challenge?.motivation?.length ?? 0) !=
+                                      0,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(Icons.directions_run),
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        2 /
+                                        3,
+                                    child: Text(
+                                      widget.challenge.motivation,
+                                      overflow: TextOverflow.ellipsis,
+                                      softWrap: false,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              getDeadlineText(context),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
+                            ),
+                            Row(
                               children: [
-                                Visibility(
-                                  visible: _binary,
-                                  maintainSize: false,
-                                  maintainState: false,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: getFriendProgressOnChallengeIcon(),
-                                  ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(Icons.alarm),
                                 ),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 3 / 4,
-                                  child: getFriendsNames(),
-                                ),
+                                getDeadlineText(context),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Visibility(
+                                    visible: _binary,
+                                    maintainSize: false,
+                                    maintainState: false,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: getFriendProgressOnChallengeIcon(),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        3 /
+                                        4,
+                                    child: getFriendsNames(),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

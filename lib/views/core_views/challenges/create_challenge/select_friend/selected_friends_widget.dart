@@ -11,11 +11,12 @@ typedef OnSelectedFriendsChanged = void Function(
     List<Friend> newSelectedFriends);
 
 class SelectedFriendsWidget extends StatefulWidget {
-  final Friend initiallySelectedFriend;
+  final List<Friend> initiallySelectedFriends;
   final OnSelectedFriendsChanged onSelectedFriendsChanged;
 
   SelectedFriendsWidget(
-      {this.initiallySelectedFriend, this.onSelectedFriendsChanged});
+      {this.initiallySelectedFriends = const [],
+      this.onSelectedFriendsChanged});
 
   @override
   _SelectedFriendsWidgetState createState() => _SelectedFriendsWidgetState();
@@ -28,11 +29,7 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget> {
   void initState() {
     super.initState();
 
-    if (widget.initiallySelectedFriend != null) {
-      _selectedFriends = [widget.initiallySelectedFriend];
-    } else {
-      _selectedFriends = [];
-    }
+    _selectedFriends = widget.initiallySelectedFriends;
   }
 
   @override
