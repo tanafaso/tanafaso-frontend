@@ -62,6 +62,23 @@ class ApiCaller {
     }
   }
 
+  static Future<http.Response> delete(
+      {@required Endpoint route, RequestBodyBase requestBody}) async {
+    try {
+      return await ServiceProvider.httpClient.delete(
+        Uri.https(
+            ApiRoutesUtil.apiRouteToString(
+                Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
+            ApiRoutesUtil.apiRouteToString(route)),
+        headers: await getHeaders(),
+        body: jsonEncode(requestBody?.toJson()),
+      );
+    } catch (e) {
+      print(e);
+      throw ApiException.withDefaultError();
+    }
+  }
+
   static Future<Map<String, String>> getHeaders() async {
     String jwtToken = await ServiceProvider.secureStorageService.getJwtToken();
 

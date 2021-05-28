@@ -111,7 +111,24 @@ class _GroupChallengeListItemWidgetState
                           Icons.delete_outline_rounded,
                           color: Colors.white,
                         ),
-                        onTap: () => {},
+                        onTap: () async {
+                          try {
+                            await ServiceProvider.challengesService
+                                .deleteChallenge(widget.challenge.id);
+                            widget.challengeChangedCallback.call(null);
+                            SnackBarUtils.showSnackBar(
+                                context,
+                                AppLocalizations.of(context)
+                                    .theChallengeHasBeenDeletedSuccessfully,
+                                color: Colors.green);
+                          } on ApiException catch (e) {
+                            SnackBarUtils.showSnackBar(
+                              context,
+                              '${AppLocalizations.of(context).error}: ${e.error}',
+                            );
+                            return;
+                          }
+                        },
                       ),
                     ),
                   ),

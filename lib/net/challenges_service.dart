@@ -9,6 +9,7 @@ import 'package:azkar/net/payload/challenges/requests/add_challenge_request_body
 import 'package:azkar/net/payload/challenges/requests/add_friends_challenge_request_body.dart';
 import 'package:azkar/net/payload/challenges/requests/update_challenge_request_body.dart';
 import 'package:azkar/net/payload/challenges/responses/add_challenge_response.dart';
+import 'package:azkar/net/payload/challenges/responses/delete_challenge_response.dart';
 import 'package:azkar/net/payload/challenges/responses/get_challenge_response.dart';
 import 'package:azkar/net/payload/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/payload/challenges/responses/update_challenge_response.dart';
@@ -87,6 +88,18 @@ class ChallengesService {
       throw new ApiException(response.getErrorMessage());
     }
     return response.challenge;
+  }
+
+  Future<void> deleteChallenge(String challengeId) async {
+    http.Response httpResponse = await ApiCaller.delete(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.DELETE_CHALLENGE,
+            pathVariables: [challengeId]));
+    var response = DeleteChallengeResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.getErrorMessage());
+    }
   }
 
   Future<Challenge> getOriginalChallenge(String challengeId) async {
