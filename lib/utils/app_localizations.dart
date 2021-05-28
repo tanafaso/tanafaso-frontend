@@ -182,12 +182,24 @@ class AppLocalizations {
       'copy': 'نسخ',
       'the challenge has been deleted successfully': 'تم حذف التحدي بنجاح',
       'delete': 'حذف',
+      'delete and copy challenge': 'حذف ونسخ التحدي',
+      'swipe the challenge card to the right to delete or copy a challenge':
+          'اسحب بطاقة التحدي إلى اليمين لحذف التحدي أو نسخه',
     },
   };
 
   String get theChallengeHasBeenDeletedSuccessfully {
     return _localizedValues[locale.languageCode]
         ['the challenge has been deleted successfully'];
+  }
+
+  String get deleteAndCopyChallenge {
+    return _localizedValues[locale.languageCode]['delete and copy challenge'];
+  }
+
+  String get swipeTheChallengeCardToTheRightToDeleteOrCopyAChallenge {
+    return _localizedValues[locale.languageCode]
+        ['swipe the challenge card to the right to delete or copy a challenge'];
   }
 
   String get copy {
