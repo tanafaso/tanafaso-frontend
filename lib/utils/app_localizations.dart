@@ -178,8 +178,23 @@ class AppLocalizations {
       'and': 'و',
       'others': 'آخرون',
       'other': 'آخر',
+      'repeating this challenge': 'تكرار هذا التحدي',
+      'copy': 'نسخ',
+      'delete': 'حذف',
     },
   };
+
+  String get copy {
+    return _localizedValues[locale.languageCode]['copy'];
+  }
+
+  String get delete {
+    return _localizedValues[locale.languageCode]['delete'];
+  }
+
+  String get repeatingThisChallenge {
+    return _localizedValues[locale.languageCode]['repeating this challenge'];
+  }
 
   String get other {
     return _localizedValues[locale.languageCode]['other'];

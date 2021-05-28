@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/api_exception.dart';
+import 'package:azkar/net/cache_manager.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/challenges/requests/add_challenge_request_body.dart';
 import 'package:azkar/net/payload/challenges/requests/add_friends_challenge_request_body.dart';
@@ -11,7 +12,9 @@ import 'package:azkar/net/payload/challenges/responses/add_challenge_response.da
 import 'package:azkar/net/payload/challenges/responses/get_challenge_response.dart';
 import 'package:azkar/net/payload/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/payload/challenges/responses/update_challenge_response.dart';
+import 'package:azkar/net/service_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChallengesService {
   Future<void> addGroupChallenge(AddChallengeRequestBody requestBody) async {
@@ -83,6 +86,26 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+    return response.challenge;
+  }
+
+  Future<Challenge> getOriginalChallenge(String challengeId) async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    String key = CacheManager.CACHE_KEY_ORIGINAL_CHALLENGE_PREFIX.toString() +
+        challengeId;
+    if (prefs.containsKey(key)) {
+      return Challenge.fromJson(json.decode(prefs.getString(key)));
+    }
+    http.Response httpResponse = await ApiCaller.get(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.GET_ORIGINAL_CHALLENGE,
+            pathVariables: [challengeId]));
+    var response = GetChallengeResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.getErrorMessage());
+    }
+    prefs.setString(key, json.encode(response.challenge.toJson()));
     return response.challenge;
   }
 

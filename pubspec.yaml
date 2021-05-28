@@ -39,6 +39,7 @@ dependencies:
   optional: ^5.0.0+1
   flutter_statusbarcolor: ^0.2.3
   confetti: ^0.5.5
+  flutter_slidable: ^0.6.0
 
 dev_dependencies:
   flutter_test:

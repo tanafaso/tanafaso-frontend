@@ -16,12 +16,19 @@ enum ChallengeTarget { SELF, FRIENDS }
 
 // ignore: must_be_immutable
 class CreateChallengeScreen extends StatefulWidget {
-  Friend initiallySelectedFriend;
+  List<Friend> initiallySelectedFriends;
+  List<SubChallenge> initiallySelectedSubChallenges;
+  String initiallyChosenName;
+  String initiallyChosenMotivation;
   ChallengeTarget defaultChallengeTarget;
 
-  CreateChallengeScreen(
-      {this.initiallySelectedFriend,
-      this.defaultChallengeTarget = ChallengeTarget.FRIENDS});
+  CreateChallengeScreen({
+    this.initiallySelectedFriends = const [],
+    this.initiallySelectedSubChallenges = const [],
+    this.initiallyChosenName = "",
+    this.initiallyChosenMotivation = "",
+    this.defaultChallengeTarget = ChallengeTarget.FRIENDS,
+  });
 
   @override
   _CreateChallengeScreenState createState() => _CreateChallengeScreenState();
@@ -130,15 +137,14 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     initChallengeNameController();
     initMotivationController();
     initExpiresAfterDayNumController();
-    _subChallenges = [];
-    _subChallengesValid = false;
+    _subChallenges = widget.initiallySelectedSubChallenges;
+    _challengeNameController =
+        TextEditingController(text: widget.initiallyChosenName);
+    _motivationController =
+        TextEditingController(text: widget.initiallyChosenMotivation);
+    _subChallengesValid = _subChallenges.length > 0;
     _challengeTarget = widget.defaultChallengeTarget;
-    if (widget.initiallySelectedFriend != null) {
-      _selectedFriends = [widget.initiallySelectedFriend];
-    } else {
-      _selectedFriends = [];
-    }
-
+    _selectedFriends = widget.initiallySelectedFriends;
     super.initState();
   }
 
@@ -253,8 +259,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                           visible: _challengeTarget == ChallengeTarget.FRIENDS,
                           maintainState: true,
                           child: SelectedFriendsWidget(
-                            initiallySelectedFriend:
-                                widget.initiallySelectedFriend,
+                            initiallySelectedFriends:
+                                widget.initiallySelectedFriends,
                             onSelectedFriendsChanged: (newFriends) {
                               setState(() {
                                 print('changed');
@@ -275,6 +281,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                               _subChallengesValid = subChallengesValid;
                             });
                           },
+                          initiallySelectedSubChallenges: _subChallenges,
                         ),
                         Card(
                           child: Column(

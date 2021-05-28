@@ -216,6 +216,7 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
 
   Widget getSubChallenges() {
     return ListView.builder(
+      shrinkWrap: true,
       scrollDirection: Axis.vertical,
       itemCount: widget.challenge.subChallenges.length,
       addAutomaticKeepAlives: true,
