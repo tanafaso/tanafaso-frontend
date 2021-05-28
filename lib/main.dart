@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:feature_discovery/feature_discovery.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,49 +68,51 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget getMaterialAppWithBody(Widget body) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateTitle: (BuildContext context) =>
-          AppLocalizations.of(context).title,
-      localizationsDelegates: [
-        AppLocalizationsDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        DefaultCupertinoLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('ar', ''),
-      ],
-      home: Scaffold(
-        body: body,
-      ),
-      theme: ThemeData(
-        primaryColor: Color(0xffcef5ce),
-        accentColor: Color(0xffcef5ce),
-        scaffoldBackgroundColor: Color(0xffcef5ce),
-        floatingActionButtonTheme:
-            FloatingActionButtonThemeData(backgroundColor: Colors.white),
-        buttonColor: Colors.white,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.resolveWith((_) => Colors.white),
-        )),
-        cardTheme: CardTheme(elevation: 10),
-        iconTheme: IconThemeData(color: Colors.black),
-        textTheme: TextTheme(
-          headline1: TextStyle(color: Colors.black),
-          headline2: TextStyle(color: Colors.black),
-          headline3: TextStyle(color: Colors.black),
-          headline4: TextStyle(color: Colors.black),
-          headline5: TextStyle(color: Colors.black),
-          headline6: TextStyle(color: Colors.black),
-          subtitle1: TextStyle(color: Colors.black),
-          subtitle2: TextStyle(color: Colors.black),
-          bodyText1: TextStyle(color: Colors.black),
-          bodyText2: TextStyle(color: Colors.black),
-          button: TextStyle(color: Colors.black),
+    return FeatureDiscovery(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        onGenerateTitle: (BuildContext context) =>
+            AppLocalizations.of(context).title,
+        localizationsDelegates: [
+          AppLocalizationsDelegate(),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          DefaultCupertinoLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('ar', ''),
+        ],
+        home: Scaffold(
+          body: body,
+        ),
+        theme: ThemeData(
+          primaryColor: Color(0xffcef5ce),
+          accentColor: Color(0xffcef5ce),
+          scaffoldBackgroundColor: Color(0xffcef5ce),
+          floatingActionButtonTheme:
+              FloatingActionButtonThemeData(backgroundColor: Colors.white),
+          buttonColor: Colors.white,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.resolveWith((_) => Colors.white),
+          )),
+          cardTheme: CardTheme(elevation: 10),
+          iconTheme: IconThemeData(color: Colors.black),
+          textTheme: TextTheme(
+            headline1: TextStyle(color: Colors.black),
+            headline2: TextStyle(color: Colors.black),
+            headline3: TextStyle(color: Colors.black),
+            headline4: TextStyle(color: Colors.black),
+            headline5: TextStyle(color: Colors.black),
+            headline6: TextStyle(color: Colors.black),
+            subtitle1: TextStyle(color: Colors.black),
+            subtitle2: TextStyle(color: Colors.black),
+            bodyText1: TextStyle(color: Colors.black),
+            bodyText2: TextStyle(color: Colors.black),
+            button: TextStyle(color: Colors.black),
+          ),
         ),
       ),
     );
