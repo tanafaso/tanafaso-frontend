@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ApiCaller {
+  static const String API_VERSION_HEADER = 'api-version';
+  static const String API_VERSION = '1.2.0';
+
   static Future<http.Response> get({@required Endpoint route}) async {
     try {
       return await ServiceProvider.httpClient.get(
@@ -64,7 +67,8 @@ class ApiCaller {
 
     return <String, String>{
       HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.authorizationHeader: jwtToken
+      HttpHeaders.authorizationHeader: jwtToken,
+      API_VERSION_HEADER: API_VERSION,
     };
   }
 }
