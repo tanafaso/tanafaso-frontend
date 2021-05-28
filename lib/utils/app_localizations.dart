@@ -180,9 +180,15 @@ class AppLocalizations {
       'other': 'آخر',
       'repeating this challenge': 'تكرار هذا التحدي',
       'copy': 'نسخ',
+      'the challenge has been deleted successfully': 'تم حذف التحدي بنجاح',
       'delete': 'حذف',
     },
   };
+
+  String get theChallengeHasBeenDeletedSuccessfully {
+    return _localizedValues[locale.languageCode]
+        ['the challenge has been deleted successfully'];
+  }
 
   String get copy {
     return _localizedValues[locale.languageCode]['copy'];
