@@ -81,7 +81,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     // of runes and not only the number of UTF-16 code points, because our
     // use-case with arabic language, there are some letters with tashkeel that
     // can only be represented in UTF-8 in 4 bytes.
-    if (motivation.characters.length > 100) {
+    if (motivation.characters.length > 200) {
       return false;
     }
     return true;
@@ -465,7 +465,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextField(
-                                  maxLength: 100,
+                                  maxLength: 200,
                                   maxLines: 1,
                                   textAlign: TextAlign.center,
                                   decoration: new InputDecoration(
