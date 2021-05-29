@@ -39,8 +39,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   TextEditingController _challengeNameController;
   String _lastChallengeName = '';
   TextEditingController _motivationController;
-  TextEditingController _expiresAfterDayNumController;
-  String _lastExpiresAfterDayNum = '١';
+  TextEditingController _expiresAfterHoursNumController;
+  String _lastExpiresAfterHoursNum = '١';
   List<SubChallenge> _subChallenges;
   bool _subChallengesValid;
   List<Friend> _selectedFriends;
@@ -87,45 +87,46 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     return true;
   }
 
-  initExpiresAfterDayNumController() {
-    _expiresAfterDayNumController = TextEditingController(text: '١');
-    _expiresAfterDayNumController.addListener(() {
-      if (_lastExpiresAfterDayNum == _expiresAfterDayNumController.value.text) {
+  initExpiresAfterHoursNumController() {
+    _expiresAfterHoursNumController = TextEditingController(text: '١');
+    _expiresAfterHoursNumController.addListener(() {
+      if (_lastExpiresAfterHoursNum ==
+          _expiresAfterHoursNumController.value.text) {
         return;
       }
-      _lastExpiresAfterDayNum = _expiresAfterDayNumController.value.text;
-      validateExpiresAfterDaysNum(true);
+      _lastExpiresAfterHoursNum = _expiresAfterHoursNumController.value.text;
+      validateExpiresAfterHoursNum(true);
       setState(() {});
     });
   }
 
-  bool validateExpiresAfterDaysNum(bool showWarning) {
-    final String newExpiresAfterDayNum =
-        _expiresAfterDayNumController.value.text;
+  bool validateExpiresAfterHoursNum(bool showWarning) {
+    final String newExpiresAfterHoursNum =
+        _expiresAfterHoursNumController.value.text;
 
-    int newExpiresAfterDaysNumInt = 0;
+    int newExpiresAfterHoursNumInt = 0;
     try {
-      newExpiresAfterDaysNumInt =
-          ArabicUtils.stringToNumber(newExpiresAfterDayNum);
+      newExpiresAfterHoursNumInt =
+          ArabicUtils.stringToNumber(newExpiresAfterHoursNum);
     } on FormatException {
       if (showWarning) {
         SnackBarUtils.showSnackBar(
-            context, AppLocalizations.of(context).daysMustBeANumberFrom1to100);
+            context, AppLocalizations.of(context).hoursMustBeANumberFrom1to24);
       }
       return false;
     }
-    if (newExpiresAfterDaysNumInt <= 0) {
+    if (newExpiresAfterHoursNumInt <= 0) {
       if (showWarning) {
         SnackBarUtils.showSnackBar(
-            context, AppLocalizations.of(context).daysMustBeMoreThan0);
+            context, AppLocalizations.of(context).hoursMustBeMoreThan0);
       }
       return false;
     }
 
-    if (newExpiresAfterDaysNumInt > 100) {
+    if (newExpiresAfterHoursNumInt > 24) {
       if (showWarning) {
         SnackBarUtils.showSnackBar(
-            context, AppLocalizations.of(context).daysMustBeLessThanOrEqual100);
+            context, AppLocalizations.of(context).hoursMustBeLessThanOrEqual24);
       }
       return false;
     }
@@ -136,7 +137,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   void initState() {
     initChallengeNameController();
     initMotivationController();
-    initExpiresAfterDayNumController();
+    initExpiresAfterHoursNumController();
     _subChallenges = widget.initiallySelectedSubChallenges;
     _challengeNameController =
         TextEditingController(text: widget.initiallyChosenName);
@@ -404,13 +405,13 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                             // textInputAction: TextInputAction.done,
                                             keyboardType: TextInputType.number,
                                             controller:
-                                                _expiresAfterDayNumController,
+                                                _expiresAfterHoursNumController,
                                           ),
                                         ),
                                       ),
                                     ),
                                     Text(
-                                      AppLocalizations.of(context).day,
+                                      AppLocalizations.of(context).hours,
                                       textAlign: TextAlign.center,
                                       textDirection: TextDirection.rtl,
                                     ),
@@ -548,9 +549,9 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       motivation: _motivationController.value.text,
       name: _challengeNameController.value.text,
       expiryDate: DateTime.now().millisecondsSinceEpoch ~/ 1000 +
-          Duration.secondsPerDay *
+          Duration.secondsPerHour *
               ArabicUtils.stringToNumber(
-                  _expiresAfterDayNumController.value.text),
+                  _expiresAfterHoursNumController.value.text),
       subChallenges: _subChallenges,
     );
 
@@ -604,7 +605,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       return false;
     }
 
-    if (!validateExpiresAfterDaysNum(showWarnings)) {
+    if (!validateExpiresAfterHoursNum(showWarnings)) {
       return false;
     }
 

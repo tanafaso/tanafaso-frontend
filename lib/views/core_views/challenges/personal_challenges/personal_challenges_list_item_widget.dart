@@ -181,6 +181,19 @@ class _PersonalChallengesListItemWidgetState
                             ],
                           ),
                         ),
+                        Visibility(
+                          visible: !widget.challenge.done() &&
+                              !widget.challenge.deadlinePassed(),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.alarm),
+                              ),
+                              getDeadlineText(context),
+                            ],
+                          ),
+                        ),
                       ]),
                 ],
               ),
@@ -223,8 +236,11 @@ class _PersonalChallengesListItemWidgetState
       }
       return Text(
           '${AppLocalizations.of(context).endsAfter} ${ArabicUtils.englishToArabic(minutesLeft.toString())} ${AppLocalizations.of(context).minute}');
+    } else {
+      int minutes =
+          widget.challenge.minutesLeft() - widget.challenge.hoursLeft() * 60;
+      return Text(
+          '${AppLocalizations.of(context).endsAfter} ${ArabicUtils.englishToArabic(widget.challenge.hoursLeft().toString())} ${AppLocalizations.of(context).hour} ${AppLocalizations.of(context).and} ${ArabicUtils.englishToArabic(minutes.toString())} ${AppLocalizations.of(context).minute}');
     }
-    return Text(
-        '${AppLocalizations.of(context).endsAfter} ${ArabicUtils.englishToArabic(widget.challenge.hoursLeft().toString())} ${AppLocalizations.of(context).hour}');
   }
 }
