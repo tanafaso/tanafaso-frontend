@@ -8,6 +8,7 @@ import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfileMainWidget extends StatelessWidget {
   @override
@@ -64,7 +65,24 @@ class ProfileMainWidget extends StatelessWidget {
                                                   .usernameCopiedSuccessfully);
                                         });
                                       },
-                                      child: Icon(Icons.copy),
+                                      child: Icon(
+                                        Icons.copy,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 8),
+                                    ),
+                                    GestureDetector(
+                                      onTapDown: (_) {
+                                        print('test');
+                                        Share.share(AppLocalizations.of(context)
+                                            .shareMessage(user.username));
+                                      },
+                                      child: Icon(
+                                        Icons.share,
+                                        size: 20,
+                                      ),
                                     ),
                                   ],
                                 ),
