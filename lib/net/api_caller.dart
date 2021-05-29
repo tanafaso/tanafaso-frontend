@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 class ApiCaller {
   static const String API_VERSION_HEADER = 'api-version';
-  static const String API_VERSION = '1.2.0';
+  static const String API_VERSION = '1.2.1';
 
   static Future<http.Response> get({@required Endpoint route}) async {
     try {

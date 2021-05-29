@@ -75,7 +75,6 @@ class ProfileMainWidget extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTapDown: (_) {
-                                        print('test');
                                         Share.share(AppLocalizations.of(context)
                                             .shareMessage(user.username));
                                       },
