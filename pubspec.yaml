@@ -41,6 +41,7 @@ dependencies:
   confetti: ^0.5.5
   flutter_slidable: ^0.6.0
   feature_discovery: ^0.14.0
+  share_plus: ^2.1.2
 
 dev_dependencies:
   flutter_test:
