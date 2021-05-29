@@ -192,15 +192,17 @@ class AppLocalizations {
       'hours must be a number from 1 to 24':
           'يجب أن تكون الساعات رقمًا من ١ إلى ٢٤',
       'share message':
-          '''تطبيق تنافسوا يساعد الأقارب والأصدقاء على أن يشجع بعضهم بعضا على ذكر الله.
-          حمل التطبيق و أضفني يا صديقي لأشجعك وتتشجعني.
-
-هذا كود المستخدم الخاص بي
-%s  
-
-Android: https://play.google.com/store/apps/details?id=com.tanafaso.azkar
-
-iOS: https://apps.apple.com/us/app/تنافسوا/id1564309117''',
+          'تطبيق تنافسوا يساعد الأقارب والأصدقاء على أن يشجع بعضهم بعضا على ذكر الله.' +
+              '\n\n' +
+              'حمل التطبيق و أضفني يا صديقي لأشجعك وتشجعني.' +
+              '\n\n' +
+              'هذا هو كود المستخدم الخاص بي' +
+              '\n'
+                  '%s' +
+              '\n\n' +
+              'Android: https://play.google.com/store/apps/details?id=com.tanafaso.azkar \n' +
+              '\n' +
+              'iOS: https://apps.apple.com/us/app/تنافسوا/id1564309117\n',
       'share with friend': 'شارك مع صديق',
     },
   };
