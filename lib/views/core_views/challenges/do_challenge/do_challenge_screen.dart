@@ -108,6 +108,7 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                               width: MediaQuery.of(context).size.width * 3 / 4,
                               child: Text(
                                 widget.challenge.motivation,
+                                textAlign: TextAlign.center,
                                 softWrap: true,
                               ),
                             ),
