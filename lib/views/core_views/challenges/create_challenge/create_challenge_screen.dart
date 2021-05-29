@@ -40,7 +40,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   String _lastChallengeName = '';
   TextEditingController _motivationController;
   TextEditingController _expiresAfterHoursNumController;
-  String _lastExpiresAfterHoursNum = '١';
+  String _lastExpiresAfterHoursNum = '٢٤';
   List<SubChallenge> _subChallenges;
   bool _subChallengesValid;
   List<Friend> _selectedFriends;
@@ -88,7 +88,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   }
 
   initExpiresAfterHoursNumController() {
-    _expiresAfterHoursNumController = TextEditingController(text: '١');
+    _expiresAfterHoursNumController = TextEditingController(text: '٢٤');
     _expiresAfterHoursNumController.addListener(() {
       if (_lastExpiresAfterHoursNum ==
           _expiresAfterHoursNumController.value.text) {
@@ -206,6 +206,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Tooltip(
+                                      waitDuration: Duration(seconds: 0),
                                       margin: EdgeInsets.all(8),
                                       padding: EdgeInsets.all(8),
                                       message: AppLocalizations.of(context)

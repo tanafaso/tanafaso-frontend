@@ -23,12 +23,14 @@ class GroupChallengeListItemWidget extends StatefulWidget {
   final Group group;
   final bool showName;
   final ChallengeChangedCallback challengeChangedCallback;
+  final bool showFeatureDiscovery;
 
   GroupChallengeListItemWidget({
     @required this.challenge,
     @required this.group,
     this.showName = true,
     @required this.challengeChangedCallback,
+    this.showFeatureDiscovery = false,
   });
 
   @override
@@ -124,241 +126,54 @@ class _GroupChallengeListItemWidgetState
                             widget.challengeChangedCallback(changedChallenge);
                           })));
                 },
-                child: DescribedFeatureOverlay(
-                  featureId: Features.CLONE_AND_DELETE,
-                  contentLocation: ContentLocation.above,
-                  tapTarget: SlideTransition(
-                      position: _offsetAnimation,
-                      child: Icon(Icons.double_arrow)),
-                  // The widget that will be displayed as the tap target.
-                  title: Center(
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Padding(
-                          padding: EdgeInsets.all(0),
-                        )),
-                        Text(
-                          AppLocalizations.of(context).deleteAndCopyChallenge,
-                          softWrap: true,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                  description: Row(
-                    children: [
-                      Expanded(
-                          child: Padding(
-                        padding: EdgeInsets.all(0),
-                      )),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        width: MediaQuery.of(context).size.width / 2,
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .swipeTheChallengeCardToTheRightToDeleteOrCopyAChallenge,
-                          softWrap: true,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                  backgroundColor: Theme.of(context).primaryColor,
-                  targetColor: Colors.white,
-                  textColor: Colors.black,
-                  child: Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.25,
-                    actions: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 4.0, top: 4.0, right: 4.0),
-                        child: Card(
-                          margin: EdgeInsets.all(0),
-                          child: IconSlideAction(
-                            caption: AppLocalizations.of(context).delete,
-                            foregroundColor: Colors.white,
-                            color: Colors.red.shade400,
-                            iconWidget: Icon(
-                              Icons.delete_outline_rounded,
-                              color: Colors.white,
-                            ),
-                            onTap: () async {
-                              try {
-                                await ServiceProvider.challengesService
-                                    .deleteGroupChallenge(widget.challenge.id);
-                                setState(() {
-                                  _deleted = true;
-                                });
-                                SnackBarUtils.showSnackBar(
-                                    context,
-                                    AppLocalizations.of(context)
-                                        .theChallengeHasBeenDeletedSuccessfully,
-                                    color: Colors.green);
-                              } on ApiException catch (e) {
-                                SnackBarUtils.showSnackBar(
-                                  context,
-                                  '${AppLocalizations.of(context).error}: ${e.error}',
-                                );
-                                return;
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4.0),
-                        child: Card(
-                          margin: EdgeInsets.all(0),
-                          child: IconSlideAction(
-                            caption: AppLocalizations.of(context).copy,
-                            color: Colors.green.shade600,
-                            icon: Icons.copy,
-                            onTap: () async {
-                              // Get original challenge
-                              Challenge originalChallenge;
-                              try {
-                                originalChallenge = await ServiceProvider
-                                    .challengesService
-                                    .getOriginalChallenge(widget.challenge.id);
-                              } on ApiException catch (e) {
-                                SnackBarUtils.showSnackBar(
-                                  context,
-                                  '${AppLocalizations.of(context).error}: ${e.error}',
-                                );
-                                return;
-                              }
-                              Friendship friends = await ServiceProvider
-                                  .usersService
-                                  .getFriends();
-                              List<Friend> currentChallengeFriends = friends
-                                  .friends
-                                  .where((friend) =>
-                                      _friendsIds.contains(friend.userId))
-                                  .toList();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          CreateChallengeScreen(
-                                            initiallySelectedFriends:
-                                                currentChallengeFriends,
-                                            initiallySelectedSubChallenges:
-                                                originalChallenge.subChallenges,
-                                            initiallyChosenName:
-                                                originalChallenge.name,
-                                            initiallyChosenMotivation:
-                                                originalChallenge.motivation,
-                                            defaultChallengeTarget:
-                                                ChallengeTarget.FRIENDS,
-                                          )));
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                    child: Card(
-                      margin: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
-                      child: IntrinsicHeight(
-                        child: Row(
-                          children: [
-                            Flexible(
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8.0, right: 8.0),
-                                child: getIconConditionally(),
+                child: !widget.showFeatureDiscovery
+                    ? getMainWidget()
+                    : DescribedFeatureOverlay(
+                        featureId: Features.CLONE_AND_DELETE,
+                        contentLocation: ContentLocation.above,
+                        tapTarget: SlideTransition(
+                            position: _offsetAnimation,
+                            child: Icon(Icons.double_arrow)),
+                        // The widget that will be displayed as the tap target.
+                        title: Center(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: Padding(
+                                padding: EdgeInsets.all(0),
+                              )),
+                              Text(
+                                AppLocalizations.of(context)
+                                    .deleteAndCopyChallenge,
+                                softWrap: true,
+                                textAlign: TextAlign.center,
                               ),
-                            ),
-                            VerticalDivider(
-                              width: 3,
-                              color: Colors.black,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        widget.challenge.name,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Visibility(
-                                  visible:
-                                      (widget.challenge?.motivation?.length ??
-                                              0) !=
-                                          0,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Icon(Icons.directions_run),
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                2 /
-                                                3,
-                                        child: Text(
-                                          widget.challenge.motivation,
-                                          overflow: TextOverflow.ellipsis,
-                                          softWrap: false,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(Icons.alarm),
-                                    ),
-                                    getDeadlineText(context),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Visibility(
-                                        visible: _binary,
-                                        maintainSize: false,
-                                        maintainState: false,
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8.0),
-                                          child:
-                                              getFriendProgressOnChallengeIcon(),
-                                        ),
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                3 /
-                                                4,
-                                        child: getFriendsNames(),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                            ],
+                          ),
+                        ),
+                        description: Row(
+                          children: [
+                            Expanded(
+                                child: Padding(
+                              padding: EdgeInsets.all(0),
+                            )),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              width: MediaQuery.of(context).size.width / 2,
+                              child: Text(
+                                AppLocalizations.of(context)
+                                    .swipeTheChallengeCardToTheRightToDeleteOrCopyAChallenge,
+                                softWrap: true,
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ],
                         ),
+                        backgroundColor: Theme.of(context).primaryColor,
+                        targetColor: Colors.white,
+                        textColor: Colors.black,
+                        child: getMainWidget(),
                       ),
-                    ),
-                  ),
-                ),
               );
             } else if (snapshot.hasError) {
               return Center(
@@ -402,6 +217,177 @@ class _GroupChallengeListItemWidgetState
               );
             }
           }),
+    );
+  }
+
+  Widget getMainWidget() {
+    return Slidable(
+      actionPane: SlidableDrawerActionPane(),
+      actionExtentRatio: 0.25,
+      actions: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 4.0, top: 4.0, right: 4.0),
+          child: Card(
+            margin: EdgeInsets.all(0),
+            child: IconSlideAction(
+              caption: AppLocalizations.of(context).delete,
+              foregroundColor: Colors.white,
+              color: Colors.red.shade400,
+              iconWidget: Icon(
+                Icons.delete_outline_rounded,
+                color: Colors.white,
+              ),
+              onTap: () async {
+                try {
+                  await ServiceProvider.challengesService
+                      .deleteGroupChallenge(widget.challenge.id);
+                  setState(() {
+                    _deleted = true;
+                  });
+                  SnackBarUtils.showSnackBar(
+                      context,
+                      AppLocalizations.of(context)
+                          .theChallengeHasBeenDeletedSuccessfully,
+                      color: Colors.green);
+                } on ApiException catch (e) {
+                  SnackBarUtils.showSnackBar(
+                    context,
+                    '${AppLocalizations.of(context).error}: ${e.error}',
+                  );
+                  return;
+                }
+              },
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 4.0),
+          child: Card(
+            margin: EdgeInsets.all(0),
+            child: IconSlideAction(
+              caption: AppLocalizations.of(context).copy,
+              color: Colors.green.shade600,
+              icon: Icons.copy,
+              onTap: () async {
+                // Get original challenge
+                Challenge originalChallenge;
+                try {
+                  originalChallenge = await ServiceProvider.challengesService
+                      .getOriginalChallenge(widget.challenge.id);
+                } on ApiException catch (e) {
+                  SnackBarUtils.showSnackBar(
+                    context,
+                    '${AppLocalizations.of(context).error}: ${e.error}',
+                  );
+                  return;
+                }
+                Friendship friends =
+                    await ServiceProvider.usersService.getFriends();
+                List<Friend> currentChallengeFriends = friends.friends
+                    .where((friend) => _friendsIds.contains(friend.userId))
+                    .toList();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateChallengeScreen(
+                              initiallySelectedFriends: currentChallengeFriends,
+                              initiallySelectedSubChallenges:
+                                  originalChallenge.subChallenges,
+                              initiallyChosenName: originalChallenge.name,
+                              initiallyChosenMotivation:
+                                  originalChallenge.motivation,
+                              defaultChallengeTarget: ChallengeTarget.FRIENDS,
+                            )));
+              },
+            ),
+          ),
+        ),
+      ],
+      child: Card(
+        margin: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
+        child: IntrinsicHeight(
+          child: Row(
+            children: [
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: getIconConditionally(),
+                ),
+              ),
+              VerticalDivider(
+                width: 3,
+                color: Colors.black,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          widget.challenge.name,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Visibility(
+                    visible: (widget.challenge?.motivation?.length ?? 0) != 0,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.directions_run),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 2 / 3,
+                          child: Text(
+                            widget.challenge.motivation,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.alarm),
+                      ),
+                      getDeadlineText(context),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Visibility(
+                          visible: _binary,
+                          maintainSize: false,
+                          maintainState: false,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: getFriendProgressOnChallengeIcon(),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 3 / 4,
+                          child: getFriendsNames(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -497,4 +483,10 @@ class _GroupChallengeListItemWidgetState
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 }
