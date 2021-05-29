@@ -185,6 +185,11 @@ class AppLocalizations {
       'delete and copy challenge': 'حذف ونسخ التحدي',
       'swipe the challenge card to the right to delete or copy a challenge':
           'اسحب بطاقة التحدي إلى اليمين لحذف التحدي أو نسخه',
+      'hours must be less than or equal 24':
+          'يجب أن تكون الساعات أقل من أو تساوي ٢٤',
+      'hours must be more than 0': 'يجب أن تكون الساعات أكثر من ٠',
+      'hours must be a number from 1 to 24':
+          'يجب أن تكون الساعات رقمًا من ١ إلى ٢٤',
     },
   };
 
@@ -500,6 +505,20 @@ class AppLocalizations {
   String get daysMustBeANumberFrom1to100 {
     return _localizedValues[locale.languageCode]
         ['days must be a number from 1 to 100'];
+  }
+
+  String get hoursMustBeLessThanOrEqual24 {
+    return _localizedValues[locale.languageCode]
+        ['hours must be less than or equal 24'];
+  }
+
+  String get hoursMustBeMoreThan0 {
+    return _localizedValues[locale.languageCode]['hours must be more than 0'];
+  }
+
+  String get hoursMustBeANumberFrom1to24 {
+    return _localizedValues[locale.languageCode]
+        ['hours must be a number from 1 to 24'];
   }
 
   String get repetitionsMustBeLessThanOrEqual100 {
