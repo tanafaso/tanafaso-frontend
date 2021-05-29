@@ -181,18 +181,6 @@ class _PersonalChallengesListItemWidgetState
                             ],
                           ),
                         ),
-                        Visibility(
-                          visible: !widget.challenge.done(),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(Icons.alarm),
-                              ),
-                              getDeadlineText(context),
-                            ],
-                          ),
-                        ),
                       ]),
                 ],
               ),
