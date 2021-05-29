@@ -187,7 +187,7 @@ class _GroupChallengeListItemWidgetState
                             onTap: () async {
                               try {
                                 await ServiceProvider.challengesService
-                                    .deleteChallenge(widget.challenge.id);
+                                    .deleteGroupChallenge(widget.challenge.id);
                                 setState(() {
                                   _deleted = true;
                                 });
@@ -217,9 +217,18 @@ class _GroupChallengeListItemWidgetState
                             icon: Icons.copy,
                             onTap: () async {
                               // Get original challenge
-                              Challenge challenge = await ServiceProvider
-                                  .challengesService
-                                  .getOriginalChallenge(widget.challenge.id);
+                              Challenge originalChallenge;
+                              try {
+                                originalChallenge = await ServiceProvider
+                                    .challengesService
+                                    .getOriginalChallenge(widget.challenge.id);
+                              } on ApiException catch (e) {
+                                SnackBarUtils.showSnackBar(
+                                  context,
+                                  '${AppLocalizations.of(context).error}: ${e.error}',
+                                );
+                                return;
+                              }
                               Friendship friends = await ServiceProvider
                                   .usersService
                                   .getFriends();
@@ -236,10 +245,11 @@ class _GroupChallengeListItemWidgetState
                                             initiallySelectedFriends:
                                                 currentChallengeFriends,
                                             initiallySelectedSubChallenges:
-                                                challenge.subChallenges,
-                                            initiallyChosenName: challenge.name,
+                                                originalChallenge.subChallenges,
+                                            initiallyChosenName:
+                                                originalChallenge.name,
                                             initiallyChosenMotivation:
-                                                challenge.motivation,
+                                                originalChallenge.motivation,
                                             defaultChallengeTarget:
                                                 ChallengeTarget.FRIENDS,
                                           )));
