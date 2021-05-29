@@ -201,8 +201,13 @@ class AppLocalizations {
 Android: https://play.google.com/store/apps/details?id=com.tanafaso.azkar
 
 iOS: https://apps.apple.com/us/app/تنافسوا/id1564309117''',
+      'share with friend': 'شارك مع صديق',
     },
   };
+
+  String get shareWithFriend {
+    return _localizedValues[locale.languageCode]['share with friend'];
+  }
 
   String shareMessage(String username) {
     return sprintf(
