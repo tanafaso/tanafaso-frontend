@@ -104,7 +104,6 @@ class _PersonalChallengesListItemWidgetState
                   icon: Icons.copy,
                   onTap: () async {
                     // Get original challenge
-                    print(widget.challenge.id);
                     Challenge original;
                     try {
                       original = await ServiceProvider.challengesService

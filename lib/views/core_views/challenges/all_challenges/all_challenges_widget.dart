@@ -88,6 +88,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
           challengeChangedCallback: (_) {
             setState(() {});
           },
+          showFeatureDiscovery: index == 0,
         );
       },
     );

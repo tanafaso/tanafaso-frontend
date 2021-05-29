@@ -16,31 +16,35 @@ class FriendsListItemWidget extends StatelessWidget {
                   friend: friend,
                 )));
       },
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${friend.firstName} ${friend.lastName}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
-                        )
-                      ],
+      child: Padding(
+        padding: const EdgeInsets.only(left: 4.0, top: 4.0, right: 4.0),
+        child: Card(
+          margin: EdgeInsets.all(0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${friend.firstName} ${friend.lastName}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
