@@ -1,95 +1,202 @@
 import 'package:azkar/models/challenge.dart';
+import 'package:azkar/net/api_exception.dart';
+import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/create_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
-class PersonalChallengesListItemWidget extends StatelessWidget {
+class PersonalChallengesListItemWidget extends StatefulWidget {
   final Challenge challenge;
   final ChallengeChangedCallback challengeChangedCallback;
 
   PersonalChallengesListItemWidget(
       {@required this.challenge, @required this.challengeChangedCallback});
 
+  @override
+  _PersonalChallengesListItemWidgetState createState() =>
+      _PersonalChallengesListItemWidgetState();
+}
+
+class _PersonalChallengesListItemWidgetState
+    extends State<PersonalChallengesListItemWidget> {
+  bool _deleted;
+
+  @override
+  void initState() {
+    super.initState();
+    _deleted = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        if (challenge.deadlinePassed()) {
-          SnackBarUtils.showSnackBar(
-              context,
-              AppLocalizations.of(context)
-                  .theDeadlineHasAlreadyPassedForThisChallenge);
-          return;
-        }
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => DoChallengeScreen(
-                challenge: challenge,
-                isPersonalChallenge: true,
-                challengeChangedCallback: (changedChallenge) {
-                  challengeChangedCallback.call(changedChallenge);
-                })));
-      },
-      child: Card(
-        margin: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
-        child: IntrinsicHeight(
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: getIconConditionally(),
-              ),
-              VerticalDivider(
-                width: 3,
-                color: Colors.black,
-              ),
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        challenge.name,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-                  ],
+    return Visibility(
+      visible: !_deleted,
+      maintainState: false,
+      maintainSize: false,
+      child: GestureDetector(
+        onTap: () async {
+          if (widget.challenge.deadlinePassed()) {
+            SnackBarUtils.showSnackBar(
+                context,
+                AppLocalizations.of(context)
+                    .theDeadlineHasAlreadyPassedForThisChallenge);
+            return;
+          }
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => DoChallengeScreen(
+                  challenge: widget.challenge,
+                  isPersonalChallenge: true,
+                  challengeChangedCallback: (changedChallenge) {
+                    widget.challengeChangedCallback.call(changedChallenge);
+                  })));
+        },
+        child: Slidable(
+          actionPane: SlidableDrawerActionPane(),
+          actionExtentRatio: 0.25,
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 4.0, top: 4.0, right: 4.0),
+              child: Card(
+                margin: EdgeInsets.all(0),
+                child: IconSlideAction(
+                  caption: AppLocalizations.of(context).delete,
+                  foregroundColor: Colors.white,
+                  color: Colors.red.shade400,
+                  iconWidget: Icon(
+                    Icons.delete_outline_rounded,
+                    color: Colors.white,
+                  ),
+                  onTap: () async {
+                    try {
+                      await ServiceProvider.challengesService
+                          .deletePersonalChallenge(widget.challenge.id);
+                      setState(() {
+                        _deleted = true;
+                      });
+                      SnackBarUtils.showSnackBar(
+                          context,
+                          AppLocalizations.of(context)
+                              .theChallengeHasBeenDeletedSuccessfully,
+                          color: Colors.green);
+                    } on ApiException catch (e) {
+                      SnackBarUtils.showSnackBar(
+                        context,
+                        '${AppLocalizations.of(context).error}: ${e.error}',
+                      );
+                      return;
+                    }
+                  },
                 ),
-                Visibility(
-                  visible: (challenge?.motivation?.length ?? 0) != 0,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.directions_run),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 2 / 3,
-                        child: Text(
-                          challenge.motivation,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: false,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Card(
+                margin: EdgeInsets.all(0),
+                child: IconSlideAction(
+                  caption: AppLocalizations.of(context).copy,
+                  color: Colors.green.shade600,
+                  icon: Icons.copy,
+                  onTap: () async {
+                    // Get original challenge
+                    print(widget.challenge.id);
+                    Challenge original;
+                    try {
+                      original = await ServiceProvider.challengesService
+                          .getOriginalChallenge(widget.challenge.id);
+                    } on ApiException catch (e) {
+                      SnackBarUtils.showSnackBar(
+                        context,
+                        '${AppLocalizations.of(context).error}: ${e.error}',
+                      );
+                      return;
+                    }
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CreateChallengeScreen(
+                                  initiallySelectedSubChallenges:
+                                      original.subChallenges,
+                                  initiallyChosenName: original.name,
+                                  initiallyChosenMotivation:
+                                      original.motivation,
+                                  defaultChallengeTarget: ChallengeTarget.SELF,
+                                )));
+                  },
+                ),
+              ),
+            ),
+          ],
+          child: Card(
+            margin: EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
+            child: IntrinsicHeight(
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: getIconConditionally(),
+                  ),
+                  VerticalDivider(
+                    width: 3,
+                    color: Colors.black,
+                  ),
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                widget.challenge.name,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Visibility(
-                  visible: !challenge.done(),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.alarm),
-                      ),
-                      getDeadlineText(context),
-                    ],
-                  ),
-                ),
-              ]),
-            ],
+                        Visibility(
+                          visible:
+                              (widget.challenge?.motivation?.length ?? 0) != 0,
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.directions_run),
+                              ),
+                              Container(
+                                width:
+                                    MediaQuery.of(context).size.width * 2 / 3,
+                                child: Text(
+                                  widget.challenge.motivation,
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: false,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Visibility(
+                          visible: !widget.challenge.done(),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.alarm),
+                              ),
+                              getDeadlineText(context),
+                            ],
+                          ),
+                        ),
+                      ]),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -97,13 +204,13 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
   }
 
   Widget getIconConditionally() {
-    if (challenge.done()) {
+    if (widget.challenge.done()) {
       return Icon(
         Icons.done_outline,
         color: Colors.green,
       );
     }
-    if (challenge.deadlinePassed()) {
+    if (widget.challenge.deadlinePassed()) {
       return Icon(
         Icons.error_outline,
         color: Colors.red,
@@ -116,12 +223,12 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
   }
 
   Widget getDeadlineText(BuildContext context) {
-    if (challenge.deadlinePassed()) {
+    if (widget.challenge.deadlinePassed()) {
       return Text(AppLocalizations.of(context).passed);
     }
-    int hoursLeft = challenge.hoursLeft();
+    int hoursLeft = widget.challenge.hoursLeft();
     if (hoursLeft == 0) {
-      int minutesLeft = challenge.minutesLeft();
+      int minutesLeft = widget.challenge.minutesLeft();
       if (minutesLeft == 0) {
         return Text(
             '${AppLocalizations.of(context).endsAfterLessThan} ١ ${AppLocalizations.of(context).minute}');
@@ -130,6 +237,6 @@ class PersonalChallengesListItemWidget extends StatelessWidget {
           '${AppLocalizations.of(context).endsAfter} ${ArabicUtils.englishToArabic(minutesLeft.toString())} ${AppLocalizations.of(context).minute}');
     }
     return Text(
-        '${AppLocalizations.of(context).endsAfter} ${ArabicUtils.englishToArabic(challenge.hoursLeft().toString())} ${AppLocalizations.of(context).hour}');
+        '${AppLocalizations.of(context).endsAfter} ${ArabicUtils.englishToArabic(widget.challenge.hoursLeft().toString())} ${AppLocalizations.of(context).hour}');
   }
 }

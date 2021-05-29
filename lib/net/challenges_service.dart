@@ -90,10 +90,22 @@ class ChallengesService {
     return response.challenge;
   }
 
-  Future<void> deleteChallenge(String challengeId) async {
+  Future<void> deleteGroupChallenge(String challengeId) async {
     http.Response httpResponse = await ApiCaller.delete(
         route: Endpoint(
             endpointRoute: EndpointRoute.DELETE_CHALLENGE,
+            pathVariables: [challengeId]));
+    var response = DeleteChallengeResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.getErrorMessage());
+    }
+  }
+
+  Future<void> deletePersonalChallenge(String challengeId) async {
+    http.Response httpResponse = await ApiCaller.delete(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.DELETE_PERSONAL_CHALLENGE,
             pathVariables: [challengeId]));
     var response = DeleteChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
