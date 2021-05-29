@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sprintf/sprintf.dart';
 
 class AppLocalizations {
   AppLocalizations(this.locale);
@@ -190,8 +191,23 @@ class AppLocalizations {
       'hours must be more than 0': 'يجب أن تكون الساعات أكثر من ٠',
       'hours must be a number from 1 to 24':
           'يجب أن تكون الساعات رقمًا من ١ إلى ٢٤',
+      'share message':
+          '''تطبيق تنافسوا يساعد الأقارب والأصدقاء على أن يشجع بعضهم بعضا على ذكر الله.
+          حمل التطبيق و أضفني يا صديقي لأشجعك وتتشجعني.
+
+هذا كود المستخدم الخاص بي
+%s  
+
+Android: https://play.google.com/store/apps/details?id=com.tanafaso.azkar
+
+iOS: https://apps.apple.com/us/app/تنافسوا/id1564309117''',
     },
   };
+
+  String shareMessage(String username) {
+    return sprintf(
+        _localizedValues[locale.languageCode]['share message'], [username]);
+  }
 
   String get theChallengeHasBeenDeletedSuccessfully {
     return _localizedValues[locale.languageCode]
