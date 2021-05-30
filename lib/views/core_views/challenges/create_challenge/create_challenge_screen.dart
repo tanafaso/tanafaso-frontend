@@ -71,10 +71,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     return true;
   }
 
-  initMotivationController() {
-    _motivationController = TextEditingController(text: '');
-  }
-
   bool validateMotivation() {
     final String motivation = _motivationController.value.text;
     // Note: Characters function is used here so as to count the actual number
@@ -136,11 +132,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   @override
   void initState() {
     initChallengeNameController();
-    initMotivationController();
     initExpiresAfterHoursNumController();
     _subChallenges = widget.initiallySelectedSubChallenges;
-    _challengeNameController =
-        TextEditingController(text: widget.initiallyChosenName);
     _motivationController =
         TextEditingController(text: widget.initiallyChosenMotivation);
     _subChallengesValid = _subChallenges.length > 0;
@@ -265,7 +258,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                 widget.initiallySelectedFriends,
                             onSelectedFriendsChanged: (newFriends) {
                               setState(() {
-                                print('changed');
                                 _selectedFriends = newFriends;
                               });
                             },
