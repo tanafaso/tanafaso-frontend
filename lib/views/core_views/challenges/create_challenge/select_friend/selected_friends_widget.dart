@@ -141,7 +141,7 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget> {
   getSelectFriendText() {
     final String text = (_selectedFriends?.length ?? 0) == 0
         ? AppLocalizations.of(context).selectFriends
-        : AppLocalizations.of(context).changeSelectedFriend;
+        : AppLocalizations.of(context).changeSelectedFriends;
     return Text(
       text,
       style: Theme.of(context).textTheme.button,
