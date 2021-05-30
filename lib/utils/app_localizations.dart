@@ -100,7 +100,7 @@ class AppLocalizations {
       'repetitions': 'التكرار',
       'no azkar selected': 'لم يتم اختيار أذكار',
       'the selected azkar': 'الأذكار المختارة',
-      'change selected friend': 'تغيير الصديق المختار',
+      'change selected friends': 'تغيير الاصدقاء المختارين',
       'you will challenge': 'سوف تتحدى',
       'no friend selected': 'لم يتم اختيار أي صديق',
       'challenge has been added successfully': 'تمت إضافة التحدي بنجاح',
@@ -467,8 +467,8 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]['the selected azkar'];
   }
 
-  String get changeSelectedFriend {
-    return _localizedValues[locale.languageCode]['change selected friend'];
+  String get changeSelectedFriends {
+    return _localizedValues[locale.languageCode]['change selected friends'];
   }
 
   String get youWillChallenge {
