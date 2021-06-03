@@ -242,8 +242,19 @@ class AppLocalizations {
       'detailed view': 'عرض تفصيلي',
       'summary view': 'عرض ملخص',
       'challenge': 'تحدى',
+      'detailed view title': 'العرض التفصيلي',
+      'detailed view explanation':
+          'اضغط على أحد عناصر القائمة لرؤية المزيد من المعلومات',
     },
   };
+
+  String get detailedViewTitle {
+    return _localizedValues[locale.languageCode]['detailed view title'];
+  }
+
+  String get detailedViewExplanation {
+    return _localizedValues[locale.languageCode]['detailed view explanation'];
+  }
 
   String get challenge {
     return _localizedValues[locale.languageCode]['challenge'];

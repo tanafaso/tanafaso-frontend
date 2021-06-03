@@ -78,7 +78,6 @@ class _GroupChallengeListItemWidgetState
     SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
       FeatureDiscovery.discoverFeatures(
         context,
-        // Feature ids for every feature that you want to showcase in order.
         [Features.CLONE_AND_DELETE],
       );
     });

@@ -45,7 +45,6 @@ class _DoChallengeSubChallengeListItemWidgetState
     SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
       FeatureDiscovery.discoverFeatures(
         context,
-        // Feature ids for every feature that you want to showcase in order.
         [Features.CLICK_ZEKR_AFTER_FINISH],
       );
     });
