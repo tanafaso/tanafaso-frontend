@@ -6,12 +6,15 @@ import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/features.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:confetti/confetti.dart';
+import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class DoChallengeScreen extends StatefulWidget {
   final Challenge challenge;
@@ -44,6 +47,13 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
     setState(() {
       initConfettiController();
     });
+    SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
+      FeatureDiscovery.discoverFeatures(
+        context,
+        // Feature ids for every feature that you want to showcase in order.
+        [Features.CLICK_ZEKR_AFTER_FINISH],
+      );
+    });
   }
 
   void initConfettiController() {
@@ -66,24 +76,27 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                     child: Visibility(
                       visible:
                           !widget.isPersonalChallenge && widget.group != null,
-                      child:
-                          !(!widget.isPersonalChallenge && widget.group != null)
-                              ? Container()
-                              : Container(
-                            height: MediaQuery.of(context).size.height / 5,
-                                child: FriendsProgressWidget(
-                                    challenge: widget.challenge,
-                                    challengedUsersIds: widget.challengedUsersIds,
-                                    challengedUsersFullNames:
-                                        widget.challengedUsersFullNames,
-                                  ),
+                      child: !(!widget.isPersonalChallenge &&
+                              widget.group != null)
+                          ? Container()
+                          : ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxHeight:
+                                    MediaQuery.of(context).size.height / 5,
                               ),
+                              child: FriendsProgressWidget(
+                                challenge: widget.challenge,
+                                challengedUsersIds: widget.challengedUsersIds,
+                                challengedUsersFullNames:
+                                    widget.challengedUsersFullNames,
+                              ),
+                            ),
                     ),
                   ),
-                  Card(
-                    child: Visibility(
-                      visible: (widget.challenge.motivation?.length ?? 0) != 0,
-                      maintainSize: false,
+                  Visibility(
+                    visible: (widget.challenge.motivation?.length ?? 0) != 0,
+                    maintainSize: false,
+                    child: Card(
                       child: Row(
                         children: [
                           Padding(
@@ -105,28 +118,60 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                       ),
                     ),
                   ),
-                  Visibility(
-                    visible: !widget.challenge.done(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                          child: Container(
-                              width: double.maxFinite,
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                  Expanded(
+                      child: DescribedFeatureOverlay(
+                    featureId: Features.CLICK_ZEKR_AFTER_FINISH,
+                    contentLocation: ContentLocation.above,
+                    tapTarget: Icon(Icons.done),
+                    // The widget that will be displayed as the tap target.
+                    description: Center(
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Padding(
+                                padding: EdgeInsets.all(0),
+                              )),
+                              Container(
+                                alignment: Alignment.center,
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: Text(
+                                  AppLocalizations.of(context).doingAChallenge,
+                                  softWrap: true,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(padding: EdgeInsets.all(8)),
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Padding(
+                                padding: EdgeInsets.all(0),
+                              )),
+                              Container(
+                                alignment: Alignment.centerRight,
+                                width: MediaQuery.of(context).size.width / 2,
                                 child: Text(
                                   AppLocalizations.of(context)
                                       .clickOnZekrAfterReadingIt,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
+                                  softWrap: true,
+                                  textAlign: TextAlign.center,
                                 ),
-                              ))),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                      child: Container(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    targetColor: Colors.white,
+                    textColor: Colors.black,
                     child: getSubChallenges(),
                   )),
                 ],
@@ -156,11 +201,14 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
   }
 
   Widget getSubChallenges() {
-    return ListView.builder(
+    return ListView.separated(
+      padding: EdgeInsets.all(4),
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       itemCount: widget.challenge.subChallenges.length,
       addAutomaticKeepAlives: true,
+      separatorBuilder: (BuildContext context, int index) =>
+          Padding(padding: EdgeInsets.only(bottom: 4)),
       itemBuilder: (context, index) {
         return DoChallengeSubChallengeListItemWidget(
           subChallenge: widget.challenge.subChallenges[index],

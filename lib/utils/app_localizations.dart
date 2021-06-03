@@ -125,7 +125,7 @@ class AppLocalizations {
           'يجب أن يكون عدد التكرار من 1 إلى 100',
       'motivation should not be empty': 'لا ينبغي أن يكون الدافع فارغًا',
       'name should not be empty': 'يجب ألا يكون الاسم فارغًا',
-      'click on zekr after reading it': 'اضغط على الذكر بعد قراءته',
+      'click on zekr after reading it': 'اضغط على الذكر بعد قراءته لحفظ تقدمك ولكي يتم إخطار أصدقائك بعد أن تنهي التحدي.',
       'you have finished reading it': 'لقد انتهيت من قراءته',
       'the remaining repetitions': 'التكرارات المتبقية',
       'you have finished the challenge successfully': 'لقد أنهيت التحدي بنجاح',
@@ -205,12 +205,18 @@ class AppLocalizations {
               'iOS: https://apps.apple.com/us/app/تنافسوا/id1564309117\n',
       'share with friend': 'شارك مع صديق',
       'challenge creator': '(منشئ التحدي)',
+      'doing a challenge': 'القيام بتحدي',
     },
   };
+
+  String get doingAChallenge {
+    return _localizedValues[locale.languageCode]['doing a challenge'];
+  }
 
   String get challengeCreator {
     return _localizedValues[locale.languageCode]['challenge creator'];
   }
+
   String get shareWithFriend {
     return _localizedValues[locale.languageCode]['share with friend'];
   }
