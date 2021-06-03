@@ -73,14 +73,15 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
               Expanded(
                 child: Container(
                   child: ListView.separated(
-                    separatorBuilder: (context, index) => Padding(padding: EdgeInsets.only(bottom: 4)),
+                      separatorBuilder: (context, index) =>
+                          Padding(padding: EdgeInsets.only(bottom: 4)),
                       padding: EdgeInsets.all(0),
                       shrinkWrap: true,
                       itemCount: widget.azkar.length,
                       itemBuilder: (context, index) {
                         return ZekrWidget(
-                          visible: filteredAzkarIds
-                              .contains(widget.azkar[index].id),
+                          visible:
+                              filteredAzkarIds.contains(widget.azkar[index].id),
                           zekr: widget.azkar[index],
                           onRepetitionsChangedCallback: onRepetitionsChanged,
                         );
