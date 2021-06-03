@@ -72,7 +72,8 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
               ),
               Expanded(
                 child: Container(
-                  child: ListView.builder(
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) => Padding(padding: EdgeInsets.only(bottom: 4)),
                       padding: EdgeInsets.all(0),
                       shrinkWrap: true,
                       itemCount: widget.azkar.length,
