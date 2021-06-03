@@ -41,8 +41,9 @@ class GroupChallengeListItemWidget extends StatefulWidget {
 class _GroupChallengeListItemWidgetState
     extends State<GroupChallengeListItemWidget>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
-  List<String> _friendsFullNames;
-  List<String> _friendsIds;
+  // Note that some of the challenged users may not be friends.
+  List<String> _challengedUsersFullNames;
+  List<String> _challengedUsersIds;
   bool _binary;
   bool _deleted;
   AnimationController _controller;
@@ -52,16 +53,16 @@ class _GroupChallengeListItemWidgetState
     try {
       String currentUserId =
           await ServiceProvider.usersService.getCurrentUserId();
-      _friendsFullNames = [];
-      _friendsIds = widget.group.usersIds
+      _challengedUsersFullNames = [];
+      _challengedUsersIds = widget.group.usersIds
           .where((userId) => userId != currentUserId)
           .toList();
-      for (String friendId in _friendsIds) {
+      for (String friendId in _challengedUsersIds) {
         String friendFullName =
             await ServiceProvider.usersService.getUserFullNameById(friendId);
-        _friendsFullNames.add(friendFullName);
+        _challengedUsersFullNames.add(friendFullName);
       }
-      _binary = _friendsIds.length == 1;
+      _binary = _challengedUsersIds.length == 1;
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.error);
     }
@@ -73,7 +74,7 @@ class _GroupChallengeListItemWidgetState
 
     _deleted = false;
     _binary = true;
-    _friendsFullNames = [];
+    _challengedUsersFullNames = [];
     SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
       FeatureDiscovery.discoverFeatures(
         context,
@@ -119,8 +120,8 @@ class _GroupChallengeListItemWidgetState
                       builder: (context) => DoChallengeScreen(
                           challenge: challenge,
                           group: widget.group,
-                          friendsIds: _friendsIds,
-                          friendsFullNames: _friendsFullNames,
+                          challengedUsersIds: _challengedUsersIds,
+                          challengedUsersFullNames: _challengedUsersFullNames,
                           isPersonalChallenge: false,
                           challengeChangedCallback: (changedChallenge) {
                             widget.challengeChangedCallback(changedChallenge);
@@ -284,7 +285,7 @@ class _GroupChallengeListItemWidgetState
                 Friendship friends =
                     await ServiceProvider.usersService.getFriends();
                 List<Friend> currentChallengeFriends = friends.friends
-                    .where((friend) => _friendsIds.contains(friend.userId))
+                    .where((friend) => _challengedUsersIds.contains(friend.userId))
                     .toList();
                 Navigator.push(
                     context,
@@ -396,11 +397,11 @@ class _GroupChallengeListItemWidgetState
     if (!widget.showName) {
       text = AppLocalizations.of(context).yourFriend;
     } else if (_binary) {
-      text = _friendsFullNames[0];
+      text = _challengedUsersFullNames[0];
     } else {
-      assert(_friendsFullNames.length > 0);
+      assert(_challengedUsersFullNames.length > 0);
       List<String> friendsFullNamesCopy =
-          new List<String>.from(_friendsFullNames);
+          new List<String>.from(_challengedUsersFullNames);
       friendsFullNamesCopy.shuffle();
       String otherOrOthers = friendsFullNamesCopy.length - 2 > 1
           ? AppLocalizations.of(context).others
@@ -421,7 +422,7 @@ class _GroupChallengeListItemWidgetState
     }
 
     if (widget.challenge.usersFinished
-        .any((userFinished) => userFinished == _friendsIds[0])) {
+        .any((userFinished) => userFinished == _challengedUsersIds[0])) {
       return Icon(
         Icons.done_outline,
         size: 15,

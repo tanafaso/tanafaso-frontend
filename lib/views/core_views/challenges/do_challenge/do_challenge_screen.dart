@@ -16,15 +16,16 @@ class DoChallengeScreen extends StatefulWidget {
   final Challenge challenge;
   final ChallengeChangedCallback challengeChangedCallback;
   final Group group;
-  final List<String> friendsIds;
-  final List<String> friendsFullNames;
+  // Note that some of the challenged users may not be friends.
+  final List<String> challengedUsersIds;
+  final List<String> challengedUsersFullNames;
   final bool isPersonalChallenge;
 
   DoChallengeScreen(
       {@required this.challenge,
       this.group,
-      this.friendsIds,
-      this.friendsFullNames,
+      this.challengedUsersIds,
+      this.challengedUsersFullNames,
       @required this.challengeChangedCallback,
       @required this.isPersonalChallenge});
 
@@ -74,7 +75,7 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                                     (BuildContext context, int index) =>
                                         Divider(),
                                 shrinkWrap: true,
-                                itemCount: widget.friendsIds.length,
+                                itemCount: widget.challengedUsersIds.length,
                                 itemBuilder: (context, index) {
                                   return Row(
                                     children: [
@@ -82,11 +83,11 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                                         padding:
                                             const EdgeInsets.only(left: 8.0),
                                         child: getFriendProgressOnChallengeIcon(
-                                            widget.friendsIds[index]),
+                                            widget.challengedUsersIds[index]),
                                       ),
-                                      Text(widget.friendsFullNames[index]),
+                                      Text(widget.challengedUsersFullNames[index]),
                                       Visibility(
-                                        visible: widget.friendsIds[index] == widget.challenge?.creatingUserId,
+                                        visible: widget.challengedUsersIds[index] == widget.challenge?.creatingUserId,
                                         child: Padding(
                                           padding: const EdgeInsets.only(right: 8.0),
                                           child: Text(AppLocalizations.of(context).challengeCreator),
