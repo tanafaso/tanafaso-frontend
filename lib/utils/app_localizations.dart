@@ -58,7 +58,30 @@ class AppLocalizations {
       'is ignored': 'تم تجاهله',
       'ignore': 'تجاهل',
       'accept': 'قبول',
-      'no friends found': 'لم يتم العثور على أصدقاء',
+      'no friends found': 'لم يتم العثور على أصدقاء.',
+      'how to add friends explanation': '''
+هناك عدة طرق يمكنك بها إضافة أصدقاء.
+
+عن طريق الفيسبوك إذا كان لدى أصدقائك التطبيق وربطوه بفيسبوك.
+ ١- اضغط على أضف صديق.
+ ٢- أضف صديق عن طريق فيسبوك.
+ ٣- سيظهر لك أصدقاؤك في فيسبوك المتصلين بتطبيق تنافسوا.
+ ٤- أرسل طلبات صداقة.
+ ٥- سوف يتم إرسال طلب صداقة لهم وسيجدونها في قائمة طلبات الصداقة.
+
+عن طريق كود المستخدم.
+١- اضغط على الملف الشخصي أسفل الشاشة السابقة.
+٢- تحت الاسم سيظهر لك الكود الخاص بك.
+٣- اضغط على زر المشاركة الذي بجانبه.
+٤- قم بمشاركة كود المستخدم الخاص بك مع أصدقائك.
+
+إذا كان لديك الكود الخاص بصديقك و تريد اضافته.
+١- اضغط على الأصدقاء الشاشة السابقة.
+٢- اضف صديق.
+٣- قم بكتابة أو لصق كود صديقك في خانة كود المستخدم.
+٤- اضغط اضف.
+٥- سوف يتم إرسال طلب صداقة لهم وسيجدونها في قائمة طلبات الصداقة و يستطيعون قبوله.
+      ''',
       'invited': 'مدعو',
       'invite': 'أضف',
       'invite facebook Friends': 'دعوة أصدقاء الفيسبوك',
@@ -125,7 +148,8 @@ class AppLocalizations {
           'يجب أن يكون عدد التكرار من 1 إلى 100',
       'motivation should not be empty': 'لا ينبغي أن يكون الدافع فارغًا',
       'name should not be empty': 'يجب ألا يكون الاسم فارغًا',
-      'click on zekr after reading it': 'اضغط على الذكر بعد قراءته لحفظ تقدمك ولكي يتم إخطار أصدقائك بعد أن تنهي التحدي.',
+      'click on zekr after reading it':
+          'اضغط على الذكر بعد قراءته لحفظ تقدمك ولكي يتم إخطار أصدقائك بعد أن تنهي التحدي.',
       'you have finished reading it': 'لقد انتهيت من قراءته',
       'the remaining repetitions': 'التكرارات المتبقية',
       'you have finished the challenge successfully': 'لقد أنهيت التحدي بنجاح',
@@ -206,8 +230,39 @@ class AppLocalizations {
       'share with friend': 'شارك مع صديق',
       'challenge creator': '(منشئ التحدي)',
       'doing a challenge': 'القيام بتحدي',
+      'add the first friends challenge': 'أضف أول تحدي للأصدقاء',
+      'how to add new friends': 'كيفية إضافة أصدقاء جدد',
+      'share username explanation':
+          'الآن يمكنك مشاركة التطبيق وكود المستخدم الخاص بك مع أصدقائك على WhatsApp و Facebook وغيرها ...',
+      'share username title': 'شارك مع الاصدقاء',
+      'how to add new friends?': 'كيف يمكنني اضافة اصدقاء جدد؟',
     },
   };
+
+  String get shareUsernameExplanation {
+    return _localizedValues[locale.languageCode]['share username explanation'];
+  }
+
+  String get shareUsernameTitle {
+    return _localizedValues[locale.languageCode]['share username title'];
+  }
+
+  String get noFriendsFound {
+    return _localizedValues[locale.languageCode]['no friends found'];
+  }
+
+  String get howToAddNewFriendsQuestion {
+    return _localizedValues[locale.languageCode]['how to add new friends?'];
+  }
+
+  String get howToAddNewFriends {
+    return _localizedValues[locale.languageCode]['how to add new friends'];
+  }
+
+  String get addTheFirstFriendsChallenge {
+    return _localizedValues[locale.languageCode]
+        ['add the first friends challenge'];
+  }
 
   String get doingAChallenge {
     return _localizedValues[locale.languageCode]['doing a challenge'];
@@ -720,8 +775,9 @@ class AppLocalizations {
         ['an invitation has been sent to'];
   }
 
-  String get noFriendsFound {
-    return _localizedValues[locale.languageCode]['no friends found'];
+  String get howToAddFriendsExplanation {
+    return _localizedValues[locale.languageCode]
+        ['how to add friends explanation'];
   }
 
   String get ignore {

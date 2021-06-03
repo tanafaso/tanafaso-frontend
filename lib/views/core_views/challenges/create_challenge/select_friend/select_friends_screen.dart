@@ -3,6 +3,7 @@ import 'package:azkar/models/friendship.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/friend_widget.dart';
+import 'package:azkar/views/core_views/friends/all_friends/how_to_add_friends_screen.dart';
 import 'package:flutter/material.dart';
 
 class SelectFriendsScreen extends StatefulWidget {
@@ -36,7 +37,11 @@ class _SelectFriendsScreenState extends State<SelectFriendsScreen> {
             Expanded(
                 child: Container(
                     child: getFriendsList(
-                        context, widget.friendship?.friends ?? []))),
+                        context,
+                        widget.friendship?.friends
+                                ?.where((friend) => !friend.pending)
+                                ?.toList() ??
+                            []))),
             Padding(
               padding: const EdgeInsets.only(
                   left: 8.0, right: 8, top: 8, bottom: 3 * 8.0),
@@ -87,8 +92,27 @@ class _SelectFriendsScreenState extends State<SelectFriendsScreen> {
 
   Widget getFriendsList(BuildContext context, List<Friend> friends) {
     if (friends?.isEmpty ?? false) {
-      return Center(
-        child: Text(AppLocalizations.of(context).youHaveNotAddedAnyFriendsYet),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            AppLocalizations.of(context).noFriendsFound,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => HowToAddFriendsScreen())),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  AppLocalizations.of(context).howToAddNewFriendsQuestion,
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+          ),
+        ],
       );
     }
 

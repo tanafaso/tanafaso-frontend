@@ -44,12 +44,13 @@ class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child:
-                      getFriendProgressOnChallengeIcon(widget.challengedUsersIds[index]),
+                  child: getFriendProgressOnChallengeIcon(
+                      widget.challengedUsersIds[index]),
                 ),
                 Text(widget.challengedUsersFullNames[index]),
                 Visibility(
-                  visible: widget.challengedUsersIds[index] == widget.challenge?.creatingUserId,
+                  visible: widget.challengedUsersIds[index] ==
+                      widget.challenge?.creatingUserId,
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Text(AppLocalizations.of(context).challengeCreator),
