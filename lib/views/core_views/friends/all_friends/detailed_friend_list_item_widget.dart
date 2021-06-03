@@ -128,13 +128,14 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                                                 )));
                                   },
                                   child: Card(
+                                    color: Theme.of(context).primaryColor,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Icon(Icons.add),
+                                          Icon(Icons.edit),
                                           Padding(
                                               padding:
                                                   EdgeInsets.only(left: 8)),
