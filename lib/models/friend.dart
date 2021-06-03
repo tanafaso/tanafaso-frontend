@@ -15,4 +15,13 @@ class Friend {
       @required this.firstName,
       @required this.lastName,
       @required this.pending});
+
+  factory Friend.fromJson(Map<String, dynamic> json) => Friend(
+        userId: json['userId'],
+        groupId: json['groupId'],
+        username: json['username'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        pending: json['pending'],
+      );
 }

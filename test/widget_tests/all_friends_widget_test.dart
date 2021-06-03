@@ -4,7 +4,7 @@ import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/net/users_service.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/friends/all_friends/all_friends_widget.dart';
-import 'package:azkar/views/core_views/friends/all_friends/friends_list_item_widget.dart';
+import 'package:azkar/views/core_views/friends/all_friends/detailed_friend_list_item_widget.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -74,7 +74,7 @@ void main() {
     expect(find.byKey(Keys.allFriendsWidgetListKey), findsOneWidget);
 
     // Finds only two FriendWidgets, which are the two non-pending friends.
-    expect(find.byType(FriendsListItemWidget), findsNWidgets(2));
+    expect(find.byType(DetailedFriendListItemWidget), findsNWidgets(2));
 
     // Finds a card for the first non-pending friend.
     expect(

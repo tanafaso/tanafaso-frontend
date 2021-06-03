@@ -28,14 +28,7 @@ class GetFriendsResponse extends ResponseBase {
   static List<Friend> getFriends(Map<String, dynamic> json) {
     List<Friend> friends = [];
     for (var friend in json['data']['friends']) {
-      friends.add(Friend(
-        userId: friend['userId'],
-        groupId: friend['groupId'],
-        username: friend['username'],
-        firstName: friend['firstName'],
-        lastName: friend['lastName'],
-        pending: friend['pending'],
-      ));
+      friends.add(Friend.fromJson(friend));
     }
     return friends;
   }
