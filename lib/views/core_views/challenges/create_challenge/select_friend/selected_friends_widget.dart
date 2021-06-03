@@ -22,7 +22,7 @@ class SelectedFriendsWidget extends StatefulWidget {
   _SelectedFriendsWidgetState createState() => _SelectedFriendsWidgetState();
 }
 
-class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget> {
+class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget> with AutomaticKeepAliveClientMixin {
   List<Friend> _selectedFriends;
 
   @override
@@ -34,6 +34,9 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // Necessary as documented by AutomaticKeepAliveClientMixin.
+    super.build(context);
+
     return Card(
       child: Column(
         children: [
@@ -147,4 +150,7 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget> {
       style: Theme.of(context).textTheme.button,
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
