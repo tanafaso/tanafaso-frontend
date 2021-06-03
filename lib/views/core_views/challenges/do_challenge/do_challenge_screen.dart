@@ -69,12 +69,15 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                       child:
                           !(!widget.isPersonalChallenge && widget.group != null)
                               ? Container()
-                              : FriendsProgressWidget(
-                                  challenge: widget.challenge,
-                                  challengedUsersIds: widget.challengedUsersIds,
-                                  challengedUsersFullNames:
-                                      widget.challengedUsersFullNames,
-                                ),
+                              : Container(
+                            height: MediaQuery.of(context).size.height / 5,
+                                child: FriendsProgressWidget(
+                                    challenge: widget.challenge,
+                                    challengedUsersIds: widget.challengedUsersIds,
+                                    challengedUsersFullNames:
+                                        widget.challengedUsersFullNames,
+                                  ),
+                              ),
                     ),
                   ),
                   Card(

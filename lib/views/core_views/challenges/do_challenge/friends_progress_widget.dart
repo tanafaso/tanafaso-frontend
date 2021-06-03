@@ -2,7 +2,7 @@ import 'package:azkar/models/challenge.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-class FriendsProgressWidget extends StatelessWidget {
+class FriendsProgressWidget extends StatefulWidget {
   final Challenge challenge;
   final List<String> challengedUsersIds;
   final List<String> challengedUsersFullNames;
@@ -14,33 +14,51 @@ class FriendsProgressWidget extends StatelessWidget {
   });
 
   @override
+  _FriendsProgressWidgetState createState() => _FriendsProgressWidgetState();
+}
+
+class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
+  ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ListView.separated(
-        padding: EdgeInsets.all(0),
-        separatorBuilder: (BuildContext context, int index) => Divider(),
-        shrinkWrap: true,
-        itemCount: challengedUsersIds.length,
-        itemBuilder: (context, index) {
-          return Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child:
-                    getFriendProgressOnChallengeIcon(challengedUsersIds[index]),
-              ),
-              Text(challengedUsersFullNames[index]),
-              Visibility(
-                visible: challengedUsersIds[index] == challenge?.creatingUserId,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Text(AppLocalizations.of(context).challengeCreator),
+      child: Scrollbar(
+        isAlwaysShown: true,
+        controller: _scrollController,
+        child: ListView.separated(
+          padding: EdgeInsets.all(0),
+          separatorBuilder: (BuildContext context, int index) => Divider(),
+          shrinkWrap: true,
+          controller: _scrollController,
+          itemCount: widget.challengedUsersIds.length,
+          itemBuilder: (context, index) {
+            return Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child:
+                      getFriendProgressOnChallengeIcon(widget.challengedUsersIds[index]),
                 ),
-              ),
-            ],
-          );
-        },
+                Text(widget.challengedUsersFullNames[index]),
+                Visibility(
+                  visible: widget.challengedUsersIds[index] == widget.challenge?.creatingUserId,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Text(AppLocalizations.of(context).challengeCreator),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -50,7 +68,7 @@ class FriendsProgressWidget extends StatelessWidget {
       return Container();
     }
 
-    if (challenge.usersFinished
+    if (widget.challenge.usersFinished
         .any((userFinished) => userFinished == userId)) {
       return Icon(
         Icons.done_outline,
@@ -59,7 +77,7 @@ class FriendsProgressWidget extends StatelessWidget {
       );
     }
 
-    if (challenge.deadlinePassed()) {
+    if (widget.challenge.deadlinePassed()) {
       return Icon(
         Icons.error_outline,
         size: 15,
