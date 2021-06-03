@@ -33,7 +33,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
       FeatureDiscovery.discoverFeatures(
         context,
         // Feature ids for every feature that you want to showcase in order.
-        [Features.SHARE_USERNAME],
+        [Features.SHARE_USERNAME, Features.FRIEND_DETAILED_VIEW],
       );
     });
   }
