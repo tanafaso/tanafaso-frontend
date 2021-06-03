@@ -8,6 +8,7 @@ import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class DoChallengeScreen extends StatefulWidget {
   final Challenge challenge;
   final ChallengeChangedCallback challengeChangedCallback;
   final Group group;
+
   // Note that some of the challenged users may not be friends.
   final List<String> challengedUsersIds;
   final List<String> challengedUsersFullNames;
@@ -64,40 +66,15 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                     child: Visibility(
                       visible:
                           !widget.isPersonalChallenge && widget.group != null,
-                      child: !(!widget.isPersonalChallenge &&
-                              widget.group != null)
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ListView.separated(
-                                padding: EdgeInsets.all(0),
-                                separatorBuilder:
-                                    (BuildContext context, int index) =>
-                                        Divider(),
-                                shrinkWrap: true,
-                                itemCount: widget.challengedUsersIds.length,
-                                itemBuilder: (context, index) {
-                                  return Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0),
-                                        child: getFriendProgressOnChallengeIcon(
-                                            widget.challengedUsersIds[index]),
-                                      ),
-                                      Text(widget.challengedUsersFullNames[index]),
-                                      Visibility(
-                                        visible: widget.challengedUsersIds[index] == widget.challenge?.creatingUserId,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(right: 8.0),
-                                          child: Text(AppLocalizations.of(context).challengeCreator),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ),
-                            ),
+                      child:
+                          !(!widget.isPersonalChallenge && widget.group != null)
+                              ? Container()
+                              : FriendsProgressWidget(
+                                  challenge: widget.challenge,
+                                  challengedUsersIds: widget.challengedUsersIds,
+                                  challengedUsersFullNames:
+                                      widget.challengedUsersFullNames,
+                                ),
                     ),
                   ),
                   Card(
@@ -172,54 +149,6 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
         numberOfParticles: 5,
         gravity: 1,
       ),
-    );
-  }
-
-  Widget getFriendProgressOnChallengeIcon(String userId) {
-    if (userId == null) {
-      return Container();
-    }
-
-    if (widget.challenge.usersFinished
-        .any((userFinished) => userFinished == userId)) {
-      return Icon(
-        Icons.done_outline,
-        size: 15,
-        color: Colors.green,
-      );
-    }
-
-    if (widget.challenge.deadlinePassed()) {
-      return Icon(
-        Icons.error_outline,
-        size: 15,
-        color: Colors.red,
-      );
-    }
-
-    return Icon(
-      Icons.not_started,
-      size: 15,
-      color: Colors.yellow,
-    );
-  }
-
-  Widget getIconConditionally() {
-    if (widget.challenge.done()) {
-      return Icon(
-        Icons.done_outline,
-        color: Colors.green,
-      );
-    }
-    if (widget.challenge.deadlinePassed()) {
-      return Icon(
-        Icons.error_outline,
-        color: Colors.red,
-      );
-    }
-    return Icon(
-      Icons.not_started,
-      color: Colors.yellow,
     );
   }
 
