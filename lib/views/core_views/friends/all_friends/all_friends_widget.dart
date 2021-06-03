@@ -109,6 +109,9 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
           child: ListView.builder(
             key: Keys.allFriendsWidgetListKey,
             itemCount: friendshipScores.length,
+            physics:
+                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               return _detailedView
                   ? DetailedFriendListItemWidget(

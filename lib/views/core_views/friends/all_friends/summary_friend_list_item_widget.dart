@@ -10,42 +10,46 @@ class SummaryFriendListItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 4.0, top: 4.0, right: 4.0),
-      child: Card(
-        margin: EdgeInsets.all(0),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 5,
-                child: Text(
-                  '${friendshipScores.friend.firstName} ${friendshipScores.friend.lastName}',
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+      child: ConstrainedBox(
+        constraints:
+            BoxConstraints(minHeight: MediaQuery.of(context).size.height / 12),
+        child: Card(
+          margin: EdgeInsets.all(0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Text(
+                    '${friendshipScores.friend.firstName} ${friendshipScores.friend.lastName}',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    Text(
-                      (friendshipScores.currentUserScore -
-                              friendshipScores.friendScore)
-                          .abs()
-                          .toString(),
-                      style: TextStyle(
-                        color: getColor(),
+                Expanded(
+                  flex: 1,
+                  child: Row(
+                    children: [
+                      Text(
+                        (friendshipScores.currentUserScore -
+                                friendshipScores.friendScore)
+                            .abs()
+                            .toString(),
+                        style: TextStyle(
+                          color: getColor(),
+                        ),
                       ),
-                    ),
-                    Padding(padding: EdgeInsets.only(right: 8)),
-                    getArrowIcon(),
-                  ],
+                      Padding(padding: EdgeInsets.only(right: 8)),
+                      getArrowIcon(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
