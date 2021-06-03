@@ -76,18 +76,16 @@ class _DoChallengeSubChallengeListItemWidgetState
         }
       },
       child: Card(
+        margin: EdgeInsets.all(0),
         color: buttonColor,
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  widget.subChallenge.zekr.zekr,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20),
-                ),
+              child: Text(
+                widget.subChallenge.zekr.zekr,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20),
               ),
             ),
             Padding(

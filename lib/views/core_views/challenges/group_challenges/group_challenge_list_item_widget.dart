@@ -23,14 +23,14 @@ class GroupChallengeListItemWidget extends StatefulWidget {
   final Group group;
   final bool showName;
   final ChallengeChangedCallback challengeChangedCallback;
-  final bool showFeatureDiscovery;
+  final bool firstChallengeInList;
 
   GroupChallengeListItemWidget({
     @required this.challenge,
     @required this.group,
     this.showName = true,
     @required this.challengeChangedCallback,
-    this.showFeatureDiscovery = false,
+    this.firstChallengeInList = false,
   });
 
   @override
@@ -127,7 +127,7 @@ class _GroupChallengeListItemWidgetState
                             widget.challengeChangedCallback(changedChallenge);
                           })));
                 },
-                child: !widget.showFeatureDiscovery
+                child: !widget.firstChallengeInList
                     ? getMainWidget()
                     : DescribedFeatureOverlay(
                         featureId: Features.CLONE_AND_DELETE,
