@@ -236,8 +236,15 @@ class AppLocalizations {
           'الآن يمكنك مشاركة التطبيق وكود المستخدم الخاص بك مع أصدقائك على WhatsApp و Facebook وغيرها ...',
       'share username title': 'شارك مع الاصدقاء',
       'how to add new friends?': 'كيف يمكنني اضافة اصدقاء جدد؟',
+      'filtered azkar not found': '''
+لم نعثر على أذكار تحتوي على هذه الكلمات
+حاول البحث بكلمات مختلفة''',
     },
   };
+
+  String get filteredAzkarNotFound {
+    return _localizedValues[locale.languageCode]['filtered azkar not found'];
+  }
 
   String get shareUsernameExplanation {
     return _localizedValues[locale.languageCode]['share username explanation'];
