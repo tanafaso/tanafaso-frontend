@@ -85,6 +85,13 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                                             widget.friendsIds[index]),
                                       ),
                                       Text(widget.friendsFullNames[index]),
+                                      Visibility(
+                                        visible: widget.friendsIds[index] == widget.challenge?.creatingUserId,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(right: 8.0),
+                                          child: Text(AppLocalizations.of(context).challengeCreator),
+                                        ),
+                                      ),
                                     ],
                                   );
                                 },

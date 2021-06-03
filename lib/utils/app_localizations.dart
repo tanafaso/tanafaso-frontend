@@ -204,9 +204,13 @@ class AppLocalizations {
               '\n' +
               'iOS: https://apps.apple.com/us/app/تنافسوا/id1564309117\n',
       'share with friend': 'شارك مع صديق',
+      'challenge creator': '(منشئ التحدي)',
     },
   };
 
+  String get challengeCreator {
+    return _localizedValues[locale.languageCode]['challenge creator'];
+  }
   String get shareWithFriend {
     return _localizedValues[locale.languageCode]['share with friend'];
   }
