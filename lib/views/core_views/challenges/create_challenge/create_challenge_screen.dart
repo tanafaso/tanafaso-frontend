@@ -167,6 +167,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                 children: [
                   Expanded(
                     child: ListView(
+                      addAutomaticKeepAlives: true,
                       shrinkWrap: true,
                       children: [
                         Card(
