@@ -22,8 +22,8 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
   @override
   void initState() {
     super.initState();
-    _detailedView = false;
-    _toggleIndex = 1;
+    _detailedView = true;
+    _toggleIndex = 0;
   }
 
   @override
