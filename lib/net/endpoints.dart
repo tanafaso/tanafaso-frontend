@@ -18,6 +18,7 @@ enum EndpointRoute {
   SET_NOTIFICATIONS_TOKEN,
   ADD_FRIEND_BY_USERNAME,
   GET_FRIENDS,
+  GET_FRIENDS_LEADERBOARD,
   ACCEPT_FRIEND,
   REJECT_FRIEND,
   ADD_GROUP,
@@ -97,6 +98,8 @@ class ApiRoutesUtil {
         return '/friends/${route.pathVariables[0]}';
       case EndpointRoute.GET_FRIENDS:
         return '/friends';
+      case EndpointRoute.GET_FRIENDS_LEADERBOARD:
+        return '/friends/leaderboard';
       case EndpointRoute.ACCEPT_FRIEND:
         assert(route.pathVariables.length == 1);
         return '/friends/${route.pathVariables[0]}/accept';

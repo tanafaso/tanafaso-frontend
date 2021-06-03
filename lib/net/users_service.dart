@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:azkar/models/friendship.dart';
+import 'package:azkar/models/friendship_scores.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/api_exception.dart';
@@ -8,6 +9,7 @@ import 'package:azkar/net/cache_manager.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/users/requests/set_notifications_token_request_body.dart';
 import 'package:azkar/net/payload/users/responses/add_friend_response.dart';
+import 'package:azkar/net/payload/users/responses/get_friends_leaderboard_response.dart';
 import 'package:azkar/net/payload/users/responses/get_friends_response.dart';
 import 'package:azkar/net/payload/users/responses/get_user_response.dart';
 import 'package:azkar/net/payload/users/responses/resolve_friend_request_response.dart';
@@ -115,6 +117,17 @@ class UsersService {
       throw new ApiException(response.getErrorMessage());
     }
     return response.friendship;
+  }
+
+  Future<List<FriendshipScores>> getFriendsLeaderboard() async {
+    http.Response httpResponse = await ApiCaller.get(
+        route: Endpoint(endpointRoute: EndpointRoute.GET_FRIENDS_LEADERBOARD));
+    var response = GetFriendsLeaderboardResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.getErrorMessage());
+    }
+    return response.friendshipScores;
   }
 
   Future<void> acceptFriend(String friendId) async {
