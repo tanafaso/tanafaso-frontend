@@ -1,13 +1,14 @@
-import 'package:azkar/models/friend.dart';
-import 'package:azkar/models/friendship.dart';
+import 'package:azkar/models/friendship_scores.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
-import 'package:azkar/views/core_views/friends/all_friends/friends_list_item_widget.dart';
-import 'package:azkar/views/core_views/friends/all_friends/how_to_add_friends_screen.dart';
+import 'package:azkar/views/core_views/friends/all_friends/detailed_friend_list_item_widget.dart';
+import 'package:azkar/views/core_views/friends/all_friends/no_friends_found_widget.dart';
+import 'package:azkar/views/core_views/friends/all_friends/summary_friend_list_item_widget.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class AllFriendsWidget extends StatefulWidget {
   @override
@@ -15,15 +16,26 @@ class AllFriendsWidget extends StatefulWidget {
 }
 
 class _AllFriendsWidgetState extends State<AllFriendsWidget> {
+  bool _detailedView;
+  int _toggleIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _detailedView = false;
+    _toggleIndex = 1;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder<Friendship>(
-        future: ServiceProvider.usersService.getFriends(),
-        builder: (BuildContext context, AsyncSnapshot<Friendship> snapshot) {
+      child: FutureBuilder<List<FriendshipScores>>(
+        future: ServiceProvider.usersService.getFriendsLeaderboard(),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<FriendshipScores>> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            return getFriendsListWidget(snapshot.data);
+            return getMainWidget(snapshot.data);
           } else if (snapshot.hasError) {
             children = <Widget>[
               Icon(
@@ -62,69 +74,53 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
     );
   }
 
-  Widget getFriendsListWidget(Friendship friendship) {
-    if (friendship == null ||
-        friendship.friends == null ||
-        friendship.friends.isEmpty) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            AppLocalizations.of(context).noFriendsFound,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          GestureDetector(
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HowToAddFriendsScreen())),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  AppLocalizations.of(context).howToAddNewFriendsQuestion,
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ),
-          ),
-        ],
-      );
+  Widget getMainWidget(List<FriendshipScores> friendshipScores) {
+    if (friendshipScores == null || friendshipScores.isEmpty) {
+      return NoFriendsFoundWidget();
     }
 
-    List<Friend> nonPendingFriends =
-        friendship.friends.where((friend) => !friend.pending).toList();
-    if (nonPendingFriends.length == 0) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            AppLocalizations.of(context).noFriendsFound,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ToggleSwitch(
+            minWidth: MediaQuery.of(context).size.width,
+            cornerRadius: 20.0,
+            activeBgColor: Colors.white,
+            activeFgColor: Colors.black,
+            inactiveBgColor: Colors.black,
+            inactiveFgColor: Colors.white,
+            initialLabelIndex: _toggleIndex,
+            labels: [
+              AppLocalizations.of(context).detailedView,
+              AppLocalizations.of(context).summaryView,
+            ],
+            fontSize: 20,
+            // icons: [FontAwesomeIcons.check, FontAwesomeIcons.times],
+            onToggle: (index) {
+              setState(() {
+                _toggleIndex = index;
+                _detailedView = index == 0;
+              });
+            },
           ),
-          GestureDetector(
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HowToAddFriendsScreen())),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  AppLocalizations.of(context).howToAddNewFriendsQuestion,
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ),
+        ),
+        Flexible(
+          child: ListView.builder(
+            key: Keys.allFriendsWidgetListKey,
+            itemCount: friendshipScores.length,
+            itemBuilder: (context, index) {
+              return _detailedView
+                  ? DetailedFriendListItemWidget(
+                      friendshipScores: friendshipScores[index],
+                    )
+                  : SummaryFriendListItemWidget(
+                      friendshipScores: friendshipScores[index],
+                    );
+            },
           ),
-        ],
-      );
-    }
-
-    return ListView.builder(
-      key: Keys.allFriendsWidgetListKey,
-      itemCount: nonPendingFriends.length,
-      itemBuilder: (context, index) {
-        return FriendsListItemWidget(
-          friend: nonPendingFriends[index],
-        );
-      },
+        ),
+      ],
     );
   }
 }

@@ -239,8 +239,23 @@ class AppLocalizations {
       'filtered azkar not found': '''
 لم نعثر على أذكار تحتوي على هذه الكلمات
 حاول البحث بكلمات مختلفة''',
+      'detailed view': 'عرض تفصيلي',
+      'summary view': 'عرض ملخص',
+      'challenge': 'تحدى',
     },
   };
+
+  String get challenge {
+    return _localizedValues[locale.languageCode]['challenge'];
+  }
+
+  String get detailedView {
+    return _localizedValues[locale.languageCode]['detailed view'];
+  }
+
+  String get summaryView {
+    return _localizedValues[locale.languageCode]['summary view'];
+  }
 
   String get filteredAzkarNotFound {
     return _localizedValues[locale.languageCode]['filtered azkar not found'];
