@@ -245,6 +245,7 @@ class AppLocalizations {
   String get filteredAzkarNotFound {
     return _localizedValues[locale.languageCode]['filtered azkar not found'];
   }
+
   String get shareUsernameExplanation {
     return _localizedValues[locale.languageCode]['share username explanation'];
   }
