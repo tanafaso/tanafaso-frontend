@@ -29,7 +29,8 @@ class SelectedAzkarWidget extends StatefulWidget {
   _SelectedAzkarWidgetState createState() => _SelectedAzkarWidgetState();
 }
 
-class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget> {
+class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
+    with AutomaticKeepAliveClientMixin {
   List<SubChallenge> _subChallenges;
   List<TextEditingController> _repetitionsControllers = [];
 
@@ -45,6 +46,9 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // Necessary as documented by AutomaticKeepAliveClientMixin.
+    super.build(context);
+
     return Card(
       child: Column(
         children: [
@@ -319,4 +323,7 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget> {
     }
     return true;
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -33,6 +33,7 @@ class ZekrWidgetState extends State<ZekrWidget>
 
   @override
   Widget build(BuildContext context) {
+    // Necessary as documented by AutomaticKeepAliveClientMixin.
     super.build(context);
 
     return Visibility(

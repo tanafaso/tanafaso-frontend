@@ -40,6 +40,7 @@ class _DoChallengeSubChallengeListItemWidgetState
 
   @override
   Widget build(BuildContext context) {
+    // Necessary as documented by AutomaticKeepAliveClientMixin.
     super.build(context);
 
     if (buttonColor == null) {
