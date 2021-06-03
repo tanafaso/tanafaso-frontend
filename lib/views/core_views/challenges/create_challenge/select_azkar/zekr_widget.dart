@@ -47,6 +47,7 @@ class ZekrWidgetState extends State<ZekrWidget>
           onSelected();
         },
         child: Card(
+          margin: EdgeInsets.all(0),
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(
