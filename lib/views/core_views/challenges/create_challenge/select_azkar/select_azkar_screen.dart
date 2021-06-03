@@ -70,6 +70,20 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
                   ),
                 ),
               ),
+              Visibility(
+                  visible: filteredAzkarIds.length == 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      AppLocalizations.of(context).filteredAzkarNotFound,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )),
               Expanded(
                 child: Container(
                   child: ListView.separated(
