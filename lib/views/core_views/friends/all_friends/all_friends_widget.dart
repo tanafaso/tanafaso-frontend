@@ -4,6 +4,7 @@ import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/friends/all_friends/friends_list_item_widget.dart';
+import 'package:azkar/views/core_views/friends/all_friends/how_to_add_friends_screen.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -65,22 +66,54 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
     if (friendship == null ||
         friendship.friends == null ||
         friendship.friends.isEmpty) {
-      return Center(
-        child: Text(
-          AppLocalizations.of(context).noFriendsFound,
-          key: Keys.allFriendsWidgetNoFriendsFoundKey,
-        ),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            AppLocalizations.of(context).noFriendsFound,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => HowToAddFriendsScreen())),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  AppLocalizations.of(context).howToAddNewFriendsQuestion,
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+          ),
+        ],
       );
     }
 
     List<Friend> nonPendingFriends =
         friendship.friends.where((friend) => !friend.pending).toList();
     if (nonPendingFriends.length == 0) {
-      return Center(
-        child: Text(
-          AppLocalizations.of(context).noFriendsFound,
-          key: Keys.allFriendsWidgetNoFriendsFoundKey,
-        ),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            AppLocalizations.of(context).noFriendsFound,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => HowToAddFriendsScreen())),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  AppLocalizations.of(context).howToAddNewFriendsQuestion,
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+          ),
+        ],
       );
     }
 

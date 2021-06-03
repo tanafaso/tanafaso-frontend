@@ -22,7 +22,8 @@ class SelectedFriendsWidget extends StatefulWidget {
   _SelectedFriendsWidgetState createState() => _SelectedFriendsWidgetState();
 }
 
-class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget> with AutomaticKeepAliveClientMixin {
+class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
+    with AutomaticKeepAliveClientMixin {
   List<Friend> _selectedFriends;
 
   @override

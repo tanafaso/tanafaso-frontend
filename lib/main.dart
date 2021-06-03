@@ -88,7 +88,7 @@ class _MyAppState extends State<MyApp> {
         ),
         theme: ThemeData(
           primaryColor: Color(0xffcef5ce),
-          accentColor: Color(0xffcef5ce),
+          accentColor: Colors.white,
           scaffoldBackgroundColor: Color(0xffcef5ce),
           floatingActionButtonTheme:
               FloatingActionButtonThemeData(backgroundColor: Colors.white),
