@@ -148,7 +148,8 @@ class AppLocalizations {
           'يجب أن يكون عدد التكرار من 1 إلى 100',
       'motivation should not be empty': 'لا ينبغي أن يكون الدافع فارغًا',
       'name should not be empty': 'يجب ألا يكون الاسم فارغًا',
-      'click on zekr after reading it': 'اضغط على الذكر بعد قراءته لحفظ تقدمك ولكي يتم إخطار أصدقائك بعد أن تنهي التحدي.',
+      'click on zekr after reading it':
+          'اضغط على الذكر بعد قراءته لحفظ تقدمك ولكي يتم إخطار أصدقائك بعد أن تنهي التحدي.',
       'you have finished reading it': 'لقد انتهيت من قراءته',
       'the remaining repetitions': 'التكرارات المتبقية',
       'you have finished the challenge successfully': 'لقد أنهيت التحدي بنجاح',
@@ -231,7 +232,8 @@ class AppLocalizations {
       'doing a challenge': 'القيام بتحدي',
       'add the first friends challenge': 'أضف أول تحدي للأصدقاء',
       'how to add new friends': 'كيفية إضافة أصدقاء جدد',
-      'share username explanation': 'الآن يمكنك مشاركة التطبيق وكود المستخدم الخاص بك مع أصدقائك على WhatsApp و Facebook وغيرها ...',
+      'share username explanation':
+          'الآن يمكنك مشاركة التطبيق وكود المستخدم الخاص بك مع أصدقائك على WhatsApp و Facebook وغيرها ...',
       'share username title': 'شارك مع الاصدقاء',
       'how to add new friends?': 'كيف يمكنني اضافة اصدقاء جدد؟',
     },
@@ -252,13 +254,16 @@ class AppLocalizations {
   String get howToAddNewFriendsQuestion {
     return _localizedValues[locale.languageCode]['how to add new friends?'];
   }
+
   String get howToAddNewFriends {
     return _localizedValues[locale.languageCode]['how to add new friends'];
   }
 
   String get addTheFirstFriendsChallenge {
-    return _localizedValues[locale.languageCode]['add the first friends challenge'];
+    return _localizedValues[locale.languageCode]
+        ['add the first friends challenge'];
   }
+
   String get doingAChallenge {
     return _localizedValues[locale.languageCode]['doing a challenge'];
   }
@@ -771,7 +776,8 @@ class AppLocalizations {
   }
 
   String get howToAddFriendsExplanation {
-    return _localizedValues[locale.languageCode]['how to add friends explanation'];
+    return _localizedValues[locale.languageCode]
+        ['how to add friends explanation'];
   }
 
   String get ignore {

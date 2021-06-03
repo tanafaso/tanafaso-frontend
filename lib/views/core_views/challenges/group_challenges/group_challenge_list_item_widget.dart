@@ -285,7 +285,8 @@ class _GroupChallengeListItemWidgetState
                 Friendship friends =
                     await ServiceProvider.usersService.getFriends();
                 List<Friend> currentChallengeFriends = friends.friends
-                    .where((friend) => _challengedUsersIds.contains(friend.userId))
+                    .where(
+                        (friend) => _challengedUsersIds.contains(friend.userId))
                     .toList();
                 Navigator.push(
                     context,
