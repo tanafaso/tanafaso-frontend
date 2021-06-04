@@ -46,7 +46,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   List<Friend> _selectedFriends;
 
   initChallengeNameController() {
-    _challengeNameController = TextEditingController(text: _lastChallengeName);
+    _lastChallengeName = widget.initiallyChosenName;
+    _challengeNameController = TextEditingController(text: widget.initiallyChosenName);
     _challengeNameController.addListener(() {
       if (_lastChallengeName == _challengeNameController.value.text) {
         return;
