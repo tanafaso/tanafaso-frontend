@@ -40,13 +40,6 @@ class _PersonalChallengesListItemWidgetState
       maintainSize: false,
       child: GestureDetector(
         onTap: () async {
-          if (widget.challenge.deadlinePassed()) {
-            SnackBarUtils.showSnackBar(
-                context,
-                AppLocalizations.of(context)
-                    .theDeadlineHasAlreadyPassedForThisChallenge);
-            return;
-          }
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => DoChallengeScreen(
                   challenge: widget.challenge,
