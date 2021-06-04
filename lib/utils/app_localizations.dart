@@ -245,8 +245,13 @@ class AppLocalizations {
       'detailed view title': 'العرض التفصيلي',
       'detailed view explanation':
           'اضغط على أحد عناصر القائمة لرؤية المزيد من المعلومات',
+      'personal challenge not found temp error message': 'يمكن فقط نسخ التحديات الشخصية التي تم إنشاؤها بدءًا من يونيو ٢٠٢١',
     },
   };
+
+  String get personalChallengeNotFoundTempErrorMessage {
+    return _localizedValues[locale.languageCode]['personal challenge not found temp error message'];
+  }
 
   String get detailedViewTitle {
     return _localizedValues[locale.languageCode]['detailed view title'];
