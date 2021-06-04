@@ -1,5 +1,6 @@
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/net/api_exception.dart';
+import 'package:azkar/net/payload/status.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
@@ -102,10 +103,20 @@ class _PersonalChallengesListItemWidgetState
                       original = await ServiceProvider.challengesService
                           .getOriginalChallenge(widget.challenge.id);
                     } on ApiException catch (e) {
-                      SnackBarUtils.showSnackBar(
-                        context,
-                        '${AppLocalizations.of(context).error}: ${e.error}',
-                      );
+                      if (e.error ==
+                          Status.conversions[
+                              Status.API_CHALLENGE_NOT_FOUND_ERROR]) {
+                        SnackBarUtils.showSnackBar(
+                          context,
+                          AppLocalizations.of(context)
+                              .personalChallengeNotFoundTempErrorMessage,
+                        );
+                      } else {
+                        SnackBarUtils.showSnackBar(
+                          context,
+                          '${AppLocalizations.of(context).error}: ${e.error}',
+                        );
+                      }
                       return;
                     }
                     Navigator.push(

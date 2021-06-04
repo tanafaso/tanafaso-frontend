@@ -50,7 +50,7 @@ class Status {
   static const int API_NAME_EMPTY_ERROR = 44;
   static const int API_PASSWORD_CHARACTERS_LESS_THAN_8_ERROR = 45;
   static const int CHALLENGE_CREATION_DUPLICATE_ZEKR_ERROR = 46;
-  Map<int, String> conversions = const {
+  static Map<int, String> conversions = const {
     API_USER_ALREADY_LOGGED_IN_ERROR: "لقد قمت بتسجيل الدخول بالفعل",
     API_EMAIL_PASSWORD_COMBINATION_ERROR:
         "خطأ في تأكيد كلمة مرور البريد الإلكتروني",
