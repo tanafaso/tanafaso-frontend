@@ -46,7 +46,9 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
               Padding(
                 padding: EdgeInsets.only(top: 16),
                 child:
-                    Text('${AppLocalizations.of(context).loadingFriends}...'),
+                Text('${AppLocalizations
+                    .of(context)
+                    .loadingFriends}...'),
               )
             ];
           }
@@ -67,8 +69,7 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
       return NoFriendsFoundWidget();
     }
 
-    return Flexible(
-      child: ListView.builder(
+    return ListView.builder(
         key: Keys.allFriendsWidgetListKey,
         itemCount: friendshipScores.length,
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
@@ -79,7 +80,6 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
             firstInList: index == 0,
           );
         },
-      ),
-    );
+      );
   }
 }
