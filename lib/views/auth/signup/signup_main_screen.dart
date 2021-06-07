@@ -25,6 +25,19 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
   String _password;
   bool _passwordObscure = true;
   bool _repeatedPasswordObscure = true;
+  FocusNode lastNameFocus;
+  FocusNode emailFocus;
+  FocusNode passwordFocus;
+  FocusNode repeatedPasswordFocus;
+
+  @override
+  void initState() {
+    super.initState();
+    lastNameFocus = new FocusNode();
+    emailFocus = new FocusNode();
+    passwordFocus = new FocusNode();
+    repeatedPasswordFocus = new FocusNode();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +47,9 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
       },
       child: Scaffold(
         key: Keys.signUpMainScreen,
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context).signUp),
+        ),
         body: Center(
             child: Container(
                 height: MediaQuery.of(context).size.height,
@@ -49,17 +65,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                         children: [
                           new Column(
                             children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.all(100.0),
-                                child: Center(
-                                  child: Text(
-                                    AppLocalizations.of(context).signUp,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  ),
-                                ),
-                              ),
+                              Padding(padding: EdgeInsets.only(top: 3 * 8.0)),
                               new Row(
                                 children: <Widget>[
                                   new Expanded(
@@ -99,6 +105,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                     new Expanded(
                                       child: TextFormField(
                                         textAlign: TextAlign.right,
+                                        autofocus: true,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText:
@@ -112,6 +119,8 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                           }
                                           return null;
                                         },
+                                        onEditingComplete: () =>
+                                            lastNameFocus.requestFocus(),
                                       ),
                                     ),
                                   ],
@@ -159,6 +168,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                     new Expanded(
                                       child: TextFormField(
                                         textAlign: TextAlign.right,
+                                        focusNode: lastNameFocus,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText:
@@ -172,6 +182,8 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                           }
                                           return null;
                                         },
+                                        onEditingComplete: () =>
+                                            emailFocus.requestFocus(),
                                       ),
                                     ),
                                   ],
@@ -219,6 +231,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                     new Expanded(
                                       child: TextFormField(
                                         textAlign: TextAlign.left,
+                                        focusNode: emailFocus,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: 'email@example.com',
@@ -235,6 +248,8 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                           }
                                           return null;
                                         },
+                                        onEditingComplete: () =>
+                                            passwordFocus.requestFocus(),
                                       ),
                                     ),
                                   ],
@@ -284,6 +299,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                         obscureText: _passwordObscure,
                                         textDirection: TextDirection.ltr,
                                         textAlign: TextAlign.left,
+                                        focusNode: passwordFocus,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
                                           icon: GestureDetector(
@@ -311,6 +327,9 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                           }
                                           return null;
                                         },
+                                        onEditingComplete: () =>
+                                            repeatedPasswordFocus
+                                                .requestFocus(),
                                       ),
                                     ),
                                   ],
@@ -359,6 +378,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                     new Expanded(
                                       child: TextFormField(
                                         obscureText: _repeatedPasswordObscure,
+                                        focusNode: repeatedPasswordFocus,
                                         textAlign: TextAlign.left,
                                         textDirection: TextDirection.ltr,
                                         decoration: InputDecoration(

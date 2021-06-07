@@ -245,12 +245,29 @@ class AppLocalizations {
       'detailed view title': 'العرض التفصيلي',
       'detailed view explanation':
           'اضغط على أحد عناصر القائمة لرؤية المزيد من المعلومات',
-      'personal challenge not found temp error message': 'يمكن فقط نسخ التحديات الشخصية التي تم إنشاؤها بدءًا من يونيو ٢٠٢١',
+      'personal challenge not found temp error message':
+          'يمكن فقط نسخ التحديات الشخصية التي تم إنشاؤها بدءًا من يونيو ٢٠٢١',
+      'yes': 'نعم',
+      'no': 'لا',
+      'are you a new user?': 'هل أنت مستخدم جديد؟',
     },
   };
 
+  String get yes {
+    return _localizedValues[locale.languageCode]['yes'];
+  }
+
+  String get no {
+    return _localizedValues[locale.languageCode]['no'];
+  }
+
+  String get areYouANewUser {
+    return _localizedValues[locale.languageCode]['are you a new user?'];
+  }
+
   String get personalChallengeNotFoundTempErrorMessage {
-    return _localizedValues[locale.languageCode]['personal challenge not found temp error message'];
+    return _localizedValues[locale.languageCode]
+        ['personal challenge not found temp error message'];
   }
 
   String get detailedViewTitle {

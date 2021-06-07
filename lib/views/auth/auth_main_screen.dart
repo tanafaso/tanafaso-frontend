@@ -45,10 +45,10 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                   child: new Column(
                     children: <Widget>[
                       Flexible(
-                          flex: Platform.isAndroid ? 2 : 3,
+                          flex: Platform.isAndroid ? 4 : 7,
                           fit: FlexFit.tight,
                           child: Column(children: [
-                            Padding(padding: EdgeInsets.all(16)),
+                            Expanded(flex: 1, child: Padding(padding: EdgeInsets.all(16))),
                             Expanded(
                               flex: 1,
                               child: new Row(
@@ -73,111 +73,131 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                           ])),
                       Flexible(
                           fit: FlexFit.tight,
-                          flex: 1,
+                          flex: 2,
                           child: Column(children: [
-                            Expanded(
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: const EdgeInsets.only(
-                                    left: 30.0, right: 30.0),
-                                alignment: Alignment.center,
-                                child: new Column(
-                                  children: <Widget>[
-                                    new Expanded(
-                                      // ignore: deprecated_member_use
-                                      child: new OutlineButton(
-                                        key: Keys.authMainScreenSignUpButton,
-                                        shape: new RoundedRectangleBorder(
-                                            borderRadius:
-                                                new BorderRadius.circular(
-                                                    30.0)),
-                                        color: Theme.of(context).primaryColor,
-                                        highlightedBorderColor: Colors.white,
-                                        onPressed: () {
-                                          Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SignUpMainScreen()),
-                                              (_) => false);
-                                        },
-                                        child: new Container(
-                                          child: new Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              new Expanded(
-                                                child: Text(
-                                                  AppLocalizations.of(context)
-                                                      .signUp,
-                                                  key: Keys
-                                                      .authMainScreenSignUpText,
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                            Text(AppLocalizations.of(context).areYouANewUser,
+                                style: TextStyle(
+                                    color: Colors.green.shade900,
+                                    fontSize: 30.0,
+                                    fontWeight: FontWeight.bold)),
+                            Padding(padding: EdgeInsets.only(top: 8 * 3.0)),
+                            IntrinsicHeight(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      margin: const EdgeInsets.only(
+                                          left: 4.0, right: 30.0),
+                                      alignment: Alignment.center,
+                                      child: new Column(
+                                        children: <Widget>[
+                                          new Expanded(
+                                            // ignore: deprecated_member_use
+                                            child: new FlatButton(
+                                              key: Keys
+                                                  .authMainScreenLoginButton,
+                                              shape: new RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      new BorderRadius.circular(
+                                                          30.0)),
+                                              color: Colors.white,
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            SignUpMainScreen()));
+                                              },
+                                              child: new Container(
+                                                child: new Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    new Expanded(
+                                                      child: Text(
+                                                        AppLocalizations.of(
+                                                                context)
+                                                            .yes,
+                                                        key: Keys
+                                                            .authMainScreenSignUpText,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8),
-                            ),
-                            Expanded(
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: const EdgeInsets.only(
-                                    left: 30.0, right: 30.0),
-                                alignment: Alignment.center,
-                                child: new Column(
-                                  children: <Widget>[
-                                    new Expanded(
-                                      // ignore: deprecated_member_use
-                                      child: new FlatButton(
-                                        key: Keys.authMainScreenLoginButton,
-                                        shape: new RoundedRectangleBorder(
-                                            borderRadius:
-                                                new BorderRadius.circular(
-                                                    30.0)),
-                                        color: Colors.white,
-                                        onPressed: () => Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginScreen())),
-                                        child: new Container(
-                                          child: new Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              new Expanded(
-                                                child: Text(
-                                                  AppLocalizations.of(context)
-                                                      .login,
-                                                  key: Keys
-                                                      .authMainScreenLoginText,
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      margin: const EdgeInsets.only(
+                                          left: 30.0, right: 4.0),
+                                      alignment: Alignment.center,
+                                      child: new Column(
+                                        children: <Widget>[
+                                          new Expanded(
+                                            // ignore: deprecated_member_use
+                                            child: new OutlineButton(
+                                              key: Keys
+                                                  .authMainScreenSignUpButton,
+                                              shape: new RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      new BorderRadius.circular(
+                                                          30.0)),
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              highlightedBorderColor:
+                                                  Colors.white,
+                                              onPressed: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          LoginScreen())),
+                                              child: new Container(
+                                                child: new Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    new Expanded(
+                                                      child: Text(
+                                                        AppLocalizations.of(
+                                                                context)
+                                                            .no,
+                                                        key: Keys
+                                                            .authMainScreenLoginText,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                             Visibility(
@@ -221,14 +241,14 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                             ),
                             Visibility(
                               visible: Platform.isAndroid,
-                              child: Expanded(
+                              child: Flexible(
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   margin: const EdgeInsets.only(
                                       left: 30.0, right: 30.0),
                                   child: new Row(
                                     children: <Widget>[
-                                      new Expanded(
+                                      new Flexible(
                                         // ignore: deprecated_member_use
                                         child: new FlatButton(
                                           key:
@@ -244,7 +264,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: <Widget>[
-                                                new Expanded(
+                                                new Flexible(
                                                   // ignore: deprecated_member_use
                                                   child: new FlatButton(
                                                     onPressed: () =>

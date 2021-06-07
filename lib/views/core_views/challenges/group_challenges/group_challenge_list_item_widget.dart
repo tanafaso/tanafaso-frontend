@@ -3,7 +3,6 @@ import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/payload/status.dart';
 import 'package:azkar/net/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';

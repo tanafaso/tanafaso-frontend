@@ -23,6 +23,14 @@ class _LoginScreenState extends State<LoginScreen> {
   String _email;
   String _password;
   bool _passwordObscure = true;
+  FocusNode passwordFocus;
+
+  @override
+  void initState() {
+    super.initState();
+
+    passwordFocus = new FocusNode();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         key: Keys.loginScreen,
+        appBar: AppBar(title: Text(AppLocalizations.of(context).login)),
         body: Center(
             child: Container(
                 height: MediaQuery.of(context).size.height,
@@ -46,16 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: SingleChildScrollView(
                       child: new Column(
                         children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(100.0),
-                            child: Center(
-                              child: Text(
-                                AppLocalizations.of(context).login,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
-                              ),
-                            ),
-                          ),
+                          Padding(padding: EdgeInsets.only(top: 3 * 8.0)),
                           new Row(
                             children: <Widget>[
                               new Expanded(
@@ -95,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 new Expanded(
                                   child: TextFormField(
                                     obscureText: false,
+                                    autofocus: true,
                                     textAlign: TextAlign.left,
                                     onChanged: (email) => _email = email,
                                     validator: (email) {
@@ -107,6 +108,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       }
                                       return null;
                                     },
+                                    onEditingComplete: () =>
+                                        passwordFocus.requestFocus(),
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: 'email@example.com',
@@ -160,6 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: TextFormField(
                                     obscureText: _passwordObscure,
                                     textDirection: TextDirection.ltr,
+                                    focusNode: passwordFocus,
                                     textAlign: TextAlign.left,
                                     onChanged: (password) =>
                                         _password = password,
