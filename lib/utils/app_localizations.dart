@@ -28,7 +28,7 @@ class AppLocalizations {
       'confirm password': 'تأكيد كلمة المرور',
       'already have an account': 'هل لديك حساب؟',
       'passwords did not match': 'كلمات المرور غير متطابقة',
-      'email is invalid': 'البريد الإلكتروني غير صالح',
+      'email is invalid': 'البريد الإلكتروني غير صحيح',
       'name example': 'مثال على الاسم',
       'name should be of at least 2 letters':
           'يجب أن يتكون الاسم من حرفين على الأقل',
