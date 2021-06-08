@@ -410,7 +410,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                 maintainSize: false,
                                 child: Text(
                                   _errorMessage,
-                                  style: TextStyle(color: Colors.red.shade700),
+                                  style: TextStyle(color: Colors.red),
                                 ),
                               ),
                               new Container(
