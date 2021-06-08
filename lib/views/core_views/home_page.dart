@@ -62,7 +62,7 @@ enum HomePageNavigationBarItem { challenges, friends, profile }
 
 class _HomePageState extends State<HomePage> {
   String userToken;
-  int _selectedIdx = 0;
+  int _selectedIdx = 1;
   String _appBarTitle = 'Home Page';
 
   Future<void> getUserToken() async {
