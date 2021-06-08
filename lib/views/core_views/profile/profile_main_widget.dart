@@ -48,7 +48,7 @@ class ProfileMainWidget extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        user.username + "@",
+                                        user.username,
                                         style: TextStyle(
                                           color: Colors.black54,
                                         ),

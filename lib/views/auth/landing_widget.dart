@@ -1,6 +1,6 @@
 import 'package:azkar/net/service_provider.dart';
-import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
+import 'package:azkar/views/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 class LandingWidget extends StatefulWidget {
@@ -20,7 +20,7 @@ class _LandingWidgetState extends State<LandingWidget> {
             MaterialPageRoute(builder: (context) => HomePage()), (_) => false);
       } else {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => AuthMainScreen()),
+            MaterialPageRoute(builder: (context) => OnboardingScreen()),
             (_) => false);
       }
     });
