@@ -24,12 +24,16 @@ class _LoginScreenState extends State<LoginScreen> {
   String _password;
   bool _passwordObscure = true;
   FocusNode passwordFocus;
+  String _errorMessage;
 
   @override
   void initState() {
     super.initState();
 
     passwordFocus = new FocusNode();
+    _errorMessage = "";
+    _email = "";
+    _password = "";
   }
 
   @override
@@ -55,70 +59,65 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: SingleChildScrollView(
                       child: new Column(
                         children: <Widget>[
-                          Padding(padding: EdgeInsets.only(top: 3 * 8.0)),
-                          new Row(
-                            children: <Widget>[
-                              new Expanded(
-                                child: new Padding(
-                                  padding: const EdgeInsets.only(right: 40.0),
-                                  child: new Text(
-                                    AppLocalizations.of(context).email,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: 15.0,
+                          Padding(padding: EdgeInsets.only(top: 4 * 8.0)),
+                          Column(
+                            children: [
+                              new Row(
+                                children: <Widget>[
+                                  new Expanded(
+                                    child: new Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 40.0),
+                                      child: new Text(
+                                        AppLocalizations.of(context).email,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          fontSize: 15.0,
+                                        ),
+                                      ),
                                     ),
                                   ),
+                                ],
+                              ),
+                              new Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: const EdgeInsets.only(
+                                    left: 16.0, right: 16.0, top: 10.0),
+                                alignment: Alignment.center,
+                                decoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(width: 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30)),
+                                  ),
+                                ),
+                                padding: const EdgeInsets.only(
+                                    left: 16.0, right: 0.0),
+                                child: new Row(
+                                  // crossAxisAlignment: CrossAxisAlignment.center,
+                                  // mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    new Expanded(
+                                      child: TextFormField(
+                                        obscureText: false,
+                                        autofocus: true,
+                                        textAlign: TextAlign.left,
+                                        onChanged: (email) => _email = email,
+                                        onEditingComplete: () =>
+                                            passwordFocus.requestFocus(),
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'email@example.com',
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
-                          ),
-                          new Container(
-                            width: MediaQuery.of(context).size.width,
-                            margin: const EdgeInsets.only(
-                                left: 40.0, right: 40.0, top: 10.0),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.black,
-                                    width: 0.5,
-                                    style: BorderStyle.solid),
-                              ),
-                            ),
-                            padding:
-                                const EdgeInsets.only(left: 10.0, right: 0.0),
-                            child: new Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                new Expanded(
-                                  child: TextFormField(
-                                    obscureText: false,
-                                    autofocus: true,
-                                    textAlign: TextAlign.left,
-                                    onChanged: (email) => _email = email,
-                                    validator: (email) {
-                                      RegExp regex = new RegExp(
-                                          '^[\\w-_\\.+]*[\\w-_\\.]\\@'
-                                          '([\\w]+\\.)+[\\w]+[\\w]\$');
-                                      if (regex.stringMatch(email) != email) {
-                                        return AppLocalizations.of(context)
-                                            .emailIsInvalid;
-                                      }
-                                      return null;
-                                    },
-                                    onEditingComplete: () =>
-                                        passwordFocus.requestFocus(),
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'email@example.com',
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
                           ),
                           Divider(
                             height: 24.0,
@@ -143,37 +142,28 @@ class _LoginScreenState extends State<LoginScreen> {
                           new Container(
                             width: MediaQuery.of(context).size.width,
                             margin: const EdgeInsets.only(
-                                left: 40.0, right: 40.0, top: 10.0),
+                                left: 16.0, right: 16.0, top: 10.0),
                             alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.black,
-                                    width: 0.5,
-                                    style: BorderStyle.solid),
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(width: 1),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
                               ),
                             ),
                             padding:
-                                const EdgeInsets.only(left: 10.0, right: 0.0),
+                                const EdgeInsets.only(left: 16.0, right: 0.0),
                             child: new Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              // crossAxisAlignment: CrossAxisAlignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 new Expanded(
                                   child: TextFormField(
                                     obscureText: _passwordObscure,
-                                    textDirection: TextDirection.ltr,
                                     focusNode: passwordFocus,
                                     textAlign: TextAlign.left,
                                     onChanged: (password) =>
                                         _password = password,
-                                    validator: (password) {
-                                      if (password.length < 8) {
-                                        return AppLocalizations.of(context)
-                                            .passwordShouldBeOfAtLeast8Characters;
-                                      }
-                                      return null;
-                                    },
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       icon: GestureDetector(
@@ -201,6 +191,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           Divider(
                             height: 20.0,
                           ),
+                          Visibility(
+                            visible: _errorMessage.length > 0,
+                            maintainSize: false,
+                            child: Text(
+                              _errorMessage,
+                              style: TextStyle(color: Colors.red.shade700),
+                            ),
+                          ),
                           new Container(
                             width: MediaQuery.of(context).size.width,
                             margin: const EdgeInsets.only(
@@ -217,13 +215,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     color: Colors.white,
                                     onPressed: () {
-                                      if (_loginFormKey.currentState
-                                          .validate()) {
-                                        loginWithEmail(
-                                            new EmailLoginRequestBody(
-                                                email: _email,
-                                                password: _password));
+                                      RegExp regex = new RegExp(
+                                          '^[\\w-_\\.+]*[\\w-_\\.]\\@'
+                                          '([\\w]+\\.)+[\\w]+[\\w]\$');
+                                      if (regex.stringMatch(_email) != _email) {
+                                        setState(() {
+                                          _errorMessage =
+                                              AppLocalizations.of(context)
+                                                  .emailIsInvalid;
+                                        });
+                                        return;
                                       }
+                                      if (_password.length < 8) {
+                                        setState(() {
+                                          _errorMessage = AppLocalizations.of(
+                                                  context)
+                                              .passwordShouldBeOfAtLeast8Characters;
+                                        });
+                                        return;
+                                      }
+
+                                      loginWithEmail(new EmailLoginRequestBody(
+                                          email: _email, password: _password));
                                     },
                                     child: new Container(
                                       padding: const EdgeInsets.symmetric(
@@ -399,12 +412,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                     textAlign: TextAlign.end,
                                   ),
                                   onPressed: () {
-                                    Navigator.pushAndRemoveUntil(
+                                    Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                new SignUpMainScreen()),
-                                        (_) => false);
+                                                new SignUpMainScreen()));
                                   },
                                 ),
                                 Expanded(

@@ -48,7 +48,9 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                           flex: Platform.isAndroid ? 4 : 7,
                           fit: FlexFit.tight,
                           child: Column(children: [
-                            Expanded(flex: 1, child: Padding(padding: EdgeInsets.all(16))),
+                            Expanded(
+                                flex: 1,
+                                child: Padding(padding: EdgeInsets.all(16))),
                             Expanded(
                               flex: 1,
                               child: new Row(
@@ -77,7 +79,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                           child: Column(children: [
                             Text(AppLocalizations.of(context).areYouANewUser,
                                 style: TextStyle(
-                                    color: Colors.green.shade900,
+                                    color: Colors.black,
                                     fontSize: 30.0,
                                     fontWeight: FontWeight.bold)),
                             Padding(padding: EdgeInsets.only(top: 8 * 3.0)),
@@ -125,7 +127,8 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                                                             TextAlign.center,
                                                         style: TextStyle(
                                                             fontSize: 20,
-                                                            color: Colors.black,
+                                                            color: Colors
+                                                                .green.shade900,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .bold),
@@ -182,7 +185,8 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                                                             TextAlign.center,
                                                         style: TextStyle(
                                                             fontSize: 20,
-                                                            color: Colors.black,
+                                                            color: Colors
+                                                                .green.shade900,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .bold),
