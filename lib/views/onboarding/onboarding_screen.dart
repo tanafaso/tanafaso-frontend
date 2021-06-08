@@ -104,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         padding: const EdgeInsets.all(0),
         child: Icon(
           Icons.arrow_forward_ios_outlined,
-          size: 40,
+          size: 30,
           color: Colors.black,
         ),
       ),
