@@ -469,7 +469,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => new HomePage()));
+        context, MaterialPageRoute(builder: (context) => HomePage()));
   }
 
   loginWithEmail(EmailLoginRequestBody request) async {
@@ -481,6 +481,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => new HomePage()), (_) => false);
+        MaterialPageRoute(builder: (context) => HomePage()), (_) => false);
   }
 }
