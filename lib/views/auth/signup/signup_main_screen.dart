@@ -29,6 +29,8 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
   FocusNode emailFocus;
   FocusNode passwordFocus;
   FocusNode repeatedPasswordFocus;
+  String _confirmedPassword;
+  String _errorMessage;
 
   @override
   void initState() {
@@ -37,6 +39,12 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
     emailFocus = new FocusNode();
     passwordFocus = new FocusNode();
     repeatedPasswordFocus = new FocusNode();
+    _firstName = "";
+    _lastName = "";
+    _email = "";
+    _password = "";
+    _confirmedPassword = "";
+    _errorMessage = "";
   }
 
   @override
@@ -65,7 +73,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                         children: [
                           new Column(
                             children: <Widget>[
-                              Padding(padding: EdgeInsets.only(top: 3 * 8.0)),
+                              Padding(padding: EdgeInsets.only(top: 4 * 8.0)),
                               new Row(
                                 children: <Widget>[
                                   new Expanded(
@@ -86,18 +94,17 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               new Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: const EdgeInsets.only(
-                                    left: 40.0, right: 40.0, top: 10.0),
+                                    left: 16.0, right: 16.0, top: 10.0),
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.black,
-                                        width: 0.5,
-                                        style: BorderStyle.solid),
+                                decoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(width: 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30)),
                                   ),
                                 ),
                                 padding: const EdgeInsets.only(
-                                    left: 10.0, right: 0.0),
+                                    left: 16.0, right: 16.0),
                                 child: new Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -107,18 +114,9 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                         textAlign: TextAlign.right,
                                         autofocus: true,
                                         decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText:
-                                                AppLocalizations.of(context)
-                                                    .firstNameExample),
+                                          border: InputBorder.none,
+                                        ),
                                         onChanged: (name) => _firstName = name,
-                                        validator: (name) {
-                                          if (name.length < 2) {
-                                            return AppLocalizations.of(context)
-                                                .nameShouldBeOfAtLeast2Letters;
-                                          }
-                                          return null;
-                                        },
                                         onEditingComplete: () =>
                                             lastNameFocus.requestFocus(),
                                       ),
@@ -149,18 +147,17 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               new Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: const EdgeInsets.only(
-                                    left: 40.0, right: 40.0, top: 10.0),
+                                    left: 16.0, right: 16.0, top: 10.0),
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.black,
-                                        width: 0.5,
-                                        style: BorderStyle.solid),
+                                decoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(width: 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30)),
                                   ),
                                 ),
                                 padding: const EdgeInsets.only(
-                                    left: 10.0, right: 0.0),
+                                    left: 16.0, right: 16.0),
                                 child: new Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -170,18 +167,9 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                         textAlign: TextAlign.right,
                                         focusNode: lastNameFocus,
                                         decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText:
-                                                AppLocalizations.of(context)
-                                                    .lastNameExample),
+                                          border: InputBorder.none,
+                                        ),
                                         onChanged: (name) => _lastName = name,
-                                        validator: (name) {
-                                          if (name.length < 2) {
-                                            return AppLocalizations.of(context)
-                                                .nameShouldBeOfAtLeast2Letters;
-                                          }
-                                          return null;
-                                        },
                                         onEditingComplete: () =>
                                             emailFocus.requestFocus(),
                                       ),
@@ -212,18 +200,17 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               new Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: const EdgeInsets.only(
-                                    left: 40.0, right: 40.0, top: 10.0),
+                                    left: 16.0, right: 16.0, top: 10.0),
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.black,
-                                        width: 0.5,
-                                        style: BorderStyle.solid),
+                                decoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(width: 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30)),
                                   ),
                                 ),
                                 padding: const EdgeInsets.only(
-                                    left: 10.0, right: 0.0),
+                                    left: 16.0, right: 16.0),
                                 child: new Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -237,17 +224,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                           hintText: 'email@example.com',
                                         ),
                                         onChanged: (email) => _email = email,
-                                        validator: (email) {
-                                          RegExp regex = new RegExp(
-                                              '^[\\w-_\\.+]*[\\w-_\\.]\\@'
-                                              '([\\w]+\\.)+[\\w]+[\\w]\$');
-                                          if (regex.stringMatch(email) !=
-                                              email) {
-                                            return AppLocalizations.of(context)
-                                                .emailIsInvalid;
-                                          }
-                                          return null;
-                                        },
                                         onEditingComplete: () =>
                                             passwordFocus.requestFocus(),
                                       ),
@@ -278,18 +254,17 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               new Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: const EdgeInsets.only(
-                                    left: 40.0, right: 40.0, top: 10.0),
+                                    left: 16.0, right: 16.0, top: 10.0),
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.black,
-                                        width: 0.5,
-                                        style: BorderStyle.solid),
+                                decoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(width: 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30)),
                                   ),
                                 ),
                                 padding: const EdgeInsets.only(
-                                    left: 10.0, right: 0.0),
+                                    left: 16.0, right: 16.0),
                                 child: new Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -320,13 +295,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                         ),
                                         onChanged: (password) =>
                                             _password = password,
-                                        validator: (password) {
-                                          if (password.length < 8) {
-                                            return AppLocalizations.of(context)
-                                                .passwordShouldBeOfAtLeast8Characters;
-                                          }
-                                          return null;
-                                        },
                                         onEditingComplete: () =>
                                             repeatedPasswordFocus
                                                 .requestFocus(),
@@ -359,18 +327,17 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               new Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: const EdgeInsets.only(
-                                    left: 40.0, right: 40.0, top: 10.0),
+                                    left: 16.0, right: 16.0, top: 10.0),
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.black,
-                                        width: 0.5,
-                                        style: BorderStyle.solid),
+                                decoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(width: 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30)),
                                   ),
                                 ),
                                 padding: const EdgeInsets.only(
-                                    left: 10.0, right: 0.0),
+                                    left: 16.0, right: 16.0),
                                 child: new Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -381,6 +348,8 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                         focusNode: repeatedPasswordFocus,
                                         textAlign: TextAlign.left,
                                         textDirection: TextDirection.ltr,
+                                        onChanged: (password) =>
+                                            _confirmedPassword = password,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
                                           icon: GestureDetector(
@@ -400,13 +369,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                           hintText: AppLocalizations.of(context)
                                               .passwordHintText,
                                         ),
-                                        validator: (confirmedPassword) {
-                                          if (confirmedPassword != _password) {
-                                            return AppLocalizations.of(context)
-                                                .passwordsDidNotMatch;
-                                          }
-                                          return null;
-                                        },
                                       ),
                                     ),
                                   ],
@@ -442,12 +404,21 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                   ),
                                 ],
                               ),
+                              Padding(padding: EdgeInsets.only(top: 8)),
+                              Visibility(
+                                visible: _errorMessage.length > 0,
+                                maintainSize: false,
+                                child: Text(
+                                  _errorMessage,
+                                  style: TextStyle(color: Colors.red.shade700),
+                                ),
+                              ),
                               new Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: const EdgeInsets.only(
                                     left: 30.0,
                                     right: 30.0,
-                                    top: 50.0,
+                                    top: 16.0,
                                     bottom: 10),
                                 alignment: Alignment.center,
                                 child: new Row(
@@ -461,10 +432,55 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                               new BorderRadius.circular(30.0),
                                         ),
                                         onPressed: () {
-                                          if (_signUpFormKey.currentState
-                                              .validate()) {
-                                            performSignUp();
+                                          if (_firstName.length < 2) {
+                                            setState(() {
+                                              _errorMessage = AppLocalizations
+                                                      .of(context)
+                                                  .nameShouldBeOfAtLeast2Letters;
+                                            });
+                                            return;
                                           }
+                                          if (_lastName.length < 2) {
+                                            setState(() {
+                                              _errorMessage = AppLocalizations
+                                                      .of(context)
+                                                  .nameShouldBeOfAtLeast2Letters;
+                                            });
+                                            return;
+                                          }
+
+                                          RegExp regex = new RegExp(
+                                              '^[\\w-_\\.+]*[\\w-_\\.]\\@'
+                                              '([\\w]+\\.)+[\\w]+[\\w]\$');
+                                          if (regex.stringMatch(_email) !=
+                                              _email) {
+                                            setState(() {
+                                              _errorMessage =
+                                                  AppLocalizations.of(context)
+                                                      .emailIsInvalid;
+                                            });
+                                            return;
+                                          }
+
+                                          if (_password.length < 8) {
+                                            setState(() {
+                                              _errorMessage = AppLocalizations
+                                                      .of(context)
+                                                  .passwordShouldBeOfAtLeast8Characters;
+                                            });
+                                            return;
+                                          }
+
+                                          if (_confirmedPassword != _password) {
+                                            setState(() {
+                                              _errorMessage =
+                                                  AppLocalizations.of(context)
+                                                      .passwordsDidNotMatch;
+                                            });
+                                            return;
+                                          }
+
+                                          performSignUp();
                                         },
                                         child: new Container(
                                           padding: const EdgeInsets.symmetric(
