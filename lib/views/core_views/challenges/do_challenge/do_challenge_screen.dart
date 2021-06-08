@@ -36,10 +36,12 @@ class DoChallengeScreen extends StatefulWidget {
 
 class _DoChallengeScreenState extends State<DoChallengeScreen> {
   ConfettiController confettiControler;
+  bool _finishedConfetti;
 
   @override
   void initState() {
     super.initState();
+    _finishedConfetti = false;
     setState(() {
       initConfettiController();
     });
@@ -160,12 +162,13 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
               SnackBarUtils.showSnackBar(context, e.error);
             }
 
+            print('callback changed index' + index.toString());
             widget.challengeChangedCallback(widget.challenge);
             if (widget.challenge.done()) {
               confettiControler.addListener(() {
                 if (confettiControler.state ==
                     ConfettiControllerState.stopped) {
-                  Navigator.of(context).pop();
+                  onFinish();
                 }
               });
 
@@ -175,5 +178,21 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
         );
       },
     );
+  }
+
+  onFinish() {
+    // Avoid popping twice if confetti's controller decided to call our listner
+    // more than once.
+    if (_finishedConfetti) {
+      return;
+    }
+    _finishedConfetti = true;
+    Navigator.of(context).pop();
+  }
+
+  @override
+  void dispose() {
+    confettiControler.dispose();
+    super.dispose();
   }
 }

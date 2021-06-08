@@ -56,7 +56,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
       child: Scaffold(
         key: Keys.signUpMainScreen,
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).signUp),
+          title: Text("إنشاء حساب"),
         ),
         body: Center(
             child: Container(
