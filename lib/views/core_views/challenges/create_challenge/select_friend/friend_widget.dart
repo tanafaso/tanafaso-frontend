@@ -39,7 +39,7 @@ class _FriendWidgetState extends State<FriendWidget>
           });
         },
         child: Card(
-          color: _selected ? Colors.green.shade600 : Colors.white,
+          color: _selected ? Colors.green.shade300 : Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: IntrinsicHeight(
