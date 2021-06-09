@@ -34,6 +34,9 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
         ? getMainWidget()
         : DescribedFeatureOverlay(
             featureId: Features.FRIEND_DETAILED_VIEW,
+            overflowMode: OverflowMode.wrapBackground,
+            barrierDismissible: false,
+            backgroundDismissible: false,
             contentLocation: ContentLocation.below,
             tapTarget: Icon(Icons.done_outline),
             // The widget that will be displayed as the tap target.
@@ -83,7 +86,6 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
             backgroundColor: Theme.of(context).primaryColor,
             targetColor: Theme.of(context).accentColor,
             textColor: Colors.black,
-            overflowMode: OverflowMode.wrapBackground,
             child: getMainWidget());
   }
 

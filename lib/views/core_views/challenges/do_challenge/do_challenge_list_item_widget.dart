@@ -65,6 +65,9 @@ class _DoChallengeSubChallengeListItemWidgetState
         ? getMainWidget()
         : DescribedFeatureOverlay(
             featureId: Features.CLICK_ZEKR_AFTER_FINISH,
+            overflowMode: OverflowMode.wrapBackground,
+            barrierDismissible: false,
+            backgroundDismissible: false,
             contentLocation: ContentLocation.above,
             tapTarget: Icon(Icons.done),
             // The widget that will be displayed as the tap target.
