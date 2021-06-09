@@ -75,6 +75,8 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
         children: [
           DescribedFeatureOverlay(
               featureId: Features.SHARE_USERNAME,
+              barrierDismissible: false,
+              backgroundDismissible: false,
               contentLocation: ContentLocation.above,
               tapTarget: Icon(Icons.share),
               // The widget that will be displayed as the tap target.
