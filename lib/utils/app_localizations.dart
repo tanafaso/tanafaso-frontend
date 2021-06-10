@@ -43,7 +43,7 @@ class AppLocalizations {
       'resend': 'إعادة إرسال',
       'did not receive the code?': 'لم يصلك الرمز؟',
       'please fill up all the cells properly':
-          'الرجاء إدخال جميع المعلومات المطلوبة',
+          'يرجى ملء جميع الخلايا بشكل صحيح',
       'the challenges': 'التحديات',
       'friends': 'الأصدقاء',
       'profile': 'الملف الشخصي',
