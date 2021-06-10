@@ -212,6 +212,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               email: widget.phoneNumber, pin: int.parse(currentText)));
     } on ApiException catch (_) {
       onEmailVerificationError();
+      return;
     }
 
     onEmailVerificationSuccess();
