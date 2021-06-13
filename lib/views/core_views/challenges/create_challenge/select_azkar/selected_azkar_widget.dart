@@ -39,8 +39,15 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
     super.initState();
     _subChallenges = widget.initiallySelectedSubChallenges;
     for (var subChallenge in _subChallenges) {
-      _repetitionsControllers.add(
-          TextEditingController(text: subChallenge.repetitions.toString()));
+      var controller = TextEditingController(text: subChallenge.repetitions.toString());
+      _repetitionsControllers.add(controller);
+      controller.addListener(() {
+        if (validateRepetition(controller.value.text, true)) {
+          subChallenge.repetitions =
+              ArabicUtils.stringToNumber(controller.value.text);
+        }
+        notifyParentWithDataChanges();
+      });
     }
   }
 
