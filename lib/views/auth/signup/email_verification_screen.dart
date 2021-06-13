@@ -216,10 +216,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     }
 
     onEmailVerificationSuccess();
-
-    setState(() {
-      hasError = false;
-    });
   }
 
   void onEmailVerificationError() {
