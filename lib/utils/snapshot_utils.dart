@@ -1,5 +1,5 @@
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/payload/status.dart';
+import 'package:azkar/net/api_interface/status.dart';
 import 'package:flutter/material.dart';
 
 class SnapshotUtils {

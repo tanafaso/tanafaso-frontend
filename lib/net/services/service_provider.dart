@@ -1,5 +1,5 @@
 import 'package:azkar/net/services/authentication_service.dart';
-import 'package:azkar/net/services/cache_manager.dart';
+import 'package:azkar/net/cache_manager.dart';
 import 'package:azkar/net/services/categories_service.dart';
 import 'package:azkar/net/services/challenges_service.dart';
 import 'package:azkar/net/services/groups_service.dart';

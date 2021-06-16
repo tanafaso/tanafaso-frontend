@@ -1,5 +1,5 @@
 import 'package:azkar/models/friendship_scores.dart';
-import 'package:azkar/net/payload/response_base.dart';
+import 'package:azkar/net/api_interface/response_base.dart';
 
 class GetFriendsLeaderboardResponse extends ResponseBase {
   List<FriendshipScores> friendshipScores;

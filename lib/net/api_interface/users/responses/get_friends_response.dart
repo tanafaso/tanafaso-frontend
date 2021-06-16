@@ -1,6 +1,6 @@
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
-import 'package:azkar/net/payload/response_base.dart';
+import 'package:azkar/net/api_interface/response_base.dart';
 
 class GetFriendsResponse extends ResponseBase {
   Friendship friendship;

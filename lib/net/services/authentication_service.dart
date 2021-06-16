@@ -1,24 +1,23 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:azkar/net/services/api_caller.dart';
+import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/api_exception.dart';
+import 'package:azkar/net/api_interface/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/net/endpoints.dart';
-import 'package:azkar/net/payload/authentication/requests/email_login_request_body.dart';
-import 'package:azkar/net/payload/authentication/requests/email_registration_request_body.dart';
-import 'package:azkar/net/payload/authentication/requests/email_verification_request_body.dart';
-import 'package:azkar/net/payload/authentication/requests/facebook_authentication_request_body.dart';
-import 'package:azkar/net/payload/authentication/requests/reset_password_request_body.dart';
-import 'package:azkar/net/payload/authentication/responses/email_login_response.dart';
-import 'package:azkar/net/payload/authentication/responses/email_registration_response.dart';
-import 'package:azkar/net/payload/authentication/responses/email_verification_response.dart';
-import 'package:azkar/net/payload/authentication/responses/facebook_friends_response.dart';
-import 'package:azkar/net/payload/authentication/responses/reset_password_response.dart';
+import 'package:azkar/net/api_interface/authentication/requests/email_login_request_body.dart';
+import 'package:azkar/net/api_interface/authentication/requests/email_registration_request_body.dart';
+import 'package:azkar/net/api_interface/authentication/requests/email_verification_request_body.dart';
+import 'package:azkar/net/api_interface/authentication/requests/facebook_authentication_request_body.dart';
+import 'package:azkar/net/api_interface/authentication/requests/reset_password_request_body.dart';
+import 'package:azkar/net/api_interface/authentication/responses/email_login_response.dart';
+import 'package:azkar/net/api_interface/authentication/responses/email_registration_response.dart';
+import 'package:azkar/net/api_interface/authentication/responses/email_verification_response.dart';
+import 'package:azkar/net/api_interface/authentication/responses/facebook_friends_response.dart';
+import 'package:azkar/net/api_interface/authentication/responses/reset_password_response.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:http/http.dart' as http;
-
-import '../payload/authentication/responses/facebook_authentication_response.dart';
 
 class AuthenticationService {
   static const int FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE = 190;
