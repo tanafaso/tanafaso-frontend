@@ -1,10 +1,10 @@
-import 'package:azkar/net/authentication_service.dart';
-import 'package:azkar/net/cache_manager.dart';
-import 'package:azkar/net/categories_service.dart';
-import 'package:azkar/net/challenges_service.dart';
-import 'package:azkar/net/groups_service.dart';
-import 'package:azkar/net/secure_storage_service.dart';
-import 'package:azkar/net/users_service.dart';
+import 'package:azkar/net/services/authentication_service.dart';
+import 'package:azkar/net/services/cache_manager.dart';
+import 'package:azkar/net/services/categories_service.dart';
+import 'package:azkar/net/services/challenges_service.dart';
+import 'package:azkar/net/services/groups_service.dart';
+import 'package:azkar/net/services/secure_storage_service.dart';
+import 'package:azkar/net/services/users_service.dart';
 import 'package:http/http.dart' as http;
 
 /// Holds instances of the application services. This should be the main access

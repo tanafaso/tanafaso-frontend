@@ -1,7 +1,7 @@
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
-import 'package:azkar/net/service_provider.dart';
-import 'package:azkar/net/users_service.dart';
+import 'package:azkar/net/services/service_provider.dart';
+import 'package:azkar/net/services/users_service.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/friends/all_friends/all_friends_widget.dart';
 import 'package:azkar/views/core_views/friends/all_friends/detailed_friend_list_item_widget.dart';

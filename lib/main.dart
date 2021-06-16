@@ -6,7 +6,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:azkar/utils/app_localizations.dart';
-import 'package:azkar/views/auth/landing_widget.dart';
+import 'package:azkar/views/landing_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:azkar/net/api_caller.dart';
+import 'package:azkar/net/services/api_caller.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/azkar/requests/get_categories_response.dart';
