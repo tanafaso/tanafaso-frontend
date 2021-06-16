@@ -1,4 +1,4 @@
-import 'package:azkar/net/payload/response_base.dart';
+import 'package:azkar/net/api_interface/response_base.dart';
 
 class ResolveFriendRequestResponse extends ResponseBase {
   static ResolveFriendRequestResponse fromJson(Map<String, dynamic> json) {

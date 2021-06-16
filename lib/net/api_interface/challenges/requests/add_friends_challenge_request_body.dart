@@ -1,5 +1,5 @@
 import 'package:azkar/models/challenge.dart';
-import 'package:azkar/net/payload/request_base.dart';
+import 'package:azkar/net/api_interface/request_base.dart';
 import 'package:flutter/cupertino.dart';
 
 class AddFriendsChallengeRequestBody extends RequestBodyBase {

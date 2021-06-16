@@ -1,5 +1,5 @@
 import 'package:azkar/models/challenge.dart';
-import 'package:azkar/net/payload/response_base.dart';
+import 'package:azkar/net/api_interface/response_base.dart';
 
 class AddChallengeResponse extends ResponseBase {
   Challenge challenge;

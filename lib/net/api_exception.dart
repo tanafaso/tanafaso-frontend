@@ -1,4 +1,4 @@
-import 'package:azkar/net/payload/status.dart';
+import 'package:azkar/net/api_interface/status.dart';
 
 class ApiException implements Exception {
   String error;

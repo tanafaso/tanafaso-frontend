@@ -1,5 +1,5 @@
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/payload/users/requests/set_notifications_token_request_body.dart';
+import 'package:azkar/net/api_interface/users/requests/set_notifications_token_request_body.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
