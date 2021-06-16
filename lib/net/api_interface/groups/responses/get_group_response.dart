@@ -1,5 +1,5 @@
 import 'package:azkar/models/group.dart';
-import 'package:azkar/net/payload/response_base.dart';
+import 'package:azkar/net/api_interface/response_base.dart';
 
 class GetGroupResponse extends ResponseBase {
   Group group;
