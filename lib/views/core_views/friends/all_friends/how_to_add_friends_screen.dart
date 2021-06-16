@@ -1,5 +1,4 @@
 import 'package:azkar/utils/app_localizations.dart';
-import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 
 class HowToAddFriendsScreen extends StatelessWidget {
@@ -18,7 +17,6 @@ class HowToAddFriendsScreen extends StatelessWidget {
               scrollDirection: Axis.vertical,
               child: Text(
                 AppLocalizations.of(context).howToAddFriendsExplanation,
-                key: Keys.allFriendsWidgetNoFriendsFoundKey,
                 style: TextStyle(fontSize: 20),
               ),
             ),
