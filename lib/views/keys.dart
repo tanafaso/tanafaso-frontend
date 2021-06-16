@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-/// Holds all widgets keys.
+/// Holds widgets keys.
 class Keys {
   // Keys for widgets used in auth_main_screen.dart
   static final GlobalKey authMainScreenSignUpText = new GlobalKey();

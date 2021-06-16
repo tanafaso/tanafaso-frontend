@@ -2,7 +2,7 @@ import 'package:azkar/models/category.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/payload/azkar/requests/get_categories_response.dart';
-import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';

@@ -1,6 +1,6 @@
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/payload/authentication/requests/email_registration_request_body.dart';
-import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/auth/auth_main_screen.dart';

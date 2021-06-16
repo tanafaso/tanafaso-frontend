@@ -1,4 +1,4 @@
-import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';

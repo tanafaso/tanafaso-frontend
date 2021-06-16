@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/user_score.dart';
-import 'package:azkar/net/api_caller.dart';
+import 'package:azkar/net/services/api_caller.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/payload/challenges/responses/get_challenges_response.dart';

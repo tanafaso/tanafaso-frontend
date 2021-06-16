@@ -1,5 +1,5 @@
 import 'package:azkar/models/friendship_scores.dart';
-import 'package:azkar/net/service_provider.dart';
+import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/friends/all_friends/friend_list_item_widget.dart';
