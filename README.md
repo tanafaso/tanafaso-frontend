@@ -2,7 +2,7 @@
 
 ![Android Continuous Build and Test](https://github.com/challenge-azkar/azkar-frontend/workflows/Android%20Continuous%20Build%20and%20Test/badge.svg?branch=master) 
 
-Android & iOS application for Muslims to challenge and motivate themselves and their friends to read Azkar in a fun way.
+A Flutter application for Muslims to challenge and motivate themselves and their friends to read Azkar in a fun way.
 
 | ![logo](https://user-images.githubusercontent.com/13997703/122165215-2f4e7380-ce78-11eb-91ce-391ce240321f.png) | ![Screenshot_1621806606](https://user-images.githubusercontent.com/13997703/122512358-07424a00-d009-11eb-8157-623b728dea03.jpeg) | ![Screenshot_1621806667](https://user-images.githubusercontent.com/13997703/122512360-07dae080-d009-11eb-9302-f5b096192161.jpeg) | ![Screenshot_1621806734](https://user-images.githubusercontent.com/13997703/122512364-08737700-d009-11eb-8722-b2542ed85f60.jpeg) |
 |-|-|-|-|
