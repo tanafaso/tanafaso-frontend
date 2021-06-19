@@ -12,7 +12,7 @@ A Flutter application for Muslims that help them challenge and motivate themselv
 
 
 ## Contributing
-There are a lot of ways you can contribute to this project.
+There are a lot of ways you can contribute to this project. You can filter issues by `good first issue` label to get started with an issue that is easy to fix.
 - Suggest new features by filing an issue.
 - Report bugs by filing an issue.
 - Add code documentation, so that it is easier for future contributers to ramp-up.
