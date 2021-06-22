@@ -43,7 +43,6 @@ class ChallengesService {
     }
   }
 
-
   Future<List<Challenge>> getAllChallenges() async {
     http.Response httpResponse = await ApiCaller.get(
         route: Endpoint(endpointRoute: EndpointRoute.GET_ALL_CHALLENGES));
