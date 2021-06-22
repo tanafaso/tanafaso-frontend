@@ -20,15 +20,14 @@ class DoChallengeScreen extends StatefulWidget {
   // Note that some of the challenged users may not be friends.
   final List<String> challengedUsersIds;
   final List<String> challengedUsersFullNames;
-  final bool isPersonalChallenge;
 
-  DoChallengeScreen(
-      {@required this.challenge,
-      this.group,
-      this.challengedUsersIds,
-      this.challengedUsersFullNames,
-      @required this.challengeChangedCallback,
-      @required this.isPersonalChallenge});
+  DoChallengeScreen({
+    @required this.challenge,
+    this.group,
+    this.challengedUsersIds,
+    this.challengedUsersFullNames,
+    @required this.challengeChangedCallback,
+  });
 
   @override
   _DoChallengeScreenState createState() => _DoChallengeScreenState();
@@ -65,10 +64,8 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                 children: [
                   Card(
                     child: Visibility(
-                      visible:
-                          !widget.isPersonalChallenge && widget.group != null,
-                      child: !(!widget.isPersonalChallenge &&
-                              widget.group != null)
+                      visible: widget.group != null,
+                      child: widget.group == null
                           ? Container()
                           : ConstrainedBox(
                               constraints: BoxConstraints(
@@ -153,16 +150,12 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
           callback: (SubChallenge newSubChallenge) async {
             widget.challenge.subChallenges[index] = newSubChallenge;
             try {
-              widget.isPersonalChallenge
-                  ? await ServiceProvider.challengesService
-                      .updatePersonalChallenge(widget.challenge)
-                  : await ServiceProvider.challengesService
-                      .updateChallenge(widget.challenge);
+              await ServiceProvider.challengesService
+                  .updateChallenge(widget.challenge);
             } on ApiException catch (e) {
               SnackBarUtils.showSnackBar(context, e.error);
             }
 
-            print('callback changed index' + index.toString());
             widget.challengeChangedCallback(widget.challenge);
             if (widget.challenge.done()) {
               confettiControler.addListener(() {

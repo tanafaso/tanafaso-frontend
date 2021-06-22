@@ -137,8 +137,6 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                                                     initiallySelectedFriends: [
                                                       friendshipScores.friend
                                                     ],
-                                                    defaultChallengeTarget:
-                                                        ChallengeTarget.FRIENDS,
                                                   )));
                                     },
                                     child: Card(

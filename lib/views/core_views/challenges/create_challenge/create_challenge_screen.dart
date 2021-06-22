@@ -12,22 +12,18 @@ import 'package:azkar/views/core_views/challenges/create_challenge/select_azkar/
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/selected_friends_widget.dart';
 import 'package:flutter/material.dart';
 
-enum ChallengeTarget { SELF, FRIENDS }
-
 // ignore: must_be_immutable
 class CreateChallengeScreen extends StatefulWidget {
   List<Friend> initiallySelectedFriends;
   List<SubChallenge> initiallySelectedSubChallenges;
   String initiallyChosenName;
   String initiallyChosenMotivation;
-  ChallengeTarget defaultChallengeTarget;
 
   CreateChallengeScreen({
     this.initiallySelectedFriends = const [],
     this.initiallySelectedSubChallenges = const [],
     this.initiallyChosenName = "",
     this.initiallyChosenMotivation = "",
-    this.defaultChallengeTarget = ChallengeTarget.FRIENDS,
   });
 
   @override
@@ -35,7 +31,6 @@ class CreateChallengeScreen extends StatefulWidget {
 }
 
 class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
-  ChallengeTarget _challengeTarget = ChallengeTarget.FRIENDS;
   TextEditingController _challengeNameController;
   String _lastChallengeName = '';
   TextEditingController _motivationController;
@@ -139,7 +134,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     _motivationController =
         TextEditingController(text: widget.initiallyChosenMotivation);
     _subChallengesValid = _subChallenges.length > 0;
-    _challengeTarget = widget.defaultChallengeTarget;
     _selectedFriends = widget.initiallySelectedFriends;
     super.initState();
   }
@@ -172,99 +166,14 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                       addAutomaticKeepAlives: true,
                       shrinkWrap: true,
                       children: [
-                        Card(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Text(
-                                      '*',
-                                      style: TextStyle(
-                                          color: Colors.red, fontSize: 17),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Icon(Icons.grading),
-                                  ),
-                                  Text(
-                                    '${AppLocalizations.of(context).iWantTo} ...',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17),
-                                  ),
-                                  Expanded(
-                                      child: Padding(
-                                    padding: EdgeInsets.only(left: 1),
-                                  )),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Tooltip(
-                                      waitDuration: Duration(seconds: 0),
-                                      margin: EdgeInsets.all(8),
-                                      padding: EdgeInsets.all(8),
-                                      message: AppLocalizations.of(context)
-                                          .challengeTargetHint,
-                                      showDuration: Duration(seconds: 5),
-                                      child: Icon(
-                                        Icons.info_outline,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              RadioListTile<ChallengeTarget>(
-                                activeColor: Colors.green,
-                                title: Row(
-                                  children: [
-                                    Text(AppLocalizations.of(context)
-                                        .challengeMyself),
-                                  ],
-                                ),
-                                dense: false,
-                                value: ChallengeTarget.SELF,
-                                groupValue: _challengeTarget,
-                                onChanged: (ChallengeTarget value) {
-                                  setState(() {
-                                    _challengeTarget = value;
-                                  });
-                                },
-                              ),
-                              RadioListTile<ChallengeTarget>(
-                                activeColor: Colors.green,
-                                title: Row(
-                                  children: [
-                                    Text(AppLocalizations.of(context)
-                                        .challengeFriends),
-                                  ],
-                                ),
-                                dense: false,
-                                value: ChallengeTarget.FRIENDS,
-                                groupValue: _challengeTarget,
-                                onChanged: (ChallengeTarget value) {
-                                  setState(() {
-                                    _challengeTarget = value;
-                                  });
-                                },
-                              )
-                            ],
-                          ),
-                        ),
-                        Visibility(
-                          visible: _challengeTarget == ChallengeTarget.FRIENDS,
-                          maintainState: true,
-                          child: SelectedFriendsWidget(
-                            initiallySelectedFriends:
-                                widget.initiallySelectedFriends,
-                            onSelectedFriendsChanged: (newFriends) {
-                              setState(() {
-                                _selectedFriends = newFriends;
-                              });
-                            },
-                          ),
+                        SelectedFriendsWidget(
+                          initiallySelectedFriends:
+                              widget.initiallySelectedFriends,
+                          onSelectedFriendsChanged: (newFriends) {
+                            setState(() {
+                              _selectedFriends = newFriends;
+                            });
+                          },
                         ),
                         SelectedAzkarWidget(
                           onSelectedAzkarChangedCallback: (newSubChallenges) {
@@ -535,8 +444,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
       return;
     }
 
-    bool challengingOneFriend = _challengeTarget == ChallengeTarget.FRIENDS &&
-        (_selectedFriends?.length ?? 0) == 1;
+    bool challengingOneFriend = (_selectedFriends?.length ?? 0) == 1;
     final String groupId =
         challengingOneFriend ? _selectedFriends[0].groupId : null;
 
@@ -552,21 +460,15 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     );
 
     try {
-      if (_challengeTarget == ChallengeTarget.SELF) {
-        await ServiceProvider.challengesService.addPersonalChallenge(
-            AddChallengeRequestBody(challenge: challenge));
+      if (challengingOneFriend) {
+        await ServiceProvider.challengesService
+            .addGroupChallenge(AddChallengeRequestBody(challenge: challenge));
       } else {
-        if (challengingOneFriend) {
-          await ServiceProvider.challengesService
-              .addGroupChallenge(AddChallengeRequestBody(challenge: challenge));
-        } else {
-          await ServiceProvider.challengesService.addFriendsChallenge(
-              AddFriendsChallengeRequestBody(
-                  challenge: challenge,
-                  friendsIds: _selectedFriends
-                      .map((friend) => friend.userId)
-                      .toList()));
-        }
+        await ServiceProvider.challengesService.addFriendsChallenge(
+            AddFriendsChallengeRequestBody(
+                challenge: challenge,
+                friendsIds:
+                    _selectedFriends.map((friend) => friend.userId).toList()));
       }
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(
@@ -585,8 +487,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   }
 
   bool readyToFinishChallenge(bool showWarnings) {
-    if (_challengeTarget == ChallengeTarget.FRIENDS &&
-        (_selectedFriends?.length ?? 0) == 0) {
+    if ((_selectedFriends?.length ?? 0) == 0) {
       return false;
     }
     if (_subChallenges.length == 0) {

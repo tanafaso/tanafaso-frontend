@@ -121,7 +121,6 @@ class _GroupChallengeListItemWidgetState
                           group: widget.group,
                           challengedUsersIds: _challengedUsersIds,
                           challengedUsersFullNames: _challengedUsersFullNames,
-                          isPersonalChallenge: false,
                           challengeChangedCallback: (changedChallenge) {
                             widget.challengeChangedCallback(changedChallenge);
                           })));
@@ -300,7 +299,6 @@ class _GroupChallengeListItemWidgetState
                               initiallyChosenName: originalChallenge.name,
                               initiallyChosenMotivation:
                                   originalChallenge.motivation,
-                              defaultChallengeTarget: ChallengeTarget.FRIENDS,
                             )));
               },
             ),
