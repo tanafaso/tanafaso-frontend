@@ -43,32 +43,10 @@ class ChallengesService {
     }
   }
 
-  Future<void> addPersonalChallenge(AddChallengeRequestBody requestBody) async {
-    http.Response httpResponse = await ApiCaller.post(
-        route: Endpoint(endpointRoute: EndpointRoute.ADD_PERSONAL_CHALLENGE),
-        requestBody: requestBody);
-
-    var response = AddChallengeResponse.fromJson(
-        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
-    if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
-    }
-  }
 
   Future<List<Challenge>> getAllChallenges() async {
     http.Response httpResponse = await ApiCaller.get(
         route: Endpoint(endpointRoute: EndpointRoute.GET_ALL_CHALLENGES));
-    var response = GetChallengesResponse.fromJson(
-        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
-    if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
-    }
-    return response.challenges;
-  }
-
-  Future<List<Challenge>> getPersonalChallenges() async {
-    http.Response httpResponse = await ApiCaller.get(
-        route: Endpoint(endpointRoute: EndpointRoute.GET_PERSONAL_CHALLENGES));
     var response = GetChallengesResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
@@ -94,18 +72,6 @@ class ChallengesService {
     http.Response httpResponse = await ApiCaller.delete(
         route: Endpoint(
             endpointRoute: EndpointRoute.DELETE_CHALLENGE,
-            pathVariables: [challengeId]));
-    var response = DeleteChallengeResponse.fromJson(
-        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
-    if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
-    }
-  }
-
-  Future<void> deletePersonalChallenge(String challengeId) async {
-    http.Response httpResponse = await ApiCaller.delete(
-        route: Endpoint(
-            endpointRoute: EndpointRoute.DELETE_PERSONAL_CHALLENGE,
             pathVariables: [challengeId]));
     var response = DeleteChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
@@ -140,21 +106,6 @@ class ChallengesService {
     http.Response httpResponse = await ApiCaller.put(
         route: Endpoint(
             endpointRoute: EndpointRoute.UPDATE_CHALLENGE,
-            pathVariables: [challenge.id]),
-        requestBody: requestBody);
-    var response = UpdateChallengeResponse.fromJson(
-        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
-    if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
-    }
-  }
-
-  Future<void> updatePersonalChallenge(Challenge challenge) async {
-    UpdateChallengeRequestBody requestBody =
-        UpdateChallengeRequestBody(challenge: challenge);
-    http.Response httpResponse = await ApiCaller.put(
-        route: Endpoint(
-            endpointRoute: EndpointRoute.UPDATE_PERSONAL_CHALLENGE,
             pathVariables: [challenge.id]),
         requestBody: requestBody);
     var response = UpdateChallengeResponse.fromJson(
