@@ -130,7 +130,7 @@ class _GroupChallengeListItemWidgetState
                     : DescribedFeatureOverlay(
                         featureId: Features.CLONE_AND_DELETE,
                         overflowMode: OverflowMode.wrapBackground,
-                        contentLocation: ContentLocation.above,
+                        contentLocation: ContentLocation.below,
                         barrierDismissible: false,
                         backgroundDismissible: false,
                         tapTarget: SlideTransition(
