@@ -48,6 +48,7 @@ class _GroupChallengeListItemWidgetState
   bool _deleted;
   AnimationController _controller;
   Animation<Offset> _offsetAnimation;
+  bool _showCloneAndDeleteFeatureDiscovery;
 
   Future<void> getNeededData() async {
     try {
@@ -80,6 +81,16 @@ class _GroupChallengeListItemWidgetState
         context,
         [Features.CLONE_AND_DELETE],
       );
+    });
+    _showCloneAndDeleteFeatureDiscovery = false;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 500), () async {
+        if (mounted) {
+          setState(() {
+            _showCloneAndDeleteFeatureDiscovery = widget.firstChallengeInList;
+          });
+        }
+      });
     });
     _controller = AnimationController(
       duration: const Duration(seconds: 2),
@@ -125,7 +136,7 @@ class _GroupChallengeListItemWidgetState
                             widget.challengeChangedCallback(changedChallenge);
                           })));
                 },
-                child: !widget.firstChallengeInList
+                child: !_showCloneAndDeleteFeatureDiscovery
                     ? getMainWidget()
                     : DescribedFeatureOverlay(
                         featureId: Features.CLONE_AND_DELETE,

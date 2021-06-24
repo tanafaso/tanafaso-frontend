@@ -1,4 +1,5 @@
 import 'package:azkar/models/friendship_scores.dart';
+import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/features.dart';
 import 'package:azkar/views/core_views/friends/all_friends/detailed_friend_list_item_widget.dart';
@@ -8,11 +9,9 @@ import 'package:flutter/material.dart';
 
 class FriendListItemWidget extends StatefulWidget {
   final FriendshipScores friendshipScores;
-  final bool firstInList;
 
   FriendListItemWidget({
     @required this.friendshipScores,
-    @required this.firstInList,
   });
 
   @override
@@ -21,19 +20,32 @@ class FriendListItemWidget extends StatefulWidget {
 
 class _FriendListItemWidgetState extends State<FriendListItemWidget> {
   bool _detailedView;
+  bool _isSabeq;
 
   @override
   void initState() {
     super.initState();
+
+    _isSabeq = false;
     _detailedView = false;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 1500), () async {
+        if (mounted) {
+          String sabeqId = await ServiceProvider.usersService.getSabeqId();
+          setState(() {
+            _isSabeq = sabeqId == widget.friendshipScores.friend.userId;
+          });
+        }
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return !widget.firstInList
+    return !_isSabeq
         ? getMainWidget()
         : DescribedFeatureOverlay(
-            featureId: Features.FRIEND_DETAILED_VIEW,
+            featureId: Features.SABEQ_INTRODUCTION,
             overflowMode: OverflowMode.wrapBackground,
             barrierDismissible: false,
             backgroundDismissible: false,
@@ -53,11 +65,12 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
                         alignment: Alignment.center,
                         width: MediaQuery.of(context).size.width / 2,
                         child: Text(
-                          AppLocalizations.of(context).detailedViewTitle,
+                          AppLocalizations.of(context)
+                              .sabeqAndDetailedViewTitle,
                           softWrap: true,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -70,14 +83,27 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
                         padding: EdgeInsets.all(0),
                       )),
                       Container(
-                        alignment: Alignment.centerRight,
-                        width: MediaQuery.of(context).size.width / 2,
-                        child: Text(
-                          AppLocalizations.of(context).detailedViewExplanation,
-                          softWrap: true,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
+                          alignment: Alignment.centerRight,
+                          width: MediaQuery.of(context).size.width / 2,
+                          child: RichText(
+                            text: TextSpan(
+                              // Note: Styles for TextSpans must be explicitly defined.
+                              // Child text spans will inherit styles from parent
+                              style: new TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.black,
+                              ),
+                              children: <TextSpan>[
+                                new TextSpan(
+                                    text: 'سابق',
+                                    style: new TextStyle(
+                                        fontWeight: FontWeight.bold)),
+                                new TextSpan(
+                                    text:
+                                        ' هو هو صديق افتراضي لك على التطبيق. اضغط على سابق لتتمكن من تحديه ولرؤية المزيد من المعلومات حول صداقتكم.'),
+                              ],
+                            ),
+                          )),
                     ],
                   )
                 ],

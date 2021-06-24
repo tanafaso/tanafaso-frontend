@@ -12,6 +12,7 @@ enum EndpointRoute {
   RESET_PASSWORD,
   GET_CATEGORIES,
   GET_CURRENT_USER_PROFILE,
+  GET_SABEQ,
   GET_USER_BY_ID,
   GET_USER_BY_USERNAME,
   GET_USER_BY_FACEBOOK_USER_ID,
@@ -80,6 +81,8 @@ class ApiRoutesUtil {
         return '/categories';
       case EndpointRoute.GET_CURRENT_USER_PROFILE:
         return 'users/me';
+      case EndpointRoute.GET_SABEQ:
+        return 'users/sabeq';
       case EndpointRoute.GET_USER_BY_ID:
         assert(route.pathVariables.length == 1);
         return 'users/${route.pathVariables[0]}';
