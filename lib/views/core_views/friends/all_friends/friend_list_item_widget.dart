@@ -100,7 +100,7 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
                                         fontWeight: FontWeight.bold)),
                                 new TextSpan(
                                     text:
-                                        ' هو هو صديق افتراضي لك على التطبيق. اضغط على سابق لتتمكن من تحديه ولرؤية المزيد من المعلومات حول صداقتكم.'),
+                                        ' هو صديق افتراضي لك على التطبيق. اضغط على سابق لتتمكن من تحديه ولرؤية المزيد من المعلومات حول صداقتكم.'),
                               ],
                             ),
                           )),
