@@ -55,8 +55,8 @@ class ApiRoutesUtil {
     switch (route.endpointRoute) {
       case EndpointRoute.BASE_URL:
         if (Platform.isAndroid) {
-          return '10.0.2.2:8080';
-          // return 'www.tanafaso.com';
+          // return '10.0.2.2:8080';
+          return 'www.tanafaso.com';
         }
         if (Platform.isIOS) {
           // return 'localhost:8080';
