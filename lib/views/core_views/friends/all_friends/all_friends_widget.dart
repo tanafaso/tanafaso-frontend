@@ -75,7 +75,6 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
       itemBuilder: (context, index) {
         return FriendListItemWidget(
           friendshipScores: friendshipScores[index],
-          firstInList: index == 0,
         );
       },
     );

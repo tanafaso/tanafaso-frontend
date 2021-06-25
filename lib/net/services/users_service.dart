@@ -42,6 +42,23 @@ class UsersService {
     return user.id;
   }
 
+  Future<String> getSabeqId() async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    String key = CacheManager.CACHE_KE_SABEQ.toString();
+    if (prefs.containsKey(key)) {
+      return prefs.getString(key);
+    }
+    http.Response httpResponse = await ApiCaller.get(
+        route: Endpoint(endpointRoute: EndpointRoute.GET_SABEQ));
+    var response = GetUserResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.getErrorMessage());
+    }
+    prefs.setString(key, response.user.id);
+    return response.user.id;
+  }
+
   Future<User> getUserById(String id) async {
     http.Response httpResponse = await ApiCaller.get(
         route: Endpoint(

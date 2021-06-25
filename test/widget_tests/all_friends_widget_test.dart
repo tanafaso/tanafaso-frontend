@@ -74,7 +74,7 @@ void main() {
         ],
       ),
     ));
-    await tester.pumpAndSettle();
+    await tester.pumpAndSettle(Duration(milliseconds: 2000));
 
     expect(find.byKey(Keys.allFriendsWidgetListKey), findsOneWidget);
 

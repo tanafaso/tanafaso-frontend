@@ -242,9 +242,9 @@ class AppLocalizations {
       'detailed view': 'عرض تفصيلي',
       'summary view': 'عرض ملخص',
       'challenge': 'تحدى',
-      'detailed view title': 'العرض التفصيلي',
-      'detailed view explanation':
-          'اضغط على أحد عناصر القائمة لرؤية المزيد من المعلومات',
+      'sabeq and detailed view title': 'أهلاً بكم في صفحة الأصدقاء',
+      'sabeq and detailed view explanation':
+          'سابق هو أول أصدقائك على التطبيق. اضغط على سابق لتتمكن من تحديه ولرؤية المزيد من المعلومات حول صداقتكم.',
       'personal challenge not found temp error message':
           'يمكن فقط نسخ التحديات الشخصية التي تم إنشاؤها بدءًا من يونيو ٢٠٢١',
       'yes': 'نعم',
@@ -270,12 +270,14 @@ class AppLocalizations {
         ['personal challenge not found temp error message'];
   }
 
-  String get detailedViewTitle {
-    return _localizedValues[locale.languageCode]['detailed view title'];
+  String get sabeqAndDetailedViewTitle {
+    return _localizedValues[locale.languageCode]
+        ['sabeq and detailed view title'];
   }
 
-  String get detailedViewExplanation {
-    return _localizedValues[locale.languageCode]['detailed view explanation'];
+  String get sabeqAndDetailedViewExplanation {
+    return _localizedValues[locale.languageCode]
+        ['sabeq and detailed view explanation'];
   }
 
   String get challenge {

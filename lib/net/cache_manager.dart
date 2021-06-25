@@ -6,7 +6,8 @@ class CacheManager {
   static const String CACHE_KEY_CURRENT_USER_ID = "000";
   static const String CACHE_KEY_USER_FULL_NAME_PREFIX = "001";
   static const String CACHE_KEY_GROUP_ID_PREFIX = "002";
-  static const String CACHE_KEY_ORIGINAL_CHALLENGE_PREFIX = "002";
+  static const String CACHE_KEY_ORIGINAL_CHALLENGE_PREFIX = "003";
+  static const String CACHE_KE_SABEQ = "004";
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
