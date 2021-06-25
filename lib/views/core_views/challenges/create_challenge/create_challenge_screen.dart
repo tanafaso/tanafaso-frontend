@@ -175,7 +175,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                     children: [
                                       Padding(
                                         padding:
-                                        const EdgeInsets.only(right: 8.0),
+                                            const EdgeInsets.only(right: 8.0),
                                         child: Text(
                                           '*',
                                           style: TextStyle(
@@ -196,8 +196,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                       ),
                                       Expanded(
                                           child: Padding(
-                                            padding: EdgeInsets.only(left: 8),
-                                          )),
+                                        padding: EdgeInsets.only(left: 8),
+                                      )),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Tooltip(
@@ -218,9 +218,9 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                 child: TextField(
                                   maxLength: 25,
                                   autofocus:
-                                  (widget.initiallyChosenName?.length ??
-                                      0) ==
-                                      0,
+                                      (widget.initiallyChosenName?.length ??
+                                              0) ==
+                                          0,
                                   maxLines: 1,
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.center,
@@ -228,7 +228,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                     alignLabelWithHint: true,
                                     border: new OutlineInputBorder(
                                         borderSide:
-                                        new BorderSide(color: Colors.teal)),
+                                            new BorderSide(color: Colors.teal)),
                                   ),
                                   controller: _challengeNameController,
                                 ),
