@@ -68,7 +68,7 @@ class _DoChallengeSubChallengeListItemWidgetState
             overflowMode: OverflowMode.wrapBackground,
             barrierDismissible: false,
             backgroundDismissible: false,
-            contentLocation: ContentLocation.above,
+            contentLocation: ContentLocation.below,
             tapTarget: Icon(Icons.done),
             // The widget that will be displayed as the tap target.
             description: Center(
