@@ -4,5 +4,5 @@ class Features {
   static const String CLONE_AND_DELETE = "clone-and-delete";
   static const String CLICK_ZEKR_AFTER_FINISH = "click-zekr-after-finish";
   static const String SHARE_USERNAME = "share-username";
-  static const String FRIEND_DETAILED_VIEW = "friend-detailed-view";
+  static const String SABEQ_INTRODUCTION = "sabeq-introduction";
 }
