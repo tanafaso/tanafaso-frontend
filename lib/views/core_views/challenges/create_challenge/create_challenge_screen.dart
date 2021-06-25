@@ -166,29 +166,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                       addAutomaticKeepAlives: true,
                       shrinkWrap: true,
                       children: [
-                        SelectedFriendsWidget(
-                          initiallySelectedFriends:
-                              widget.initiallySelectedFriends,
-                          onSelectedFriendsChanged: (newFriends) {
-                            setState(() {
-                              _selectedFriends = newFriends;
-                            });
-                          },
-                        ),
-                        SelectedAzkarWidget(
-                          onSelectedAzkarChangedCallback: (newSubChallenges) {
-                            setState(() {
-                              _subChallenges = newSubChallenges;
-                            });
-                          },
-                          onSelectedAzkarValidityChangedCallback:
-                              (subChallengesValid) {
-                            setState(() {
-                              _subChallengesValid = subChallengesValid;
-                            });
-                          },
-                          initiallySelectedSubChallenges: _subChallenges,
-                        ),
                         Card(
                           child: Column(
                             children: [
@@ -258,6 +235,29 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                               ),
                             ],
                           ),
+                        ),
+                        SelectedFriendsWidget(
+                          initiallySelectedFriends:
+                              widget.initiallySelectedFriends,
+                          onSelectedFriendsChanged: (newFriends) {
+                            setState(() {
+                              _selectedFriends = newFriends;
+                            });
+                          },
+                        ),
+                        SelectedAzkarWidget(
+                          onSelectedAzkarChangedCallback: (newSubChallenges) {
+                            setState(() {
+                              _subChallenges = newSubChallenges;
+                            });
+                          },
+                          onSelectedAzkarValidityChangedCallback:
+                              (subChallengesValid) {
+                            setState(() {
+                              _subChallengesValid = subChallengesValid;
+                            });
+                          },
+                          initiallySelectedSubChallenges: _subChallenges,
                         ),
                         Card(
                           child: Column(
