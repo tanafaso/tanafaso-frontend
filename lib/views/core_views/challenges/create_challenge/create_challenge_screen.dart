@@ -166,6 +166,76 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                       addAutomaticKeepAlives: true,
                       shrinkWrap: true,
                       children: [
+                        Card(
+                          child: Column(
+                            children: [
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets.only(right: 8.0),
+                                        child: Text(
+                                          '*',
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 17),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Icon(
+                                            Icons.drive_file_rename_outline),
+                                      ),
+                                      Text(
+                                        AppLocalizations.of(context)
+                                            .challengeName,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17),
+                                      ),
+                                      Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(left: 8),
+                                          )),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Tooltip(
+                                          message: AppLocalizations.of(context)
+                                              .writeANameWithWhichYouCanDistinguishTheChallenge,
+                                          child: Icon(
+                                            Icons.info_outline,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextField(
+                                  maxLength: 25,
+                                  autofocus:
+                                  (widget.initiallyChosenName?.length ??
+                                      0) ==
+                                      0,
+                                  maxLines: 1,
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.center,
+                                  decoration: new InputDecoration(
+                                    alignLabelWithHint: true,
+                                    border: new OutlineInputBorder(
+                                        borderSide:
+                                        new BorderSide(color: Colors.teal)),
+                                  ),
+                                  controller: _challengeNameController,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         SelectedFriendsWidget(
                           initiallySelectedFriends:
                               widget.initiallySelectedFriends,
@@ -188,76 +258,6 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                             });
                           },
                           initiallySelectedSubChallenges: _subChallenges,
-                        ),
-                        Card(
-                          child: Column(
-                            children: [
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 8.0),
-                                        child: Text(
-                                          '*',
-                                          style: TextStyle(
-                                              color: Colors.red, fontSize: 17),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Icon(
-                                            Icons.drive_file_rename_outline),
-                                      ),
-                                      Text(
-                                        AppLocalizations.of(context)
-                                            .challengeName,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17),
-                                      ),
-                                      Expanded(
-                                          child: Padding(
-                                        padding: EdgeInsets.only(left: 8),
-                                      )),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Tooltip(
-                                          message: AppLocalizations.of(context)
-                                              .writeANameWithWhichYouCanDistinguishTheChallenge,
-                                          child: Icon(
-                                            Icons.info_outline,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextField(
-                                  maxLength: 25,
-                                  autofocus:
-                                      (widget.initiallyChosenName?.length ??
-                                              0) ==
-                                          0,
-                                  maxLines: 1,
-                                  textDirection: TextDirection.rtl,
-                                  textAlign: TextAlign.center,
-                                  decoration: new InputDecoration(
-                                    alignLabelWithHint: true,
-                                    border: new OutlineInputBorder(
-                                        borderSide:
-                                            new BorderSide(color: Colors.teal)),
-                                  ),
-                                  controller: _challengeNameController,
-                                ),
-                              ),
-                            ],
-                          ),
                         ),
                         Card(
                           child: Column(
