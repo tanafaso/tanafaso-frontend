@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
+import 'package:azkar/net/cache_manager.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
@@ -11,6 +13,7 @@ import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 class DoChallengeScreen extends StatefulWidget {
   final Challenge challenge;
@@ -173,14 +176,58 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
     );
   }
 
-  onFinish() {
+  onFinish() async {
     // Avoid popping twice if confetti's controller decided to call our listner
     // more than once.
     if (_finishedConfetti) {
       return;
     }
     _finishedConfetti = true;
+
+    if (Platform.isAndroid && widget.challengedUsersIds.length >= 2) {
+      var prefs = await ServiceProvider.cacheManager.getPrefs();
+      if (!prefs.containsKey(CacheManager.CAHCE_KEY_ASKED_FOR_REVIEW)) {
+        prefs.setBool(CacheManager.CAHCE_KEY_ASKED_FOR_REVIEW, true);
+        await showReviewDialog(context);
+      }
+    }
     Navigator.of(context).pop();
+  }
+
+  Future<void> showReviewDialog(BuildContext context) {
+    // ignore: deprecated_member_use
+    Widget cancelButton = FlatButton(
+      child: Text("لا شكرا"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    // ignore: deprecated_member_use
+    Widget continueButton = FlatButton(
+      child: Text("قيم التطبيق"),
+      onPressed: () {
+        InAppReview.instance.openStoreListing();
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("تقييم التطبيق"),
+      content: Text("هل يمكنك تقييم التطبيق إذا كنت تعتقد أنه مفيد؟ 😊"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   @override
