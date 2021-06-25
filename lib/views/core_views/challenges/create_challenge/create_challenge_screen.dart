@@ -240,6 +240,10 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextField(
                                   maxLength: 25,
+                                  autofocus:
+                                      (widget.initiallyChosenName?.length ??
+                                              0) ==
+                                          0,
                                   maxLines: 1,
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.center,
