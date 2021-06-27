@@ -29,7 +29,7 @@ A Flutter application for Muslims that help them challenge and motivate themselv
     ### Dependencies for IOS
        - Xcode IDE
 
-    For more information about dependencies, you can check this [link] (https://flutter.dev/docs/get-started/install). for Android
+    For more information about dependencies, you can check this [link] (https://flutter.dev/docs/get-started/install).
 
 ## Contributing
 There are a lot of ways you can contribute to this project. You can filter issues by `good first issue` label to get started with an issue that is easy to fix.
