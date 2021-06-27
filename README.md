@@ -22,7 +22,7 @@ As you may already know, the cool thing about flutter is that you write code onc
   - [android/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/android)
   - [ios/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/ios)
   
-All The dart code can be found in the [lib/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/lib) directory.
+All the dart code can be found in the [lib/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/lib) directory.
 - [lib/models/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/lib/models
 ): Contains the definitions of all of the models used in the application (e.g. User, Challenge
 , etc...) and also defines how every model should be encoded and decoded.
