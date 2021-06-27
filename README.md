@@ -11,6 +11,34 @@ A Flutter application for Muslims that help them challenge and motivate themselv
 | ![Screenshot_1622827279](https://user-images.githubusercontent.com/13997703/122512366-090c0d80-d009-11eb-98b5-97d9a21feba9.jpeg) | ![Screenshot_1622827285](https://user-images.githubusercontent.com/13997703/122512367-090c0d80-d009-11eb-98f4-8c187d30e81e.jpeg) | ![Screenshot_1623259103](https://user-images.githubusercontent.com/13997703/122512368-09a4a400-d009-11eb-9b31-f3d02aed4a0e.png) | ![Screenshot_1623334651](https://user-images.githubusercontent.com/13997703/122512371-09a4a400-d009-11eb-8406-60536604d5f7.png) |
 
 
+## Code Structure
+Assets (pictures, fonts and certificates) can be found in the [assets/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/assets) folder.
+
+As you may already know, the cool thing about flutter is that you write code once in dart and
+ then flutter does the hard work of compiling it into native Android and iOS code. You can find
+  the compiled native code in the following directories (**Note** that you would rarely need to
+   change code in these
+   directories):
+  - [android/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/android)
+  - [ios/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/ios)
+  
+All The dart code can be found in the [lib/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/lib) directory.
+- [lib/models/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/lib/models
+): Contains the definitions of all of the models used in the application (e.g. User, Challenge
+, etc...) and also defines how every model should be encoded and decoded.
+- [lib/net/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/lib/net
+): Implements the wire between the frontend and the backend ([challenge-azkar/tanafas-backend](https://github.com/challenge-azkar/tanafaso-backend)).
+    - [lib/net/endpoints.dart](https://github.com/challenge-azkar/tanafaso-frontend/blob/master/lib/net/endpoints.dart) contains all of the endpoints that the API is supporting for this
+     frontend version.
+- [lib/utils/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/lib/utils
+): Contains classes that provide utilities that will be used throughout the application code.
+- [lib/views/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/lib/views
+): Contains all of the declarations of the user interface.
+  - *Screen.dart: Classes that end with the suffix "Screen" are declaring a whole screen that the
+   user will see.
+  - *Widget.dart: Classes that end with the suffix "Widget" are declaring a widget that will be
+   part of the user screen.
+
 ## Contributing
 There are a lot of ways you can contribute to this project. You can filter issues by `good first issue` label to get started with an issue that is easy to fix.
 - Suggest new features by filing an issue.
