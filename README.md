@@ -10,6 +10,26 @@ A Flutter application for Muslims that help them challenge and motivate themselv
 |-|-|-|-|
 | ![Screenshot_1622827279](https://user-images.githubusercontent.com/13997703/122512366-090c0d80-d009-11eb-98b5-97d9a21feba9.jpeg) | ![Screenshot_1622827285](https://user-images.githubusercontent.com/13997703/122512367-090c0d80-d009-11eb-98f4-8c187d30e81e.jpeg) | ![Screenshot_1623259103](https://user-images.githubusercontent.com/13997703/122512368-09a4a400-d009-11eb-9b31-f3d02aed4a0e.png) | ![Screenshot_1623334651](https://user-images.githubusercontent.com/13997703/122512371-09a4a400-d009-11eb-8406-60536604d5f7.png) |
 
+## Setting up a Development Environment
+ ### Git
+  To set up a local development environment, you have to do the following :
+  - Fork [tanafaso-frontend] (https://github.com/challenge-azkar/tanafaso-frontend)
+  - Clone your fork using git clone `https://github.com/<your-github-username>/tanafaso-frontend`
+  - Navigate to your local repository using your cmd/terminal based on your local environment
+  - Check that your fork is the origin remote using `git remote -v`, if it is not then added using `git remote add origin https://github.com/<your-github-username>/tanafaso-frontend`
+  - Add the original project as upstream remote using `git remote add upstream https://github.com/challenge-azkar/tanafaso-frontend`
+  - Congratulations, you can start contribute now, but make sure you create branch for every proposed change you make.
+
+## Dependencies
+    ### Dependencies for Android
+       - Android Studio IDE
+       - Flutter SDK
+       - Java SDK
+
+    ### Dependencies for IOS
+       - Xcode IDE
+
+    For more information about dependencies, you can check this [link] (https://flutter.dev/docs/get-started/install). for Android
 
 ## Contributing
 There are a lot of ways you can contribute to this project. You can filter issues by `good first issue` label to get started with an issue that is easy to fix.
