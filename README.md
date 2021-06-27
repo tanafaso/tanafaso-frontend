@@ -40,6 +40,8 @@ All the dart code can be found in the [lib/](https://github.com/challenge-azkar/
    part of the user screen.
 
 ## Contributing
+(Optionally) join Tanafaso's [discord server](https://discord.gg/JQ7zYXCw) to give feedback, propose new features or ask for help.
+
 There are a lot of ways you can contribute to this project. You can filter issues by `good first issue` label to get started with an issue that is easy to fix.
 - Suggest new features by filing an issue.
 - Report bugs by filing an issue.
