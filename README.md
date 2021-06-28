@@ -29,15 +29,15 @@ Also, take a look at the [Backend](https://github.com/challenge-azkar/azkar-api)
   - Congratulations, you can start contribute now, but make sure you create branch for every proposed change you make.
 
 ## Dependencies
-    ### Dependencies for Android
-       - Android Studio IDE
-       - Flutter SDK
-       - Java SDK
+### Dependencies for Android
+- Android Studio IDE
+- Flutter SDK
+- Java SDK
 
-    ### Dependencies for IOS
-       - Xcode IDE
+### Dependencies for IOS
+- Xcode IDE
 
-    For more information about dependencies, you can check this [link] (https://flutter.dev/docs/get-started/install).
+For more information about dependencies, you can check the [flutter documentation](https://flutter.dev/docs/get-started/install).
 
 ## Code Structure
 Assets (pictures, fonts and certificates) can be found in the [assets/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/assets) folder.
