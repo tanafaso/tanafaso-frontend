@@ -233,7 +233,7 @@ class AppLocalizations {
       'add the first friends challenge': 'أضف أول تحدي للأصدقاء',
       'how to add new friends': 'كيفية إضافة أصدقاء جدد',
       'share username explanation':
-          'الآن يمكنك مشاركة التطبيق وكود المستخدم الخاص بك مع أصدقائك على WhatsApp و Facebook وغيرها ...',
+          'يمكنك مشاركة التطبيق وكود المستخدم الخاص بك مع أصدقائك على WhatsApp و Facebook وغيرها ...',
       'share username title': 'شارك مع الاصدقاء',
       'how to add new friends?': 'كيف يمكنني اضافة اصدقاء جدد؟',
       'filtered azkar not found': '''

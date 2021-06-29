@@ -25,10 +25,12 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
 
   List<Tab> friendsTabs;
   TabController _tabController;
+  bool _addExpanded;
 
   @override
   void initState() {
     super.initState();
+    _addExpanded = false;
     SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
       FeatureDiscovery.discoverFeatures(
         context,
@@ -73,90 +75,132 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          DescribedFeatureOverlay(
-              featureId: Features.SHARE_USERNAME,
-              barrierDismissible: false,
-              backgroundDismissible: false,
-              contentLocation: ContentLocation.above,
-              tapTarget: Icon(Icons.share),
-              // The widget that will be displayed as the tap target.
-              description: Center(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                            child: Padding(
-                          padding: EdgeInsets.all(0),
-                        )),
-                        Container(
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: Text(
-                            AppLocalizations.of(context).shareUsernameTitle,
-                            softWrap: true,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+          Visibility(
+            visible: _addExpanded,
+            maintainSize: false,
+            maintainState: false,
+            child: DescribedFeatureOverlay(
+                featureId: Features.SHARE_USERNAME,
+                barrierDismissible: false,
+                backgroundDismissible: false,
+                contentLocation: ContentLocation.above,
+                tapTarget: Icon(Icons.share),
+                // The widget that will be displayed as the tap target.
+                description: Center(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Padding(
+                            padding: EdgeInsets.all(0),
+                          )),
+                          Container(
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: Text(
+                              AppLocalizations.of(context).shareUsernameTitle,
+                              softWrap: true,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.all(8)),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: Padding(
-                          padding: EdgeInsets.all(0),
-                        )),
-                        Container(
-                          alignment: Alignment.centerRight,
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: Text(
-                            AppLocalizations.of(context)
-                                .shareUsernameExplanation,
-                            softWrap: true,
-                            textAlign: TextAlign.center,
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.all(8)),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Padding(
+                            padding: EdgeInsets.all(0),
+                          )),
+                          Container(
+                            alignment: Alignment.centerRight,
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: Text(
+                              AppLocalizations.of(context)
+                                  .shareUsernameExplanation,
+                              softWrap: true,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              backgroundColor: Theme.of(context).accentColor,
-              targetColor: Theme.of(context).primaryColor,
-              textColor: Colors.black,
-              overflowMode: OverflowMode.wrapBackground,
-              child: FloatingActionButton.extended(
-                heroTag: "secondaryFloating",
-                icon: Icon(Icons.share),
-                label: Text(AppLocalizations.of(context).shareWithFriend),
-                onPressed: () async {
-                  User currentUser;
-                  try {
-                    currentUser =
-                        await ServiceProvider.usersService.getCurrentUser();
-                  } on ApiException catch (e) {
-                    SnackBarUtils.showSnackBar(
+                backgroundColor: Theme.of(context).accentColor,
+                targetColor: Theme.of(context).primaryColor,
+                textColor: Colors.black,
+                overflowMode: OverflowMode.wrapBackground,
+                child: FloatingActionButton.extended(
+                  heroTag: "shareWithFriend",
+                  icon: Icon(Icons.share),
+                  label: Text(AppLocalizations.of(context).shareWithFriend),
+                  onPressed: () async {
+                    User currentUser;
+                    try {
+                      currentUser =
+                          await ServiceProvider.usersService.getCurrentUser();
+                    } on ApiException catch (e) {
+                      SnackBarUtils.showSnackBar(
+                        context,
+                        '${AppLocalizations.of(context).error}: ${e.error}',
+                      );
+                      return;
+                    }
+                    Share.share(AppLocalizations.of(context)
+                        .shareMessage(currentUser.username));
+                  },
+                )),
+          ),
+          Visibility(
+              visible: _addExpanded,
+              maintainSize: false,
+              child: Padding(padding: EdgeInsets.only(bottom: 8.0))),
+          Visibility(
+            visible: _addExpanded,
+            maintainSize: false,
+            child: FloatingActionButton.extended(
+                heroTag: "addFriend",
+                icon: Icon(Icons.add),
+                label: Text(AppLocalizations.of(context).addFriend),
+                onPressed: () {
+                  Navigator.push(
                       context,
-                      '${AppLocalizations.of(context).error}: ${e.error}',
-                    );
-                    return;
-                  }
-                  Share.share(AppLocalizations.of(context)
-                      .shareMessage(currentUser.username));
-                },
-              )),
-          Padding(padding: EdgeInsets.only(bottom: 8.0)),
-          FloatingActionButton.extended(
-              heroTag: "mainFloating",
-              icon: Icon(Icons.add),
-              label: Text(AppLocalizations.of(context).addFriend),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AddFriendScreen()));
-              }),
+                      MaterialPageRoute(
+                          builder: (context) => AddFriendScreen()));
+                }),
+          ),
+          Visibility(
+            visible: !_addExpanded,
+            maintainSize: false,
+            child: FloatingActionButton.extended(
+                heroTag: "mainFloating",
+                label: Icon(Icons.add),
+                onPressed: () {
+                  setState(() {
+                    _addExpanded = true;
+                  });
+                }),
+          ),
+          Visibility(
+              visible: _addExpanded,
+              maintainSize: false,
+              child: Padding(padding: EdgeInsets.only(bottom: 8.0))),
+          Visibility(
+            visible: _addExpanded,
+            maintainSize: false,
+            child: FloatingActionButton.extended(
+                heroTag: "minimizeAddFriendButtons",
+                label: Icon(Icons.close_outlined),
+                onPressed: () {
+                  setState(() {
+                    _addExpanded = false;
+                  });
+                }),
+          ),
         ],
       ),
     );
