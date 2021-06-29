@@ -15,11 +15,20 @@ class AuthMainScreen extends StatefulWidget {
   _AuthMainScreenState createState() => _AuthMainScreenState();
 }
 
-class _AuthMainScreenState extends State<AuthMainScreen> {
+class _AuthMainScreenState extends State<AuthMainScreen>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 10),
+      vsync: this,
+    );
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _controller.repeat();
       bool isSignedIn =
           await ServiceProvider.secureStorageService.userSignedIn();
       if (isSignedIn) {
@@ -69,7 +78,11 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                             Expanded(
                               flex: 4,
                               child: Center(
-                                child: Image.asset('assets/images/logo.png'),
+                                child: RotationTransition(
+                                  child: Image.asset('assets/images/logo.png'),
+                                  turns: Tween(begin: 0.0, end: 1.0)
+                                      .animate(_controller),
+                                ),
                               ),
                             ),
                           ])),
@@ -343,5 +356,11 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
 
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => new HomePage()));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
