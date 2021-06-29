@@ -1,4 +1,4 @@
-import 'package:azkar/views/auth/signup/signup_main_screen.dart';
+import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -13,7 +13,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _onIntroEnd(context) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => SignUpMainScreen()),
+      MaterialPageRoute(builder: (_) => AuthMainScreen()),
     );
   }
 
