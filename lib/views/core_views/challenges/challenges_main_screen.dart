@@ -19,8 +19,7 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
       body: AllChallengesWidget(),
       floatingActionButton: FloatingActionButton.extended(
           heroTag: "mainFloating",
-          icon: Icon(Icons.create),
-          label: Text(AppLocalizations.of(context).createAChallenge),
+          label: Icon(Icons.create),
           onPressed: () {
             Navigator.push(
                 context,
