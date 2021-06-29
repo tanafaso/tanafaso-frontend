@@ -23,7 +23,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 10000),
+      duration: const Duration(seconds: 10),
       vsync: this,
     );
 
