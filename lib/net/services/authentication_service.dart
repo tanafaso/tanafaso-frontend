@@ -3,18 +3,16 @@ import 'dart:io';
 
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/api_interface/authentication/responses/facebook_authentication_response.dart';
-import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/api_interface/authentication/requests/email_login_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/requests/email_registration_request_body.dart';
-import 'package:azkar/net/api_interface/authentication/requests/email_verification_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/requests/facebook_authentication_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/requests/reset_password_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/responses/email_login_response.dart';
 import 'package:azkar/net/api_interface/authentication/responses/email_registration_response.dart';
-import 'package:azkar/net/api_interface/authentication/responses/email_verification_response.dart';
+import 'package:azkar/net/api_interface/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/net/api_interface/authentication/responses/facebook_friends_response.dart';
 import 'package:azkar/net/api_interface/authentication/responses/reset_password_response.dart';
+import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:http/http.dart' as http;
@@ -152,7 +150,7 @@ class AuthenticationService {
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(
-                Endpoint(endpointRoute: EndpointRoute.REGISTER_WITH_EMAIL))),
+                Endpoint(endpointRoute: EndpointRoute.REGISTER_WITH_EMAIL_V2))),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -210,31 +208,6 @@ class AuthenticationService {
 
     var response = ResetPasswordResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
-    if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
-    }
-  }
-
-  Future<void> verifyEmail(EmailVerificationRequestBody request) async {
-    http.Response apiResponse;
-    try {
-      apiResponse = await http.put(
-        Uri.https(
-            ApiRoutesUtil.apiRouteToString(
-                Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
-            ApiRoutesUtil.apiRouteToString(
-                Endpoint(endpointRoute: EndpointRoute.VERIFY_EMAIL))),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(request.toJson()),
-      );
-    } catch (e) {
-      throw ApiException.withDefaultError();
-    }
-
-    var response = EmailVerificationResponse.fromJson(
-        jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
