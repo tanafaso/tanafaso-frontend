@@ -9,10 +9,10 @@ A Flutter application for Muslims that help them challenge and motivate themselv
 Also, take a look at the [Backend](https://github.com/challenge-azkar/azkar-api) repository.
 
 ## Stats
-- **3K** App Downloads.
-- **763** signed-in users.
-- **155** users have at least one challenge.
-- **69** users have friends.
+- **3.3K** App Downloads.
+- **799** signed-in users.
+- **160** users have at least one challenge.
+- **70** users have friends.
 
 | ![logo](https://user-images.githubusercontent.com/13997703/122165215-2f4e7380-ce78-11eb-91ce-391ce240321f.png) | ![Screenshot_1621806606](https://user-images.githubusercontent.com/13997703/122512358-07424a00-d009-11eb-8157-623b728dea03.jpeg) | ![Screenshot_1621806667](https://user-images.githubusercontent.com/13997703/122512360-07dae080-d009-11eb-9302-f5b096192161.jpeg) | ![Screenshot_1621806734](https://user-images.githubusercontent.com/13997703/122512364-08737700-d009-11eb-8722-b2542ed85f60.jpeg) |
 |-|-|-|-|
