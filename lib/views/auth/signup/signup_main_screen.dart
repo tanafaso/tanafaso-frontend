@@ -3,11 +3,11 @@ import 'package:azkar/net/api_interface/authentication/requests/email_registrati
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
-import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
-import 'package:azkar/views/auth/signup/email_verification_screen.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_state_button/iconed_button.dart';
+import 'package:progress_state_button/progress_button.dart';
 
 class SignUpMainScreen extends StatefulWidget {
   @override
@@ -31,10 +31,12 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
   FocusNode repeatedPasswordFocus;
   String _confirmedPassword;
   String _errorMessage;
+  ButtonState progressButtonState;
 
   @override
   void initState() {
     super.initState();
+
     lastNameFocus = new FocusNode();
     emailFocus = new FocusNode();
     passwordFocus = new FocusNode();
@@ -45,6 +47,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
     _password = "";
     _confirmedPassword = "";
     _errorMessage = "";
+    progressButtonState = ButtonState.idle;
   }
 
   @override
@@ -397,76 +400,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                         children: <Widget>[
                           new Expanded(
                             // ignore: deprecated_member_use
-                            child: new FlatButton(
-                              color: Theme.of(context).buttonColor,
-                              shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0),
-                              ),
-                              onPressed: () {
-                                if (_firstName.length < 2) {
-                                  setState(() {
-                                    _errorMessage = AppLocalizations.of(context)
-                                        .nameShouldBeOfAtLeast2Letters;
-                                  });
-                                  return;
-                                }
-                                if (_lastName.length < 2) {
-                                  setState(() {
-                                    _errorMessage = AppLocalizations.of(context)
-                                        .nameShouldBeOfAtLeast2Letters;
-                                  });
-                                  return;
-                                }
-
-                                RegExp regex =
-                                    new RegExp('^[\\w-_\\.+]*[\\w-_\\.]\\@'
-                                        '([\\w]+\\.)+[\\w]+[\\w]\$');
-                                if (regex.stringMatch(_email) != _email) {
-                                  setState(() {
-                                    _errorMessage = AppLocalizations.of(context)
-                                        .emailIsInvalid;
-                                  });
-                                  return;
-                                }
-
-                                if (_password.length < 8) {
-                                  setState(() {
-                                    _errorMessage = AppLocalizations.of(context)
-                                        .passwordShouldBeOfAtLeast8Characters;
-                                  });
-                                  return;
-                                }
-
-                                if (_confirmedPassword != _password) {
-                                  setState(() {
-                                    _errorMessage = AppLocalizations.of(context)
-                                        .passwordsDidNotMatch;
-                                  });
-                                  return;
-                                }
-
-                                performSignUp();
-                              },
-                              child: new Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 20.0,
-                                  horizontal: 20.0,
-                                ),
-                                child: new Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Expanded(
-                                      child: Text(
-                                        AppLocalizations.of(context).signUp,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            child: getProgressButton(),
                           ),
                         ],
                       ),
@@ -480,10 +414,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
   }
 
   void performSignUp() async {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => new EmailVerificationScreen(_email)));
     try {
       await ServiceProvider.authenticationService
           .signUp(new EmailRegistrationRequestBody(
@@ -492,12 +422,125 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
         firstName: _firstName,
         lastName: _lastName,
       ));
+
+      SnackBarUtils.showSnackBar(
+        context,
+        'لقد أرسلنا لك رسالة بريد إلكتروني للتحقق. يرجى التحقق من البريد الوارد الخاص بك.',
+        color: Colors.green.shade400,
+        duration: Duration(seconds: 4),
+      );
+
+      setState(() {
+        progressButtonState = ButtonState.success;
+      });
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.error);
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => new AuthMainScreen()),
-          (_) => false);
+      setState(() {
+        progressButtonState = ButtonState.fail;
+      });
     }
+  }
+
+  Widget getProgressButton() {
+    return ProgressButton.icon(
+      textStyle: TextStyle(
+        color: Colors.black,
+      ),
+      iconedButtons: {
+        ButtonState.idle: IconedButton(
+            text: AppLocalizations.of(context).signUp,
+            icon: Icon(Icons.login, color: Colors.black),
+            color: Theme.of(context).buttonColor),
+        ButtonState.loading: IconedButton(
+            text: AppLocalizations.of(context).sending,
+            color: Colors.yellow.shade200),
+        ButtonState.fail: IconedButton(
+            text: AppLocalizations.of(context).failed,
+            icon: Icon(Icons.cancel, color: Colors.white),
+            color: Colors.red.shade300),
+        ButtonState.success: IconedButton(
+            text: AppLocalizations.of(context).login,
+            icon: Icon(
+              Icons.check_circle,
+              color: Colors.white,
+            ),
+            color: Colors.green.shade400)
+      },
+      onPressed: onProgressButtonClicked,
+      state: progressButtonState,
+    );
+  }
+
+  void onProgressButtonClicked() {
+    switch (progressButtonState) {
+      case ButtonState.idle:
+        setState(() {
+          progressButtonState = ButtonState.loading;
+        });
+
+        _errorMessage = "";
+        validateRegistrationInfo();
+        break;
+      case ButtonState.loading:
+        break;
+      case ButtonState.success:
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => LoginScreen()));
+        break;
+      case ButtonState.fail:
+        progressButtonState = ButtonState.idle;
+        break;
+    }
+    setState(() {
+      progressButtonState = progressButtonState;
+    });
+  }
+
+  void validateRegistrationInfo() {
+    if (_firstName.length < 2) {
+      setState(() {
+        progressButtonState = ButtonState.fail;
+        _errorMessage =
+            AppLocalizations.of(context).nameShouldBeOfAtLeast2Letters;
+      });
+      return;
+    }
+    if (_lastName.length < 2) {
+      setState(() {
+        progressButtonState = ButtonState.fail;
+        _errorMessage =
+            AppLocalizations.of(context).nameShouldBeOfAtLeast2Letters;
+      });
+      return;
+    }
+
+    RegExp regex = new RegExp('^[\\w-_\\.+]*[\\w-_\\.]\\@'
+        '([\\w]+\\.)+[\\w]+[\\w]\$');
+    if (regex.stringMatch(_email) != _email) {
+      setState(() {
+        progressButtonState = ButtonState.fail;
+        _errorMessage = AppLocalizations.of(context).emailIsInvalid;
+      });
+      return;
+    }
+
+    if (_password.length < 8) {
+      setState(() {
+        progressButtonState = ButtonState.fail;
+        _errorMessage =
+            AppLocalizations.of(context).passwordShouldBeOfAtLeast8Characters;
+      });
+      return;
+    }
+
+    if (_confirmedPassword != _password) {
+      setState(() {
+        progressButtonState = ButtonState.fail;
+        _errorMessage = AppLocalizations.of(context).passwordsDidNotMatch;
+      });
+      return;
+    }
+
+    performSignUp();
   }
 }

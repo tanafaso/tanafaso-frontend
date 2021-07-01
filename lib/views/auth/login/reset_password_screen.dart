@@ -17,8 +17,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
 
   String _email;
-  ButtonState stateOnlyText = ButtonState.idle;
-  ButtonState stateTextWithIcon = ButtonState.idle;
+  ButtonState progressButtonState;
+
+  @override
+  void initState() {
+    super.initState();
+
+    progressButtonState = ButtonState.idle;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,10 +127,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                               ),
                                             ),
                                           ),
-                                          buildTextWithIcon(),
+                                          getProgressButton(),
                                           Padding(padding: EdgeInsets.all(8)),
                                           Visibility(
-                                            visible: stateTextWithIcon ==
+                                            visible: progressButtonState ==
                                                 ButtonState.success,
                                             child: Container(
                                               width: MediaQuery.of(context)
@@ -170,7 +176,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         ))))));
   }
 
-  Widget buildTextWithIcon() {
+  Widget getProgressButton() {
     return ProgressButton.icon(
       textStyle: TextStyle(
         color: Colors.black,
@@ -195,20 +201,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             ),
             color: Colors.green.shade400)
       },
-      onPressed: onPressedIconWithText,
-      state: stateTextWithIcon,
+      onPressed: onProgressButtonPressed,
+      state: progressButtonState,
     );
   }
 
-  void onPressedIconWithText() {
-    switch (stateTextWithIcon) {
+  void onProgressButtonPressed() {
+    switch (progressButtonState) {
       case ButtonState.idle:
         if (!_formKey.currentState.validate()) {
           break;
         }
 
         setState(() {
-          stateTextWithIcon = ButtonState.loading;
+          progressButtonState = ButtonState.loading;
         });
 
         resetEmail();
@@ -216,14 +222,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       case ButtonState.loading:
         break;
       case ButtonState.success:
-        stateTextWithIcon = ButtonState.idle;
+        progressButtonState = ButtonState.idle;
         break;
       case ButtonState.fail:
-        stateTextWithIcon = ButtonState.idle;
+        progressButtonState = ButtonState.idle;
         break;
     }
     setState(() {
-      stateTextWithIcon = stateTextWithIcon;
+      progressButtonState = progressButtonState;
     });
   }
 
@@ -232,7 +238,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       await ServiceProvider.authenticationService.resetPassword(_email);
     } on ApiException catch (e) {
       setState(() {
-        stateTextWithIcon = ButtonState.fail;
+        progressButtonState = ButtonState.fail;
       });
       SnackBarUtils.showSnackBar(
         context,
@@ -242,7 +248,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     }
 
     setState(() {
-      stateTextWithIcon = ButtonState.success;
+      progressButtonState = ButtonState.success;
     });
 
     SnackBarUtils.showSnackBar(

@@ -6,8 +6,7 @@ enum EndpointRoute {
   BASE_URL,
   LOGIN_WITH_FACEBOOK,
   CONNECT_FACEBOOK,
-  REGISTER_WITH_EMAIL,
-  VERIFY_EMAIL,
+  REGISTER_WITH_EMAIL_V2,
   LOGIN_WITH_EMAIL,
   RESET_PASSWORD,
   GET_CATEGORIES,
@@ -69,10 +68,8 @@ class ApiRoutesUtil {
         return '/login/facebook';
       case EndpointRoute.CONNECT_FACEBOOK:
         return '/connect/facebook';
-      case EndpointRoute.REGISTER_WITH_EMAIL:
-        return '/register/email';
-      case EndpointRoute.VERIFY_EMAIL:
-        return '/verify/email';
+      case EndpointRoute.REGISTER_WITH_EMAIL_V2:
+        return '/register/email/v2';
       case EndpointRoute.LOGIN_WITH_EMAIL:
         return '/login/email';
       case EndpointRoute.RESET_PASSWORD:
