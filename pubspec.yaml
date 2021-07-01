@@ -37,6 +37,7 @@ dependencies:
   firebase_core: ^1.0.4
   firebase_messaging: ^9.1.1
   shared_preferences: ^2.0.5
+  shimmer: ^2.0.0
   optional: ^5.0.0+1
   flutter_statusbarcolor: ^0.2.3
   confetti: ^0.5.5

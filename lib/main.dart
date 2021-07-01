@@ -4,7 +4,7 @@
 
 import 'dart:io';
 import 'dart:ui';
-
+import 'package:shimmer/shimmer.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/landing_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:feature_discovery/feature_discovery.dart';
+import 'package:azkar/views/loading_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,8 +61,16 @@ class _MyAppState extends State<MyApp> {
             // TODO(omorsi): Show loader
             return getMaterialAppWithBody(Container(
               child: Center(
-                child: Image.asset('assets/images/logo.png'),
+            child: Shimmer.fromColors(
+            baseColor: Colors.black12,
+              highlightColor: Colors.grey,
+              child: ListView.builder(itemBuilder: (_, __) => (
+                  LoadingWidget()
               ),
+                itemCount: 1,
+              ),
+            ),
+            ),
             ));
           }
         });
