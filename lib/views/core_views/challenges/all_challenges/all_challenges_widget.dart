@@ -6,6 +6,8 @@ import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:azkar/views/loading_widget.dart';
 
 class AllChallengesWidget extends StatefulWidget {
   @override
@@ -39,16 +41,15 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
             ];
           } else {
             children = <Widget>[
-              SizedBox(
-                child: CircularProgressIndicator(),
-                width: 60,
-                height: 60,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text(
-                    '${AppLocalizations.of(context).loadingTheChallenges}...'),
-              )
+          Shimmer.fromColors(
+          baseColor: Colors.black12,
+          highlightColor: Colors.grey,
+          child: ListView.builder(itemBuilder: (_, __) => (
+          LoadingWidget()
+          ),
+          itemCount: 1,
+          ),
+          ),
             ];
           }
           return Center(
