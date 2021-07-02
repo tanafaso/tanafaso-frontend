@@ -15,6 +15,8 @@ import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:azkar/views/LoadingWidget.dart';
+import 'package:shimmer/shimmer.dart';
 
 typedef ChallengeChangedCallback = void Function(Challenge newChallenge);
 
@@ -215,7 +217,11 @@ class _GroupChallengeListItemWidgetState
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
-                        child: CircularProgressIndicator(),
+                        child: Shimmer.fromColors(
+                          baseColor: Colors.black12,
+                          highlightColor: Colors.grey,
+                          child: LoadingWidget(),
+                        ),
                         width: 60,
                         height: 60,
                       ),
