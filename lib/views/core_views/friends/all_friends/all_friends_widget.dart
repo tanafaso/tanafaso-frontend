@@ -11,7 +11,8 @@ class AllFriendsWidget extends StatefulWidget {
   final List<FriendshipScores> friendshipScores;
   final OnRefreshRequested onRefreshRequested;
 
-  AllFriendsWidget({@required this.friendshipScores, @required this.onRefreshRequested});
+  AllFriendsWidget(
+      {@required this.friendshipScores, @required this.onRefreshRequested});
 
   @override
   _AllFriendsWidgetState createState() => _AllFriendsWidgetState();
