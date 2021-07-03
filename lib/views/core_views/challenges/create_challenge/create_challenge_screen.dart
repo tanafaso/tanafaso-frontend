@@ -11,6 +11,8 @@ import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_azkar/selected_azkar_widget.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/selected_friends_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_state_button/iconed_button.dart';
+import 'package:progress_state_button/progress_button.dart';
 
 // ignore: must_be_immutable
 class CreateChallengeScreen extends StatefulWidget {
@@ -39,6 +41,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
   List<SubChallenge> _subChallenges;
   bool _subChallengesValid;
   List<Friend> _selectedFriends;
+  ButtonState progressButtonState;
 
   initChallengeNameController() {
     _lastChallengeName = widget.initiallyChosenName;
@@ -135,6 +138,8 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
         TextEditingController(text: widget.initiallyChosenMotivation);
     _subChallengesValid = _subChallenges.length > 0;
     _selectedFriends = widget.initiallySelectedFriends;
+    progressButtonState = ButtonState.idle;
+
     super.initState();
   }
 
@@ -392,43 +397,17 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Container(
-                      margin: const EdgeInsets.all(8),
-                      child: ButtonTheme(
-                        height: 50,
-                        // ignore: deprecated_member_use
-                        child: FlatButton(
-                          onPressed: () async => onCreatePressed(),
-                          child: Center(
-                              child: Text(
-                            readyToFinishChallenge(false)
-                                ? AppLocalizations.of(context).add
-                                : AppLocalizations.of(context).addNotReady,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          )),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 8, top: 8),
+                          child: !readyToFinishChallenge(false)
+                              ? getNotReadyButton()
+                              : getReadyButton(),
                         ),
                       ),
-                      decoration: BoxDecoration(
-                          color: readyToFinishChallenge(false)
-                              ? Colors.green.shade300
-                              : Colors.grey,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.green.shade200,
-                                offset: Offset(1, -2),
-                                blurRadius: 5),
-                            BoxShadow(
-                                color: Colors.green.shade200,
-                                offset: Offset(-1, 2),
-                                blurRadius: 5)
-                          ]),
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -439,12 +418,87 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
     );
   }
 
+  Widget getNotReadyButton() {
+    return Container(
+      margin: const EdgeInsets.all(8),
+      child: ButtonTheme(
+        height: 50,
+        // ignore: deprecated_member_use
+        child: FlatButton(
+          color: Colors.grey,
+          onPressed: () async => onCreatePressed(),
+          child: Center(
+              child: Text(
+            AppLocalizations.of(context).addNotReady,
+            style: TextStyle(
+                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          )),
+        ),
+      ),
+    );
+  }
+
+  Widget getReadyButton() {
+    return ProgressButton.icon(
+      textStyle: TextStyle(
+        color: Colors.black,
+      ),
+      iconedButtons: {
+        ButtonState.idle: IconedButton(
+            text: AppLocalizations.of(context).add,
+            icon: Icon(Icons.add_circle_outline_rounded, color: Colors.black),
+            color: Theme.of(context).buttonColor),
+        ButtonState.loading: IconedButton(
+            text: AppLocalizations.of(context).sending,
+            color: Colors.yellow.shade200),
+        ButtonState.fail: IconedButton(
+            text: AppLocalizations.of(context).failed,
+            icon: Icon(Icons.cancel, color: Colors.white),
+            color: Colors.red.shade300),
+        ButtonState.success: IconedButton(
+            text: AppLocalizations.of(context).login,
+            icon: Icon(
+              Icons.check_circle,
+              color: Colors.white,
+            ),
+            color: Colors.green.shade400)
+      },
+      onPressed: onProgressButtonClicked,
+      state: progressButtonState,
+    );
+  }
+
+  void onProgressButtonClicked() {
+    switch (progressButtonState) {
+      case ButtonState.idle:
+        setState(() {
+          progressButtonState = ButtonState.loading;
+        });
+
+        onCreatePressed();
+        break;
+      case ButtonState.loading:
+        break;
+      case ButtonState.success:
+        break;
+      case ButtonState.fail:
+        progressButtonState = ButtonState.idle;
+        break;
+    }
+    setState(() {
+      progressButtonState = progressButtonState;
+    });
+  }
+
   onCreatePressed() async {
     if (!readyToFinishChallenge(true)) {
       SnackBarUtils.showSnackBar(
         context,
         AppLocalizations.of(context).pleaseFillUpAllTheCellsProperly,
       );
+      setState(() {
+        progressButtonState = ButtonState.fail;
+      });
       return;
     }
 
@@ -479,8 +533,15 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
         context,
         e.error,
       );
+      setState(() {
+        progressButtonState = ButtonState.fail;
+      });
       return;
     }
+
+    setState(() {
+      progressButtonState = ButtonState.success;
+    });
 
     SnackBarUtils.showSnackBar(
       context,
