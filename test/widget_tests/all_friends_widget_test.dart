@@ -62,12 +62,14 @@ void main() {
 
     var friendsLeaderboard = [friendScore1, friendScore2, friendScore3];
 
-    when(usersService.getFriendsLeaderboard())
-        .thenAnswer((_) => Future.value(friendsLeaderboard));
+    // when(usersService.getFriendsLeaderboard())
+    //     .thenAnswer((_) => Future.value(friendsLeaderboard));
 
     await tester.pumpWidget(FeatureDiscovery(
       child: new MaterialApp(
-        home: AllFriendsWidget(),
+        home: AllFriendsWidget(
+          friendshipScores: friendsLeaderboard,
+        ),
         localizationsDelegates: [AppLocalizationsDelegate()],
         supportedLocales: [
           const Locale('ar', ''),
@@ -105,11 +107,13 @@ void main() {
   testWidgets(
       'a message showing that the friend list is empty is shown when the user has no friends',
       (WidgetTester tester) async {
-    when(usersService.getFriendsLeaderboard())
-        .thenAnswer((_) => Future.value([]));
+    // when(usersService.getFriendsLeaderboard())
+    //     .thenAnswer((_) => Future.value([]));
 
     await tester.pumpWidget(new MaterialApp(
-      home: AllFriendsWidget(),
+      home: AllFriendsWidget(
+        friendshipScores: [],
+      ),
       localizationsDelegates: [AppLocalizationsDelegate()],
       supportedLocales: [
         const Locale('ar', ''),

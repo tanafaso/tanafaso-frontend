@@ -11,7 +11,8 @@ class FriendRequestWidget extends StatefulWidget {
   final Friend friend;
   final OnFriendRequestResolvedCallback onFriendRequestResolvedCallback;
 
-  FriendRequestWidget({@required this.friend, @required this.onFriendRequestResolvedCallback});
+  FriendRequestWidget(
+      {@required this.friend, @required this.onFriendRequestResolvedCallback});
 
   @override
   _FriendRequestWidgetState createState() => _FriendRequestWidgetState();
