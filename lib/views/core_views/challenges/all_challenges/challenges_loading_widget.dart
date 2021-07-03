@@ -50,6 +50,7 @@ class LoadingWidget extends StatelessWidget {
     );
   }
 }
+
 /*
 Widget that represents the lines Loading in the widget.
  */
