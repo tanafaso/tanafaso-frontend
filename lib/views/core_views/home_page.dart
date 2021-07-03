@@ -13,9 +13,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Topic {
   BottomNavigationBarItem bottomNavigationBarItem;
-  Widget widget;
+  TopicType topicType;
 
-  Topic({@required this.bottomNavigationBarItem, @required this.widget});
+  Topic({@required this.bottomNavigationBarItem, @required this.topicType});
+}
+
+enum TopicType {
+  CHALLENGES,
+  FRIENDS,
+  PROFILE,
 }
 
 class HomePage extends StatefulWidget {
@@ -123,7 +129,7 @@ class _HomePageState extends State<HomePage> {
               title: Text(_appBarTitle),
             ),
             body: Center(
-              child: topics[_selectedIdx].widget,
+              child: getWidgetForTopicType(topics[_selectedIdx].topicType),
             ),
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: Theme.of(context).primaryColor,
@@ -145,21 +151,34 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.whatshot),
               label: AppLocalizations.of(context).theChallenges,
               backgroundColor: Theme.of(context).primaryColor),
-          widget: widget.challengesWidget),
+          topicType: TopicType.CHALLENGES),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
             label: AppLocalizations.of(context).friends,
             backgroundColor: Theme.of(context).primaryColor,
           ),
-          widget: widget.friendsWidget),
+          topicType: TopicType.FRIENDS),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             label: AppLocalizations.of(context).profile,
             backgroundColor: Theme.of(context).primaryColor,
           ),
-          widget: widget.profileWidget),
+          topicType: TopicType.PROFILE),
     ];
+  }
+
+  // ignore: missing_return
+  Widget getWidgetForTopicType(TopicType topicType) {
+    switch (topicType) {
+      case TopicType.CHALLENGES:
+        return ChallengesMainScreen();
+      case TopicType.FRIENDS:
+        return FriendsMainScreen();
+      case TopicType.PROFILE:
+        return ProfileMainWidget();
+    }
+    assert(false);
   }
 }

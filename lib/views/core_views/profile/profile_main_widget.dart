@@ -10,11 +10,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
-class ProfileMainWidget extends StatelessWidget {
+class ProfileMainWidget extends StatefulWidget {
+  @override
+  _ProfileMainWidgetState createState() => _ProfileMainWidgetState();
+}
+
+class _ProfileMainWidgetState extends State<ProfileMainWidget> {
+  @override
+  void initState() {
+    super.initState();
+
+    HomePage.setAppBarTitle('الملف الشخصي');
+  }
+
   @override
   Widget build(BuildContext context) {
-    HomePage.setAppBarTitle(AppLocalizations.of(context).profile);
-
     return FutureBuilder(
         future: ServiceProvider.usersService.getCurrentUser(),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {

@@ -1,4 +1,3 @@
-import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/challenges/all_challenges/all_challenges_widget.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_challenge_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
@@ -12,9 +11,13 @@ class ChallengesMainScreen extends StatefulWidget {
 class _ChallengesMainScreenState extends State<ChallengesMainScreen>
     with TickerProviderStateMixin {
   @override
-  Widget build(BuildContext context) {
-    HomePage.setAppBarTitle(AppLocalizations.of(context).theChallenges);
+  void initState() {
+    super.initState();
+    HomePage.setAppBarTitle('التحديات');
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: AllChallengesWidget(),
       floatingActionButton: FloatingActionButton.extended(
