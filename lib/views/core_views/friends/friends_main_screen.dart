@@ -1,9 +1,13 @@
+import 'package:azkar/models/friend.dart';
+import 'package:azkar/models/friendship.dart';
+import 'package:azkar/models/friendship_scores.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/features.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
+import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/friends/add_friend/add_friend_screen.dart';
 import 'package:azkar/views/core_views/friends/all_friends/all_friends_widget.dart';
 import 'package:azkar/views/core_views/friends/friend_requests/friend_requests_widget.dart';
@@ -27,6 +31,9 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
   TabController _tabController;
   bool _addExpanded;
 
+  List<FriendshipScores> _friendshipScores;
+  List<Friend> _pendingFriends;
+
   @override
   void initState() {
     super.initState();
@@ -41,18 +48,134 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
 
     allFriendsTabKey = UniqueKey();
     friendRequestsTabKey = UniqueKey();
-    friendsTabs = <Tab>[
-      Tab(key: allFriendsTabKey, text: 'الأصدقاء'),
-      Tab(key: friendRequestsTabKey, text: 'طلبات صداقة'),
-    ];
 
-    _tabController = TabController(vsync: this, length: friendsTabs.length);
+    _friendshipScores = [];
+    _pendingFriends = [];
 
     HomePage.setAppBarTitle('الأصدقاء');
   }
 
+  Future<void> getNeededData() async {
+    try {
+      _friendshipScores =
+          await ServiceProvider.usersService.getFriendsLeaderboard();
+      _friendshipScores = _friendshipScores
+          .where((friendshipScore) => !friendshipScore.friend.pending)
+          .toList();
+
+      Friendship friendship = await ServiceProvider.usersService.getFriends();
+      _pendingFriends =
+          friendship.friends.where((friend) => friend.pending).toList();
+    } on ApiException catch (e) {
+      SnackBarUtils.showSnackBar(context, e.error);
+    }
+  }
+
+  Widget getAllFriendsTabTitle() {
+    return RichText(
+        text: TextSpan(
+      // Note: Styles for TextSpans must be explicitly defined.
+      // Child text spans will inherit styles from parent
+      style: new TextStyle(
+        color: Colors.black,
+      ),
+      children: <TextSpan>[
+        new TextSpan(
+            text: 'الأصدقاء',
+            style: new TextStyle(fontWeight: FontWeight.bold)),
+        new TextSpan(
+          text: ' ',
+        ),
+        new TextSpan(
+            text: '(${_friendshipScores.length.toString()})',
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+      ],
+    ));
+  }
+
+  Widget getFriendRequestsTabTitle() {
+    return RichText(
+        text: TextSpan(
+      // Note: Styles for TextSpans must be explicitly defined.
+      // Child text spans will inherit styles from parent
+      style: new TextStyle(
+        color: Colors.black,
+      ),
+      children: <TextSpan>[
+        new TextSpan(
+            text: 'طلبات صداقة',
+            style: new TextStyle(fontWeight: FontWeight.bold)),
+        new TextSpan(
+          text: ' ',
+        ),
+        new TextSpan(
+            text: '(${_pendingFriends.length.toString()})',
+            style: TextStyle(
+                color:
+                    _pendingFriends.length == 0 ? Colors.black : Colors.green,
+                fontWeight: FontWeight.bold)),
+      ],
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<void>(
+      future: getNeededData(),
+      builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        List<Widget> children;
+        if (snapshot.connectionState == ConnectionState.done) {
+          friendsTabs = <Tab>[
+            Tab(
+              key: allFriendsTabKey,
+              child: getAllFriendsTabTitle(),
+            ),
+            Tab(
+              key: friendRequestsTabKey,
+              child: getFriendRequestsTabTitle(),
+            )
+          ];
+
+          _tabController =
+              TabController(vsync: this, length: friendsTabs.length);
+          return getMainWidget();
+        } else if (snapshot.hasError) {
+          children = <Widget>[
+            Icon(
+              Icons.error_outline,
+              color: Colors.red,
+              size: 60,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: SnapshotUtils.getErrorWidget(context, snapshot),
+            )
+          ];
+        } else {
+          children = <Widget>[
+            SizedBox(
+              child: CircularProgressIndicator(),
+              width: 60,
+              height: 60,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: Text('${AppLocalizations.of(context).loadingFriends}...'),
+            )
+          ];
+        }
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: children,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget getMainWidget() {
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -64,9 +187,14 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
         controller: _tabController,
         children: friendsTabs.map((Tab tab) {
           if (tab.key == allFriendsTabKey) {
-            return AllFriendsWidget();
+            return AllFriendsWidget(friendshipScores: _friendshipScores);
           } else if (tab.key == friendRequestsTabKey) {
-            return FriendRequestsWidget();
+            return FriendRequestsWidget(
+              pendingFriends: _pendingFriends,
+              onFriendRequestResolvedCallback: () {
+                setState(() {});
+              },
+            );
           } else {
             assert(false);
           }
