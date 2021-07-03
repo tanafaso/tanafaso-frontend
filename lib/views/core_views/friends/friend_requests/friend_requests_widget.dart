@@ -20,20 +20,36 @@ class FriendRequestsWidget extends StatefulWidget {
 class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
   @override
   Widget build(BuildContext context) {
+    Widget mainWidget;
     if ((widget.pendingFriends?.length ?? 0) == 0) {
-      return Center(
-        child: Text(AppLocalizations.of(context).noFriendRequestsFound),
+      mainWidget = ListView(
+        children: [
+          Center(
+            child: Text(AppLocalizations.of(context).noFriendRequestsFound),
+          ),
+        ],
+      );
+    } else {
+      mainWidget = ListView.builder(
+        itemCount: widget.pendingFriends.length,
+        itemBuilder: (context, index) {
+          return FriendRequestWidget(
+            friend: widget.pendingFriends[index],
+            onFriendRequestResolvedCallback:
+                widget.onFriendRequestResolvedCallback,
+          );
+        },
       );
     }
-    return ListView.builder(
-      itemCount: widget.pendingFriends.length,
-      itemBuilder: (context, index) {
-        return FriendRequestWidget(
-          friend: widget.pendingFriends[index],
-          onFriendRequestResolvedCallback:
-              widget.onFriendRequestResolvedCallback,
-        );
+
+    return RefreshIndicator(
+      onRefresh: () {
+        // Just to force parents to reload.
+        widget.onFriendRequestResolvedCallback();
+        return Future.value();
       },
+      color: Colors.black,
+      child: mainWidget,
     );
   }
 }
