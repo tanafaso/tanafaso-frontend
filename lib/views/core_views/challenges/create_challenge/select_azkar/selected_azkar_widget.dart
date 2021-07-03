@@ -208,6 +208,8 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
                         setState(() {
                           _subChallenges.removeAt(index);
                           _repetitionsControllers.removeAt(index);
+                          widget.onSelectedAzkarChangedCallback
+                              .call(_subChallenges);
                         });
                       },
                       child: Icon(
