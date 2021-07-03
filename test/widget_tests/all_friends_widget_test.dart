@@ -6,7 +6,6 @@ import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/friends/all_friends/all_friends_widget.dart';
 import 'package:azkar/views/core_views/friends/all_friends/no_friends_found_widget.dart';
 import 'package:azkar/views/core_views/friends/all_friends/summary_friend_list_item_widget.dart';
-import 'package:azkar/views/keys.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
