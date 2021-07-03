@@ -351,7 +351,6 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
 
     try {
       List<User> friends = await getFacebookFriends();
-      print(friends.length);
       Navigator.push(
           context,
           MaterialPageRoute(

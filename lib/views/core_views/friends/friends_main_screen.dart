@@ -20,8 +20,8 @@ class FriendsMainScreen extends StatefulWidget {
 
 class _FriendsMainScreenState extends State<FriendsMainScreen>
     with TickerProviderStateMixin {
-  final allFriendsTabKey = UniqueKey();
-  final friendRequestsTabKey = UniqueKey();
+  UniqueKey allFriendsTabKey;
+  UniqueKey friendRequestsTabKey;
 
   List<Tab> friendsTabs;
   TabController _tabController;
@@ -38,20 +38,21 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
         [Features.SHARE_USERNAME, Features.SABEQ_INTRODUCTION],
       );
     });
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    HomePage.setAppBarTitle(AppLocalizations.of(context).friends);
+    allFriendsTabKey = UniqueKey();
+    friendRequestsTabKey = UniqueKey();
     friendsTabs = <Tab>[
-      Tab(key: allFriendsTabKey, text: AppLocalizations.of(context).friends),
-      Tab(
-          key: friendRequestsTabKey,
-          text: AppLocalizations.of(context).friendRequests),
+      Tab(key: allFriendsTabKey, text: 'الأصدقاء'),
+      Tab(key: friendRequestsTabKey, text: 'طلبات صداقة'),
     ];
 
     _tabController = TabController(vsync: this, length: friendsTabs.length);
 
+    HomePage.setAppBarTitle('الأصدقاء');
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
