@@ -20,12 +20,12 @@ class LoadingWidget extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 15),
                   child: Column(
                     children: [
-                      Mycontainer(150.0, 8.0),
+                      LineWidget(150.0, 8.0),
                       SizedBox(
                         width: 0,
                         height: 13,
                       ),
-                      Mycontainer(120.0, 8.0),
+                      LineWidget(120.0, 8.0),
                     ],
                   )),
             ],
@@ -34,15 +34,15 @@ class LoadingWidget extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 40, 60, 0),
               child: Column(
                 children: [
-                  Mycontainer(290.0, 8.0),
+                  LineWidget(290.0, 8.0),
                   SizedBox(
                     height: 13,
                   ),
-                  Mycontainer(250.0, 8.0),
+                  LineWidget(250.0, 8.0),
                   SizedBox(
                     height: 13,
                   ),
-                  Mycontainer(200.0, 8.0),
+                  LineWidget(200.0, 8.0),
                 ],
               )),
         ],
@@ -50,11 +50,13 @@ class LoadingWidget extends StatelessWidget {
     );
   }
 }
-
-class Mycontainer extends StatelessWidget {
+/*
+Widget that represents the lines Loading in the widget.
+ */
+class LineWidget extends StatelessWidget {
   final double width;
   final double height;
-  Mycontainer(this.width, this.height);
+  LineWidget(this.width, this.height);
   @override
   Widget build(BuildContext context) {
     return Container(
