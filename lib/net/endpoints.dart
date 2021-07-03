@@ -55,8 +55,8 @@ class ApiRoutesUtil {
       case EndpointRoute.BASE_URL:
         if (Platform.isAndroid) {
           // Use the following for testing locally.
-          // return '10.0.2.2:8080';
-          return 'www.tanafaso.com';
+          return '10.0.2.2:8080';
+          // return 'www.tanafaso.com';
         }
         if (Platform.isIOS) {
           // Use the following for testing locally.

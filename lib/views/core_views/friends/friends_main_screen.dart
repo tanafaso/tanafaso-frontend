@@ -187,7 +187,12 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
         controller: _tabController,
         children: friendsTabs.map((Tab tab) {
           if (tab.key == allFriendsTabKey) {
-            return AllFriendsWidget(friendshipScores: _friendshipScores);
+            return AllFriendsWidget(
+              friendshipScores: _friendshipScores,
+              onRefreshRequested: () {
+                setState(() {});
+              },
+            );
           } else if (tab.key == friendRequestsTabKey) {
             return FriendRequestsWidget(
               pendingFriends: _pendingFriends,

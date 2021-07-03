@@ -69,6 +69,7 @@ void main() {
       child: new MaterialApp(
         home: AllFriendsWidget(
           friendshipScores: friendsLeaderboard,
+          onRefreshRequested: () {},
         ),
         localizationsDelegates: [AppLocalizationsDelegate()],
         supportedLocales: [
@@ -113,6 +114,7 @@ void main() {
     await tester.pumpWidget(new MaterialApp(
       home: AllFriendsWidget(
         friendshipScores: [],
+        onRefreshRequested: () {},
       ),
       localizationsDelegates: [AppLocalizationsDelegate()],
       supportedLocales: [
