@@ -447,7 +447,7 @@ class _CreateChallengeScreenState extends State<CreateChallengeScreen> {
         ButtonState.idle: IconedButton(
             text: AppLocalizations.of(context).add,
             icon: Icon(Icons.add_circle_outline_rounded, color: Colors.black),
-            color: Theme.of(context).buttonColor),
+            color: Colors.green.shade300),
         ButtonState.loading: IconedButton(
             text: AppLocalizations.of(context).sending,
             color: Colors.yellow.shade200),
