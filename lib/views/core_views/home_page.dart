@@ -169,7 +169,8 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
-  Widget getWidgetForTopicType (TopicType topicType) {
+  // ignore: missing_return
+  Widget getWidgetForTopicType(TopicType topicType) {
     switch (topicType) {
       case TopicType.CHALLENGES:
         return ChallengesMainScreen();
