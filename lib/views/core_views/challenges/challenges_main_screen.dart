@@ -11,10 +11,15 @@ class ChallengesMainScreen extends StatefulWidget {
 
 class _ChallengesMainScreenState extends State<ChallengesMainScreen>
     with TickerProviderStateMixin {
+
+  @override
+  void initState() {
+    super.initState();
+    HomePage.setAppBarTitle('التحديات');
+  }
+  
   @override
   Widget build(BuildContext context) {
-    HomePage.setAppBarTitle(AppLocalizations.of(context).theChallenges);
-
     return Scaffold(
       body: AllChallengesWidget(),
       floatingActionButton: FloatingActionButton.extended(
