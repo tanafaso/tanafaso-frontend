@@ -5,10 +5,14 @@ import 'package:azkar/views/keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+typedef OnRefreshRequested = void Function();
+
 class AllFriendsWidget extends StatefulWidget {
   final List<FriendshipScores> friendshipScores;
+  final OnRefreshRequested onRefreshRequested;
 
-  AllFriendsWidget({@required this.friendshipScores});
+  AllFriendsWidget(
+      {@required this.friendshipScores, @required this.onRefreshRequested});
 
   @override
   _AllFriendsWidgetState createState() => _AllFriendsWidgetState();
@@ -21,16 +25,24 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
       return NoFriendsFoundWidget();
     }
 
-    return ListView.builder(
-      key: Keys.allFriendsWidgetListKey,
-      itemCount: widget.friendshipScores.length,
-      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      scrollDirection: Axis.vertical,
-      itemBuilder: (context, index) {
-        return FriendListItemWidget(
-          friendshipScores: widget.friendshipScores[index],
-        );
+    return RefreshIndicator(
+      onRefresh: () {
+        // Just to force parents to reload.
+        widget.onRefreshRequested();
+        return Future.value();
       },
+      color: Colors.black,
+      child: ListView.builder(
+        key: Keys.allFriendsWidgetListKey,
+        itemCount: widget.friendshipScores.length,
+        physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) {
+          return FriendListItemWidget(
+            friendshipScores: widget.friendshipScores[index],
+          );
+        },
+      ),
     );
   }
 }
