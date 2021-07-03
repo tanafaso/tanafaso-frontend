@@ -5,11 +5,14 @@ import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:flutter/material.dart';
 
+typedef OnFriendRequestResolvedCallback = void Function();
+
 class FriendRequestWidget extends StatefulWidget {
   final Friend friend;
-  final State parentState;
+  final OnFriendRequestResolvedCallback onFriendRequestResolvedCallback;
 
-  FriendRequestWidget({@required this.friend, @required this.parentState});
+  FriendRequestWidget(
+      {@required this.friend, @required this.onFriendRequestResolvedCallback});
 
   @override
   _FriendRequestWidgetState createState() => _FriendRequestWidgetState();
@@ -102,7 +105,7 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
     SnackBarUtils.showSnackBar(context,
         '${widget.friend.firstName} ${widget.friend.lastName} ${AppLocalizations.of(context).isNowYourFriend}',
         color: Colors.green.shade400);
-    widget.parentState.setState(() {});
+    widget.onFriendRequestResolvedCallback();
   }
 
   void onRejectedPressed() async {
@@ -116,6 +119,6 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
       context,
       "${AppLocalizations.of(context).friendRequest} ${widget.friend.firstName} ${widget.friend.lastName} ${AppLocalizations.of(context).isIgnored}",
     );
-    widget.parentState.setState(() {});
+    widget.onFriendRequestResolvedCallback();
   }
 }
