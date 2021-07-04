@@ -1,6 +1,7 @@
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
+import 'package:azkar/models/friendship_scores.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/services/service_provider.dart';
@@ -49,6 +50,7 @@ class _GroupChallengeListItemWidgetState
   AnimationController _controller;
   Animation<Offset> _offsetAnimation;
   bool _showCloneAndDeleteFeatureDiscovery;
+  List<FriendshipScores> _friendshipScores;
 
   Future<void> getNeededData() async {
     try {
@@ -64,6 +66,7 @@ class _GroupChallengeListItemWidgetState
         _challengedUsersFullNames.add(friendFullName);
       }
       _binary = _challengedUsersIds.length == 1;
+      _friendshipScores = await ServiceProvider.usersService.getFriendsLeaderboard();
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.error);
     }
@@ -132,6 +135,7 @@ class _GroupChallengeListItemWidgetState
                           group: widget.group,
                           challengedUsersIds: _challengedUsersIds,
                           challengedUsersFullNames: _challengedUsersFullNames,
+                          friendshipScores: _friendshipScores,
                           challengeChangedCallback: (changedChallenge) {
                             widget.challengeChangedCallback(changedChallenge);
                           })));

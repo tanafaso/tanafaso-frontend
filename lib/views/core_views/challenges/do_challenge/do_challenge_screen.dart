@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:azkar/models/challenge.dart';
+import 'package:azkar/models/friendship_scores.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
@@ -11,7 +12,9 @@ import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
+import 'package:azkar/views/core_views/friends/all_friends/summary_friend_list_item_widget.dart';
 import 'package:confetti/confetti.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 
@@ -24,12 +27,15 @@ class DoChallengeScreen extends StatefulWidget {
   final List<String> challengedUsersIds;
   final List<String> challengedUsersFullNames;
 
+  final List<FriendshipScores> friendshipScores;
+
   DoChallengeScreen({
     @required this.challenge,
-    this.group,
-    this.challengedUsersIds,
-    this.challengedUsersFullNames,
+    @required this.group,
+    @required this.challengedUsersIds,
+    @required this.challengedUsersFullNames,
     @required this.challengeChangedCallback,
+    @required this.friendshipScores,
   });
 
   @override
@@ -164,7 +170,7 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
               confettiControler.addListener(() {
                 if (confettiControler.state ==
                     ConfettiControllerState.stopped) {
-                  onFinish();
+                  onFinishedConfetti();
                 }
               });
 
@@ -176,7 +182,7 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
     );
   }
 
-  onFinish() async {
+  onFinishedConfetti() async {
     // Avoid popping twice if confetti's controller decided to call our listner
     // more than once.
     if (_finishedConfetti) {
@@ -184,12 +190,18 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
     }
     _finishedConfetti = true;
 
+    bool ratingRequestShown = false;
     if (Platform.isAndroid && widget.challengedUsersIds.length >= 2) {
       var prefs = await ServiceProvider.cacheManager.getPrefs();
       if (!prefs.containsKey(CacheManager.CAHCE_KEY_ASKED_FOR_REVIEW)) {
         prefs.setBool(CacheManager.CAHCE_KEY_ASKED_FOR_REVIEW, true);
+        ratingRequestShown = true;
         await showReviewDialog(context);
       }
+    }
+
+    if (!ratingRequestShown) {
+      await showFriendsScoreDialog();
     }
     Navigator.of(context).pop();
   }
@@ -227,6 +239,45 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
       builder: (BuildContext context) {
         return alert;
       },
+    );
+  }
+
+  Future<void> showFriendsScoreDialog() async {
+    List<FriendshipScores> relevantFriendScores = widget.friendshipScores
+        .where((friendshipScore) =>
+            widget.challengedUsersIds.contains(friendshipScore.friend.userId))
+        .toList();
+    List<FriendshipScores> newScores = relevantFriendScores.map((e) {
+      e.currentUserScore++;
+      return e;
+    }).toList();
+
+
+    var scrollController = ScrollController();
+
+    await showDialog(
+      context: context,
+      builder: (_) => Center(
+        child: Container(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 300),
+            child: Scrollbar(
+              isAlwaysShown: true,
+              controller: scrollController,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: newScores.length,
+                  controller: scrollController,
+                  itemBuilder: (context, index) {
+                    return SummaryFriendListItemWidget(
+                      friendshipScores: newScores[index],
+                      toggleViewCallback: () {}, // do nothing in this view
+                    );
+                  }),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
