@@ -248,6 +248,9 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
             widget.challengedUsersIds.contains(friendshipScore.friend.userId))
         .toList();
 
+    for (int i = 0; i < 5; i++) {
+      relevantFriendScores.add(relevantFriendScores[0]);
+    }
     var scrollController = ScrollController();
 
     await showDialog(
@@ -300,6 +303,22 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                     ),
                   ),
                 ),
+                RawMaterialButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  child: Text(
+                    '💪',
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 8),
+                )
               ],
             ),
           ),
