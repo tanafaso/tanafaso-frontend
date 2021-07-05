@@ -80,14 +80,18 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
         return Future.value();
       },
       color: Colors.black,
-      child: ListView.builder(
+      child: ListView.separated(
         key: Keys.allChallengesWidgetListKey,
         addAutomaticKeepAlives: true,
         // Cache half screen after and half screen before the current screen.
         cacheExtent: MediaQuery.of(context).size.height * 0.5,
+        separatorBuilder: (context, index) => Padding(
+          padding: EdgeInsets.only(bottom: 4),
+        ),
         itemCount: challenges.length,
         itemBuilder: (context, index) {
           return GroupChallengeListItemWidget(
+            key: Key(challenges[index].id),
             challenge: challenges[index],
             group: groups
                 .firstWhere((group) => group.id == challenges[index].groupId),
