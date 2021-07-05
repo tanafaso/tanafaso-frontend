@@ -1,4 +1,5 @@
 import 'package:azkar/models/challenge.dart';
+import 'package:azkar/models/friendship_scores.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
@@ -17,58 +18,63 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
   Widget build(BuildContext context) {
     return Container(
       child: FutureBuilder<List<dynamic>>(
-        future: Future.wait([
+          future: Future.wait([
           ServiceProvider.challengesService.getAllChallenges(),
-          ServiceProvider.groupsService.getGroups()
-        ]),
-        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-          List<Widget> children;
-          if (snapshot.hasData) {
-            return getChallengesListWidget(snapshot.data[0], snapshot.data[1]);
-          } else if (snapshot.hasError) {
-            children = <Widget>[
-              Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 60,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: SnapshotUtils.getErrorWidget(context, snapshot),
-              )
-            ];
-          } else {
-            children = <Widget>[
-              SizedBox(
-                child: CircularProgressIndicator(),
-                width: 60,
-                height: 60,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text(
-                    '${AppLocalizations.of(context).loadingTheChallenges}...'),
-              )
-            ];
-          }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: children,
+          ServiceProvider.groupsService.getGroups(),
+          ServiceProvider.usersService.getFriendsLeaderboard(),
+          ]),
+      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+        List<Widget> children;
+        if (snapshot.hasData) {
+          return getChallengesListWidget(
+              snapshot.data[0], snapshot.data[1], snapshot.data[2]);
+        } else if (snapshot.hasError) {
+          children = <Widget>[
+            Icon(
+              Icons.error_outline,
+              color: Colors.red,
+              size: 60,
             ),
-          );
-        },
-      ),
-    );
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: SnapshotUtils.getErrorWidget(context, snapshot),
+            )
+          ];
+        } else {
+          children = <Widget>[
+            SizedBox(
+              child: CircularProgressIndicator(),
+              width: 60,
+              height: 60,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: Text(
+                  '${AppLocalizations
+                      .of(context)
+                      .loadingTheChallenges}...'),
+            )
+          ];
+        }
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: children,
+          ),
+        );
+      },
+    ),);
   }
 
-  Widget getChallengesListWidget(
-      List<Challenge> challenges, List<Group> groups) {
+  Widget getChallengesListWidget(List<Challenge> challenges,
+      List<Group> groups, List<FriendshipScores> friendshipScores) {
     if (challenges == null || challenges.isEmpty) {
       return Center(
         child: Text(
-          AppLocalizations.of(context).noChallengesFound,
+          AppLocalizations
+              .of(context)
+              .noChallengesFound,
           key: Keys.allChallengesWidgetNoChallengesFoundKey,
         ),
       );
@@ -84,10 +90,14 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
         key: Keys.allChallengesWidgetListKey,
         addAutomaticKeepAlives: true,
         // Cache half screen after and half screen before the current screen.
-        cacheExtent: MediaQuery.of(context).size.height * 0.5,
-        separatorBuilder: (context, index) => Padding(
-          padding: EdgeInsets.only(bottom: 4),
-        ),
+        cacheExtent: MediaQuery
+            .of(context)
+            .size
+            .height * 0.5,
+        separatorBuilder: (context, index) =>
+            Padding(
+              padding: EdgeInsets.only(bottom: 4),
+            ),
         itemCount: challenges.length,
         itemBuilder: (context, index) {
           return GroupChallengeListItemWidget(
@@ -99,6 +109,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
               setState(() {});
             },
             firstChallengeInList: index == 0,
+            friendshipScores: friendshipScores,
           );
         },
       ),
