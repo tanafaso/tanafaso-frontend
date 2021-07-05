@@ -9,10 +9,10 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/cache_manager.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/animated_score_change_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
-import 'package:azkar/views/core_views/friends/all_friends/summary_friend_list_item_widget.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -247,33 +247,60 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
         .where((friendshipScore) =>
             widget.challengedUsersIds.contains(friendshipScore.friend.userId))
         .toList();
-    List<FriendshipScores> newScores = relevantFriendScores.map((e) {
-      e.currentUserScore++;
-      return e;
-    }).toList();
-
 
     var scrollController = ScrollController();
 
     await showDialog(
       context: context,
       builder: (_) => Center(
-        child: Container(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 300),
-            child: Scrollbar(
-              isAlwaysShown: true,
-              controller: scrollController,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: newScores.length,
-                  controller: scrollController,
-                  itemBuilder: (context, index) {
-                    return SummaryFriendListItemWidget(
-                      friendshipScores: newScores[index],
-                      toggleViewCallback: () {}, // do nothing in this view
-                    );
-                  }),
+        child: SizedBox(
+          width: double.maxFinite,
+          child: Card(
+            color: Theme.of(context).primaryColor,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            'استمر في تحفيز أصدقائك وتحديهم 🔥',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height / 3),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Scrollbar(
+                      isAlwaysShown: true,
+                      controller: scrollController,
+                      child: ListView.separated(
+                          padding: EdgeInsets.all(0),
+                          addAutomaticKeepAlives: true,
+                          separatorBuilder: (BuildContext context, int index) =>
+                              Divider(),
+                          shrinkWrap: true,
+                          itemCount: relevantFriendScores.length,
+                          controller: scrollController,
+                          itemBuilder: (context, index) {
+                            return AnimatedScoreChangeWidget(
+                              friendshipScores: relevantFriendScores[index],
+                            );
+                          }),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

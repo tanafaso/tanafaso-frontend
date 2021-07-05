@@ -88,6 +88,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
         itemCount: challenges.length,
         itemBuilder: (context, index) {
           return GroupChallengeListItemWidget(
+            key: Key(challenges[index].id),
             challenge: challenges[index],
             group: groups
                 .firstWhere((group) => group.id == challenges[index].groupId),

@@ -27,12 +27,13 @@ class GroupChallengeListItemWidget extends StatefulWidget {
   final bool firstChallengeInList;
 
   GroupChallengeListItemWidget({
+    Key key,
     @required this.challenge,
     @required this.group,
     this.showName = true,
     @required this.challengeChangedCallback,
     this.firstChallengeInList = false,
-  });
+  }) : super(key: key);
 
   @override
   _GroupChallengeListItemWidgetState createState() =>
@@ -66,7 +67,8 @@ class _GroupChallengeListItemWidgetState
         _challengedUsersFullNames.add(friendFullName);
       }
       _binary = _challengedUsersIds.length == 1;
-      _friendshipScores = await ServiceProvider.usersService.getFriendsLeaderboard();
+      _friendshipScores =
+          await ServiceProvider.usersService.getFriendsLeaderboard();
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.error);
     }
