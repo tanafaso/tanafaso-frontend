@@ -248,9 +248,6 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
             widget.challengedUsersIds.contains(friendshipScore.friend.userId))
         .toList();
 
-    for(int i = 0; i < 5; i++) {
-      relevantFriendScores.add(relevantFriendScores[0]);
-    }
     var scrollController = ScrollController();
 
     await showDialog(
