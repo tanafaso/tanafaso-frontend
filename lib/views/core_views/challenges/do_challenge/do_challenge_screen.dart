@@ -301,14 +301,21 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                   ),
                 ),
                 RawMaterialButton(
-                  onPressed: () { Navigator.pop(context); },
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   elevation: 2.0,
                   fillColor: Colors.white,
-                  child: Text('💪', style: TextStyle(fontSize: 25),),
+                  child: Text(
+                    '💪',
+                    style: TextStyle(fontSize: 25),
+                  ),
                   padding: EdgeInsets.all(15.0),
                   shape: CircleBorder(),
                 ),
-                Padding(padding: EdgeInsets.only(top: 8),)
+                Padding(
+                  padding: EdgeInsets.only(top: 8),
+                )
               ],
             ),
           ),
