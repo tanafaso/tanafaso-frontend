@@ -25,6 +25,7 @@ class GroupChallengeListItemWidget extends StatefulWidget {
   final bool showName;
   final ChallengeChangedCallback challengeChangedCallback;
   final bool firstChallengeInList;
+  final List<FriendshipScores> friendshipScores;
 
   GroupChallengeListItemWidget({
     Key key,
@@ -33,6 +34,7 @@ class GroupChallengeListItemWidget extends StatefulWidget {
     this.showName = true,
     @required this.challengeChangedCallback,
     this.firstChallengeInList = false,
+    @required this.friendshipScores,
   }) : super(key: key);
 
   @override
@@ -51,7 +53,6 @@ class _GroupChallengeListItemWidgetState
   AnimationController _controller;
   Animation<Offset> _offsetAnimation;
   bool _showCloneAndDeleteFeatureDiscovery;
-  List<FriendshipScores> _friendshipScores;
 
   Future<void> getNeededData() async {
     try {
@@ -67,8 +68,6 @@ class _GroupChallengeListItemWidgetState
         _challengedUsersFullNames.add(friendFullName);
       }
       _binary = _challengedUsersIds.length == 1;
-      _friendshipScores =
-          await ServiceProvider.usersService.getFriendsLeaderboard();
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.error);
     }
@@ -138,7 +137,7 @@ class _GroupChallengeListItemWidgetState
                           group: widget.group,
                           challengedUsersIds: _challengedUsersIds,
                           challengedUsersFullNames: _challengedUsersFullNames,
-                          friendshipScores: _friendshipScores,
+                          friendshipScores: widget.friendshipScores,
                           challengeChangedCallback: (changedChallenge) {
                             widget.challengeChangedCallback(changedChallenge);
                           })));
