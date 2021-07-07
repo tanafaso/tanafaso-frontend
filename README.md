@@ -27,6 +27,9 @@ Also, take a look at the [Backend](https://github.com/challenge-azkar/azkar-api)
   - Check that your fork is the origin remote using `git remote -v`, if it is not then added using `git remote add origin https://github.com/<your-github-username>/tanafaso-frontend`
   - Add the original project as upstream remote using `git remote add upstream https://github.com/challenge-azkar/tanafaso-frontend`
   - Congratulations, you can start contribute now, but make sure you create branch for every proposed change you make.
+ ### Firebase Notifications Development
+ Please note that if you don't intend to do changes regarding notifications, you have to comment the line `apply plugin: 'com.google.gms.google-services'` in file `android/app/build.gradle` so as to be able to build the android project.
+ If you intend to do changes regarding notifications, please create a firebase cloud messaging testing project and then move the `google-services.json` file you will obtain from firebase to `android/app` directory.
 
 ## Dependencies
 ### Dependencies for Android
