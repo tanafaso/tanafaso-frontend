@@ -6,8 +6,8 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:azkar/utils/app_localizations.dart';
-import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/landing_widget.dart';
+import 'package:feature_discovery/feature_discovery.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:feature_discovery/feature_discovery.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
