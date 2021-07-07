@@ -13,9 +13,6 @@ jobs:
       - uses: actions/checkout@v1
 
       - run: |
-          ls
-          cat android/app/build.gradle
           found=($(grep "^apply plugin: 'com.google.gms.google-services'" android/app/build.gradle | wc -l))
-          echo $found
-          [ found == 1 ] || exit 1
+          [ "$found" == "1" ] || exit 1
           exit 0
