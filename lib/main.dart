@@ -6,6 +6,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/landing_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -53,9 +54,9 @@ class _MyAppState extends State<MyApp> {
           if (snapshot.hasData) {
             return getMaterialAppWithBody(LandingWidget());
           } else if (snapshot.hasError) {
-            return getMaterialAppWithBody(Text(AppLocalizations(
-                    Locale('ar', ''))
-                .anErrorHappenedWhileSettingUpThisDeviceToReceiveNotifications));
+            print('حدث خطأ أثناء إعداد هذا الجهاز لتلقي الإخطارات');
+
+            return getMaterialAppWithBody(LandingWidget());
           } else {
             // TODO(omorsi): Show loader
             return getMaterialAppWithBody(Container(
