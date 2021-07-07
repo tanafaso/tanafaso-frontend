@@ -9,8 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
-    - run: |
+      - uses: actions/checkout@v1
+      - run: |
         found=($(grep "^apply plugin: 'com.google.gms.google-services'" android/app/build.gradle | wc -l))
         found || exit 1
         exit 0
