@@ -29,6 +29,7 @@ Also, take a look at the [Backend](https://github.com/challenge-azkar/azkar-api)
   - Congratulations, you can start contribute now, but make sure you create branch for every proposed change you make.
  ### Firebase Notifications Development
  Please note that if you don't intend to do changes regarding notifications, you have to comment the line `apply plugin: 'com.google.gms.google-services'` in file `android/app/build.gradle` so as to be able to build the android project.
+ 
  If you intend to do changes regarding notifications, please create a firebase cloud messaging testing project and then move the `google-services.json` file you will obtain from firebase to `android/app` directory.
 
 ## Dependencies
