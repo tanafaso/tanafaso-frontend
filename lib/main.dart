@@ -22,6 +22,10 @@ void main() async {
   SecurityContext context = SecurityContext.defaultContext;
   context.setTrustedCertificatesBytes(data.buffer.asUint8List());
   FlutterStatusbarcolor.setStatusBarColor(Color(0xffcef5ce));
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Color(0xffcef5ce),
+    statusBarColor: Color(0xffcef5ce),
+  ));
   runApp(MyApp());
 }
 
