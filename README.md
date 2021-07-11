@@ -44,6 +44,15 @@ Also, take a look at the [Backend](https://github.com/challenge-azkar/azkar-api)
 
 For more information about dependencies, you can check the [flutter documentation](https://flutter.dev/docs/get-started/install).
 
+## Code GuideLines
+- Use [snake case](https://www.theserverside.com/definition/Snake-case) for file names.
+- The filename should correspond to the name of the primary class in the file.
+- Names of files that contains widgets that take the whole screen should end with the suffix: `_screen.dart`, for example, signup or login takes up the whole screen for authentication.
+- Names of files that contains widgets that don't take the whole screen should end with the suffix: `_widget.dart`, for example, invite friends from facebook or twitter is a widget since it is part of the screen widget, but does not take the whole screen.
+- Use [Camel Case](https://techterms.com/definition/camelcase) convention for class and enum names.
+- Name (classes, variables, functions, modules) in a meaningful name which describe its functionality.
+- Make sure that all .dart files are formatted using `flutter format` command.
+
 ## Code Structure
 Assets (pictures, fonts and certificates) can be found in the [assets/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/assets) folder.
 
