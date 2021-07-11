@@ -1,64 +1,76 @@
-import 'sub_challenge.dart';
+import 'package:azkar/models/azkar_challenge.dart';
+import 'package:azkar/models/meaning_challenge.dart';
+
+enum ChallengeType {
+  AZKAR,
+  MEANING,
+}
 
 class Challenge {
   Challenge({
-    this.id,
-    this.groupId,
-    this.creatingUserId,
-    this.motivation,
-    this.name,
-    this.expiryDate,
-    this.usersFinished = const [],
-    this.subChallenges,
-  });
+    this.azkarChallenge,
+    this.meaningChallenge,
+  }) : challengeType = azkarChallenge != null
+            ? ChallengeType.AZKAR
+            : ChallengeType.MEANING;
 
-  String id;
-  String groupId;
-  String creatingUserId;
-  String motivation;
-  String name;
+  AzkarChallenge azkarChallenge;
+  MeaningChallenge meaningChallenge;
+  ChallengeType challengeType;
 
-  // In seconds since epoch
-  int expiryDate;
-  List<String> usersFinished;
-  List<SubChallenge> subChallenges;
-
-  factory Challenge.fromJson(Map<String, dynamic> json) => Challenge(
-        id: json["id"],
-        groupId: json["groupId"],
-        creatingUserId: json["creatingUserId"],
-        motivation: json["motivation"],
-        name: json["name"],
-        expiryDate: json["expiryDate"],
-        usersFinished: List<String>.from(json["usersFinished"].map((x) => x)),
-        subChallenges: List<SubChallenge>.from(
-            json["subChallenges"].map((x) => SubChallenge.fromJson(x))),
+  factory Challenge.fromJson(Map<String, dynamic> json) {
+    if (json["azkarChallenge"] == null) {
+      return Challenge(
+        meaningChallenge: MeaningChallenge.fromJson(json["meaningChallenge"]),
       );
+    }
+    return Challenge(
+      azkarChallenge: AzkarChallenge.fromJson(json["azkarChallenge"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "groupId": groupId,
-        "creatingUserId": creatingUserId,
-        "motivation": motivation,
-        "name": name,
-        "expiryDate": expiryDate,
-        "usersFinished": List<String>.from(usersFinished.map((x) => x)),
-        "subChallenges":
-            List<dynamic>.from(subChallenges.map((x) => x.toJson())),
+        "azkarChallenge": azkarChallenge.toJson(),
+        "meaningChallenge": meaningChallenge.toJson(),
       };
 
-  bool done() {
-    for (SubChallenge subChallenge in subChallenges) {
-      if (!subChallenge.done()) {
-        return false;
-      }
+  String getId() {
+    if (challengeType == ChallengeType.AZKAR) {
+      return azkarChallenge.id;
     }
-    return true;
+    return meaningChallenge.id;
+  }
+
+  String getGroupId() {
+    if (challengeType == ChallengeType.AZKAR) {
+      return azkarChallenge.groupId;
+    }
+    return meaningChallenge.groupId;
+  }
+
+  String getName() {
+    if (challengeType == ChallengeType.AZKAR) {
+      return azkarChallenge.name;
+    }
+    return meaningChallenge.getName();
+  }
+
+  bool done() {
+    if (challengeType == ChallengeType.AZKAR) {
+      return azkarChallenge.done();
+    }
+    return meaningChallenge.finished;
+  }
+
+  int getExpiryDate() {
+    return challengeType == ChallengeType.AZKAR
+        ? azkarChallenge.expiryDate
+        : meaningChallenge.expiryDate;
   }
 
   bool deadlinePassed() {
     int secondsSinceEpoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-    return secondsSinceEpoch >= expiryDate;
+    return secondsSinceEpoch >= getExpiryDate();
   }
 
   int hoursLeft() {
@@ -66,7 +78,7 @@ class Challenge {
       return 0;
     }
     int secondsSinceEpoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-    int secondsLeft = expiryDate - secondsSinceEpoch;
+    int secondsLeft = getExpiryDate() - secondsSinceEpoch;
     return secondsLeft ~/ 60 ~/ 60;
   }
 
@@ -75,7 +87,21 @@ class Challenge {
       return 0;
     }
     int secondsSinceEpoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-    int secondsLeft = expiryDate - secondsSinceEpoch;
+    int secondsLeft = getExpiryDate() - secondsSinceEpoch;
     return secondsLeft ~/ 60;
+  }
+
+  List<String> getUsersFinishedIds() {
+    if (challengeType == ChallengeType.AZKAR) {
+      return azkarChallenge.usersFinished;
+    }
+    return meaningChallenge.usersFinished;
+  }
+
+  String creatingUserId() {
+    if (challengeType == ChallengeType.AZKAR) {
+      return azkarChallenge.creatingUserId;
+    }
+    return meaningChallenge.creatingUserId;
   }
 }

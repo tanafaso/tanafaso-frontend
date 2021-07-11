@@ -50,6 +50,11 @@ class Status {
   static const int API_NAME_EMPTY_ERROR = 44;
   static const int API_PASSWORD_CHARACTERS_LESS_THAN_8_ERROR = 45;
   static const int CHALLENGE_CREATION_DUPLICATE_ZEKR_ERROR = 46;
+  // static const int INVALID_RESET_PASSWORD_TOKEN_ERROR = 47;
+  static const int ONE_OR_MORE_USERS_NOT_FRIENDS_ERROR = 48;
+  static const int LESS_THAN_TWO_FRIENDS_ARE_PROVIDED_ERROR = 49;
+  static const int DUPLICATE_FRIEND_IDS_PROVIDED_ERROR = 50;
+  static const int CHALLENGE_HAS_ALREADY_BEEN_FINISHED = 51;
   static Map<int, String> conversions = const {
     API_USER_ALREADY_LOGGED_IN_ERROR: "لقد قمت بتسجيل الدخول بالفعل",
     API_EMAIL_PASSWORD_COMBINATION_ERROR:
@@ -109,6 +114,11 @@ class Status {
     API_PASSWORD_CHARACTERS_LESS_THAN_8_ERROR:
         "لا يمكن أن تكون كلمة المرور أقل من 8 أحرف",
     CHALLENGE_CREATION_DUPLICATE_ZEKR_ERROR: "يجب ألا يتكرر الذكر",
+    // INVALID_RESET_PASSWORD_TOKEN_ERROR : "";
+    ONE_OR_MORE_USERS_NOT_FRIENDS_ERROR: "مستخدم واحد أو أكثر ليسوا أصدقاء",
+    LESS_THAN_TWO_FRIENDS_ARE_PROVIDED_ERROR: "تم اختيار أقل من صديقين",
+    DUPLICATE_FRIEND_IDS_PROVIDED_ERROR: "تم العثور على أصدقاء مكررين",
+    CHALLENGE_HAS_ALREADY_BEEN_FINISHED: "تم الانتهاء من التحدي بالفعل من قبل",
   };
 
   Status(int errorCode) {

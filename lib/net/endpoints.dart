@@ -26,15 +26,17 @@ enum EndpointRoute {
   GET_GROUP_LEADERBOARD,
   GET_GROUPS,
   ADD_GROUP_CHALLENGE,
-  ADD_FRIENDS_CHALLENGE,
+  ADD_AZKAR_CHALLENGE,
+  ADD_MEANING_CHALLENGE,
+  FINISH_MEANING_CHALLENGE,
   ADD_PERSONAL_CHALLENGE,
   GET_ALL_CHALLENGES,
   GET_ALL_CHALLENGES_IN_GROUP,
-  GET_CHALLENGE,
+  GET_AZKAR_CHALLENGE,
   DELETE_CHALLENGE,
   DELETE_PERSONAL_CHALLENGE,
   GET_ORIGINAL_CHALLENGE,
-  UPDATE_CHALLENGE,
+  UPDATE_AZKAR_CHALLENGE,
   UPDATE_PERSONAL_CHALLENGE,
   GET_PERSONAL_CHALLENGES,
 }
@@ -55,8 +57,8 @@ class ApiRoutesUtil {
       case EndpointRoute.BASE_URL:
         if (Platform.isAndroid) {
           // Use the following for testing locally.
-          // return '10.0.2.2:8080';
-          return 'www.tanafaso.com';
+          return '10.0.2.2:8080';
+          // return 'www.tanafaso.com';
         }
         if (Platform.isIOS) {
           // Use the following for testing locally.
@@ -119,16 +121,21 @@ class ApiRoutesUtil {
         return '/groups';
       case EndpointRoute.ADD_GROUP_CHALLENGE:
         return '/challenges';
-      case EndpointRoute.ADD_FRIENDS_CHALLENGE:
+      case EndpointRoute.ADD_AZKAR_CHALLENGE:
         return '/challenges/friends';
+      case EndpointRoute.ADD_MEANING_CHALLENGE:
+        return '/challenges/meaning';
+      case EndpointRoute.FINISH_MEANING_CHALLENGE:
+        assert(route.pathVariables.length == 1);
+        return '/challenges/finish/meaning/${route.pathVariables[0]}/';
       case EndpointRoute.ADD_PERSONAL_CHALLENGE:
         return '/challenges/personal';
       case EndpointRoute.GET_ALL_CHALLENGES:
-        return '/challenges/';
+        return '/challenges/v2';
       case EndpointRoute.GET_ALL_CHALLENGES_IN_GROUP:
         assert(route.pathVariables.length == 1);
         return '/challenges/groups/${route.pathVariables[0]}/';
-      case EndpointRoute.GET_CHALLENGE:
+      case EndpointRoute.GET_AZKAR_CHALLENGE:
         assert(route.pathVariables.length == 1);
         return '/challenges/${route.pathVariables[0]}';
       case EndpointRoute.DELETE_CHALLENGE:
@@ -140,7 +147,7 @@ class ApiRoutesUtil {
       case EndpointRoute.GET_ORIGINAL_CHALLENGE:
         assert(route.pathVariables.length == 1);
         return '/challenges/original/${route.pathVariables[0]}';
-      case EndpointRoute.UPDATE_CHALLENGE:
+      case EndpointRoute.UPDATE_AZKAR_CHALLENGE:
         assert(route.pathVariables.length == 1);
         return '/challenges/${route.pathVariables[0]}';
       case EndpointRoute.UPDATE_PERSONAL_CHALLENGE:
