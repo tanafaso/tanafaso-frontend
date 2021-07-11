@@ -50,7 +50,7 @@ class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
                 Text(widget.challengedUsersFullNames[index]),
                 Visibility(
                   visible: widget.challengedUsersIds[index] ==
-                      widget.challenge?.creatingUserId,
+                      widget.challenge?.creatingUserId(),
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Text(AppLocalizations.of(context).challengeCreator),
@@ -69,7 +69,8 @@ class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
       return Container();
     }
 
-    if (widget.challenge.usersFinished
+    if (widget.challenge
+        .getUsersFinishedIds()
         .any((userFinished) => userFinished == userId)) {
       return Icon(
         Icons.done_outline,

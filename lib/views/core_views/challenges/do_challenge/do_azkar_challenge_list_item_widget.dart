@@ -1,4 +1,4 @@
-import 'package:azkar/models/challenge.dart';
+import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
@@ -11,16 +11,16 @@ import 'package:flutter/scheduler.dart';
 typedef SubChallengeChangedCallback = void Function(
     SubChallenge newSubChallenge);
 
-class DoChallengeSubChallengeListItemWidget extends StatefulWidget {
+class DoAzkarChallengeListItemWidget extends StatefulWidget {
   final SubChallenge subChallenge;
   final SubChallengeChangedCallback callback;
   final bool firstItemInList;
 
   // Only use to check if the challenge is expired, since other data may change
   // and will not be consistent.
-  final Challenge challenge;
+  final AzkarChallenge challenge;
 
-  DoChallengeSubChallengeListItemWidget({
+  DoAzkarChallengeListItemWidget({
     @required this.subChallenge,
     @required this.callback,
     @required this.challenge,
@@ -28,12 +28,12 @@ class DoChallengeSubChallengeListItemWidget extends StatefulWidget {
   });
 
   @override
-  _DoChallengeSubChallengeListItemWidgetState createState() =>
-      _DoChallengeSubChallengeListItemWidgetState();
+  _DoAzkarChallengeListItemWidgetState createState() =>
+      _DoAzkarChallengeListItemWidgetState();
 }
 
-class _DoChallengeSubChallengeListItemWidgetState
-    extends State<DoChallengeSubChallengeListItemWidget>
+class _DoAzkarChallengeListItemWidgetState
+    extends State<DoAzkarChallengeListItemWidget>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   Color buttonColor;
   int initialRepetitions;
