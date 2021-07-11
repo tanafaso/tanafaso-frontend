@@ -222,14 +222,11 @@ class _GroupChallengeListItemWidgetState
                           highlightColor: Colors.grey,
                           child: LoadingWidget(),
                         ),
-                        width: 60,
-                        height: 60,
+                        width: 280,
+                        height: 280,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Text(
-                            '${AppLocalizations.of(context).loadingTheChallenge}...'),
-                      )
+                      Text(
+                          '${AppLocalizations.of(context).loadingTheChallenge}...'),
                     ],
                   ),
                 ),

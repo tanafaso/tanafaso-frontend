@@ -4,47 +4,55 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(16, 25, 10, 1),
+      padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width / 16,
+          MediaQuery.of(context).size.height / 16, 0, 0),
       child: Column(
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                width: 70.0,
-                height: 70.0,
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: MediaQuery.of(context).size.height / 8,
                 decoration:
                     BoxDecoration(shape: BoxShape.circle, color: Colors.white),
               ),
-              Padding(
-                  padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 15),
-                  child: Column(
-                    children: [
-                      LineWidget(150.0, 8.0),
-                      SizedBox(
-                        width: 0,
-                        height: 13,
-                      ),
-                      LineWidget(120.0, 8.0),
-                    ],
-                  )),
+              Column(
+                children: [
+                  LineWidget(MediaQuery.of(context).size.width * 0.3,
+                      MediaQuery.of(context).size.height / 80),
+                  SizedBox(
+                    width: 0,
+                    height: 13,
+                  ),
+                  LineWidget(MediaQuery.of(context).size.width * 0.4,
+                      MediaQuery.of(context).size.height / 80),
+                ],
+              )
             ],
           ),
           Padding(
-              padding: EdgeInsets.fromLTRB(0, 40, 60, 0),
+              padding: EdgeInsets.fromLTRB(0, 40, 100, 0),
               child: Column(
                 children: [
-                  LineWidget(290.0, 8.0),
+                  LineWidget(MediaQuery.of(context).size.width * 0.4,
+                      MediaQuery.of(context).size.height / 80),
                   SizedBox(
                     height: 13,
                   ),
-                  LineWidget(250.0, 8.0),
+                  LineWidget(MediaQuery.of(context).size.width * 0.6,
+                      MediaQuery.of(context).size.height / 80),
                   SizedBox(
                     height: 13,
                   ),
-                  LineWidget(200.0, 8.0),
+                  LineWidget(MediaQuery.of(context).size.width * 0.8,
+                      MediaQuery.of(context).size.height / 80),
                 ],
               )),
+          Padding(
+            padding: EdgeInsets.only(top: 16),
+            child: Text('تحدي'),
+          )
         ],
       ),
     );
@@ -52,8 +60,8 @@ class LoadingWidget extends StatelessWidget {
 }
 
 /*
-Widget that represents the lines Loading in the widget.
- */
+ Widget that represents the lines Loading in the widget.
+  */
 class LineWidget extends StatelessWidget {
   final double width;
   final double height;
