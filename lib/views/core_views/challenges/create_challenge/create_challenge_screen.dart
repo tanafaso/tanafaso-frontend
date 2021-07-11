@@ -29,7 +29,13 @@ class CreateChallengeScreen extends StatelessWidget {
                                     initiallySelectedFriends,
                               )));
                     },
-                    child: Text('قراءة الأذكار'),
+                    child: Text(
+                      'قراءة الأذكار',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
                     elevation: 2.0,
                     fillColor: Colors.white,
                     padding: EdgeInsets.all(15.0),
@@ -49,7 +55,13 @@ class CreateChallengeScreen extends StatelessWidget {
                                     initiallySelectedFriends,
                               )));
                     },
-                    child: Text('تفسير القرآن'),
+                    child: Text(
+                      'تفسير القرآن',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
                     elevation: 2.0,
                     fillColor: Colors.white,
                     padding: EdgeInsets.all(15.0),
