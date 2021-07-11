@@ -44,6 +44,11 @@ Also, take a look at the [Backend](https://github.com/challenge-azkar/azkar-api)
 
 For more information about dependencies, you can check the [flutter documentation](https://flutter.dev/docs/get-started/install).
 
+## Code GuideLines
+- Use [Camel Case](https://techterms.com/definition/camelcase) convention.
+- Name (classes, variables, functions, modules) in a meaningful name which describe its functionality.
+- Make sure that all .dart files are formatted using `flutter format` command.
+
 ## Code Structure
 Assets (pictures, fonts and certificates) can be found in the [assets/](https://github.com/challenge-azkar/tanafaso-frontend/tree/master/assets) folder.
 
