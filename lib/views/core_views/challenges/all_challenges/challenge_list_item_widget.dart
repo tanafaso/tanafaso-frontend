@@ -1,3 +1,4 @@
+import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
@@ -10,16 +11,18 @@ import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/features.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
-import 'package:azkar/views/core_views/challenges/create_challenge/create_challenge_screen.dart';
-import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/create_azkar_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/create_meaning_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/do_azkar_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/do_meaning_challenge_screen.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-typedef ChallengeChangedCallback = void Function(Challenge newChallenge);
+typedef ChallengeChangedCallback = void Function(AzkarChallenge newChallenge);
 
-class GroupChallengeListItemWidget extends StatefulWidget {
+class ChallengeListItemWidget extends StatefulWidget {
   final Challenge challenge;
   final Group group;
   final bool showName;
@@ -27,9 +30,9 @@ class GroupChallengeListItemWidget extends StatefulWidget {
   final bool firstChallengeInList;
   final List<FriendshipScores> friendshipScores;
 
-  GroupChallengeListItemWidget({
+  ChallengeListItemWidget({
     Key key,
-    @required this.challenge,
+    this.challenge,
     @required this.group,
     this.showName = true,
     @required this.challengeChangedCallback,
@@ -38,12 +41,11 @@ class GroupChallengeListItemWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GroupChallengeListItemWidgetState createState() =>
-      _GroupChallengeListItemWidgetState();
+  _ChallengeListItemWidgetState createState() =>
+      _ChallengeListItemWidgetState();
 }
 
-class _GroupChallengeListItemWidgetState
-    extends State<GroupChallengeListItemWidget>
+class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   // Note that some of the challenged users may not be friends.
   List<String> _challengedUsersFullNames;
@@ -81,10 +83,12 @@ class _GroupChallengeListItemWidgetState
     _binary = true;
     _challengedUsersFullNames = [];
     SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
-      FeatureDiscovery.discoverFeatures(
-        context,
-        [Features.CLONE_AND_DELETE],
-      );
+      if (mounted) {
+        FeatureDiscovery.discoverFeatures(
+          context,
+          [Features.CLONE_AND_DELETE],
+        );
+      }
     });
     _showCloneAndDeleteFeatureDiscovery = false;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -122,26 +126,7 @@ class _GroupChallengeListItemWidgetState
             if (snapshot.connectionState == ConnectionState.done) {
               return RawMaterialButton(
                 padding: EdgeInsets.all(4),
-                onPressed: () async {
-                  Challenge challenge;
-                  try {
-                    challenge = await ServiceProvider.challengesService
-                        .getChallenge(widget.challenge.id);
-                  } on ApiException catch (e) {
-                    SnackBarUtils.showSnackBar(context,
-                        '${AppLocalizations.of(context).error}: ${e.error}');
-                  }
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DoChallengeScreen(
-                          challenge: challenge,
-                          group: widget.group,
-                          challengedUsersIds: _challengedUsersIds,
-                          challengedUsersFullNames: _challengedUsersFullNames,
-                          friendshipScores: widget.friendshipScores,
-                          challengeChangedCallback: (changedChallenge) {
-                            widget.challengeChangedCallback(changedChallenge);
-                          })));
-                },
+                onPressed: () => onChallengePressed(),
                 elevation: 2.0,
                 fillColor: Colors.white,
                 child: !_showCloneAndDeleteFeatureDiscovery
@@ -261,7 +246,7 @@ class _GroupChallengeListItemWidgetState
               onTap: () async {
                 try {
                   await ServiceProvider.challengesService
-                      .deleteGroupChallenge(widget.challenge.id);
+                      .deleteChallenge(widget.challenge.getId());
                   setState(() {
                     _deleted = true;
                   });
@@ -286,40 +271,14 @@ class _GroupChallengeListItemWidgetState
           child: Card(
             margin: EdgeInsets.all(0),
             child: IconSlideAction(
-              caption: AppLocalizations.of(context).copy,
+              caption: widget.challenge.challengeType == ChallengeType.AZKAR
+                  ? AppLocalizations.of(context).copy
+                  : "إضافة",
               color: Colors.green.shade600,
-              icon: Icons.copy,
-              onTap: () async {
-                // Get original challenge
-                Challenge originalChallenge;
-                try {
-                  originalChallenge = await ServiceProvider.challengesService
-                      .getOriginalChallenge(widget.challenge.id);
-                } on ApiException catch (e) {
-                  SnackBarUtils.showSnackBar(
-                    context,
-                    '${AppLocalizations.of(context).error}: ${e.error}',
-                  );
-                  return;
-                }
-                Friendship friends =
-                    await ServiceProvider.usersService.getFriends();
-                List<Friend> currentChallengeFriends = friends.friends
-                    .where(
-                        (friend) => _challengedUsersIds.contains(friend.userId))
-                    .toList();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CreateChallengeScreen(
-                              initiallySelectedFriends: currentChallengeFriends,
-                              initiallySelectedSubChallenges:
-                                  originalChallenge.subChallenges,
-                              initiallyChosenName: originalChallenge.name,
-                              initiallyChosenMotivation:
-                                  originalChallenge.motivation,
-                            )));
-              },
+              icon: widget.challenge.challengeType == ChallengeType.AZKAR
+                  ? Icons.copy
+                  : Icons.add,
+              onTap: () => onCopyPressed(),
             ),
           ),
         ),
@@ -345,7 +304,7 @@ class _GroupChallengeListItemWidgetState
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        widget.challenge.name,
+                        widget.challenge.getName(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
@@ -353,7 +312,11 @@ class _GroupChallengeListItemWidgetState
                   ],
                 ),
                 Visibility(
-                  visible: (widget.challenge?.motivation?.length ?? 0) != 0,
+                  visible: widget.challenge.challengeType ==
+                          ChallengeType.AZKAR &&
+                      (widget.challenge?.azkarChallenge?.motivation?.length ??
+                              0) !=
+                          0,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -364,7 +327,7 @@ class _GroupChallengeListItemWidgetState
                       Container(
                         width: MediaQuery.of(context).size.width * 2 / 3,
                         child: Text(
-                          widget.challenge.motivation,
+                          widget.challenge.azkarChallenge?.motivation ?? "",
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
                         ),
@@ -409,6 +372,98 @@ class _GroupChallengeListItemWidgetState
     );
   }
 
+  void onAzkarChallengePressed() async {
+    AzkarChallenge challenge;
+    try {
+      challenge = await ServiceProvider.challengesService
+          .getAzkarChallenge(widget.challenge.getId());
+    } on ApiException catch (e) {
+      SnackBarUtils.showSnackBar(
+          context, '${AppLocalizations.of(context).error}: ${e.error}');
+    }
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => DoAzkarChallengeScreen(
+            challenge: challenge,
+            group: widget.group,
+            challengedUsersIds: _challengedUsersIds,
+            challengedUsersFullNames: _challengedUsersFullNames,
+            friendshipScores: widget.friendshipScores,
+            challengeChangedCallback: (changedChallenge) {
+              widget.challengeChangedCallback(changedChallenge);
+            })));
+  }
+
+  void onMeaningChallengePressed() {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => DoMeaningChallengeScreen(
+            challenge: widget.challenge.meaningChallenge,
+            group: widget.group,
+            challengedUsersIds: _challengedUsersIds,
+            challengedUsersFullNames: _challengedUsersFullNames,
+            friendshipScores: widget.friendshipScores,
+            challengeChangedCallback: (changedChallenge) {
+              widget.challengeChangedCallback(changedChallenge);
+            })));
+  }
+
+  void onChallengePressed() {
+    if (widget.challenge.challengeType == ChallengeType.AZKAR) {
+      onAzkarChallengePressed();
+    } else {
+      onMeaningChallengePressed();
+    }
+  }
+
+  void onCopyAzkarChallenge() async {
+    // Get original challenge
+    AzkarChallenge originalChallenge;
+    try {
+      originalChallenge = await ServiceProvider.challengesService
+          .getOriginalChallenge(widget.challenge.getId());
+    } on ApiException catch (e) {
+      SnackBarUtils.showSnackBar(
+        context,
+        '${AppLocalizations.of(context).error}: ${e.error}',
+      );
+      return;
+    }
+    Friendship friends = await ServiceProvider.usersService.getFriends();
+    List<Friend> currentChallengeFriends = friends.friends
+        .where((friend) => _challengedUsersIds.contains(friend.userId))
+        .toList();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CreateAzkarChallengeScreen(
+                  initiallySelectedFriends: currentChallengeFriends,
+                  initiallySelectedSubChallenges:
+                      originalChallenge.subChallenges,
+                  initiallyChosenName: originalChallenge.name,
+                  initiallyChosenMotivation: originalChallenge.motivation,
+                )));
+  }
+
+  void onCopyMeaningChallenge() async {
+    Friendship friends = await ServiceProvider.usersService.getFriends();
+    List<Friend> currentChallengeFriends = friends.friends
+        .where((friend) => _challengedUsersIds.contains(friend.userId))
+        .toList();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CreateMeaningChallengeScreen(
+                  initiallySelectedFriends: currentChallengeFriends,
+                )));
+  }
+
+  void onCopyPressed() {
+    if (widget.challenge.challengeType == ChallengeType.AZKAR) {
+      onCopyAzkarChallenge();
+    } else {
+      onCopyMeaningChallenge();
+    }
+  }
+
   Widget getFriendsNames() {
     String text;
     if (!widget.showName) {
@@ -438,7 +493,8 @@ class _GroupChallengeListItemWidgetState
       return Container();
     }
 
-    if (widget.challenge.usersFinished
+    if (widget.challenge
+        .getUsersFinishedIds()
         .any((userFinished) => userFinished == _challengedUsersIds[0])) {
       return Icon(
         Icons.done_outline,

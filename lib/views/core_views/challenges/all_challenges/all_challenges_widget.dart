@@ -4,7 +4,7 @@ import 'package:azkar/models/group.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
-import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
+import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_item_widget.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 
@@ -83,28 +83,31 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
         return Future.value();
       },
       color: Colors.black,
-      child: ListView.separated(
-        key: Keys.allChallengesWidgetListKey,
-        addAutomaticKeepAlives: true,
-        // Cache half screen after and half screen before the current screen.
-        cacheExtent: MediaQuery.of(context).size.height * 0.5,
-        separatorBuilder: (context, index) => Padding(
-          padding: EdgeInsets.only(bottom: 4),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.separated(
+          key: Keys.allChallengesWidgetListKey,
+          addAutomaticKeepAlives: true,
+          // Cache half screen after and half screen before the current screen.
+          cacheExtent: MediaQuery.of(context).size.height * 0.5,
+          separatorBuilder: (context, index) => Padding(
+            padding: EdgeInsets.only(bottom: 4),
+          ),
+          itemCount: challenges.length,
+          itemBuilder: (context, index) {
+            return ChallengeListItemWidget(
+              key: Key(challenges[index].getId()),
+              challenge: challenges[index],
+              group: groups.firstWhere(
+                  (group) => group.id == challenges[index].getGroupId()),
+              challengeChangedCallback: (_) {
+                setState(() {});
+              },
+              firstChallengeInList: index == 0,
+              friendshipScores: friendshipScores,
+            );
+          },
         ),
-        itemCount: challenges.length,
-        itemBuilder: (context, index) {
-          return GroupChallengeListItemWidget(
-            key: Key(challenges[index].id),
-            challenge: challenges[index],
-            group: groups
-                .firstWhere((group) => group.id == challenges[index].groupId),
-            challengeChangedCallback: (_) {
-              setState(() {});
-            },
-            firstChallengeInList: index == 0,
-            friendshipScores: friendshipScores,
-          );
-        },
       ),
     );
   }

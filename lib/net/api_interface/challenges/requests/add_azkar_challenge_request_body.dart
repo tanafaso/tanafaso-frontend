@@ -1,12 +1,12 @@
-import 'package:azkar/models/challenge.dart';
+import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/net/api_interface/request_base.dart';
 import 'package:flutter/cupertino.dart';
 
-class AddFriendsChallengeRequestBody extends RequestBodyBase {
-  Challenge challenge;
+class AddAzkarChallengeRequestBody extends RequestBodyBase {
+  AzkarChallenge challenge;
   List<String> friendsIds;
 
-  AddFriendsChallengeRequestBody({
+  AddAzkarChallengeRequestBody({
     @required this.challenge,
     @required this.friendsIds,
   });

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friendship_scores.dart';
 import 'package:azkar/models/group.dart';
@@ -9,17 +10,17 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/cache_manager.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
+import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/animated_score_change_widget.dart';
-import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_list_item_widget.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/do_azkar_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
-import 'package:azkar/views/core_views/challenges/group_challenges/group_challenge_list_item_widget.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 
-class DoChallengeScreen extends StatefulWidget {
-  final Challenge challenge;
+class DoAzkarChallengeScreen extends StatefulWidget {
+  final AzkarChallenge challenge;
   final ChallengeChangedCallback challengeChangedCallback;
   final Group group;
 
@@ -29,7 +30,7 @@ class DoChallengeScreen extends StatefulWidget {
 
   final List<FriendshipScores> friendshipScores;
 
-  DoChallengeScreen({
+  DoAzkarChallengeScreen({
     @required this.challenge,
     @required this.group,
     @required this.challengedUsersIds,
@@ -39,10 +40,10 @@ class DoChallengeScreen extends StatefulWidget {
   });
 
   @override
-  _DoChallengeScreenState createState() => _DoChallengeScreenState();
+  _DoAzkarChallengeScreenState createState() => _DoAzkarChallengeScreenState();
 }
 
-class _DoChallengeScreenState extends State<DoChallengeScreen> {
+class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen> {
   ConfettiController confettiControler;
   bool _finishedConfetti;
 
@@ -82,7 +83,8 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
                                     MediaQuery.of(context).size.height / 5,
                               ),
                               child: FriendsProgressWidget(
-                                challenge: widget.challenge,
+                                challenge:
+                                    Challenge(azkarChallenge: widget.challenge),
                                 challengedUsersIds: widget.challengedUsersIds,
                                 challengedUsersFullNames:
                                     widget.challengedUsersFullNames,
@@ -152,7 +154,7 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
       separatorBuilder: (BuildContext context, int index) =>
           Padding(padding: EdgeInsets.only(bottom: 4)),
       itemBuilder: (context, index) {
-        return DoChallengeSubChallengeListItemWidget(
+        return DoAzkarChallengeListItemWidget(
           subChallenge: widget.challenge.subChallenges[index],
           challenge: widget.challenge,
           firstItemInList: index == 0,
@@ -160,7 +162,7 @@ class _DoChallengeScreenState extends State<DoChallengeScreen> {
             widget.challenge.subChallenges[index] = newSubChallenge;
             try {
               await ServiceProvider.challengesService
-                  .updateChallenge(widget.challenge);
+                  .updateAzkarChallenge(widget.challenge);
             } on ApiException catch (e) {
               SnackBarUtils.showSnackBar(context, e.error);
             }
