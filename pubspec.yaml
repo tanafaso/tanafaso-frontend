@@ -46,6 +46,8 @@ dependencies:
   toggle_switch: ^0.1.9
   introduction_screen: ^2.1.0
   in_app_review: ^2.0.2
+  crisp: ^0.1.8
+  crypto: ^3.0.1
 
 dev_dependencies:
   flutter_test:
