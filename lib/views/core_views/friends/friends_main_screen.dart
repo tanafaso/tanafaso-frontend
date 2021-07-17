@@ -42,7 +42,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
       FeatureDiscovery.discoverFeatures(
         context,
         // Feature ids for every feature that you want to showcase in order.
-        [Features.SHARE_USERNAME, Features.SABEQ_INTRODUCTION],
+        [Features.SHARE_USERNAME],
       );
     });
 
