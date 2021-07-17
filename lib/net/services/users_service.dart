@@ -42,6 +42,18 @@ class UsersService {
     return user.id;
   }
 
+  // Either returns the current user's name or throws an ApiException.
+  Future<String> getCurrentUserFullName() async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    String key = CacheManager.CAHCE_KEY_CURRENT_USER_FULL_NAME.toString();
+    if (prefs.containsKey(key)) {
+      return prefs.getString(key);
+    }
+    User user = await getCurrentUser();
+    prefs.setString(key, user.firstName + " " + user.lastName);
+    return user.firstName + " " + user.lastName;
+  }
+
   Future<String> getSabeqId() async {
     SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
     String key = CacheManager.CACHE_KE_SABEQ.toString();
