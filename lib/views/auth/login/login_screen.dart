@@ -103,7 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         obscureText: false,
                                         autofocus: true,
                                         textAlign: TextAlign.left,
-                                        onChanged: (email) => _email = email,
+                                        onChanged: (email) =>
+                                            _email = email.trim(),
                                         onEditingComplete: () =>
                                             passwordFocus.requestFocus(),
                                         decoration: InputDecoration(

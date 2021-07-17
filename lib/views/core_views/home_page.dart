@@ -5,6 +5,7 @@ import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/challenges_main_screen.dart';
 import 'package:azkar/views/core_views/friends/friends_main_screen.dart';
+import 'package:azkar/views/core_views/live_support_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_main_widget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,14 +23,11 @@ enum TopicType {
   CHALLENGES,
   FRIENDS,
   PROFILE,
+  LIVE_SUPPORT,
 }
 
 class HomePage extends StatefulWidget {
   static _HomePageState _homePageState;
-
-  final Widget challengesWidget = ChallengesMainScreen();
-  final Widget friendsWidget = FriendsMainScreen();
-  final Widget profileWidget = ProfileMainWidget();
 
   @override
   _HomePageState createState() {
@@ -46,25 +44,25 @@ class HomePage extends StatefulWidget {
     });
   }
 
-  void selectNavigationBarItemForTesting(
-      HomePageNavigationBarItem homePageNavigationBarItem) {
+  void selectNavigationBarItemForTesting(TopicType topicType) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      switch (homePageNavigationBarItem) {
-        case HomePageNavigationBarItem.challenges:
+      switch (topicType) {
+        case TopicType.CHALLENGES:
           _homePageState._onItemTapped(0);
           break;
-        case HomePageNavigationBarItem.friends:
+        case TopicType.FRIENDS:
           _homePageState._onItemTapped(1);
           break;
-        case HomePageNavigationBarItem.profile:
+        case TopicType.PROFILE:
           _homePageState._onItemTapped(2);
+          break;
+        case TopicType.LIVE_SUPPORT:
+          _homePageState._onItemTapped(3);
           break;
       }
     });
   }
 }
-
-enum HomePageNavigationBarItem { challenges, friends, profile }
 
 class _HomePageState extends State<HomePage> {
   String userToken;
@@ -166,6 +164,13 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Theme.of(context).primaryColor,
           ),
           topicType: TopicType.PROFILE),
+      Topic(
+          bottomNavigationBarItem: BottomNavigationBarItem(
+            icon: Icon(Icons.help),
+            label: "استفسار",
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+          topicType: TopicType.LIVE_SUPPORT),
     ];
   }
 
@@ -178,6 +183,8 @@ class _HomePageState extends State<HomePage> {
         return FriendsMainScreen();
       case TopicType.PROFILE:
         return ProfileMainWidget();
+      case TopicType.LIVE_SUPPORT:
+        return LiveSupportScreen();
     }
     assert(false);
   }
