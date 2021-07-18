@@ -48,7 +48,6 @@ dependencies:
   in_app_review: ^2.0.2
   crisp: ^0.1.8
   crypto: ^3.0.1
-  numberpicker: ^2.1.1
 
 dev_dependencies:
   flutter_test:

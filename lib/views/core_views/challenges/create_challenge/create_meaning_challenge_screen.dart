@@ -7,7 +7,6 @@ import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/selected_friends_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
@@ -143,7 +142,7 @@ class _CreateMeaningChallengeScreenState
                                     child: Icon(Icons.date_range),
                                   ),
                                   Text(
-                                    AppLocalizations.of(context).deadline,
+                                    "عدد الكلمات",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 17),
@@ -155,43 +154,42 @@ class _CreateMeaningChallengeScreenState
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      AppLocalizations.of(context)
-                                          .challengeExpiresAfter,
-                                      textAlign: TextAlign.center,
-                                      textDirection: TextDirection.rtl,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        width: 70,
-                                        height: 30,
-                                        alignment: Alignment.center,
-                                        child: Card(
-                                          elevation: 1,
-                                          child: TextField(
-                                            textAlign: TextAlign.center,
-                                            decoration: new InputDecoration(
-                                              alignLabelWithHint: true,
-                                              border: new OutlineInputBorder(
-                                                  borderSide: new BorderSide(
-                                                      color: Colors.teal)),
-                                            ),
-                                            // textInputAction: TextInputAction.done,
-                                            keyboardType: TextInputType.number,
-                                            controller:
-                                                _expiresAfterHoursNumController,
-                                          ),
-                                        ),
+                                    RichText(
+                                        text: TextSpan(
+                                      // Note: Styles for TextSpans must be explicitly defined.
+                                      // Child text spans will inherit styles from parent
+                                      style: new TextStyle(
+                                        color: Colors.black,
                                       ),
-                                    ),
-                                    Text(
-                                      AppLocalizations.of(context).hours,
-                                      textAlign: TextAlign.center,
-                                      textDirection: TextDirection.rtl,
-                                    ),
+                                      children: <TextSpan>[
+                                        new TextSpan(
+                                          text: 'سيتكون التحدي من',
+                                        ),
+                                        new TextSpan(
+                                            text:
+                                                '  ${ArabicUtils.englishToArabic(_numberOfWords.toString())}  ',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            )),
+                                        new TextSpan(
+                                          text: 'كلمات ومعانيها.',
+                                        ),
+                                      ],
+                                    )),
                                   ],
                                 ),
+                              ),
+                              Slider(
+                                value: _numberOfWords.toDouble(),
+                                activeColor: Theme.of(context).primaryColor,
+                                inactiveColor: Theme.of(context).primaryColor,
+                                min: 3,
+                                max: 9,
+                                divisions: 8,
+                                onChanged: (value) => setState(
+                                    () => _numberOfWords = value.toInt()),
+                                label: "$_numberOfWords",
                               ),
                             ],
                           ),
@@ -240,14 +238,18 @@ class _CreateMeaningChallengeScreenState
                                         alignment: Alignment.center,
                                         child: Card(
                                           elevation: 1,
-                                          child: NumberPicker(
-                                            value: _numberOfWords,
-                                            minValue: 0,
-                                            maxValue: 100,
-                                            step: 10,
-                                            haptics: true,
-                                            onChanged: (value) => setState(
-                                                () => _numberOfWords = value),
+                                          child: TextField(
+                                            textAlign: TextAlign.center,
+                                            decoration: new InputDecoration(
+                                              alignLabelWithHint: true,
+                                              border: new OutlineInputBorder(
+                                                  borderSide: new BorderSide(
+                                                      color: Colors.teal)),
+                                            ),
+                                            // textInputAction: TextInputAction.done,
+                                            keyboardType: TextInputType.number,
+                                            controller:
+                                                _expiresAfterHoursNumController,
                                           ),
                                         ),
                                       ),

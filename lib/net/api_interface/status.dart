@@ -121,7 +121,8 @@ class Status {
     LESS_THAN_TWO_FRIENDS_ARE_PROVIDED_ERROR: "تم اختيار أقل من صديقين",
     DUPLICATE_FRIEND_IDS_PROVIDED_ERROR: "تم العثور على أصدقاء مكررين",
     CHALLENGE_HAS_ALREADY_BEEN_FINISHED: "تم الانتهاء من التحدي بالفعل من قبل",
-    TAFSEER_CHALLENGE_INCORRECT_NUMBER_OF_WORDS_ERROR: "عدد الكلمات المختارة غير صحيح",
+    TAFSEER_CHALLENGE_INCORRECT_NUMBER_OF_WORDS_ERROR:
+        "عدد الكلمات المختارة غير صحيح",
   };
 
   Status(int errorCode) {
