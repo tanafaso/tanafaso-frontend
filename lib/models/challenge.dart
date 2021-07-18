@@ -79,6 +79,7 @@ class Challenge {
     }
     int secondsSinceEpoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     int secondsLeft = getExpiryDate() - secondsSinceEpoch;
+
     return secondsLeft ~/ 60 ~/ 60;
   }
 
