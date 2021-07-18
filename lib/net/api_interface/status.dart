@@ -55,6 +55,8 @@ class Status {
   static const int LESS_THAN_TWO_FRIENDS_ARE_PROVIDED_ERROR = 49;
   static const int DUPLICATE_FRIEND_IDS_PROVIDED_ERROR = 50;
   static const int CHALLENGE_HAS_ALREADY_BEEN_FINISHED = 51;
+  static const int TAFSEER_CHALLENGE_INCORRECT_NUMBER_OF_WORDS_ERROR = 52;
+
   static Map<int, String> conversions = const {
     API_USER_ALREADY_LOGGED_IN_ERROR: "لقد قمت بتسجيل الدخول بالفعل",
     API_EMAIL_PASSWORD_COMBINATION_ERROR:
@@ -119,6 +121,8 @@ class Status {
     LESS_THAN_TWO_FRIENDS_ARE_PROVIDED_ERROR: "تم اختيار أقل من صديقين",
     DUPLICATE_FRIEND_IDS_PROVIDED_ERROR: "تم العثور على أصدقاء مكررين",
     CHALLENGE_HAS_ALREADY_BEEN_FINISHED: "تم الانتهاء من التحدي بالفعل من قبل",
+    TAFSEER_CHALLENGE_INCORRECT_NUMBER_OF_WORDS_ERROR:
+        "عدد الكلمات المختارة غير صحيح",
   };
 
   Status(int errorCode) {

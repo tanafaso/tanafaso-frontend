@@ -29,6 +29,7 @@ class _CreateMeaningChallengeScreenState
   String _lastExpiresAfterHoursNum = '٢٤';
   List<Friend> _selectedFriends;
   ButtonState progressButtonState;
+  int _numberOfWords;
 
   initExpiresAfterHoursNumController() {
     _expiresAfterHoursNumController = TextEditingController(text: '٢٤');
@@ -81,6 +82,7 @@ class _CreateMeaningChallengeScreenState
     initExpiresAfterHoursNumController();
     _selectedFriends = widget.initiallySelectedFriends;
     progressButtonState = ButtonState.idle;
+    _numberOfWords = 3;
 
     super.initState();
   }
@@ -121,6 +123,76 @@ class _CreateMeaningChallengeScreenState
                               _selectedFriends = newFriends;
                             });
                           },
+                        ),
+                        Card(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Text(
+                                      '*',
+                                      style: TextStyle(
+                                          color: Colors.red, fontSize: 17),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(Icons.date_range),
+                                  ),
+                                  Text(
+                                    "عدد الكلمات",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    RichText(
+                                        text: TextSpan(
+                                      // Note: Styles for TextSpans must be explicitly defined.
+                                      // Child text spans will inherit styles from parent
+                                      style: new TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                      children: <TextSpan>[
+                                        new TextSpan(
+                                          text: 'سيتكون التحدي من',
+                                        ),
+                                        new TextSpan(
+                                            text:
+                                                '  ${ArabicUtils.englishToArabic(_numberOfWords.toString())}  ',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            )),
+                                        new TextSpan(
+                                          text: 'كلمات ومعانيها.',
+                                        ),
+                                      ],
+                                    )),
+                                  ],
+                                ),
+                              ),
+                              Slider(
+                                value: _numberOfWords.toDouble(),
+                                activeColor: Theme.of(context).primaryColor,
+                                inactiveColor: Theme.of(context).primaryColor,
+                                min: 3,
+                                max: 9,
+                                divisions: 8,
+                                onChanged: (value) => setState(
+                                    () => _numberOfWords = value.toInt()),
+                                label: "$_numberOfWords",
+                              ),
+                            ],
+                          ),
                         ),
                         Card(
                           child: Column(
@@ -313,6 +385,7 @@ class _CreateMeaningChallengeScreenState
             Duration.secondsPerHour *
                 ArabicUtils.stringToNumber(
                     _expiresAfterHoursNumController.value.text),
+        numberOfWords: _numberOfWords,
       ));
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(

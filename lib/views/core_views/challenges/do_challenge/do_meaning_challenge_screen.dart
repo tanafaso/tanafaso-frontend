@@ -225,12 +225,12 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                                     constraints: BoxConstraints(
                                         maxHeight:
                                             MediaQuery.of(context).size.height /
-                                                3),
+                                                4),
                                     child: ListView.separated(
                                       separatorBuilder: (context, _) => Padding(
                                         padding: EdgeInsets.only(bottom: 4),
                                       ),
-                                      itemCount: _words.length,
+                                      itemCount: _meanings.length,
                                       shrinkWrap: true,
                                       itemBuilder: (context, index) {
                                         return AnimatedBuilder(
