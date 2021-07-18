@@ -7,6 +7,7 @@ import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/selected_friends_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
@@ -29,6 +30,7 @@ class _CreateMeaningChallengeScreenState
   String _lastExpiresAfterHoursNum = '٢٤';
   List<Friend> _selectedFriends;
   ButtonState progressButtonState;
+  int _numberOfWords;
 
   initExpiresAfterHoursNumController() {
     _expiresAfterHoursNumController = TextEditingController(text: '٢٤');
@@ -81,6 +83,7 @@ class _CreateMeaningChallengeScreenState
     initExpiresAfterHoursNumController();
     _selectedFriends = widget.initiallySelectedFriends;
     progressButtonState = ButtonState.idle;
+    _numberOfWords = 3;
 
     super.initState();
   }
@@ -178,6 +181,73 @@ class _CreateMeaningChallengeScreenState
                                             keyboardType: TextInputType.number,
                                             controller:
                                                 _expiresAfterHoursNumController,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      AppLocalizations.of(context).hours,
+                                      textAlign: TextAlign.center,
+                                      textDirection: TextDirection.rtl,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Card(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Text(
+                                      '*',
+                                      style: TextStyle(
+                                          color: Colors.red, fontSize: 17),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(Icons.date_range),
+                                  ),
+                                  Text(
+                                    AppLocalizations.of(context).deadline,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)
+                                          .challengeExpiresAfter,
+                                      textAlign: TextAlign.center,
+                                      textDirection: TextDirection.rtl,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        width: 70,
+                                        height: 30,
+                                        alignment: Alignment.center,
+                                        child: Card(
+                                          elevation: 1,
+                                          child: NumberPicker(
+                                            value: _numberOfWords,
+                                            minValue: 0,
+                                            maxValue: 100,
+                                            step: 10,
+                                            haptics: true,
+                                            onChanged: (value) => setState(
+                                                () => _numberOfWords = value),
                                           ),
                                         ),
                                       ),
@@ -313,6 +383,7 @@ class _CreateMeaningChallengeScreenState
             Duration.secondsPerHour *
                 ArabicUtils.stringToNumber(
                     _expiresAfterHoursNumController.value.text),
+        numberOfWords: _numberOfWords,
       ));
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(

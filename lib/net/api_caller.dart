@@ -15,7 +15,7 @@ class ApiCaller {
   static Future<http.Response> get({@required Endpoint route}) async {
     try {
       return await ServiceProvider.httpClient.get(
-        Uri.https(
+        Uri.http(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(route),
@@ -32,7 +32,7 @@ class ApiCaller {
       {@required Endpoint route, RequestBodyBase requestBody}) async {
     try {
       return await ServiceProvider.httpClient.put(
-        Uri.https(
+        Uri.http(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(route)),
@@ -49,7 +49,7 @@ class ApiCaller {
       {@required Endpoint route, RequestBodyBase requestBody}) async {
     try {
       return await ServiceProvider.httpClient.post(
-        Uri.https(
+        Uri.http(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(route)),
@@ -66,7 +66,7 @@ class ApiCaller {
       {@required Endpoint route, RequestBodyBase requestBody}) async {
     try {
       return await ServiceProvider.httpClient.delete(
-        Uri.https(
+        Uri.http(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(route)),
