@@ -25,64 +25,17 @@ class CreateMeaningChallengeScreen extends StatefulWidget {
 
 class _CreateMeaningChallengeScreenState
     extends State<CreateMeaningChallengeScreen> {
-  TextEditingController _expiresAfterHoursNumController;
-  String _lastExpiresAfterHoursNum = '٢٤';
   List<Friend> _selectedFriends;
   ButtonState progressButtonState;
   int _numberOfWords;
-
-  initExpiresAfterHoursNumController() {
-    _expiresAfterHoursNumController = TextEditingController(text: '٢٤');
-    _expiresAfterHoursNumController.addListener(() {
-      if (_lastExpiresAfterHoursNum ==
-          _expiresAfterHoursNumController.value.text) {
-        return;
-      }
-      _lastExpiresAfterHoursNum = _expiresAfterHoursNumController.value.text;
-      validateExpiresAfterHoursNum(true);
-      setState(() {});
-    });
-  }
-
-  bool validateExpiresAfterHoursNum(bool showWarning) {
-    final String newExpiresAfterHoursNum =
-        _expiresAfterHoursNumController.value.text;
-
-    int newExpiresAfterHoursNumInt = 0;
-    try {
-      newExpiresAfterHoursNumInt =
-          ArabicUtils.stringToNumber(newExpiresAfterHoursNum);
-    } on FormatException {
-      if (showWarning) {
-        SnackBarUtils.showSnackBar(
-            context, AppLocalizations.of(context).hoursMustBeANumberFrom1to24);
-      }
-      return false;
-    }
-    if (newExpiresAfterHoursNumInt <= 0) {
-      if (showWarning) {
-        SnackBarUtils.showSnackBar(
-            context, AppLocalizations.of(context).hoursMustBeMoreThan0);
-      }
-      return false;
-    }
-
-    if (newExpiresAfterHoursNumInt > 24) {
-      if (showWarning) {
-        SnackBarUtils.showSnackBar(
-            context, AppLocalizations.of(context).hoursMustBeLessThanOrEqual24);
-      }
-      return false;
-    }
-    return true;
-  }
+  int _expiresAfterHoursNum;
 
   @override
   void initState() {
-    initExpiresAfterHoursNumController();
     _selectedFriends = widget.initiallySelectedFriends;
     progressButtonState = ButtonState.idle;
     _numberOfWords = 3;
+    _expiresAfterHoursNum = 24;
 
     super.initState();
   }
@@ -224,43 +177,42 @@ class _CreateMeaningChallengeScreenState
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      AppLocalizations.of(context)
-                                          .challengeExpiresAfter,
-                                      textAlign: TextAlign.center,
-                                      textDirection: TextDirection.rtl,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        width: 70,
-                                        height: 30,
-                                        alignment: Alignment.center,
-                                        child: Card(
-                                          elevation: 1,
-                                          child: TextField(
-                                            textAlign: TextAlign.center,
-                                            decoration: new InputDecoration(
-                                              alignLabelWithHint: true,
-                                              border: new OutlineInputBorder(
-                                                  borderSide: new BorderSide(
-                                                      color: Colors.teal)),
-                                            ),
-                                            // textInputAction: TextInputAction.done,
-                                            keyboardType: TextInputType.number,
-                                            controller:
-                                                _expiresAfterHoursNumController,
-                                          ),
-                                        ),
+                                    RichText(
+                                        text: TextSpan(
+                                      // Note: Styles for TextSpans must be explicitly defined.
+                                      // Child text spans will inherit styles from parent
+                                      style: new TextStyle(
+                                        color: Colors.black,
                                       ),
-                                    ),
-                                    Text(
-                                      AppLocalizations.of(context).hours,
-                                      textAlign: TextAlign.center,
-                                      textDirection: TextDirection.rtl,
-                                    ),
+                                      children: <TextSpan>[
+                                        new TextSpan(
+                                          text: 'التحدي ينتهي بعد',
+                                        ),
+                                        new TextSpan(
+                                            text:
+                                                '  ${ArabicUtils.englishToArabic(_expiresAfterHoursNum.toString())}  ',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            )),
+                                        new TextSpan(
+                                          text: 'ساعات.',
+                                        ),
+                                      ],
+                                    )),
                                   ],
                                 ),
+                              ),
+                              Slider(
+                                value: _expiresAfterHoursNum.toDouble(),
+                                activeColor: Theme.of(context).primaryColor,
+                                inactiveColor: Theme.of(context).primaryColor,
+                                min: 1,
+                                max: 24,
+                                divisions: 24,
+                                onChanged: (value) => setState(() =>
+                                    _expiresAfterHoursNum = value.toInt()),
+                                label: "$_expiresAfterHoursNum",
                               ),
                             ],
                           ),
@@ -378,13 +330,13 @@ class _CreateMeaningChallengeScreenState
     }
 
     try {
+      print(DateTime.now().millisecondsSinceEpoch ~/ 1000 +
+          Duration.secondsPerHour * _expiresAfterHoursNum);
       await ServiceProvider.challengesService
           .addMeaningChallenge(AddMeaningChallengeRequestBody(
         friendsIds: _selectedFriends.map((friend) => friend.userId).toList(),
         expiryDate: DateTime.now().millisecondsSinceEpoch ~/ 1000 +
-            Duration.secondsPerHour *
-                ArabicUtils.stringToNumber(
-                    _expiresAfterHoursNumController.value.text),
+            Duration.secondsPerHour * _expiresAfterHoursNum,
         numberOfWords: _numberOfWords,
       ));
     } on ApiException catch (e) {
@@ -412,10 +364,6 @@ class _CreateMeaningChallengeScreenState
 
   bool readyToFinishChallenge(bool showWarnings) {
     if ((_selectedFriends?.length ?? 0) == 0) {
-      return false;
-    }
-
-    if (!validateExpiresAfterHoursNum(showWarnings)) {
       return false;
     }
 
