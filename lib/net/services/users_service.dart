@@ -5,8 +5,6 @@ import 'package:azkar/models/friendship_scores.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/cache_manager.dart';
-import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/api_interface/users/requests/set_notifications_token_request_body.dart';
 import 'package:azkar/net/api_interface/users/responses/add_friend_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_friends_leaderboard_response.dart';
@@ -14,6 +12,8 @@ import 'package:azkar/net/api_interface/users/responses/get_friends_response.dar
 import 'package:azkar/net/api_interface/users/responses/get_user_response.dart';
 import 'package:azkar/net/api_interface/users/responses/resolve_friend_request_response.dart';
 import 'package:azkar/net/api_interface/users/responses/set_notifications_token_response.dart';
+import 'package:azkar/net/cache_manager.dart';
+import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,7 +38,7 @@ class UsersService {
       return prefs.getString(key);
     }
     User user = await getCurrentUser();
-    prefs.setString(key, user.id);
+    await cacheCurrentUserDetails(user);
     return user.id;
   }
 
@@ -50,8 +50,28 @@ class UsersService {
       return prefs.getString(key);
     }
     User user = await getCurrentUser();
-    prefs.setString(key, user.firstName + " " + user.lastName);
+    await cacheCurrentUserDetails(user);
     return user.firstName + " " + user.lastName;
+  }
+
+  // Either returns the current user's email or throws an ApiException.
+  Future<String> getCurrentUserEmail() async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    String key = CacheManager.CAHCE_KEY_CURRENT_USER_EMAIL.toString();
+    if (prefs.containsKey(key)) {
+      return prefs.getString(key);
+    }
+    User user = await getCurrentUser();
+    await cacheCurrentUserDetails(user);
+    return user.email;
+  }
+
+  Future<void> cacheCurrentUserDetails(User user) async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    prefs.setString(CacheManager.CACHE_KEY_CURRENT_USER_ID, user.id);
+    prefs.setString(CacheManager.CAHCE_KEY_CURRENT_USER_EMAIL, user.email);
+    prefs.setString(CacheManager.CAHCE_KEY_CURRENT_USER_FULL_NAME,
+        user.firstName + " " + user.lastName);
   }
 
   Future<String> getSabeqId() async {

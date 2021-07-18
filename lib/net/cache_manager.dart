@@ -10,6 +10,7 @@ class CacheManager {
   static const String CACHE_KE_SABEQ = "004";
   static const String CAHCE_KEY_ASKED_FOR_REVIEW = "005";
   static const String CAHCE_KEY_CURRENT_USER_FULL_NAME = "006";
+  static const String CAHCE_KEY_CURRENT_USER_EMAIL = "007";
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
