@@ -16,8 +16,6 @@ class _LiveSupportScreenState extends State<LiveSupportScreen>
     with SingleTickerProviderStateMixin {
   CrispMain crispMain;
 
-  String _userId;
-  String _userFullName;
   AnimationController _loadingAnimationController;
 
   @override
@@ -33,9 +31,11 @@ class _LiveSupportScreenState extends State<LiveSupportScreen>
     _loadingAnimationController.repeat();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _userId = await ServiceProvider.usersService.getCurrentUserId();
-      _userFullName =
+      String _userId = await ServiceProvider.usersService.getCurrentUserId();
+      String _userFullName =
           await ServiceProvider.usersService.getCurrentUserFullName();
+      String _userEmail =
+          await ServiceProvider.usersService.getCurrentUserEmail();
 
       crispMain = CrispMain(
         websiteId: '49ccee9e-e5a5-4319-bd8d-f5eb37df0f0b',
@@ -45,7 +45,7 @@ class _LiveSupportScreenState extends State<LiveSupportScreen>
       crispMain.register(
         user: CrispUser(
           nickname: _userFullName,
-          email: "hide_email@example.com",
+          email: _userEmail,
         ),
       );
 
