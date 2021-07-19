@@ -97,7 +97,7 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
                   widget.onSelectedFriendsChanged(_selectedFriends);
                 });
               },
-              child: getSelectFriendButtonChild(),
+              child: _getSelectFriendsIcon(),
             ),
           ),
         ],
@@ -142,7 +142,7 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
     );
   }
 
-  Widget getSelectFriendButtonChild() => (_selectedFriends?.length ?? 0) == 0
+  Widget _getSelectFriendsIcon() => (_selectedFriends?.length ?? 0) == 0
       ? Icon(Icons.add, color: Theme.of(context).iconTheme.color)
       : Text(
           AppLocalizations.of(context).changeSelectedFriends,
