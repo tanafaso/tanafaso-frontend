@@ -307,7 +307,7 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
       if (showWarning) {
         SnackBarUtils.showSnackBar(
           context,
-          AppLocalizations.of(context).repetitionsMustBeANumberFrom1to100,
+          AppLocalizations.of(context).repetitionsMustBeANumberFrom1to1000,
         );
       }
       return false;
@@ -322,11 +322,11 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
       return false;
     }
 
-    if (repetitionsNum > 100) {
+    if (repetitionsNum > 1000) {
       if (showWarning) {
         SnackBarUtils.showSnackBar(
           context,
-          AppLocalizations.of(context).repetitionsMustBeLessThanOrEqual100,
+          AppLocalizations.of(context).repetitionsMustBeLessThanOrEqual1000,
         );
       }
       return false;
