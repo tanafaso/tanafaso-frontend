@@ -11,7 +11,7 @@ Also, take a look at the [Backend](https://github.com/challenge-azkar/azkar-api)
 
 ## Stats
 - **5.2K** App Downloads.
-- **1205** signed-in users.
+- **1.2K** signed-in users.
 - **212** users have at least one Azkar challenge.
 - **100** users have at least one Tafseer challenge.
 - **98** users have friends.
