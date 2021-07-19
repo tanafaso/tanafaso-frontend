@@ -220,7 +220,7 @@ class ZekrWidgetState extends State<ZekrWidget>
 
   void add(int repetitions) {
     setState(() {
-      _repetitions = min(100, repetitions + _repetitions);
+      _repetitions = min(1000, repetitions + _repetitions);
       onRepetitionsChanged();
     });
   }

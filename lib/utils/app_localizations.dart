@@ -141,11 +141,11 @@ class AppLocalizations {
       'days must be more than 0': 'يجب أن تكون الأيام أكثر من 0',
       'days must be a number from 1 to 100':
           'يجب أن تكون الأيام عبارة عن رقم من 1 إلى 100',
-      'repetitions must be less than or equal 100':
-          'يجب أن تكون التكرارات أقل من 100 أو تساويها',
+      'repetitions must be less than or equal 1000':
+          'يجب أن تكون التكرارات أقل من 1000 أو تساويها',
       'repetitions must be more than 0': 'يجب أن يكون التكرار أكثر من 0',
-      'repetitions must be a number from 1 to 100':
-          'يجب أن يكون عدد التكرار من 1 إلى 100',
+      'repetitions must be a number from 1 to 1000':
+          'يجب أن يكون عدد التكرار من 1 إلى 1000',
       'motivation should not be empty': 'لا ينبغي أن يكون الدافع فارغًا',
       'name should not be empty': 'يجب ألا يكون الاسم فارغًا',
       'click on zekr after reading it':
@@ -666,9 +666,9 @@ class AppLocalizations {
         ['hours must be a number from 1 to 24'];
   }
 
-  String get repetitionsMustBeLessThanOrEqual100 {
+  String get repetitionsMustBeLessThanOrEqual1000 {
     return _localizedValues[locale.languageCode]
-        ['repetitions must be less than or equal 100'];
+        ['repetitions must be less than or equal 1000'];
   }
 
   String get repetitionsMustBeMoreThan0 {
@@ -676,9 +676,9 @@ class AppLocalizations {
         ['repetitions must be more than 0'];
   }
 
-  String get repetitionsMustBeANumberFrom1to100 {
+  String get repetitionsMustBeANumberFrom1to1000 {
     return _localizedValues[locale.languageCode]
-        ['repetitions must be a number from 1 to 100'];
+        ['repetitions must be a number from 1 to 1000'];
   }
 
   String get youHaveNotAddedAnyFriendsYet {
