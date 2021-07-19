@@ -97,7 +97,7 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
                   widget.onSelectedFriendsChanged(_selectedFriends);
                 });
               },
-              child: getSelectFriendText(),
+              child: getSelectFriendButtonChild(),
             ),
           ),
         ],
@@ -142,15 +142,12 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
     );
   }
 
-  getSelectFriendText() {
-    final String text = (_selectedFriends?.length ?? 0) == 0
-        ? AppLocalizations.of(context).selectFriends
-        : AppLocalizations.of(context).changeSelectedFriends;
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.button,
-    );
-  }
+  Widget getSelectFriendButtonChild() => (_selectedFriends?.length ?? 0) == 0
+      ? Icon(Icons.add, color: Theme.of(context).iconTheme.color)
+      : Text(
+          AppLocalizations.of(context).changeSelectedFriends,
+          style: Theme.of(context).textTheme.button,
+        );
 
   @override
   bool get wantKeepAlive => true;

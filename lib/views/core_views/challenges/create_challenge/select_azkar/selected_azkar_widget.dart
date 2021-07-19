@@ -90,19 +90,13 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
               onPressed: () {
                 onAddAzkarPressed();
               },
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      (_subChallenges?.length ?? 0) == 0
-                          ? AppLocalizations.of(context).selectAzkar
-                          : AppLocalizations.of(context).changeSelectedAzkar,
+              child: (_subChallenges?.length ?? 0) == 0
+                  ? Icon(Icons.add,
+                      color: Theme.of(context).iconTheme.color)
+                  : Text(
+                      AppLocalizations.of(context).changeSelectedAzkar,
                       style: Theme.of(context).textTheme.button,
                     ),
-                  ],
-                ),
-              ),
             ),
           ),
         ],
