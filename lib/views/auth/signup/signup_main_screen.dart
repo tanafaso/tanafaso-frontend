@@ -362,22 +362,35 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(left: 20.0),
-                          // ignore: deprecated_member_use
-                          child: new FlatButton(
-                            child: new Text(
-                              AppLocalizations.of(context).alreadyHaveAnAccount,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
+                          child: Row(
+                            children: [
+                              new Text(
+                                AppLocalizations.of(context)
+                                    .alreadyHaveAnAccount,
+                                style: TextStyle(fontSize: 14.0),
+                                textAlign: TextAlign.end,
                               ),
-                              textAlign: TextAlign.end,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => new LoginScreen()));
-                            },
+                              const SizedBox(width: 2),
+                              // ignore: deprecated_member_use
+                              FlatButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              new LoginScreen()));
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context).login,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
