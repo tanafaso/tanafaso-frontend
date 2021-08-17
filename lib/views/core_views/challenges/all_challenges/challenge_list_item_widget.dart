@@ -11,6 +11,7 @@ import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/features.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
+import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_item_loading_widget.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_azkar_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_meaning_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_azkar_challenge_screen.dart';
@@ -200,27 +201,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                 ),
               );
             } else {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        child: CircularProgressIndicator(),
-                        width: 60,
-                        height: 60,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Text(
-                            '${AppLocalizations.of(context).loadingTheChallenge}...'),
-                      )
-                    ],
-                  ),
-                ),
-              );
+              return ChallengeListItemLoadingWidget();
             }
           }),
     );
