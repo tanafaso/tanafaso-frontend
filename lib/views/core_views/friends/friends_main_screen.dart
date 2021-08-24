@@ -11,7 +11,6 @@ import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/friends/add_friend/add_friend_screen.dart';
 import 'package:azkar/views/core_views/friends/all_friends/all_friends_widget.dart';
 import 'package:azkar/views/core_views/friends/friend_requests/friend_requests_widget.dart';
-import 'package:azkar/views/core_views/home_page.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -51,8 +50,6 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
 
     _friendshipScores = [];
     _pendingFriends = [];
-
-    HomePage.setAppBarTitle('الأصدقاء');
   }
 
   Future<void> getNeededData() async {
@@ -120,58 +117,61 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<void>(
-      future: getNeededData(),
-      builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-        List<Widget> children;
-        if (snapshot.connectionState == ConnectionState.done) {
-          friendsTabs = <Tab>[
-            Tab(
-              key: allFriendsTabKey,
-              child: getAllFriendsTabTitle(),
-            ),
-            Tab(
-              key: friendRequestsTabKey,
-              child: getFriendRequestsTabTitle(),
-            )
-          ];
+    return SafeArea(
+      child: FutureBuilder<void>(
+        future: getNeededData(),
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          List<Widget> children;
+          if (snapshot.connectionState == ConnectionState.done) {
+            friendsTabs = <Tab>[
+              Tab(
+                key: allFriendsTabKey,
+                child: getAllFriendsTabTitle(),
+              ),
+              Tab(
+                key: friendRequestsTabKey,
+                child: getFriendRequestsTabTitle(),
+              )
+            ];
 
-          _tabController =
-              TabController(vsync: this, length: friendsTabs.length);
-          return getMainWidget();
-        } else if (snapshot.hasError) {
-          children = <Widget>[
-            Icon(
-              Icons.error_outline,
-              color: Colors.red,
-              size: 60,
+            _tabController =
+                TabController(vsync: this, length: friendsTabs.length);
+            return getMainWidget();
+          } else if (snapshot.hasError) {
+            children = <Widget>[
+              Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: SnapshotUtils.getErrorWidget(context, snapshot),
+              )
+            ];
+          } else {
+            children = <Widget>[
+              SizedBox(
+                child: CircularProgressIndicator(),
+                width: 60,
+                height: 60,
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child:
+                    Text('${AppLocalizations.of(context).loadingFriends}...'),
+              )
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: children,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: SnapshotUtils.getErrorWidget(context, snapshot),
-            )
-          ];
-        } else {
-          children = <Widget>[
-            SizedBox(
-              child: CircularProgressIndicator(),
-              width: 60,
-              height: 60,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 16),
-              child: Text('${AppLocalizations.of(context).loadingFriends}...'),
-            )
-          ];
-        }
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: children,
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

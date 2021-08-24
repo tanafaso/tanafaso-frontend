@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/services/service_provider.dart';
-import 'package:azkar/views/core_views/home_page.dart';
 import 'package:crisp/crisp.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +20,6 @@ class _LiveSupportScreenState extends State<LiveSupportScreen>
   @override
   void initState() {
     super.initState();
-
-    HomePage.setAppBarTitle('الاستفسارات والطلبات');
 
     _loadingAnimationController = AnimationController(
       duration: const Duration(seconds: 10),
@@ -60,21 +57,22 @@ class _LiveSupportScreenState extends State<LiveSupportScreen>
   @override
   Widget build(BuildContext context) {
     return crispMain == null
-        ? Center(
-            child: RotationTransition(
-              child: Image.asset('assets/images/logo.png'),
-              turns: Tween(begin: 0.0, end: 1.0)
-                  .animate(_loadingAnimationController),
+        ? SafeArea(
+            child: Center(
+              child: RotationTransition(
+                child: Image.asset('assets/images/logo.png'),
+                turns: Tween(begin: 0.0, end: 1.0)
+                    .animate(_loadingAnimationController),
+              ),
             ),
           )
-        : CrispView(
-            appBar: AppBar(
-              title: const Text('Widget WebView'),
+        : SafeArea(
+            child: CrispView(
+              loadingWidget: Center(
+                child: CircularProgressIndicator(),
+              ),
+              crispMain: crispMain,
             ),
-            loadingWidget: Center(
-              child: CircularProgressIndicator(),
-            ),
-            crispMain: crispMain,
           );
   }
 
