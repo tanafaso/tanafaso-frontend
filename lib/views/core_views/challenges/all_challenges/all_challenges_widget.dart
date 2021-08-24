@@ -26,7 +26,9 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
         ]),
         builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           List<Widget> children;
-          if (snapshot.hasData) {
+          print(snapshot.connectionState);
+          if (snapshot.hasData &&
+              snapshot.connectionState == ConnectionState.done) {
             return getChallengesListWidget(
                 snapshot.data[0], snapshot.data[1], snapshot.data[2]);
           } else if (snapshot.hasError) {
