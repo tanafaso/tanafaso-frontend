@@ -76,10 +76,13 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
     }
   }
 
+  Future<void> _neededData;
+
   @override
   void initState() {
     super.initState();
 
+    _neededData = getNeededData();
     _deleted = false;
     _binary = true;
     _challengedUsersFullNames = [];
@@ -122,7 +125,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       maintainSize: false,
       maintainState: false,
       child: FutureBuilder(
-          future: getNeededData(),
+          future: _neededData,
           builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return RawMaterialButton(
