@@ -269,46 +269,42 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       ],
       child: IntrinsicHeight(
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Flexible(
+              flex: 1,
               child: Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                padding: const EdgeInsets.only(right: 8.0),
                 child: getIconConditionally(),
               ),
             ),
-            VerticalDivider(
-              width: 3,
-              color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+            Flexible(
+              flex: 10,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        widget.challenge.getName(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          widget.challenge.getName(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                Visibility(
-                  visible: widget.challenge.challengeType ==
-                          ChallengeType.AZKAR &&
-                      (widget.challenge?.azkarChallenge?.motivation?.length ??
-                              0) !=
-                          0,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.directions_run),
-                      ),
-                      Container(
+                    Visibility(
+                      visible: widget.challenge.challengeType ==
+                              ChallengeType.AZKAR &&
+                          (widget.challenge?.azkarChallenge?.motivation?.length ??
+                                  0) !=
+                              0,
+                      child: Container(
                         width: MediaQuery.of(context).size.width * 2 / 3,
                         child: Text(
                           widget.challenge.azkarChallenge?.motivation ?? "",
@@ -316,39 +312,15 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                           softWrap: false,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.alarm),
                     ),
                     getDeadlineText(context),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 3 / 4,
+                      child: getFriendsNames(),
+                    ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Visibility(
-                        visible: _binary,
-                        maintainSize: false,
-                        maintainState: false,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: getFriendProgressOnChallengeIcon(),
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 3 / 4,
-                        child: getFriendsNames(),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
           ],
         ),
@@ -466,40 +438,25 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
           ? '${friendsFullNamesCopy[0]} ،${friendsFullNamesCopy[1]}'
           : '${friendsFullNamesCopy[0]} ،${friendsFullNamesCopy[1]} ${AppLocalizations.of(context).and} ${ArabicUtils.englishToArabic((friendsFullNamesCopy.length - 2).toString())} $otherOrOthers';
     }
+
+    return RichText(
+      overflow: TextOverflow.ellipsis,
+        text: TextSpan(
+          style: TextStyle(color: Colors.black,),
+          children: <TextSpan>[
+            new TextSpan(
+                text: "تنافس مع ",
+                style: new TextStyle(color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
+            new TextSpan(
+              text: text,
+            ),
+          ],
+        ));
     return Text(
       text,
       overflow: TextOverflow.ellipsis,
     );
-  }
 
-  Widget getFriendProgressOnChallengeIcon() {
-    if (!_binary) {
-      return Container();
-    }
-
-    if (widget.challenge
-        .getUsersFinishedIds()
-        .any((userFinished) => userFinished == _challengedUsersIds[0])) {
-      return Icon(
-        Icons.done_outline,
-        size: 15,
-        color: Colors.green,
-      );
-    }
-
-    if (widget.challenge.deadlinePassed()) {
-      return Icon(
-        Icons.error_outline,
-        size: 15,
-        color: Colors.red,
-      );
-    }
-
-    return Icon(
-      Icons.not_started,
-      size: 15,
-      color: Colors.yellow,
-    );
   }
 
   Widget getIconConditionally() {
@@ -529,14 +486,50 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
     if (hoursLeft == 0) {
       int minutesLeft = widget.challenge.minutesLeft();
       if (minutesLeft == 0) {
-        return Text(
-            '${AppLocalizations.of(context).endsAfterLessThan} ١ ${AppLocalizations.of(context).minute}');
+        return RichText(
+            text: TextSpan(
+              style: TextStyle(color: Colors.black,),
+              children: <TextSpan>[
+                new TextSpan(
+                    text: AppLocalizations.of(context).endsAfterLessThan,
+                    style: new TextStyle(color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
+                new TextSpan(
+                  text: ' ١ ',
+                ),
+                new TextSpan(
+                    text: AppLocalizations.of(context).minute,)
+              ],
+            ));
       }
-      return Text(
-          '${AppLocalizations.of(context).endsAfter} ${ArabicUtils.englishToArabic(minutesLeft.toString())} ${AppLocalizations.of(context).minute}');
+      return RichText(
+          text: TextSpan(
+            style: TextStyle(color: Colors.black,),
+            children: <TextSpan>[
+              new TextSpan(
+                  text: AppLocalizations.of(context).endsAfter,
+                  style: new TextStyle(color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
+              new TextSpan(
+                text: ' ${ArabicUtils.englishToArabic(minutesLeft.toString())} ',
+              ),
+              new TextSpan(
+                text: AppLocalizations.of(context).minute,)
+            ],
+          ));
     }
-    return Text(
-        '${AppLocalizations.of(context).endsAfter} ${ArabicUtils.englishToArabic(widget.challenge.hoursLeft().toString())} ${AppLocalizations.of(context).hour}');
+    return RichText(
+        text: TextSpan(
+          style: TextStyle(color: Colors.black,),
+          children: <TextSpan>[
+            new TextSpan(
+                text: AppLocalizations.of(context).endsAfter,
+                style: new TextStyle(color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
+            new TextSpan(
+              text: ' ${ArabicUtils.englishToArabic(widget.challenge.hoursLeft().toString())} ',
+            ),
+            new TextSpan(
+              text: AppLocalizations.of(context).hour,)
+          ],
+        ));
   }
 
   @override
