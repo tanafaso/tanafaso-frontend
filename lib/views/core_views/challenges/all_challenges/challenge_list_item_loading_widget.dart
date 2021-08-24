@@ -26,7 +26,7 @@ class ChallengeListItemLoadingWidget extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: LineWidget_(MediaQuery.of(context).size.width / 3),
+                      child: LineWidget(MediaQuery.of(context).size.width / 3),
                     ),
                   ],
                 ),
@@ -37,7 +37,7 @@ class ChallengeListItemLoadingWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Icon(Icons.directions_run),
                     ),
-                    LineWidget_(MediaQuery.of(context).size.width * 2 / 3),
+                    LineWidget(MediaQuery.of(context).size.width * 2 / 3),
                   ],
                 ),
                 Row(
@@ -46,7 +46,7 @@ class ChallengeListItemLoadingWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Icon(Icons.alarm),
                     ),
-                    LineWidget_(MediaQuery.of(context).size.width * 2 / 3),
+                    LineWidget(MediaQuery.of(context).size.width * 2 / 3),
                   ],
                 ),
                 Padding(
@@ -57,7 +57,7 @@ class ChallengeListItemLoadingWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Icon(Icons.circle),
                       ),
-                      LineWidget_(MediaQuery.of(context).size.width * 2 / 3),
+                      LineWidget(MediaQuery.of(context).size.width * 2 / 3),
                     ],
                   ),
                 ),
@@ -73,10 +73,10 @@ class ChallengeListItemLoadingWidget extends StatelessWidget {
 /*
  Widget that represents the lines Loading in the widget.
   */
-class LineWidget_ extends StatelessWidget {
+class LineWidget extends StatelessWidget {
   final double width;
 
-  LineWidget_(this.width);
+  LineWidget(this.width);
 
   @override
   Widget build(BuildContext context) {

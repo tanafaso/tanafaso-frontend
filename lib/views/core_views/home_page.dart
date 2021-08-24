@@ -27,47 +27,13 @@ enum TopicType {
 }
 
 class HomePage extends StatefulWidget {
-  static _HomePageState _homePageState;
-
   @override
-  _HomePageState createState() {
-    _homePageState = _HomePageState();
-    return _homePageState;
-  }
-
-  static void setAppBarTitle(String appBarTitle) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // ignore: invalid_use_of_protected_member
-      _homePageState.setState(() {
-        _homePageState.setAppBarTitle(appBarTitle);
-      });
-    });
-  }
-
-  void selectNavigationBarItemForTesting(TopicType topicType) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      switch (topicType) {
-        case TopicType.CHALLENGES:
-          _homePageState._onItemTapped(0);
-          break;
-        case TopicType.FRIENDS:
-          _homePageState._onItemTapped(1);
-          break;
-        case TopicType.PROFILE:
-          _homePageState._onItemTapped(2);
-          break;
-        case TopicType.LIVE_SUPPORT:
-          _homePageState._onItemTapped(3);
-          break;
-      }
-    });
-  }
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   String userToken;
   int _selectedIdx = 1;
-  String _appBarTitle = 'Home Page';
 
   Future<void> getUserToken() async {
     userToken = await FlutterSecureStorage().read(key: 'jwtToken');
@@ -77,10 +43,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _selectedIdx = index;
     });
-  }
-
-  void setAppBarTitle(String appBarTitle) {
-    _appBarTitle = appBarTitle;
   }
 
   void sendTokenToDatabase(String token) async {
@@ -123,9 +85,6 @@ class _HomePageState extends State<HomePage> {
       future: getUserToken(),
       builder: (context, AsyncSnapshot snapshot) {
         return Scaffold(
-            appBar: AppBar(
-              title: Text(_appBarTitle),
-            ),
             body: Center(
               child: getWidgetForTopicType(topics[_selectedIdx].topicType),
             ),
