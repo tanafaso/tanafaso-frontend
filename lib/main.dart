@@ -35,6 +35,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Widget _landingWidget;
+
   Future<FirebaseApp> asyncInitialization(BuildContext context) async {
     FirebaseApp app = await Firebase.initializeApp();
     await FirebaseMessaging.instance
@@ -54,12 +56,18 @@ class _MyAppState extends State<MyApp> {
     return FutureBuilder(
         future: asyncInitialization(context),
         builder: (BuildContext context, snapshot) {
-          if (snapshot.hasData) {
-            return getMaterialAppWithBody(LandingWidget());
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (_landingWidget == null) {
+              _landingWidget = getMaterialAppWithBody(LandingWidget());
+            }
+            return _landingWidget;
           } else if (snapshot.hasError) {
             print('حدث خطأ أثناء إعداد هذا الجهاز لتلقي الإخطارات');
 
-            return getMaterialAppWithBody(LandingWidget());
+            if (_landingWidget == null) {
+              _landingWidget = getMaterialAppWithBody(LandingWidget());
+            }
+            return _landingWidget;
           } else {
             // TODO(omorsi): Show loader
             return getMaterialAppWithBody(Container(

@@ -4,6 +4,7 @@ import 'package:azkar/models/group.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
+import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_item_loading_widget.dart';
 import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_item_widget.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
@@ -41,18 +42,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
               )
             ];
           } else {
-            children = <Widget>[
-              SizedBox(
-                child: CircularProgressIndicator(),
-                width: 60,
-                height: 60,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text(
-                    '${AppLocalizations.of(context).loadingTheChallenges}...'),
-              )
-            ];
+            children = List.generate(3, (_) => ChallengeListItemLoadingWidget());
           }
           return Center(
             child: Column(
