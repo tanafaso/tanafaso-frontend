@@ -11,7 +11,6 @@ import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/friends/add_friend/add_friend_screen.dart';
 import 'package:azkar/views/core_views/friends/all_friends/all_friends_widget.dart';
 import 'package:azkar/views/core_views/friends/friend_requests/friend_requests_widget.dart';
-import 'package:azkar/views/core_views/home_page.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -159,7 +158,8 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
               ),
               Padding(
                 padding: EdgeInsets.only(top: 16),
-                child: Text('${AppLocalizations.of(context).loadingFriends}...'),
+                child:
+                    Text('${AppLocalizations.of(context).loadingFriends}...'),
               )
             ];
           }

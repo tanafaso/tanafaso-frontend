@@ -42,7 +42,8 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
               )
             ];
           } else {
-            children = List.generate(3, (_) => ChallengeListItemLoadingWidget());
+            children =
+                List.generate(3, (_) => ChallengeListItemLoadingWidget());
           }
           return Center(
             child: Column(

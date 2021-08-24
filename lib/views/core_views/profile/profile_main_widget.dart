@@ -5,7 +5,6 @@ import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/auth/auth_main_screen.dart';
-import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
@@ -129,7 +128,8 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      AppLocalizations.of(context).youHaveFinished,
+                                      AppLocalizations.of(context)
+                                          .youHaveFinished,
                                       style: TextStyle(fontSize: 30),
                                     ),
                                   ),
