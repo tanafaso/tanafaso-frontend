@@ -16,6 +16,7 @@ import 'package:azkar/views/core_views/challenges/create_challenge/create_azkar_
 import 'package:azkar/views/core_views/challenges/create_challenge/create_meaning_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_azkar_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_meaning_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -268,87 +269,75 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
         ),
       ],
       child: IntrinsicHeight(
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                child: getIconConditionally(),
-              ),
-            ),
-            VerticalDivider(
-              width: 3,
-              color: Colors.black,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
               children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        widget.challenge.getName(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-                  ],
+                Padding(padding: EdgeInsets.only(right: 8)),
+                getIconConditionally(),
+                Padding(padding: EdgeInsets.only(right: 8)),
+                Text(
+                  widget.challenge.getName(),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
-                Visibility(
-                  visible: widget.challenge.challengeType ==
-                          ChallengeType.AZKAR &&
-                      (widget.challenge?.azkarChallenge?.motivation?.length ??
-                              0) !=
-                          0,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.directions_run),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 2 / 3,
-                        child: Text(
-                          widget.challenge.azkarChallenge?.motivation ?? "",
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: false,
-                        ),
-                      ),
-                    ],
+                Expanded(
+                  child: Container(),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (_) {
+                          return FriendsProgressWidget(
+                              challenge: widget.challenge,
+                              challengedUsersIds: _challengedUsersIds,
+                              challengedUsersFullNames:
+                                  _challengedUsersFullNames);
+                        });
+                  },
+                  child: Icon(
+                    Icons.whatshot,
+                    color: Colors.green,
+                    size: 20,
                   ),
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.alarm),
-                    ),
-                    getDeadlineText(context),
-                  ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Visibility(
-                        visible: _binary,
-                        maintainSize: false,
-                        maintainState: false,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: getFriendProgressOnChallengeIcon(),
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 3 / 4,
-                        child: getFriendsNames(),
-                      ),
-                    ],
-                  ),
-                ),
+                  padding: EdgeInsets.only(left: 8),
+                )
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [],
+                  ),
+                  Visibility(
+                    visible: widget.challenge.challengeType ==
+                            ChallengeType.AZKAR &&
+                        (widget.challenge?.azkarChallenge?.motivation?.length ??
+                                0) !=
+                            0,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 2 / 3,
+                      child: Text(
+                        widget.challenge.azkarChallenge?.motivation ?? "",
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                      ),
+                    ),
+                  ),
+                  getDeadlineText(context),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 3 / 4,
+                    child: getFriendsNames(),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -466,40 +455,23 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
           ? '${friendsFullNamesCopy[0]} ،${friendsFullNamesCopy[1]}'
           : '${friendsFullNamesCopy[0]} ،${friendsFullNamesCopy[1]} ${AppLocalizations.of(context).and} ${ArabicUtils.englishToArabic((friendsFullNamesCopy.length - 2).toString())} $otherOrOthers';
     }
-    return Text(
-      text,
-      overflow: TextOverflow.ellipsis,
-    );
-  }
 
-  Widget getFriendProgressOnChallengeIcon() {
-    if (!_binary) {
-      return Container();
-    }
-
-    if (widget.challenge
-        .getUsersFinishedIds()
-        .any((userFinished) => userFinished == _challengedUsersIds[0])) {
-      return Icon(
-        Icons.done_outline,
-        size: 15,
-        color: Colors.green,
-      );
-    }
-
-    if (widget.challenge.deadlinePassed()) {
-      return Icon(
-        Icons.error_outline,
-        size: 15,
-        color: Colors.red,
-      );
-    }
-
-    return Icon(
-      Icons.not_started,
-      size: 15,
-      color: Colors.yellow,
-    );
+    return RichText(
+        overflow: TextOverflow.ellipsis,
+        text: TextSpan(
+          style: TextStyle(
+            color: Colors.black,
+          ),
+          children: <TextSpan>[
+            new TextSpan(
+                text: "تنافس مع ",
+                style: new TextStyle(
+                    color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
+            new TextSpan(
+              text: text,
+            ),
+          ],
+        ));
   }
 
   Widget getIconConditionally() {
@@ -507,36 +479,92 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       return Icon(
         Icons.done_outline,
         color: Colors.green,
+        size: 20,
       );
     }
     if (widget.challenge.deadlinePassed()) {
       return Icon(
         Icons.error_outline,
         color: Colors.red,
+        size: 20,
       );
     }
     return Icon(
       Icons.not_started,
       color: Colors.yellow,
+      size: 20,
     );
   }
 
   Widget getDeadlineText(BuildContext context) {
     if (widget.challenge.deadlinePassed()) {
-      return Text(AppLocalizations.of(context).passed);
+      return Text(
+        "انتهى التحدي",
+        style: new TextStyle(
+            color: Colors.grey.shade700, fontWeight: FontWeight.bold),
+      );
     }
     int hoursLeft = widget.challenge.hoursLeft();
     if (hoursLeft == 0) {
       int minutesLeft = widget.challenge.minutesLeft();
       if (minutesLeft == 0) {
-        return Text(
-            '${AppLocalizations.of(context).endsAfterLessThan} ١ ${AppLocalizations.of(context).minute}');
+        return RichText(
+            text: TextSpan(
+          style: TextStyle(
+            color: Colors.black,
+          ),
+          children: <TextSpan>[
+            new TextSpan(
+                text: AppLocalizations.of(context).endsAfterLessThan,
+                style: new TextStyle(
+                    color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
+            new TextSpan(
+              text: ' ١ ',
+            ),
+            new TextSpan(
+              text: AppLocalizations.of(context).minute,
+            )
+          ],
+        ));
       }
-      return Text(
-          '${AppLocalizations.of(context).endsAfter} ${ArabicUtils.englishToArabic(minutesLeft.toString())} ${AppLocalizations.of(context).minute}');
+      return RichText(
+          text: TextSpan(
+        style: TextStyle(
+          color: Colors.black,
+        ),
+        children: <TextSpan>[
+          new TextSpan(
+              text: AppLocalizations.of(context).endsAfter,
+              style: new TextStyle(
+                  color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
+          new TextSpan(
+            text: ' ${ArabicUtils.englishToArabic(minutesLeft.toString())} ',
+          ),
+          new TextSpan(
+            text: AppLocalizations.of(context).minute,
+          )
+        ],
+      ));
     }
-    return Text(
-        '${AppLocalizations.of(context).endsAfter} ${ArabicUtils.englishToArabic(widget.challenge.hoursLeft().toString())} ${AppLocalizations.of(context).hour}');
+    return RichText(
+        text: TextSpan(
+      style: TextStyle(
+        color: Colors.black,
+      ),
+      children: <TextSpan>[
+        new TextSpan(
+            text: AppLocalizations.of(context).endsAfter,
+            style: new TextStyle(
+                color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
+        new TextSpan(
+          text:
+              ' ${ArabicUtils.englishToArabic(widget.challenge.hoursLeft().toString())} ',
+        ),
+        new TextSpan(
+          text: AppLocalizations.of(context).hour,
+        )
+      ],
+    ));
   }
 
   @override
