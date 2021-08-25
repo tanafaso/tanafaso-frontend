@@ -10,6 +10,7 @@ import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/friends/add_friend/add_friend_screen.dart';
 import 'package:azkar/views/core_views/friends/all_friends/all_friends_widget.dart';
+import 'package:azkar/views/core_views/friends/all_friends/friend_list_item_loading_widget.dart';
 import 'package:azkar/views/core_views/friends/friend_requests/friend_requests_widget.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
@@ -150,22 +151,18 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
               )
             ];
           } else {
-            children = <Widget>[
-              SizedBox(
-                child: CircularProgressIndicator(),
-                width: 60,
-                height: 60,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child:
-                    Text('${AppLocalizations.of(context).loadingFriends}...'),
-              )
-            ];
+            children = List.generate(5, (_) => FriendListItemLoadingWidget());
           }
+          // Add space for the top tap.
+          children.insert(
+            0,
+            Container(
+              height: MediaQuery.of(context).size.height / 11,
+            ),
+          );
           return Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: children,
             ),

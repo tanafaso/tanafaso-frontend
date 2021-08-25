@@ -49,7 +49,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
           }
           return Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: children,
             ),
