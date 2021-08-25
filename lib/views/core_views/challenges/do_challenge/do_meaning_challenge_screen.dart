@@ -110,163 +110,155 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
         body: Stack(
           children: [
             Center(
-              child: Column(
-                children: [
-                  Card(
-                    child: Visibility(
-                      visible: widget.group != null,
-                      child: widget.group == null
-                          ? Container()
-                          : ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxHeight:
-                                    MediaQuery.of(context).size.height / 5,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Card(
+                      child: Visibility(
+                        visible: widget.group != null,
+                        child: widget.group == null
+                            ? Container()
+                            : ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxHeight:
+                                      MediaQuery.of(context).size.height / 5,
+                                ),
+                                child: FriendsProgressWidget(
+                                  challenge: Challenge(
+                                      meaningChallenge: widget.challenge),
+                                  challengedUsersIds: widget.challengedUsersIds,
+                                  challengedUsersFullNames:
+                                      widget.challengedUsersFullNames,
+                                ),
                               ),
-                              child: FriendsProgressWidget(
-                                challenge: Challenge(
-                                    meaningChallenge: widget.challenge),
-                                challengedUsersIds: widget.challengedUsersIds,
-                                challengedUsersFullNames:
-                                    widget.challengedUsersFullNames,
+                      ),
+                    ),
+                    Divider(),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Card(
+                            color:
+                                _shouldChooseWord ? Colors.white : Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Text('الكلمات',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25,
+                                      )),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 8),
+                                  ),
+                                  ListView.separated(
+                                    separatorBuilder: (context, _) => Padding(
+                                      padding: EdgeInsets.only(bottom: 4),
+                                    ),
+                                    itemCount: _words.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return AnimatedBuilder(
+                                        animation: _colorAnimation,
+                                        builder: (context, _) =>
+                                            RawMaterialButton(
+                                                onPressed: () =>
+                                                    onWordPressed(index),
+                                                elevation: 2,
+                                                fillColor: _shouldChooseWord
+                                                    ? _colorAnimation.value
+                                                    : _chosenWordIndex ==
+                                                            _words[index]
+                                                                .index
+                                                        ? Color(0xffcef5ce)
+                                                        : Colors.white,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(
+                                                          8.0),
+                                                  child: Text(
+                                                    _words[index].text,
+                                                    textAlign:
+                                                        TextAlign.center,
+                                                    softWrap: true,
+                                                    style: TextStyle(
+                                                        fontSize: 17),
+                                                  ),
+                                                )),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
                             ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Divider(),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Card(
-                          color:
-                              _shouldChooseWord ? Colors.white : Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Text('الكلمات',
+                    Divider(),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Card(
+                            color:
+                                _shouldChooseWord ? Colors.white : Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'المعاني',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 25,
-                                    )),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 8),
-                                ),
-                                ConstrainedBox(
-                                    constraints: BoxConstraints(
-                                        maxHeight:
-                                            MediaQuery.of(context).size.height /
-                                                3),
-                                    child: ListView.separated(
-                                      separatorBuilder: (context, _) => Padding(
-                                        padding: EdgeInsets.only(bottom: 4),
-                                      ),
-                                      itemCount: _words.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        return AnimatedBuilder(
-                                          animation: _colorAnimation,
-                                          builder: (context, _) =>
-                                              RawMaterialButton(
-                                                  onPressed: () =>
-                                                      onWordPressed(index),
-                                                  elevation: 2,
-                                                  fillColor: _shouldChooseWord
-                                                      ? _colorAnimation.value
-                                                      : _chosenWordIndex ==
-                                                              _words[index]
-                                                                  .index
-                                                          ? Color(0xffcef5ce)
-                                                          : Colors.white,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Text(
-                                                      _words[index].text,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      softWrap: true,
-                                                      style: TextStyle(
-                                                          fontSize: 17),
-                                                    ),
-                                                  )),
-                                        );
-                                      },
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Divider(),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Card(
-                          color:
-                              _shouldChooseWord ? Colors.white : Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  'المعاني',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25,
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 8),
-                                ),
-                                ConstrainedBox(
-                                    constraints: BoxConstraints(
-                                        maxHeight:
-                                            MediaQuery.of(context).size.height /
-                                                4),
-                                    child: ListView.separated(
-                                      separatorBuilder: (context, _) => Padding(
-                                        padding: EdgeInsets.only(bottom: 4),
-                                      ),
-                                      itemCount: _meanings.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        return AnimatedBuilder(
-                                          animation: _colorAnimation,
-                                          builder: (context, _) =>
-                                              RawMaterialButton(
-                                                  onPressed: () =>
-                                                      onMeaningPressed(index),
-                                                  elevation: 2,
-                                                  fillColor: _shouldChooseWord
-                                                      ? Colors.white
-                                                      : _colorAnimation.value,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Text(
-                                                      _meanings[index].text,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 17),
-                                                      softWrap: true,
-                                                    ),
-                                                  )),
-                                        );
-                                      },
-                                    ))
-                              ],
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 8),
+                                  ),
+                                  ListView.separated(
+                                    separatorBuilder: (context, _) => Padding(
+                                      padding: EdgeInsets.only(bottom: 4),
+                                    ),
+                                    itemCount: _meanings.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return AnimatedBuilder(
+                                        animation: _colorAnimation,
+                                        builder: (context, _) =>
+                                            RawMaterialButton(
+                                                onPressed: () =>
+                                                    onMeaningPressed(index),
+                                                elevation: 2,
+                                                fillColor: _shouldChooseWord
+                                                    ? Colors.white
+                                                    : _colorAnimation.value,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(
+                                                          8.0),
+                                                  child: Text(
+                                                    _meanings[index].text,
+                                                    textAlign:
+                                                        TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 17),
+                                                    softWrap: true,
+                                                  ),
+                                                )),
+                                      );
+                                    },
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
             getConfettiWidget(),
