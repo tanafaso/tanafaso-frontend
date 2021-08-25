@@ -22,12 +22,8 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
   Widget build(BuildContext context) {
     Widget mainWidget;
     if ((widget.pendingFriends?.length ?? 0) == 0) {
-      mainWidget = ListView(
-        children: [
-          Center(
-            child: Text(AppLocalizations.of(context).noFriendRequestsFound),
-          ),
-        ],
+      mainWidget = Center(
+        child: Text(AppLocalizations.of(context).noFriendRequestsFound),
       );
     } else {
       mainWidget = ListView.builder(
