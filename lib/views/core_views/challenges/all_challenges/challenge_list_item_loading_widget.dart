@@ -4,66 +4,56 @@ import 'package:shimmer/shimmer.dart';
 class ChallengeListItemLoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[500],
-      highlightColor: Colors.grey[100],
-      enabled: true,
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            Icon(
-              Icons.circle,
-              size: 20,
-            ),
-            VerticalDivider(
-              width: 3,
-              color: Colors.black,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: LineWidget(MediaQuery.of(context).size.width / 3),
-                    ),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.directions_run),
-                    ),
-                    LineWidget(MediaQuery.of(context).size.width * 2 / 3),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.alarm),
-                    ),
-                    LineWidget(MediaQuery.of(context).size.width * 2 / 3),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Icon(Icons.circle),
-                      ),
-                      LineWidget(MediaQuery.of(context).size.width * 2 / 3),
-                    ],
+    return Card(
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[500],
+        highlightColor: Colors.grey[100],
+        enabled: true,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Padding(padding: EdgeInsets.only(right: 8)),
+                  LineWidget(width: MediaQuery.of(context).size.width / 3),
+                  Expanded(
+                    child: Container(),
                   ),
+                  Icon(
+                    Icons.whatshot,
+                    color: Colors.green,
+                    size: 20,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8),
+                  )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [],
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 2 / 3,
+                      child: LineWidget(
+                          width: MediaQuery.of(context).size.width / 3),
+                    ),
+                    Padding(padding: EdgeInsets.all(8)),
+                    LineWidget(width: MediaQuery.of(context).size.width / 3),
+                    Padding(padding: EdgeInsets.all(8)),
+                    LineWidget(width: MediaQuery.of(context).size.width * 2 / 3),
+                  ],
                 ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -76,7 +66,7 @@ class ChallengeListItemLoadingWidget extends StatelessWidget {
 class LineWidget extends StatelessWidget {
   final double width;
 
-  LineWidget(this.width);
+  LineWidget({@required this.width});
 
   @override
   Widget build(BuildContext context) {

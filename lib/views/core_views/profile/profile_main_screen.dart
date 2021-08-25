@@ -5,16 +5,17 @@ import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/auth/auth_main_screen.dart';
+import 'package:azkar/views/core_views/profile/profile_loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
-class ProfileMainWidget extends StatefulWidget {
+class ProfileMainScreen extends StatefulWidget {
   @override
-  _ProfileMainWidgetState createState() => _ProfileMainWidgetState();
+  _ProfileMainScreenState createState() => _ProfileMainScreenState();
 }
 
-class _ProfileMainWidgetState extends State<ProfileMainWidget> {
+class _ProfileMainScreenState extends State<ProfileMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -218,8 +219,7 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> {
                     ],
                   );
                 } else {
-                  // TODO(omorsi): Show loader
-                  return Text(AppLocalizations.of(context).loading);
+                  return ProfileLoadingWidget();
                 }
               }),
         ),
