@@ -77,7 +77,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
       },
       color: Colors.black,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(top: 8.0, left: 8, right: 8),
         child: ListView.separated(
           key: Keys.allChallengesWidgetListKey,
           addAutomaticKeepAlives: true,
