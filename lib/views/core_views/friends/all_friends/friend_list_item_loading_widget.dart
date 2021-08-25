@@ -24,7 +24,9 @@ class FriendListItemLoadingWidget extends StatelessWidget {
                     LineWidget(
                       width: MediaQuery.of(context).size.width * 2 / 3,
                     ),
-                    Expanded(child: Container(),),
+                    Expanded(
+                      child: Container(),
+                    ),
                     Row(
                       children: [
                         Padding(padding: EdgeInsets.only(right: 8)),

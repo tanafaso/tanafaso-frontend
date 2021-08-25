@@ -10,96 +10,103 @@ class ProfileLoadingWidget extends StatelessWidget {
       highlightColor: Colors.grey[100],
       enabled: true,
       child: Padding(
-          padding: const EdgeInsets.all(8.0),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Column(
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  child: LineWidget(width: MediaQuery.of(context).size.width / 2,),
-                ),
-                Padding(padding: EdgeInsets.all(8)),
-                Container(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    child: LineWidget(
+                      width: MediaQuery.of(context).size.width / 2,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.all(8)),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: LineWidget(
+                            width: MediaQuery.of(context).size.width / 3,
+                          ),
+                        ),
+                        Icon(
+                          Icons.copy,
+                          size: 20,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 8),
+                        ),
+                        Icon(
+                          Icons.share,
+                          size: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 8.0, right: 8, top: 20, bottom: 8),
+                child: Container(
                   alignment: Alignment.center,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Icon(
+                        Icons.email,
+                        size: 30,
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: LineWidget(width: MediaQuery.of(context).size.width / 3,),
-                      ),
-                      Icon(
-                        Icons.copy,
-                        size: 20,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 8),
-                      ),
-                      Icon(
-                        Icons.share,
-                        size: 20,
+                        child: LineWidget(
+                          width: MediaQuery.of(context).size.width * 2 / 3,
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 8.0, right: 8, top: 20, bottom: 8),
-              child: Container(
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.email,
-                      size: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: LineWidget(width: MediaQuery.of(context).size.width * 2 / 3,),
-                    ),
-                  ],
+              ),
+              Padding(padding: EdgeInsets.all(30)),
+              Card(
+                elevation: 15,
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 300,
+                  width: 300,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          AppLocalizations.of(context).youHaveFinished,
+                          style: TextStyle(fontSize: 30),
+                        ),
+                      ),
+                      LineWidget(
+                        width: MediaQuery.of(context).size.width / 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          AppLocalizations.of(context).challenges,
+                          style: TextStyle(fontSize: 30),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(padding: EdgeInsets.all(30)),
-            Card(
-              elevation: 15,
-              child: Container(
-                alignment: Alignment.center,
-                height: 300,
-                width: 300,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        AppLocalizations.of(context)
-                            .youHaveFinished,
-                        style: TextStyle(fontSize: 30),
-                      ),
-                    ),
-                    LineWidget(width: MediaQuery.of(context).size.width / 5,),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        AppLocalizations.of(context).challenges,
-                        style: TextStyle(fontSize: 30),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
     );
   }
 }

@@ -48,7 +48,8 @@ class ChallengeListItemLoadingWidget extends StatelessWidget {
                     Padding(padding: EdgeInsets.all(8)),
                     LineWidget(width: MediaQuery.of(context).size.width / 3),
                     Padding(padding: EdgeInsets.all(8)),
-                    LineWidget(width: MediaQuery.of(context).size.width * 2 / 3),
+                    LineWidget(
+                        width: MediaQuery.of(context).size.width * 2 / 3),
                   ],
                 ),
               ),
