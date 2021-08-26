@@ -19,7 +19,6 @@ import 'package:azkar/views/core_views/challenges/do_challenge/do_meaning_challe
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 typedef ChallengeChangedCallback = void Function(AzkarChallenge newChallenge);
@@ -81,20 +80,10 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
 
   @override
   void initState() {
-    super.initState();
-
     _neededData = getNeededData();
     _deleted = false;
     _binary = true;
     _challengedUsersFullNames = [];
-    SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
-      if (mounted) {
-        FeatureDiscovery.discoverFeatures(
-          context,
-          [Features.CLONE_AND_DELETE],
-        );
-      }
-    });
     _showCloneAndDeleteFeatureDiscovery = false;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 500), () async {
@@ -116,6 +105,8 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       parent: _controller,
       curve: Curves.elasticIn,
     ));
+
+    super.initState();
   }
 
   @override
