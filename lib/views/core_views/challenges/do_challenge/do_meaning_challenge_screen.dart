@@ -169,21 +169,18 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                                                 fillColor: _shouldChooseWord
                                                     ? _colorAnimation.value
                                                     : _chosenWordIndex ==
-                                                            _words[index]
-                                                                .index
+                                                            _words[index].index
                                                         ? Color(0xffcef5ce)
                                                         : Colors.white,
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsets.all(
-                                                          8.0),
+                                                      const EdgeInsets.all(8.0),
                                                   child: Text(
                                                     _words[index].text,
-                                                    textAlign:
-                                                        TextAlign.center,
+                                                    textAlign: TextAlign.center,
                                                     softWrap: true,
-                                                    style: TextStyle(
-                                                        fontSize: 17),
+                                                    style:
+                                                        TextStyle(fontSize: 17),
                                                   ),
                                                 )),
                                       );
@@ -236,14 +233,12 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                                                     : _colorAnimation.value,
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsets.all(
-                                                          8.0),
+                                                      const EdgeInsets.all(8.0),
                                                   child: Text(
                                                     _meanings[index].text,
-                                                    textAlign:
-                                                        TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 17),
+                                                    textAlign: TextAlign.center,
+                                                    style:
+                                                        TextStyle(fontSize: 17),
                                                     softWrap: true,
                                                   ),
                                                 )),

@@ -6,7 +6,6 @@ import 'package:azkar/utils/features.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 typedef SubChallengeChangedCallback = void Function(
     SubChallenge newSubChallenge);
@@ -42,12 +41,6 @@ class _DoAzkarChallengeListItemWidgetState
   void initState() {
     super.initState();
     initialRepetitions = widget.subChallenge.repetitions;
-    SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
-      FeatureDiscovery.discoverFeatures(
-        context,
-        [Features.CLICK_ZEKR_AFTER_FINISH],
-      );
-    });
   }
 
   @override
