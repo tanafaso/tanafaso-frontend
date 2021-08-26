@@ -12,7 +12,6 @@ class ChallengesMainScreen extends StatefulWidget {
 
 class _ChallengesMainScreenState extends State<ChallengesMainScreen>
     with TickerProviderStateMixin {
-
   @override
   void initState() {
     super.initState();
@@ -27,8 +26,8 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
         ],
       );
     });
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

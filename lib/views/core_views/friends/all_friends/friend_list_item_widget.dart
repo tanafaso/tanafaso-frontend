@@ -6,7 +6,6 @@ import 'package:azkar/views/core_views/friends/all_friends/detailed_friend_list_
 import 'package:azkar/views/core_views/friends/all_friends/summary_friend_list_item_widget.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 class FriendListItemWidget extends StatefulWidget {
   final FriendshipScores friendshipScores;

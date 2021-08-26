@@ -19,7 +19,6 @@ import 'package:azkar/views/core_views/challenges/do_challenge/do_meaning_challe
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 typedef ChallengeChangedCallback = void Function(AzkarChallenge newChallenge);
