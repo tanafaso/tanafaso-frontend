@@ -81,20 +81,10 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
 
   @override
   void initState() {
-    super.initState();
-
     _neededData = getNeededData();
     _deleted = false;
     _binary = true;
     _challengedUsersFullNames = [];
-    SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
-      if (mounted) {
-        FeatureDiscovery.discoverFeatures(
-          context,
-          [Features.CLONE_AND_DELETE],
-        );
-      }
-    });
     _showCloneAndDeleteFeatureDiscovery = false;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 500), () async {
@@ -116,6 +106,8 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       parent: _controller,
       curve: Curves.elasticIn,
     ));
+
+    super.initState();
   }
 
   @override

@@ -42,12 +42,6 @@ class _DoAzkarChallengeListItemWidgetState
   void initState() {
     super.initState();
     initialRepetitions = widget.subChallenge.repetitions;
-    SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
-      FeatureDiscovery.discoverFeatures(
-        context,
-        [Features.CLICK_ZEKR_AFTER_FINISH],
-      );
-    });
   }
 
   @override

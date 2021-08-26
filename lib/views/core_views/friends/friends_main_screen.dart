@@ -34,23 +34,31 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
   List<FriendshipScores> _friendshipScores;
   List<Friend> _pendingFriends;
 
+  Future<void> _neededData;
+
   @override
   void initState() {
     super.initState();
     _addExpanded = false;
-    SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
-      FeatureDiscovery.discoverFeatures(
-        context,
-        // Feature ids for every feature that you want to showcase in order.
-        [Features.SHARE_USERNAME],
-      );
-    });
 
     allFriendsTabKey = UniqueKey();
     friendRequestsTabKey = UniqueKey();
 
     _friendshipScores = [];
     _pendingFriends = [];
+
+    _neededData = getNeededData();
+
+    SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
+      FeatureDiscovery.discoverFeatures(
+        context,
+        // Feature ids for every feature that we want to showcase in order.
+        [
+          Features.SABEQ_INTRODUCTION,
+          Features.SHARE_USERNAME,
+        ],
+      );
+    });
   }
 
   Future<void> getNeededData() async {
@@ -120,7 +128,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: FutureBuilder<void>(
-        future: getNeededData(),
+        future: _neededData,
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           List<Widget> children;
           if (snapshot.connectionState == ConnectionState.done) {
@@ -187,7 +195,9 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
             return AllFriendsWidget(
               friendshipScores: _friendshipScores,
               onRefreshRequested: () {
-                setState(() {});
+                setState(() {
+                  _neededData = getNeededData();
+                });
               },
             );
           } else if (tab.key == friendRequestsTabKey) {

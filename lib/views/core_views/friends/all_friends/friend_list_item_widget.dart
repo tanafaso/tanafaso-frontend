@@ -30,14 +30,6 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
     _isSabeq = false;
     _detailedView = false;
 
-    SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
-      FeatureDiscovery.discoverFeatures(
-        context,
-        // Feature ids for every feature that you want to showcase in order.
-        [Features.SABEQ_INTRODUCTION],
-      );
-    });
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 1500), () async {
         if (mounted) {
