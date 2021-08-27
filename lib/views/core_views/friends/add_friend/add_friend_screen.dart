@@ -44,36 +44,42 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding:
+                                  const EdgeInsets.only(right: 8, top: 8.0),
                               child: Icon(Icons.drive_file_rename_outline),
                             ),
-                            Text(
-                              AppLocalizations.of(context).enterAUsername,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 17),
-                            ),
-                            Expanded(
-                              child: Padding(padding: EdgeInsets.only(left: 8)),
-                            ),
+                            Padding(padding: EdgeInsets.only(right: 8)),
                             Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Tooltip(
-                                showDuration: Duration(seconds: 3),
-                                message: AppLocalizations.of(context)
-                                    .yourFriendCanFindHisUserCodeOnHisProfilePage,
-                                padding: EdgeInsets.all(8),
-                                margin: EdgeInsets.all(8),
-                                child: Icon(
-                                  Icons.info_outline,
-                                  color: Colors.grey,
-                                ),
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text(
+                                AppLocalizations.of(context).enterAUsername,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 17),
                               ),
                             ),
                           ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 4 / 5,
+                            child: Text(
+                              AppLocalizations.of(context)
+                                  .yourFriendCanFindHisUserCodeOnHisProfilePage,
+                              textAlign: TextAlign.right,
+                              softWrap: true,
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey.shade700,
+                              ),
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -108,7 +114,10 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                             ),
                           ),
                         ),
-                        buildTextWithIcon(),
+                        Align(
+                          child: buildTextWithIcon(),
+                          alignment: Alignment.center,
+                        ),
                         Padding(padding: EdgeInsets.all(8)),
                       ],
                     ),
