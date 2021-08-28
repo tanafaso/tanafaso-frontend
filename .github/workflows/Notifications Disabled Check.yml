@@ -1,4 +1,4 @@
-name: Notifications Disabled
+name: Notifications Disabled (for ease of open source contributions)
 
 on:
   push:
