@@ -70,13 +70,17 @@ class _HomePageState extends State<HomePage> {
 
     // Any time the token refreshes, store this in the database too.
     FirebaseMessaging.instance.onTokenRefresh.listen(sendTokenToDatabase);
+
+    FirebaseMessaging.onMessage.listen((event) {
+      ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+    });
   }
 
   @override
   void initState() {
-    getNotificationsToken();
-
     super.initState();
+
+    getNotificationsToken();
   }
 
   @override

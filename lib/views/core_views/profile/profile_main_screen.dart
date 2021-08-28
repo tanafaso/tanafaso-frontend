@@ -16,16 +16,31 @@ class ProfileMainScreen extends StatefulWidget {
 }
 
 class _ProfileMainScreenState extends State<ProfileMainScreen> {
+  Future<void> _neededData;
+  User _user;
+  int _userScore;
+
+  Future<void> getNeededData() async {
+    _user = await ServiceProvider.usersService.getCurrentUser();
+    _userScore = _user.getFinishedChallengesCount();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _neededData = getNeededData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Center(
           child: FutureBuilder(
-              future: ServiceProvider.usersService.getCurrentUser(),
-              builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-                if (snapshot.hasData) {
-                  User user = snapshot.data;
+              future: _neededData,
+              builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SingleChildScrollView(
@@ -36,7 +51,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                               Container(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  user.firstName + " " + user.lastName,
+                                  _user.firstName + " " + _user.lastName,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 30,
@@ -51,7 +66,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        user.username,
+                                        _user.username,
                                         style: TextStyle(
                                           color: Colors.black54,
                                         ),
@@ -60,7 +75,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                     GestureDetector(
                                       onTapDown: (_) {
                                         Clipboard.setData(ClipboardData(
-                                          text: user.username,
+                                          text: _user.username,
                                         )).then((_) {
                                           SnackBarUtils.showSnackBar(
                                               context,
@@ -79,7 +94,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                     GestureDetector(
                                       onTapDown: (_) {
                                         Share.share(AppLocalizations.of(context)
-                                            .shareMessage(user.username));
+                                            .shareMessage(_user.username));
                                       },
                                       child: Icon(
                                         Icons.share,
@@ -97,7 +112,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                             child: Container(
                               alignment: Alignment.center,
                               child: Visibility(
-                                visible: (user?.email ?? null) != null,
+                                visible: (_user?.email ?? null) != null,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -107,7 +122,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(user?.email ??
+                                      child: Text(_user?.email ??
                                           AppLocalizations.of(context)
                                               .noEmailProvided),
                                     ),
@@ -135,9 +150,8 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                     ),
                                   ),
                                   Text(
-                                      ArabicUtils.englishToArabic(user
-                                          .getFinishedChallengesCount()
-                                          .toString()),
+                                      ArabicUtils.englishToArabic(
+                                          _userScore.toString()),
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 50,
