@@ -116,8 +116,8 @@ class _DoAzkarChallengeListItemWidgetState
   }
 
   Widget getMainWidget() {
-    return GestureDetector(
-      onTapDown: (_) {
+    return RawMaterialButton(
+      onPressed: () {
         if (widget.subChallenge.done()) {
           return;
         }
@@ -130,48 +130,40 @@ class _DoAzkarChallengeListItemWidgetState
           return;
         }
         setState(() {
-          buttonColor = Theme.of(context).primaryColor;
           widget.subChallenge.repetitions -= 1;
+          if (widget.subChallenge.repetitions == 0) {
+            buttonColor = Theme.of(context).primaryColor;
+          }
           widget.callback.call(widget.subChallenge);
         });
       },
-      onTapUp: (_) {
-        if (widget.subChallenge.repetitions != 0) {
-          setState(() {
-            buttonColor = Theme.of(context).buttonColor;
-          });
-        }
-      },
-      child: Card(
-        margin: EdgeInsets.all(0),
-        color: buttonColor,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.subChallenge.zekr.zekr,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20),
-              ),
+      fillColor: buttonColor,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.subChallenge.zekr.zekr,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: getRepetitionsTextConditionally(),
-            ),
-            LinearProgressIndicator(
-              minHeight: 10,
-              // Reversed them. This is just a hack as I am afraid that
-              // widget.subChallenge.repetitions maybe zero at some point.
-              color: Colors.white,
-              backgroundColor: Theme.of(context).primaryColor,
-              value: initialRepetitions == 0
-                  ? 0
-                  : widget.subChallenge.repetitions.toDouble() /
-                      initialRepetitions.toDouble(),
-            ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: getRepetitionsTextConditionally(),
+          ),
+          LinearProgressIndicator(
+            minHeight: 10,
+            // Reversed them. This is just a hack as I am afraid that
+            // widget.subChallenge.repetitions maybe zero at some point.
+            color: Colors.white,
+            backgroundColor: Theme.of(context).primaryColor,
+            value: initialRepetitions == 0
+                ? 0
+                : widget.subChallenge.repetitions.toDouble() /
+                    initialRepetitions.toDouble(),
+          ),
+        ],
       ),
     );
   }
