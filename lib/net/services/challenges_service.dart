@@ -33,6 +33,8 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<void> addAzkarChallenge(
@@ -46,6 +48,8 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<void> addMeaningChallenge(
@@ -59,6 +63,8 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<void> finishMeaningChallenge(String id) async {
@@ -72,16 +78,28 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<List<Challenge>> getAllChallenges() async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    String key = CacheManager.CACHE_KEY_CHALLENGES.toString();
+
+    if (prefs.containsKey(key)) {
+      return GetChallengesResponse.fromJson(jsonDecode(prefs.getString(key)))
+          .challenges;
+    }
+
     http.Response httpResponse = await ApiCaller.get(
         route: Endpoint(endpointRoute: EndpointRoute.GET_ALL_CHALLENGES));
-    var response = GetChallengesResponse.fromJson(
-        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    String responseBody = utf8.decode(httpResponse.body.codeUnits);
+    var response = GetChallengesResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+
+    prefs.setString(key, responseBody);
     return response.challenges;
   }
 
@@ -108,6 +126,8 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<AzkarChallenge> getOriginalChallenge(String challengeId) async {
@@ -143,5 +163,7 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 }

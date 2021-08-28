@@ -31,4 +31,26 @@ class User {
     }
     return totalScore;
   }
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    List<UserGroup> userGroups = [];
+    for (var userGroupJson in json['userGroups']) {
+      userGroups.add(UserGroup.fromJson(userGroupJson));
+    }
+    List<AzkarChallenge> personalChallenges = [];
+    for (var personalChallengeJson in json['personalChallenges']) {
+      personalChallenges.add(AzkarChallenge.fromJson(personalChallengeJson));
+    }
+    return User(
+      email: json['email'],
+      id: json['id'],
+      username: json['username'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      userGroups: userGroups,
+      personalChallenges: personalChallenges,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {};
 }

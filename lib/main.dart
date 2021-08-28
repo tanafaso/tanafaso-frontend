@@ -5,6 +5,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/landing_widget.dart';
 import 'package:feature_discovery/feature_discovery.dart';
@@ -49,6 +50,13 @@ class _MyAppState extends State<MyApp> {
       FirebaseMessaging.instance.requestPermission();
     }
     return app;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   @override

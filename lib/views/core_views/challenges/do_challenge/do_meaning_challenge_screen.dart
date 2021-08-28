@@ -349,8 +349,8 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
     bool ratingRequestShown = false;
     if (Platform.isAndroid && widget.challengedUsersIds.length >= 2) {
       var prefs = await ServiceProvider.cacheManager.getPrefs();
-      if (!prefs.containsKey(CacheManager.CAHCE_KEY_ASKED_FOR_REVIEW)) {
-        prefs.setBool(CacheManager.CAHCE_KEY_ASKED_FOR_REVIEW, true);
+      if (!prefs.containsKey(CacheManager.CACHE_KEY_ASKED_FOR_REVIEW)) {
+        prefs.setBool(CacheManager.CACHE_KEY_ASKED_FOR_REVIEW, true);
         ratingRequestShown = true;
         await showReviewDialog(context);
       }
