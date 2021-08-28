@@ -160,15 +160,11 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen> {
           firstItemInList: index == 0,
           callback: (SubChallenge newSubChallenge) async {
             widget.challenge.subChallenges[index] = newSubChallenge;
-            try {
-              await ServiceProvider.challengesService
-                  .updateAzkarChallenge(widget.challenge);
-            } on ApiException catch (e) {
-              SnackBarUtils.showSnackBar(context, e.error);
-            }
 
             widget.challengeChangedCallback(widget.challenge);
             if (widget.challenge.done()) {
+              updateAzkarChallenge();
+
               confettiControler.addListener(() {
                 if (confettiControler.state ==
                     ConfettiControllerState.stopped) {
@@ -326,8 +322,18 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen> {
     );
   }
 
+  updateAzkarChallenge() async {
+    try {
+      await ServiceProvider.challengesService
+          .updateAzkarChallenge(widget.challenge);
+    } on ApiException catch (e) {
+      SnackBarUtils.showSnackBar(context, e.error);
+    }
+  }
+
   @override
   void dispose() {
+    updateAzkarChallenge();
     confettiControler.dispose();
     super.dispose();
   }

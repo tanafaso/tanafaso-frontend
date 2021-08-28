@@ -16,13 +16,16 @@ class _LandingWidgetState extends State<LandingWidget> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       bool isSignedIn =
           await ServiceProvider.secureStorageService.userSignedIn();
-      if (isSignedIn) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => HomePage()), (_) => false);
-      } else {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => OnboardingScreen()),
-            (_) => false);
+      if (mounted) {
+        if (isSignedIn) {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => HomePage()),
+              (_) => false);
+        } else {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => OnboardingScreen()),
+              (_) => false);
+        }
       }
     });
   }
