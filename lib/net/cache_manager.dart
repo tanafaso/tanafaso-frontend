@@ -7,15 +7,35 @@ class CacheManager {
   static const String CACHE_KEY_USER_FULL_NAME_PREFIX = "001";
   static const String CACHE_KEY_GROUP_ID_PREFIX = "002";
   static const String CACHE_KEY_ORIGINAL_CHALLENGE_PREFIX = "003";
-  static const String CACHE_KE_SABEQ = "004";
-  static const String CAHCE_KEY_ASKED_FOR_REVIEW = "005";
-  static const String CAHCE_KEY_CURRENT_USER_FULL_NAME = "006";
-  static const String CAHCE_KEY_CURRENT_USER_EMAIL = "007";
+  static const String CACHE_KEY_SABEQ = "004";
+  static const String CACHE_KEY_ASKED_FOR_REVIEW = "005";
+  static const String CACHE_KEY_CURRENT_USER_FULL_NAME = "006";
+  static const String CACHE_KEY_CURRENT_USER_EMAIL = "007";
+  static const String CACHE_KEY_CHALLENGES = "008";
+  static const String CACHE_KEY_GROUPS = "009";
+  static const String CACHE_KEY_FRIENDS_LEADERBOARD = "010";
+  static const String CACHE_KEY_CURRENT_USER = "011";
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   Future<SharedPreferences> getPrefs() async {
     return await _prefs;
+  }
+
+  // This removes all data that are cached and changes frequently like
+  // challenges or friends scores. This will be called in the following
+  // event types.
+  // 1- In app changes that will lead to a need for reloading data (e.g.
+  // adding a new challenge).
+  // 2- Receiving a firebase notification.
+  // 3- When starting the application.
+  void invalidateFrequentlyChangingData() async {
+    _prefs.then((prefs) {
+      prefs.remove(CACHE_KEY_CHALLENGES);
+      prefs.remove(CACHE_KEY_GROUPS);
+      prefs.remove(CACHE_KEY_FRIENDS_LEADERBOARD);
+      prefs.remove(CACHE_KEY_CURRENT_USER);
+    });
   }
 
   Future<void> clearPreferences() async {

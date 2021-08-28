@@ -12,6 +12,7 @@ class _LandingWidgetState extends State<LandingWidget> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       bool isSignedIn =
           await ServiceProvider.secureStorageService.userSignedIn();

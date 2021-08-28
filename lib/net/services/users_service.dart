@@ -20,13 +20,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UsersService {
   Future<User> getCurrentUser() async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    String key = CacheManager.CACHE_KEY_CURRENT_USER.toString();
+
+    if (prefs.containsKey(key)) {
+      return GetUserResponse.fromJson(jsonDecode(prefs.getString(key))).user;
+    }
+
     http.Response httpResponse = await ApiCaller.get(
         route: Endpoint(endpointRoute: EndpointRoute.GET_CURRENT_USER_PROFILE));
-    var response = GetUserResponse.fromJson(
-        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    var responseBody = utf8.decode(httpResponse.body.codeUnits);
+    var response = GetUserResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+
+    prefs.setString(key, responseBody);
     return response.user;
   }
 
@@ -45,7 +54,7 @@ class UsersService {
   // Either returns the current user's name or throws an ApiException.
   Future<String> getCurrentUserFullName() async {
     SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
-    String key = CacheManager.CAHCE_KEY_CURRENT_USER_FULL_NAME.toString();
+    String key = CacheManager.CACHE_KEY_CURRENT_USER_FULL_NAME.toString();
     if (prefs.containsKey(key)) {
       return prefs.getString(key);
     }
@@ -57,7 +66,7 @@ class UsersService {
   // Either returns the current user's email or throws an ApiException.
   Future<String> getCurrentUserEmail() async {
     SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
-    String key = CacheManager.CAHCE_KEY_CURRENT_USER_EMAIL.toString();
+    String key = CacheManager.CACHE_KEY_CURRENT_USER_EMAIL.toString();
     if (prefs.containsKey(key)) {
       return prefs.getString(key);
     }
@@ -69,14 +78,14 @@ class UsersService {
   Future<void> cacheCurrentUserDetails(User user) async {
     SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
     prefs.setString(CacheManager.CACHE_KEY_CURRENT_USER_ID, user.id);
-    prefs.setString(CacheManager.CAHCE_KEY_CURRENT_USER_EMAIL, user.email);
-    prefs.setString(CacheManager.CAHCE_KEY_CURRENT_USER_FULL_NAME,
+    prefs.setString(CacheManager.CACHE_KEY_CURRENT_USER_EMAIL, user.email);
+    prefs.setString(CacheManager.CACHE_KEY_CURRENT_USER_FULL_NAME,
         user.firstName + " " + user.lastName);
   }
 
   Future<String> getSabeqId() async {
     SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
-    String key = CacheManager.CACHE_KE_SABEQ.toString();
+    String key = CacheManager.CACHE_KEY_SABEQ.toString();
     if (prefs.containsKey(key)) {
       return prefs.getString(key);
     }
@@ -169,13 +178,25 @@ class UsersService {
   }
 
   Future<List<FriendshipScores>> getFriendsLeaderboard() async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    String key = CacheManager.CACHE_KEY_FRIENDS_LEADERBOARD.toString();
+
+    if (prefs.containsKey(key)) {
+      return GetFriendsLeaderboardResponse.fromJson(
+              jsonDecode(prefs.getString(key)))
+          .friendshipScores;
+    }
+
     http.Response httpResponse = await ApiCaller.get(
         route: Endpoint(endpointRoute: EndpointRoute.GET_FRIENDS_LEADERBOARD));
-    var response = GetFriendsLeaderboardResponse.fromJson(
-        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    var responseBody = utf8.decode(httpResponse.body.codeUnits);
+    var response =
+        GetFriendsLeaderboardResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+
+    prefs.setString(key, responseBody);
     return response.friendshipScores;
   }
 
