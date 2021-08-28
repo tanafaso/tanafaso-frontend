@@ -1,4 +1,4 @@
-name: Notifications Enabled
+name: Notifications Disabled
 
 on:
   push:
@@ -14,5 +14,5 @@ jobs:
 
       - run: |
           found=($(grep "^apply plugin: 'com.google.gms.google-services'" android/app/build.gradle | wc -l))
-          [ "$found" == "1" ] || exit 1
+          [ "$found" == "0" ] || exit 1
           exit 0
