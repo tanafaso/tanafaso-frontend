@@ -31,9 +31,18 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   String userToken;
   int _selectedIdx = 1;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      setState(() {
+        ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+      });
+    }
+  }
 
   Future<void> getUserToken() async {
     userToken = await FlutterSecureStorage().read(key: 'jwtToken');
@@ -61,7 +70,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  getNotificationsToken() async {
+  initFirebase() async {
     // Get the token each time the application loads.
     String token = await FirebaseMessaging.instance.getToken();
 
@@ -71,16 +80,16 @@ class _HomePageState extends State<HomePage> {
     // Any time the token refreshes, store this in the database too.
     FirebaseMessaging.instance.onTokenRefresh.listen(sendTokenToDatabase);
 
-    FirebaseMessaging.onMessage.listen((event) {
-      ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
-    });
+    FirebaseMessaging.onMessage.listen(
+        (_) => ServiceProvider.cacheManager.invalidateFrequentlyChangingData());
   }
 
   @override
   void initState() {
     super.initState();
 
-    getNotificationsToken();
+    initFirebase();
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -151,5 +160,12 @@ class _HomePageState extends State<HomePage> {
         return LiveSupportScreen();
     }
     assert(false);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    WidgetsBinding.instance.removeObserver(this);
   }
 }
