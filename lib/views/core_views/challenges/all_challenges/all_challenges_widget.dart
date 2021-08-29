@@ -71,6 +71,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
 
     return RefreshIndicator(
       onRefresh: () {
+        ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
         setState(() {});
         return Future.value();
       },
