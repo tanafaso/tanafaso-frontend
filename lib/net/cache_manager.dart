@@ -15,6 +15,7 @@ class CacheManager {
   static const String CACHE_KEY_GROUPS = "009";
   static const String CACHE_KEY_FRIENDS_LEADERBOARD = "010";
   static const String CACHE_KEY_CURRENT_USER = "011";
+  static const String CACHE_KEY_FRIENDS = "012";
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
