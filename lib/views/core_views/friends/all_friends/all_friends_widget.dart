@@ -42,6 +42,9 @@ class _AllFriendsWidgetState extends State<AllFriendsWidget> {
         itemBuilder: (context, index) {
           return FriendListItemWidget(
             friendshipScores: widget.friendshipScores[index],
+            onFriendDeletedCallback: () {
+              widget.onRefreshRequested();
+            },
           );
         },
       ),

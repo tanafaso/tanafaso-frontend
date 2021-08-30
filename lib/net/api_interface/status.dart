@@ -56,6 +56,7 @@ class Status {
   static const int DUPLICATE_FRIEND_IDS_PROVIDED_ERROR = 50;
   static const int CHALLENGE_HAS_ALREADY_BEEN_FINISHED = 51;
   static const int TAFSEER_CHALLENGE_INCORRECT_NUMBER_OF_WORDS_ERROR = 52;
+  static const int CANNOT_REMOVE_SABEQ__FROM_FRIENDS_ERROR = 53;
 
   static Map<int, String> conversions = const {
     API_USER_ALREADY_LOGGED_IN_ERROR: "لقد قمت بتسجيل الدخول بالفعل",
@@ -123,6 +124,7 @@ class Status {
     CHALLENGE_HAS_ALREADY_BEEN_FINISHED: "تم الانتهاء من التحدي بالفعل من قبل",
     TAFSEER_CHALLENGE_INCORRECT_NUMBER_OF_WORDS_ERROR:
         "عدد الكلمات المختارة غير صحيح",
+    CANNOT_REMOVE_SABEQ__FROM_FRIENDS_ERROR: "لا يمكن إزالة سابق من الأصدقاء",
   };
 
   Status(int errorCode) {

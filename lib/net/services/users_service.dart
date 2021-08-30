@@ -7,6 +7,7 @@ import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/users/requests/set_notifications_token_request_body.dart';
 import 'package:azkar/net/api_interface/users/responses/add_friend_response.dart';
+import 'package:azkar/net/api_interface/users/responses/delete_friend_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_friends_leaderboard_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_friends_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_user_response.dart';
@@ -164,6 +165,21 @@ class UsersService {
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+  }
+
+  Future<void> deleteFriend(String id) async {
+    http.Response httpResponse = await ApiCaller.delete(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.DELETE_FRIEND, pathVariables: [id]));
+
+    var response = DeleteFriendResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+
+    if (response.hasError()) {
+      throw new ApiException(response.getErrorMessage());
+    }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<Friendship> getFriends() async {

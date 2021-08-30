@@ -45,7 +45,19 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
         return Future.value();
       },
       color: Colors.black,
-      child: mainWidget,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: mainWidget,
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height,
+            )
+          ],
+        ),
+      ),
     );
   }
 }
