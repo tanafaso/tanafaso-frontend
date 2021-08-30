@@ -187,8 +187,7 @@ class UsersService {
     String key = CacheManager.CACHE_KEY_FRIENDS.toString();
 
     if (prefs.containsKey(key)) {
-      return GetFriendsResponse.fromJson(
-          jsonDecode(prefs.getString(key)))
+      return GetFriendsResponse.fromJson(jsonDecode(prefs.getString(key)))
           .friendship;
     }
 
@@ -196,8 +195,7 @@ class UsersService {
         route: Endpoint(endpointRoute: EndpointRoute.GET_FRIENDS));
 
     var responseBody = utf8.decode(httpResponse.body.codeUnits);
-    var response = GetFriendsResponse.fromJson(
-        jsonDecode(responseBody));
+    var response = GetFriendsResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
