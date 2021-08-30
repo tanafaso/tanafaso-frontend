@@ -183,13 +183,24 @@ class UsersService {
   }
 
   Future<Friendship> getFriends() async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    String key = CacheManager.CACHE_KEY_FRIENDS.toString();
+
+    if (prefs.containsKey(key)) {
+      return GetFriendsResponse.fromJson(jsonDecode(prefs.getString(key)))
+          .friendship;
+    }
+
     http.Response httpResponse = await ApiCaller.get(
         route: Endpoint(endpointRoute: EndpointRoute.GET_FRIENDS));
-    var response = GetFriendsResponse.fromJson(
-        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+
+    var responseBody = utf8.decode(httpResponse.body.codeUnits);
+    var response = GetFriendsResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+
+    prefs.setString(key, responseBody);
     return response.friendship;
   }
 
