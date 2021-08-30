@@ -5,4 +5,5 @@ class Features {
   static const String CLICK_ZEKR_AFTER_FINISH = "click-zekr-after-finish";
   static const String SHARE_USERNAME = "share-username";
   static const String SABEQ_INTRODUCTION = "sabeq-introduction";
+  static const String ADD_CHALLENGE = "ADD_CHALLENGE";
 }

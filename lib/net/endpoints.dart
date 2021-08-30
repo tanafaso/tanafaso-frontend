@@ -17,6 +17,7 @@ enum EndpointRoute {
   GET_USER_BY_FACEBOOK_USER_ID,
   SET_NOTIFICATIONS_TOKEN,
   ADD_FRIEND_BY_USERNAME,
+  DELETE_FRIEND,
   GET_FRIENDS,
   GET_FRIENDS_LEADERBOARD,
   ACCEPT_FRIEND,
@@ -97,6 +98,9 @@ class ApiRoutesUtil {
       case EndpointRoute.SET_NOTIFICATIONS_TOKEN:
         return '/users/notifications/token';
       case EndpointRoute.ADD_FRIEND_BY_USERNAME:
+        assert(route.pathVariables.length == 1);
+        return '/friends/${route.pathVariables[0]}';
+      case EndpointRoute.DELETE_FRIEND:
         assert(route.pathVariables.length == 1);
         return '/friends/${route.pathVariables[0]}';
       case EndpointRoute.GET_FRIENDS:

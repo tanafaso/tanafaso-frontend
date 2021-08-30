@@ -36,6 +36,8 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
 
   Future<void> _neededData;
 
+  int _tabIndex;
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +61,8 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
         ],
       );
     });
+
+    _tabIndex = 0;
   }
 
   Future<void> getNeededData() async {
@@ -143,8 +147,15 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
               )
             ];
 
-            _tabController =
-                TabController(vsync: this, length: friendsTabs.length);
+            _tabController = TabController(
+                vsync: this,
+                length: friendsTabs.length,
+                initialIndex: _tabIndex);
+            _tabController.addListener(() {
+              setState(() {
+                _tabIndex = _tabController.index;
+              });
+            });
             return getMainWidget();
           } else if (snapshot.hasError) {
             children = <Widget>[
@@ -204,7 +215,9 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
             return FriendRequestsWidget(
               pendingFriends: _pendingFriends,
               onFriendRequestResolvedCallback: () {
-                setState(() {});
+                setState(() {
+                  _neededData = getNeededData();
+                });
               },
             );
           } else {
@@ -318,7 +331,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
             visible: !_addExpanded,
             maintainSize: false,
             child: FloatingActionButton.extended(
-                heroTag: "mainFloating",
+                heroTag: "addFloatingButton",
                 label: Icon(Icons.add),
                 onPressed: () {
                   setState(() {

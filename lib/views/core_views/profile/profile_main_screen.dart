@@ -40,7 +40,8 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
           child: FutureBuilder(
               future: _neededData,
               builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    _user != null) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SingleChildScrollView(

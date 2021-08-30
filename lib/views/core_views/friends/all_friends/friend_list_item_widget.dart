@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 
 class FriendListItemWidget extends StatefulWidget {
   final FriendshipScores friendshipScores;
+  final OnFriendDeletedCallback onFriendDeletedCallback;
 
   FriendListItemWidget({
     @required this.friendshipScores,
+    @required this.onFriendDeletedCallback,
   });
 
   @override
@@ -124,6 +126,9 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
               setState(() {
                 _detailedView = false;
               });
+            },
+            onFriendDeletedCallback: () {
+              widget.onFriendDeletedCallback.call();
             },
           )
         : SummaryFriendListItemWidget(
