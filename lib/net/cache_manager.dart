@@ -36,6 +36,7 @@ class CacheManager {
       prefs.remove(CACHE_KEY_GROUPS);
       prefs.remove(CACHE_KEY_FRIENDS_LEADERBOARD);
       prefs.remove(CACHE_KEY_CURRENT_USER);
+      prefs.remove(CACHE_KEY_FRIENDS);
     });
   }
 
