@@ -5,9 +5,10 @@ class FriendListItemLoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 2.0, right: 2.0),
-      child: Card(
-        margin: EdgeInsets.all(2),
+      padding: const EdgeInsets.only(bottom: 4, left: 2.0, right: 2.0),
+      child: RawMaterialButton(
+        onPressed: (){},
+        fillColor: Colors.white,
         child: Shimmer.fromColors(
           baseColor: Colors.grey[500],
           highlightColor: Colors.grey[100],

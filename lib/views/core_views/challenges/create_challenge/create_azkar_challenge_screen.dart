@@ -102,7 +102,7 @@ class _CreateAzkarChallengeScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).createAChallenge),
+        title: Text("قراءة أذكار"),
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -452,9 +452,6 @@ class _CreateAzkarChallengeScreenState
         context,
         AppLocalizations.of(context).pleaseFillUpAllTheCellsProperly,
       );
-      setState(() {
-        progressButtonState = ButtonState.fail;
-      });
       return;
     }
 
