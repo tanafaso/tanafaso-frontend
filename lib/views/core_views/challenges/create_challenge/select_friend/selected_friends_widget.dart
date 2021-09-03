@@ -13,10 +13,13 @@ typedef OnSelectedFriendsChanged = void Function(
 class SelectedFriendsWidget extends StatefulWidget {
   final List<Friend> initiallySelectedFriends;
   final OnSelectedFriendsChanged onSelectedFriendsChanged;
+  final ScrollController scrollController;
 
-  SelectedFriendsWidget(
-      {this.initiallySelectedFriends = const [],
-      this.onSelectedFriendsChanged});
+  SelectedFriendsWidget({
+    this.initiallySelectedFriends = const [],
+    this.onSelectedFriendsChanged,
+    this.scrollController,
+  });
 
   @override
   _SelectedFriendsWidgetState createState() => _SelectedFriendsWidgetState();
@@ -128,6 +131,7 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
         child: Padding(
           padding: const EdgeInsets.only(right: 16.0, top: 8),
           child: ListView.separated(
+            controller: widget?.scrollController ?? ScrollController(),
             separatorBuilder: (BuildContext context, int index) => Divider(),
             shrinkWrap: true,
             itemCount: _selectedFriends.length,

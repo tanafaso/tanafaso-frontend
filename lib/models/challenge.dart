@@ -1,71 +1,123 @@
 import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/models/meaning_challenge.dart';
+import 'package:azkar/models/reading_quran_challenge.dart';
 
 enum ChallengeType {
   AZKAR,
   MEANING,
+  READING_QURAN,
+  OTHER,
 }
 
 class Challenge {
   Challenge({
     this.azkarChallenge,
     this.meaningChallenge,
+    this.readingQuranChallenge,
   }) : challengeType = azkarChallenge != null
             ? ChallengeType.AZKAR
-            : ChallengeType.MEANING;
+            : meaningChallenge != null
+                ? ChallengeType.MEANING
+                : ChallengeType.READING_QURAN;
 
   AzkarChallenge azkarChallenge;
   MeaningChallenge meaningChallenge;
+  ReadingQuranChallenge readingQuranChallenge;
   ChallengeType challengeType;
 
   factory Challenge.fromJson(Map<String, dynamic> json) {
-    if (json["azkarChallenge"] == null) {
+    if (json["azkarChallenge"] != null) {
+      return Challenge(
+        azkarChallenge: AzkarChallenge.fromJson(json["azkarChallenge"]),
+      );
+    } else if (json["meaningChallenge"] != null) {
       return Challenge(
         meaningChallenge: MeaningChallenge.fromJson(json["meaningChallenge"]),
       );
+    } else if (json["readingQuranChallenge"] != null) {
+      return Challenge(
+        readingQuranChallenge:
+            ReadingQuranChallenge.fromJson(json["readingQuranChallenge"]),
+      );
     }
-    return Challenge(
-      azkarChallenge: AzkarChallenge.fromJson(json["azkarChallenge"]),
-    );
+
+    return Challenge();
   }
 
   Map<String, dynamic> toJson() => {
         "azkarChallenge": azkarChallenge.toJson(),
         "meaningChallenge": meaningChallenge.toJson(),
+        "readingQuranChallenge": readingQuranChallenge.toJson(),
       };
 
   String getId() {
-    if (challengeType == ChallengeType.AZKAR) {
-      return azkarChallenge.id;
+    switch (challengeType) {
+      case ChallengeType.AZKAR:
+        return azkarChallenge.id;
+      case ChallengeType.MEANING:
+        return meaningChallenge.id;
+      case ChallengeType.READING_QURAN:
+        return readingQuranChallenge.id;
+      case ChallengeType.OTHER:
+        return null;
     }
-    return meaningChallenge.id;
+    return null;
   }
 
   String getGroupId() {
-    if (challengeType == ChallengeType.AZKAR) {
-      return azkarChallenge.groupId;
+    switch (challengeType) {
+      case ChallengeType.AZKAR:
+        return azkarChallenge.groupId;
+      case ChallengeType.MEANING:
+        return meaningChallenge.groupId;
+      case ChallengeType.READING_QURAN:
+        return readingQuranChallenge.groupId;
+      case ChallengeType.OTHER:
+        return null;
     }
-    return meaningChallenge.groupId;
+    return null;
   }
 
   String getName() {
-    if (challengeType == ChallengeType.AZKAR) {
-      return azkarChallenge.name;
+    switch (challengeType) {
+      case ChallengeType.AZKAR:
+        return azkarChallenge.name;
+      case ChallengeType.MEANING:
+        return meaningChallenge.getName();
+      case ChallengeType.READING_QURAN:
+        return readingQuranChallenge.getName();
+      case ChallengeType.OTHER:
+        return null;
     }
-    return meaningChallenge.getName();
+    return null;
   }
 
   bool done() {
-    if (challengeType == ChallengeType.AZKAR) {
-      return azkarChallenge.done();
+    switch (challengeType) {
+      case ChallengeType.AZKAR:
+        return azkarChallenge.done();
+      case ChallengeType.MEANING:
+        return meaningChallenge.finished;
+      case ChallengeType.READING_QURAN:
+        return readingQuranChallenge.finished;
+      case ChallengeType.OTHER:
+        return false;
     }
-    return meaningChallenge.finished;
+    return false;
   }
 
   int getExpiryDate() {
-    return challengeType == ChallengeType.AZKAR
-        ? azkarChallenge.expiryDate
-        : meaningChallenge.expiryDate;
+    switch (challengeType) {
+      case ChallengeType.AZKAR:
+        return azkarChallenge.expiryDate;
+      case ChallengeType.MEANING:
+        return meaningChallenge.expiryDate;
+      case ChallengeType.READING_QURAN:
+        return readingQuranChallenge.expiryDate;
+      case ChallengeType.OTHER:
+        return 0;
+    }
+    return 0;
   }
 
   bool deadlinePassed() {
@@ -93,16 +145,30 @@ class Challenge {
   }
 
   List<String> getUsersFinishedIds() {
-    if (challengeType == ChallengeType.AZKAR) {
-      return azkarChallenge.usersFinished;
+    switch (challengeType) {
+      case ChallengeType.AZKAR:
+        return azkarChallenge.usersFinished;
+      case ChallengeType.MEANING:
+        return meaningChallenge.usersFinished;
+      case ChallengeType.READING_QURAN:
+        return readingQuranChallenge.usersFinished;
+      case ChallengeType.OTHER:
+        return [];
     }
-    return meaningChallenge.usersFinished;
+    return [];
   }
 
   String creatingUserId() {
-    if (challengeType == ChallengeType.AZKAR) {
-      return azkarChallenge.creatingUserId;
+    switch (challengeType) {
+      case ChallengeType.AZKAR:
+        return azkarChallenge.creatingUserId;
+      case ChallengeType.MEANING:
+        return meaningChallenge.creatingUserId;
+      case ChallengeType.READING_QURAN:
+        return readingQuranChallenge.creatingUserId;
+      case ChallengeType.OTHER:
+        return null;
     }
-    return meaningChallenge.creatingUserId;
+    return null;
   }
 }

@@ -29,7 +29,9 @@ enum EndpointRoute {
   ADD_GROUP_CHALLENGE,
   ADD_AZKAR_CHALLENGE,
   ADD_MEANING_CHALLENGE,
+  ADD_READING_QURAN_CHALLENGE,
   FINISH_MEANING_CHALLENGE,
+  FINISH_READING_QURAN_CHALLENGE,
   ADD_PERSONAL_CHALLENGE,
   GET_ALL_CHALLENGES,
   GET_ALL_CHALLENGES_IN_GROUP,
@@ -129,9 +131,14 @@ class ApiRoutesUtil {
         return '/challenges/friends';
       case EndpointRoute.ADD_MEANING_CHALLENGE:
         return '/challenges/meaning';
+      case EndpointRoute.ADD_READING_QURAN_CHALLENGE:
+        return '/challenges/reading_quran';
       case EndpointRoute.FINISH_MEANING_CHALLENGE:
         assert(route.pathVariables.length == 1);
         return '/challenges/finish/meaning/${route.pathVariables[0]}/';
+      case EndpointRoute.FINISH_READING_QURAN_CHALLENGE:
+        assert(route.pathVariables.length == 1);
+        return '/challenges/finish/reading_quran/${route.pathVariables[0]}/';
       case EndpointRoute.ADD_PERSONAL_CHALLENGE:
         return '/challenges/personal';
       case EndpointRoute.GET_ALL_CHALLENGES:

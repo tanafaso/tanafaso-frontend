@@ -22,185 +22,177 @@ class DetailedFriendListItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => toggleViewCallback.call(),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 4.0, top: 4.0, right: 4.0),
-        child: Card(
-          margin: EdgeInsets.all(0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      '${friendshipScores.friend.firstName} ${friendshipScores.friend.lastName}',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                    Padding(padding: EdgeInsets.only(top: 4)),
-                                    Container(
-                                      alignment: Alignment.centerRight,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 8)),
-                                          Text(
-                                            "@" +
-                                                friendshipScores
-                                                    .friend.username,
-                                            textDirection: TextDirection.ltr,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: Colors.grey.shade700),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                              padding: EdgeInsets.only(
-                            top: 8,
-                          )),
-                          Row(
+    return Padding(
+      padding: const EdgeInsets.only(left: 4.0, top: 4.0, right: 4.0),
+      child: RawMaterialButton(
+        // margin: EdgeInsets.all(0),
+        fillColor: Colors.white,
+        onPressed: () {
+          toggleViewCallback.call();
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IntrinsicHeight(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Flexible(
-                                child: Column(
-                                  children: [
-                                    Text(AppLocalizations.of(context)
-                                        .yourFriend),
-                                    Padding(padding: EdgeInsets.only(top: 4)),
-                                    Row(
+                              Column(
+                                children: [
+                                  Text(
+                                    '${friendshipScores.friend.firstName} ${friendshipScores.friend.lastName}',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Padding(padding: EdgeInsets.only(top: 4)),
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                    child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(left: 8)),
                                         Text(
-                                          friendshipScores.friendScore
-                                              .toString(),
+                                          "@" +
+                                              friendshipScores.friend.username,
+                                          textDirection: TextDirection.ltr,
+                                          textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            color: getColor(),
-                                          ),
+                                              color: Colors.grey.shade700),
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Flexible(
-                                child: Column(
-                                  children: [
-                                    Text(AppLocalizations.of(context).you),
-                                    Padding(padding: EdgeInsets.only(top: 4)),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          friendshipScores.currentUserScore
-                                              .toString(),
-                                          style: TextStyle(
-                                            color: getColor(),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          MaterialButton(
-                              color: Theme.of(context).primaryColor,
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CreateChallengeScreen(
-                                          initiallySelectedFriends: [
-                                            friendshipScores.friend
-                                          ],
-                                        )));
+                        ),
+                        Padding(
+                            padding: EdgeInsets.only(
+                          top: 8,
+                        )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Column(
+                                children: [
+                                  Text(AppLocalizations.of(context).yourFriend),
+                                  Padding(padding: EdgeInsets.only(top: 4)),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        friendshipScores.friendScore.toString(),
+                                        style: TextStyle(
+                                          color: getColor(),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Flexible(
+                              child: Column(
+                                children: [
+                                  Text(AppLocalizations.of(context).you),
+                                  Padding(padding: EdgeInsets.only(top: 4)),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        friendshipScores.currentUserScore
+                                            .toString(),
+                                        style: TextStyle(
+                                          color: getColor(),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        RawMaterialButton(
+                            fillColor: Theme.of(context).primaryColor,
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => CreateChallengeScreen(
+                                        initiallySelectedFriends: [
+                                          friendshipScores.friend
+                                        ],
+                                      )));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.edit_outlined),
+                                  Padding(padding: EdgeInsets.only(left: 8)),
+                                  Text(
+                                    AppLocalizations.of(context)
+                                        .challengeThisFriend,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            )),
+                        Visibility(
+                          visible: friendshipScores.friend.username != "sabeq",
+                          child: RawMaterialButton(
+                              fillColor: Colors.grey,
+                              onPressed: () async {
+                                bool deleted =
+                                    await _showDeleteFriendAlertDialog(context);
+                                if (deleted) {
+                                  onFriendDeletedCallback.call();
+                                }
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.edit_outlined),
+                                    Icon(
+                                      Icons.remove_circle_outline,
+                                      color: Colors.white,
+                                    ),
                                     Padding(padding: EdgeInsets.only(left: 8)),
                                     Text(
-                                      AppLocalizations.of(context)
-                                          .challengeThisFriend,
+                                      "حذف هذا الصديق",
                                       textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ],
                                 ),
                               )),
-                          Visibility(
-                            visible:
-                                friendshipScores.friend.username != "sabeq",
-                            child: MaterialButton(
-                                color: Colors.grey,
-                                onPressed: () async {
-                                  bool deleted =
-                                      await _showDeleteFriendAlertDialog(
-                                          context);
-                                  if (deleted) {
-                                    onFriendDeletedCallback.call();
-                                  }
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.remove_circle_outline,
-                                        color: Colors.white,
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(left: 8)),
-                                      Text(
-                                        "حذف هذا الصديق",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

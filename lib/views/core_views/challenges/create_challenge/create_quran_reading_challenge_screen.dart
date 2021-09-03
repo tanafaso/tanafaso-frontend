@@ -1,41 +1,44 @@
 import 'package:azkar/models/friend.dart';
+import 'package:azkar/models/reading_quran_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/api_interface/challenges/requests/add_meaning_challenge_request_body.dart';
+import 'package:azkar/net/api_interface/challenges/requests/add_reading_quran_challenge_request_body.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/selected_friends_widget.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/select_surahs/selected_surahs_widget.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
-// ignore: must_be_immutable
-class CreateMeaningChallengeScreen extends StatefulWidget {
-  List<Friend> initiallySelectedFriends;
+class CreateQuranReadingChallengeScreen extends StatefulWidget {
+  final List<Friend> initiallySelectedFriends;
+  final List<SurahSubChallenge> initiallySelectedSurahSubChallenges;
 
-  CreateMeaningChallengeScreen({
+  CreateQuranReadingChallengeScreen({
     this.initiallySelectedFriends = const [],
+    this.initiallySelectedSurahSubChallenges = const [],
   });
 
   @override
-  _CreateMeaningChallengeScreenState createState() =>
-      _CreateMeaningChallengeScreenState();
+  _CreateQuranReadingChallengeScreenState createState() =>
+      _CreateQuranReadingChallengeScreenState();
 }
 
-class _CreateMeaningChallengeScreenState
-    extends State<CreateMeaningChallengeScreen> {
+class _CreateQuranReadingChallengeScreenState
+    extends State<CreateQuranReadingChallengeScreen> {
   List<Friend> _selectedFriends;
+  List<SurahSubChallenge> _selectedSurahSubChallenges;
   ButtonState progressButtonState;
-  int _numberOfWords;
   int _expiresAfterHoursNum;
 
   @override
   void initState() {
     _selectedFriends = widget.initiallySelectedFriends;
+    _selectedSurahSubChallenges = widget.initiallySelectedSurahSubChallenges;
     progressButtonState = ButtonState.idle;
-    _numberOfWords = 3;
     _expiresAfterHoursNum = 24;
 
     super.initState();
@@ -45,7 +48,7 @@ class _CreateMeaningChallengeScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("معاني كلمات القرآن"),
+        title: Text('قراءة قرآن'),
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -78,75 +81,14 @@ class _CreateMeaningChallengeScreenState
                             });
                           },
                         ),
-                        Card(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Text(
-                                      '*',
-                                      style: TextStyle(
-                                          color: Colors.red, fontSize: 17),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Icon(Icons.date_range),
-                                  ),
-                                  Text(
-                                    "عدد الكلمات",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    RichText(
-                                        text: TextSpan(
-                                      // Note: Styles for TextSpans must be explicitly defined.
-                                      // Child text spans will inherit styles from parent
-                                      style: new TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                      children: <TextSpan>[
-                                        new TextSpan(
-                                          text: 'سيتكون التحدي من',
-                                        ),
-                                        new TextSpan(
-                                            text:
-                                                '  ${ArabicUtils.englishToArabic(_numberOfWords.toString())}  ',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            )),
-                                        new TextSpan(
-                                          text: 'كلمات ومعانيها.',
-                                        ),
-                                      ],
-                                    )),
-                                  ],
-                                ),
-                              ),
-                              Slider(
-                                value: _numberOfWords.toDouble(),
-                                activeColor: Theme.of(context).primaryColor,
-                                inactiveColor: Theme.of(context).primaryColor,
-                                min: 3,
-                                max: 9,
-                                divisions: 8,
-                                onChanged: (value) => setState(
-                                    () => _numberOfWords = value.toInt()),
-                                label: "$_numberOfWords",
-                              ),
-                            ],
-                          ),
+                        SelectedSurahsWidget(
+                          initiallySelectedSurahs: _selectedSurahSubChallenges,
+                          onSelectedSurahsChanged: (newSurahSubChallenges) {
+                            setState(() {
+                              _selectedSurahSubChallenges =
+                                  newSurahSubChallenges;
+                            });
+                          },
                         ),
                         Card(
                           child: Column(
@@ -324,22 +266,19 @@ class _CreateMeaningChallengeScreenState
         context,
         AppLocalizations.of(context).pleaseFillUpAllTheCellsProperly,
       );
-      setState(() {
-        progressButtonState = ButtonState.fail;
-      });
       return;
     }
 
     try {
-      print(DateTime.now().millisecondsSinceEpoch ~/ 1000 +
-          Duration.secondsPerHour * _expiresAfterHoursNum);
-      await ServiceProvider.challengesService
-          .addMeaningChallenge(AddMeaningChallengeRequestBody(
-        friendsIds: _selectedFriends.map((friend) => friend.userId).toList(),
-        expiryDate: DateTime.now().millisecondsSinceEpoch ~/ 1000 +
-            Duration.secondsPerHour * _expiresAfterHoursNum,
-        numberOfWords: _numberOfWords,
-      ));
+      await ServiceProvider.challengesService.addReadingQuranChallenge(
+          AddReadingQuranChallengeRequestBody(
+              friendsIds:
+                  _selectedFriends.map((friend) => friend.userId).toList(),
+              readingQuranChallenge: ReadingQuranChallenge(
+                expiryDate: DateTime.now().millisecondsSinceEpoch ~/ 1000 +
+                    Duration.secondsPerHour * _expiresAfterHoursNum,
+                surahSubChallenges: _selectedSurahSubChallenges,
+              )));
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(
         context,
@@ -360,7 +299,6 @@ class _CreateMeaningChallengeScreenState
       AppLocalizations.of(context).challengeHasBeenAddedSuccessfully,
       color: Colors.green.shade400,
     );
-
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
             builder: (_) => HomePage(
@@ -371,6 +309,9 @@ class _CreateMeaningChallengeScreenState
 
   bool readyToFinishChallenge(bool showWarnings) {
     if ((_selectedFriends?.length ?? 0) == 0) {
+      return false;
+    }
+    if ((_selectedSurahSubChallenges?.length ?? 0) == 0) {
       return false;
     }
 

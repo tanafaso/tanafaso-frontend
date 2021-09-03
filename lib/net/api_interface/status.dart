@@ -50,6 +50,7 @@ class Status {
   static const int API_NAME_EMPTY_ERROR = 44;
   static const int API_PASSWORD_CHARACTERS_LESS_THAN_8_ERROR = 45;
   static const int CHALLENGE_CREATION_DUPLICATE_ZEKR_ERROR = 46;
+
   // static const int INVALID_RESET_PASSWORD_TOKEN_ERROR = 47;
   static const int ONE_OR_MORE_USERS_NOT_FRIENDS_ERROR = 48;
   static const int LESS_THAN_TWO_FRIENDS_ARE_PROVIDED_ERROR = 49;
@@ -57,6 +58,7 @@ class Status {
   static const int CHALLENGE_HAS_ALREADY_BEEN_FINISHED = 51;
   static const int TAFSEER_CHALLENGE_INCORRECT_NUMBER_OF_WORDS_ERROR = 52;
   static const int CANNOT_REMOVE_SABEQ__FROM_FRIENDS_ERROR = 53;
+  static const int STARTING_VERSE_AFTER_ENDING_VERSE_ERROR = 54;
 
   static Map<int, String> conversions = const {
     API_USER_ALREADY_LOGGED_IN_ERROR: "لقد قمت بتسجيل الدخول بالفعل",
@@ -125,6 +127,8 @@ class Status {
     TAFSEER_CHALLENGE_INCORRECT_NUMBER_OF_WORDS_ERROR:
         "عدد الكلمات المختارة غير صحيح",
     CANNOT_REMOVE_SABEQ__FROM_FRIENDS_ERROR: "لا يمكن إزالة سابق من الأصدقاء",
+    STARTING_VERSE_AFTER_ENDING_VERSE_ERROR:
+        "لا يمكن أن يكون رقم آية البداية أكبر من رقم آية النهاية",
   };
 
   Status(int errorCode) {
