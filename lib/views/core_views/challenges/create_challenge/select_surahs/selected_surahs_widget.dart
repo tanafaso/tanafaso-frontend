@@ -84,10 +84,12 @@ class _SelectedSurahsWidgetState extends State<SelectedSurahsWidget>
                     ),
                   ) as SurahSubChallenge;
 
-                  setState(() {
-                    _selectedSurahs.add(selectedSurahSubChallenge);
-                    widget.onSelectedSurahsChanged(_selectedSurahs);
-                  });
+                  if (selectedSurahSubChallenge != null) {
+                    setState(() {
+                      _selectedSurahs.add(selectedSurahSubChallenge);
+                      widget.onSelectedSurahsChanged(_selectedSurahs);
+                    });
+                  }
                 },
                 child:
                     Icon(Icons.add, color: Theme.of(context).iconTheme.color),
