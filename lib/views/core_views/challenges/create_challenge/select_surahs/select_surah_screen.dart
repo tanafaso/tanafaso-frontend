@@ -1,4 +1,4 @@
-import 'package:azkar/models/readingQuranChallenge.dart';
+import 'package:azkar/models/reading_quran_challenge.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/quran_surahs.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +99,7 @@ class SelectSurahScreen extends StatelessWidget {
                                             color: Colors.grey.shade700,
                                             fontSize: 17),
                                         children: [
-                                          TextSpan(text: 'من آية رقم '),
+                                          TextSpan(text: 'من الآية رقم '),
                                           TextSpan(
                                               text: ArabicUtils.englishToArabic(
                                                   firstAyah.toString()),

@@ -1,4 +1,3 @@
-import 'package:azkar/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -74,33 +73,12 @@ class ProfileLoadingWidget extends StatelessWidget {
               ),
               Padding(padding: EdgeInsets.all(30)),
               Card(
-                elevation: 15,
+                elevation: 0,
                 child: Container(
                   alignment: Alignment.center,
                   height: 300,
                   width: 300,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          AppLocalizations.of(context).youHaveFinished,
-                          style: TextStyle(fontSize: 30),
-                        ),
-                      ),
-                      LineWidget(
-                        width: MediaQuery.of(context).size.width / 5,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          AppLocalizations.of(context).challenges,
-                          style: TextStyle(fontSize: 30),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: Container(),
                 ),
               ),
             ],

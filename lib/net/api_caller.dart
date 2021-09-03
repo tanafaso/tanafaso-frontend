@@ -2,20 +2,20 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/api_interface/request_base.dart';
+import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ApiCaller {
   static const String API_VERSION_HEADER = 'api-version';
-  static const String API_VERSION = '1.5.1';
+  static const String API_VERSION = '1.8.0';
 
   static Future<http.Response> get({@required Endpoint route}) async {
     try {
       return await ServiceProvider.httpClient.get(
-        Uri.http(
+        Uri.https(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(route),
@@ -32,7 +32,7 @@ class ApiCaller {
       {@required Endpoint route, RequestBodyBase requestBody}) async {
     try {
       return await ServiceProvider.httpClient.put(
-        Uri.http(
+        Uri.https(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(route)),
@@ -49,7 +49,7 @@ class ApiCaller {
       {@required Endpoint route, RequestBodyBase requestBody}) async {
     try {
       return await ServiceProvider.httpClient.post(
-        Uri.http(
+        Uri.https(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(route)),
@@ -66,7 +66,7 @@ class ApiCaller {
       {@required Endpoint route, RequestBodyBase requestBody}) async {
     try {
       return await ServiceProvider.httpClient.delete(
-        Uri.http(
+        Uri.https(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(route)),

@@ -6,6 +6,7 @@ import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/selected_friends_widget.dart';
+import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
@@ -359,7 +360,13 @@ class _CreateMeaningChallengeScreenState
       AppLocalizations.of(context).challengeHasBeenAddedSuccessfully,
       color: Colors.green.shade400,
     );
-    Navigator.of(context).pop();
+
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (_) => HomePage(
+                  initiallySelectedTopicType: TopicType.CHALLENGES,
+                )),
+        (_) => false);
   }
 
   bool readyToFinishChallenge(bool showWarnings) {

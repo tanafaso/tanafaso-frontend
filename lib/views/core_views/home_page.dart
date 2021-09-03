@@ -27,13 +27,17 @@ enum TopicType {
 }
 
 class HomePage extends StatefulWidget {
+  final TopicType initiallySelectedTopicType;
+
+  HomePage({this.initiallySelectedTopicType = TopicType.FRIENDS});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   String userToken;
-  int _selectedIdx = 1;
+  int _selectedIdx;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -88,6 +92,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
+    _selectedIdx = topicToIndex(widget.initiallySelectedTopicType);
     initFirebase();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -113,6 +118,21 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             ));
       },
     );
+  }
+
+  // ignore: missing_return
+  int topicToIndex(TopicType topicType) {
+    switch (topicType) {
+      case TopicType.CHALLENGES:
+        return 0;
+      case TopicType.FRIENDS:
+        return 1;
+      case TopicType.PROFILE:
+        return 2;
+      case TopicType.LIVE_SUPPORT:
+        return 3;
+    }
+    assert(false);
   }
 
   List<Topic> getTopics(BuildContext context) {

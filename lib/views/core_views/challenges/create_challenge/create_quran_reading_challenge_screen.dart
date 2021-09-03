@@ -1,13 +1,14 @@
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/models/readingQuranChallenge.dart';
+import 'package:azkar/models/reading_quran_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/api_interface/challenges/requests/add_meaning_challenge_request_body.dart';
+import 'package:azkar/net/api_interface/challenges/requests/add_reading_quran_challenge_request_body.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/selected_friends_widget.dart';
-import 'package:azkar/views/core_views/challenges/create_challenge/selected_surahs_widget.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/select_surahs/selected_surahs_widget.dart';
+import 'package:azkar/views/core_views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
@@ -31,7 +32,6 @@ class _CreateQuranReadingChallengeScreenState
   List<Friend> _selectedFriends;
   List<SurahSubChallenge> _selectedSurahSubChallenges;
   ButtonState progressButtonState;
-  int _numberOfWords;
   int _expiresAfterHoursNum;
 
   @override
@@ -39,7 +39,6 @@ class _CreateQuranReadingChallengeScreenState
     _selectedFriends = widget.initiallySelectedFriends;
     _selectedSurahSubChallenges = widget.initiallySelectedSurahSubChallenges;
     progressButtonState = ButtonState.idle;
-    _numberOfWords = 3;
     _expiresAfterHoursNum = 24;
 
     super.initState();
@@ -83,6 +82,7 @@ class _CreateQuranReadingChallengeScreenState
                           },
                         ),
                         SelectedSurahsWidget(
+                          initiallySelectedSurahs: _selectedSurahSubChallenges,
                           onSelectedSurahsChanged: (newSurahSubChallenges) {
                             setState(() {
                               _selectedSurahSubChallenges =
@@ -270,15 +270,15 @@ class _CreateQuranReadingChallengeScreenState
     }
 
     try {
-      print(DateTime.now().millisecondsSinceEpoch ~/ 1000 +
-          Duration.secondsPerHour * _expiresAfterHoursNum);
-      await ServiceProvider.challengesService
-          .addMeaningChallenge(AddMeaningChallengeRequestBody(
-        friendsIds: _selectedFriends.map((friend) => friend.userId).toList(),
-        expiryDate: DateTime.now().millisecondsSinceEpoch ~/ 1000 +
-            Duration.secondsPerHour * _expiresAfterHoursNum,
-        numberOfWords: _numberOfWords,
-      ));
+      await ServiceProvider.challengesService.addReadingQuranChallenge(
+          AddReadingQuranChallengeRequestBody(
+              friendsIds:
+                  _selectedFriends.map((friend) => friend.userId).toList(),
+              readingQuranChallenge: ReadingQuranChallenge(
+                expiryDate: DateTime.now().millisecondsSinceEpoch ~/ 1000 +
+                    Duration.secondsPerHour * _expiresAfterHoursNum,
+                surahSubChallenges: _selectedSurahSubChallenges,
+              )));
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(
         context,
@@ -299,7 +299,12 @@ class _CreateQuranReadingChallengeScreenState
       AppLocalizations.of(context).challengeHasBeenAddedSuccessfully,
       color: Colors.green.shade400,
     );
-    Navigator.of(context).pop();
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (_) => HomePage(
+                  initiallySelectedTopicType: TopicType.CHALLENGES,
+                )),
+        (_) => false);
   }
 
   bool readyToFinishChallenge(bool showWarnings) {

@@ -7,11 +7,14 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/challenges/requests/add_azkar_challenge_in_group_request.dart';
 import 'package:azkar/net/api_interface/challenges/requests/add_azkar_challenge_request_body.dart';
 import 'package:azkar/net/api_interface/challenges/requests/add_meaning_challenge_request_body.dart';
+import 'package:azkar/net/api_interface/challenges/requests/add_reading_quran_challenge_request_body.dart';
 import 'package:azkar/net/api_interface/challenges/requests/update_azkar_challenge_request_body.dart';
-import 'package:azkar/net/api_interface/challenges/responses/FinishMeaningChallengeResponse.dart';
 import 'package:azkar/net/api_interface/challenges/responses/add_azkar_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/add_meaning_challenge_response.dart';
+import 'package:azkar/net/api_interface/challenges/responses/add_reading_quran_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/delete_challenge_response.dart';
+import 'package:azkar/net/api_interface/challenges/responses/finish_meaning_challenge_response.dart';
+import 'package:azkar/net/api_interface/challenges/responses/finish_reading_quran_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/get_azkar_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/update_azkar_challenge_response.dart';
@@ -67,6 +70,22 @@ class ChallengesService {
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
+  Future<void> addReadingQuranChallenge(
+      AddReadingQuranChallengeRequestBody requestBody) async {
+    http.Response httpResponse = await ApiCaller.post(
+        route:
+            Endpoint(endpointRoute: EndpointRoute.ADD_READING_QURAN_CHALLENGE),
+        requestBody: requestBody);
+
+    var response = AddReadingQuranChallengeResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.getErrorMessage());
+    }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+  }
+
   Future<void> finishMeaningChallenge(String id) async {
     http.Response httpResponse = await ApiCaller.put(
         route: Endpoint(
@@ -74,6 +93,21 @@ class ChallengesService {
             pathVariables: [id]));
 
     var response = FinishMeaningChallengeResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.getErrorMessage());
+    }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+  }
+
+  Future<void> finishReadingQuranChallenge(String id) async {
+    http.Response httpResponse = await ApiCaller.put(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.FINISH_READING_QURAN_CHALLENGE,
+            pathVariables: [id]));
+
+    var response = FinishReadingQuranChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());

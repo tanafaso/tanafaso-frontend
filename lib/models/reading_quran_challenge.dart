@@ -16,8 +16,8 @@ class ReadingQuranChallenge {
     this.groupId,
     this.creatingUserId,
     this.expiryDate,
-    this.usersFinished,
-    this.subChallenges,
+    this.usersFinished = const [],
+    this.surahSubChallenges,
     this.finished,
   });
 
@@ -26,7 +26,7 @@ class ReadingQuranChallenge {
   String creatingUserId;
   int expiryDate;
   List<String> usersFinished;
-  List<SurahSubChallenge> subChallenges;
+  List<SurahSubChallenge> surahSubChallenges;
   bool finished;
 
   factory ReadingQuranChallenge.fromJson(Map<String, dynamic> json) =>
@@ -36,8 +36,9 @@ class ReadingQuranChallenge {
         creatingUserId: json["creatingUserId"],
         expiryDate: json["expiryDate"],
         usersFinished: List<String>.from(json["usersFinished"].map((x) => x)),
-        subChallenges: List<SurahSubChallenge>.from(json["surahSubChallenges"]
-            .map((x) => SurahSubChallenge.fromJson(x))),
+        surahSubChallenges: List<SurahSubChallenge>.from(
+            json["surahSubChallenges"]
+                .map((x) => SurahSubChallenge.fromJson(x))),
         finished: json["finished"],
       );
 
@@ -46,11 +47,15 @@ class ReadingQuranChallenge {
         "groupId": groupId,
         "creatingUserId": creatingUserId,
         "expiryDate": expiryDate,
-        "usersFinished": List<String>.from(usersFinished.map((x) => x)),
+        "usersFinished": usersFinished,
         "surahSubChallenges":
-            List<SurahSubChallenge>.from(subChallenges.map((x) => x.toJson())),
+            List<dynamic>.from(surahSubChallenges.map((x) => x.toJson())),
         "finished": finished,
       };
+
+  String getName() {
+    return "قراءة قرآن";
+  }
 }
 
 class SurahSubChallenge {
