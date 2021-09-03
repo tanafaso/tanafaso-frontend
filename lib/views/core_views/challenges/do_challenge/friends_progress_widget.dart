@@ -6,11 +6,13 @@ class FriendsProgressWidget extends StatefulWidget {
   final Challenge challenge;
   final List<String> challengedUsersIds;
   final List<String> challengedUsersFullNames;
+  final int fontSize;
 
   FriendsProgressWidget({
     @required this.challenge,
     @required this.challengedUsersIds,
     @required this.challengedUsersFullNames,
+    this.fontSize = 15,
   });
 
   @override
@@ -47,13 +49,23 @@ class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
                   child: getFriendProgressOnChallengeIcon(
                       widget.challengedUsersIds[index]),
                 ),
-                Text(widget.challengedUsersFullNames[index]),
+                Text(
+                  widget.challengedUsersFullNames[index],
+                  style: TextStyle(
+                    fontSize: widget.fontSize.toDouble(),
+                  ),
+                ),
                 Visibility(
                   visible: widget.challengedUsersIds[index] ==
                       widget.challenge?.creatingUserId(),
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8.0),
-                    child: Text(AppLocalizations.of(context).challengeCreator),
+                    child: Text(
+                      AppLocalizations.of(context).challengeCreator,
+                      style: TextStyle(
+                        fontSize: widget.fontSize.toDouble(),
+                      ),
+                    ),
                   ),
                 ),
               ],

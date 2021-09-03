@@ -14,8 +14,10 @@ import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_item_loading_widget.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_azkar_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_meaning_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/create_quran_reading_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_azkar_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_meaning_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/do_reading_quran_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
@@ -247,13 +249,9 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
           child: Card(
             margin: EdgeInsets.all(0),
             child: IconSlideAction(
-              caption: widget.challenge.challengeType == ChallengeType.AZKAR
-                  ? AppLocalizations.of(context).copy
-                  : "إضافة",
+              caption: getCopyCaption(),
               color: Colors.green.shade600,
-              icon: widget.challenge.challengeType == ChallengeType.AZKAR
-                  ? Icons.copy
-                  : Icons.add,
+              icon: getCopyIcon(),
               onTap: () => onCopyPressed(),
             ),
           ),
@@ -281,10 +279,11 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                         context: context,
                         builder: (_) {
                           return FriendsProgressWidget(
-                              challenge: widget.challenge,
-                              challengedUsersIds: _challengedUsersIds,
-                              challengedUsersFullNames:
-                                  _challengedUsersFullNames);
+                            challenge: widget.challenge,
+                            challengedUsersIds: _challengedUsersIds,
+                            challengedUsersFullNames: _challengedUsersFullNames,
+                            fontSize: 20,
+                          );
                         });
                   },
                   child: Icon(
@@ -370,11 +369,32 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
             })));
   }
 
+  void onReadingChallengePressed() {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => DoReadingQuranChallengeScreen(
+            challenge: widget.challenge.readingQuranChallenge,
+            group: widget.group,
+            challengedUsersIds: _challengedUsersIds,
+            challengedUsersFullNames: _challengedUsersFullNames,
+            friendshipScores: widget.friendshipScores,
+            challengeChangedCallback: (changedChallenge) {
+              widget.challengeChangedCallback(changedChallenge);
+            })));
+  }
+
   void onChallengePressed() {
-    if (widget.challenge.challengeType == ChallengeType.AZKAR) {
-      onAzkarChallengePressed();
-    } else {
-      onMeaningChallengePressed();
+    switch (widget.challenge.challengeType) {
+      case ChallengeType.AZKAR:
+        onAzkarChallengePressed();
+        return;
+      case ChallengeType.MEANING:
+        onMeaningChallengePressed();
+        return;
+      case ChallengeType.READING_QURAN:
+        onReadingChallengePressed();
+        return;
+      case ChallengeType.OTHER:
+        return;
     }
   }
 
@@ -420,11 +440,50 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                 )));
   }
 
+  void onCopyReadingChallenge() async {
+    Friendship friends = await ServiceProvider.usersService.getFriends();
+    List<Friend> currentChallengeFriends = friends.friends
+        .where((friend) => _challengedUsersIds.contains(friend.userId))
+        .toList();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CreateQuranReadingChallengeScreen(
+                  initiallySelectedFriends: currentChallengeFriends,
+                  initiallySelectedSurahSubChallenges:
+                      widget.challenge.readingQuranChallenge.surahSubChallenges,
+                )));
+  }
+
+  String getCopyCaption() {
+    return widget.challenge.challengeType == ChallengeType.AZKAR ||
+            widget.challenge.challengeType == ChallengeType.READING_QURAN ||
+            widget.challenge.challengeType == ChallengeType.OTHER
+        ? AppLocalizations.of(context).copy
+        : "إضافة";
+  }
+
+  IconData getCopyIcon() {
+    return widget.challenge.challengeType == ChallengeType.AZKAR ||
+            widget.challenge.challengeType == ChallengeType.READING_QURAN ||
+            widget.challenge.challengeType == ChallengeType.OTHER
+        ? Icons.copy
+        : Icons.add;
+  }
+
   void onCopyPressed() {
-    if (widget.challenge.challengeType == ChallengeType.AZKAR) {
-      onCopyAzkarChallenge();
-    } else {
-      onCopyMeaningChallenge();
+    switch (widget.challenge.challengeType) {
+      case ChallengeType.AZKAR:
+        onCopyAzkarChallenge();
+        return;
+      case ChallengeType.MEANING:
+        onCopyMeaningChallenge();
+        return;
+      case ChallengeType.READING_QURAN:
+        onCopyReadingChallenge();
+        return;
+      case ChallengeType.OTHER:
+        return;
     }
   }
 

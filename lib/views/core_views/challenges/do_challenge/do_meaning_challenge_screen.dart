@@ -10,12 +10,11 @@ import 'package:azkar/net/cache_manager.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_item_widget.dart';
-import 'package:azkar/views/core_views/challenges/do_challenge/animated_score_change_widget.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:in_app_review/in_app_review.dart';
 
 class DoMeaningChallengeScreen extends StatefulWidget {
   final MeaningChallenge challenge;
@@ -63,6 +62,8 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
 
   int _chosenWordIndex;
 
+  ScrollController _pageScrollController;
+
   @override
   void initState() {
     super.initState();
@@ -91,9 +92,8 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
 
     _chosenWordIndex = -1;
 
-    setState(() {
-      initConfettiController();
-    });
+    _pageScrollController = ScrollController();
+    initConfettiController();
   }
 
   void initConfettiController() {
@@ -109,151 +109,153 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
         ),
         body: Stack(
           children: [
-            Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Card(
-                      child: Visibility(
-                        visible: widget.group != null,
-                        child: widget.group == null
-                            ? Container()
-                            : ConstrainedBox(
-                                constraints: BoxConstraints(
-                                  maxHeight:
-                                      MediaQuery.of(context).size.height / 5,
-                                ),
-                                child: FriendsProgressWidget(
-                                  challenge: Challenge(
-                                      meaningChallenge: widget.challenge),
-                                  challengedUsersIds: widget.challengedUsersIds,
-                                  challengedUsersFullNames:
-                                      widget.challengedUsersFullNames,
-                                ),
+            SingleChildScrollView(
+              controller: _pageScrollController,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Card(
+                    child: Visibility(
+                      visible: widget.group != null,
+                      child: widget.group == null
+                          ? Container()
+                          : ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxHeight:
+                                    MediaQuery.of(context).size.height / 5,
                               ),
-                      ),
-                    ),
-                    Divider(),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Card(
-                            color:
-                                _shouldChooseWord ? Colors.white : Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text('الكلمات',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 25,
-                                      )),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 8),
-                                  ),
-                                  ListView.separated(
-                                    separatorBuilder: (context, _) => Padding(
-                                      padding: EdgeInsets.only(bottom: 4),
-                                    ),
-                                    itemCount: _words.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return AnimatedBuilder(
-                                        animation: _colorAnimation,
-                                        builder: (context, _) =>
-                                            RawMaterialButton(
-                                                onPressed: () =>
-                                                    onWordPressed(index),
-                                                elevation: 2,
-                                                fillColor: _shouldChooseWord
-                                                    ? _colorAnimation.value
-                                                    : _chosenWordIndex ==
-                                                            _words[index].index
-                                                        ? Color(0xffcef5ce)
-                                                        : Colors.white,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    _words[index].text,
-                                                    textAlign: TextAlign.center,
-                                                    softWrap: true,
-                                                    style:
-                                                        TextStyle(fontSize: 17),
-                                                  ),
-                                                )),
-                                      );
-                                    },
-                                  ),
-                                ],
+                              child: FriendsProgressWidget(
+                                challenge: Challenge(
+                                    meaningChallenge: widget.challenge),
+                                challengedUsersIds: widget.challengedUsersIds,
+                                challengedUsersFullNames:
+                                    widget.challengedUsersFullNames,
                               ),
                             ),
-                          ),
-                        ),
-                      ],
                     ),
-                    Divider(),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Card(
-                            color:
-                                _shouldChooseWord ? Colors.white : Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    'المعاني',
+                  ),
+                  Divider(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Card(
+                          color:
+                              _shouldChooseWord ? Colors.white : Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Text('الكلمات',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 25,
-                                    ),
+                                    )),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 8),
+                                ),
+                                ListView.separated(
+                                  separatorBuilder: (context, _) => Padding(
+                                    padding: EdgeInsets.only(bottom: 4),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 8),
-                                  ),
-                                  ListView.separated(
-                                    separatorBuilder: (context, _) => Padding(
-                                      padding: EdgeInsets.only(bottom: 4),
-                                    ),
-                                    itemCount: _meanings.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return AnimatedBuilder(
-                                        animation: _colorAnimation,
-                                        builder: (context, _) =>
-                                            RawMaterialButton(
-                                                onPressed: () =>
-                                                    onMeaningPressed(index),
-                                                elevation: 2,
-                                                fillColor: _shouldChooseWord
-                                                    ? Colors.white
-                                                    : _colorAnimation.value,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    _meanings[index].text,
-                                                    textAlign: TextAlign.center,
-                                                    style:
-                                                        TextStyle(fontSize: 17),
-                                                    softWrap: true,
-                                                  ),
-                                                )),
-                                      );
-                                    },
-                                  )
-                                ],
-                              ),
+                                  controller: _pageScrollController,
+                                  itemCount: _words.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return AnimatedBuilder(
+                                      animation: _colorAnimation,
+                                      builder: (context, _) =>
+                                          RawMaterialButton(
+                                              onPressed: () =>
+                                                  onWordPressed(index),
+                                              elevation: 2,
+                                              fillColor: _shouldChooseWord
+                                                  ? _colorAnimation.value
+                                                  : _chosenWordIndex ==
+                                                          _words[index].index
+                                                      ? Color(0xffcef5ce)
+                                                      : Colors.white,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  _words[index].text,
+                                                  textAlign: TextAlign.center,
+                                                  softWrap: true,
+                                                  style:
+                                                      TextStyle(fontSize: 17),
+                                                ),
+                                              )),
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    )
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                  Divider(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Card(
+                          color:
+                              _shouldChooseWord ? Colors.white : Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'المعاني',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 8),
+                                ),
+                                ListView.separated(
+                                  separatorBuilder: (context, _) => Padding(
+                                    padding: EdgeInsets.only(bottom: 4),
+                                  ),
+                                  controller: _pageScrollController,
+                                  itemCount: _meanings.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return AnimatedBuilder(
+                                      animation: _colorAnimation,
+                                      builder: (context, _) =>
+                                          RawMaterialButton(
+                                              onPressed: () =>
+                                                  onMeaningPressed(index),
+                                              elevation: 2,
+                                              fillColor: _shouldChooseWord
+                                                  ? Colors.white
+                                                  : _colorAnimation.value,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  _meanings[index].text,
+                                                  textAlign: TextAlign.center,
+                                                  style:
+                                                      TextStyle(fontSize: 17),
+                                                  softWrap: true,
+                                                ),
+                                              )),
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
             getConfettiWidget(),
@@ -352,132 +354,15 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
       if (!prefs.containsKey(CacheManager.CACHE_KEY_ASKED_FOR_REVIEW)) {
         prefs.setBool(CacheManager.CACHE_KEY_ASKED_FOR_REVIEW, true);
         ratingRequestShown = true;
-        await showReviewDialog(context);
+        await DoChallengeUtils.showReviewDialog(context);
       }
     }
 
     if (!ratingRequestShown) {
-      await showFriendsScoreDialog();
+      await DoChallengeUtils.showFriendsScoreDialog(
+          context, widget.friendshipScores, widget.challengedUsersIds);
     }
     Navigator.of(context).pop();
-  }
-
-  Future<void> showReviewDialog(BuildContext context) {
-    // ignore: deprecated_member_use
-    Widget cancelButton = FlatButton(
-      child: Text("لا شكرا"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-    // ignore: deprecated_member_use
-    Widget continueButton = FlatButton(
-      child: Text("قيم التطبيق"),
-      onPressed: () {
-        InAppReview.instance.openStoreListing();
-        Navigator.of(context).pop();
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("تقييم التطبيق"),
-      content: Text("هل يمكنك تقييم التطبيق إذا كنت تعتقد أنه مفيد؟ 😊"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-
-    // show the dialog
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-  Future<void> showFriendsScoreDialog() async {
-    List<FriendshipScores> relevantFriendScores = widget.friendshipScores
-        .where((friendshipScore) =>
-            widget.challengedUsersIds.contains(friendshipScore.friend.userId))
-        .toList();
-
-    var scrollController = ScrollController();
-
-    await showDialog(
-      context: context,
-      builder: (_) => Center(
-        child: SizedBox(
-          width: double.maxFinite,
-          child: Card(
-            color: Theme.of(context).primaryColor,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            'استمر في تحفيز أصدقائك وتحديهم 🔥',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height / 3),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Scrollbar(
-                      isAlwaysShown: true,
-                      controller: scrollController,
-                      child: ListView.separated(
-                          padding: EdgeInsets.all(0),
-                          addAutomaticKeepAlives: true,
-                          separatorBuilder: (BuildContext context, int index) =>
-                              Divider(),
-                          shrinkWrap: true,
-                          itemCount: relevantFriendScores.length,
-                          controller: scrollController,
-                          itemBuilder: (context, index) {
-                            return AnimatedScoreChangeWidget(
-                              friendshipScores: relevantFriendScores[index],
-                            );
-                          }),
-                    ),
-                  ),
-                ),
-                RawMaterialButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  elevation: 2.0,
-                  fillColor: Colors.white,
-                  child: Text(
-                    '💪',
-                    style: TextStyle(fontSize: 25),
-                  ),
-                  padding: EdgeInsets.all(15.0),
-                  shape: CircleBorder(),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 8),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
   }
 
   @override

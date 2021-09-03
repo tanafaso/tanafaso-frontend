@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/api_interface/request_base.dart';
+import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ApiCaller {
   static const String API_VERSION_HEADER = 'api-version';
-  static const String API_VERSION = '1.5.1';
+  static const String API_VERSION = '1.8.0';
 
   static Future<http.Response> get({@required Endpoint route}) async {
     try {
