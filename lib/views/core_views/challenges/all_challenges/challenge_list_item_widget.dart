@@ -264,7 +264,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
             Row(
               children: [
                 Padding(padding: EdgeInsets.only(right: 8)),
-                getIconConditionally(),
+                getIcon(),
                 Padding(padding: EdgeInsets.only(right: 8)),
                 Text(
                   widget.challenge.getName(),
@@ -289,7 +289,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                   child: Icon(
                     Icons.whatshot,
                     color: Colors.green,
-                    size: 20,
+                    size: 30,
                   ),
                 ),
                 Padding(
@@ -524,7 +524,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
         ));
   }
 
-  Widget getIconConditionally() {
+  Widget getIcon() {
     if (widget.challenge.done()) {
       return Icon(
         Icons.done_outline,
@@ -542,7 +542,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
     return Icon(
       Icons.not_started,
       color: Colors.yellow,
-      size: 20,
+      size: 25,
     );
   }
 
