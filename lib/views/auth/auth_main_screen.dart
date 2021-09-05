@@ -88,7 +88,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
                           ])),
                       Flexible(
                           fit: FlexFit.tight,
-                          flex: 2,
+                          flex: 3,
                           child: Column(children: [
                             Text(AppLocalizations.of(context).areYouANewUser,
                                 style: TextStyle(
