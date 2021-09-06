@@ -15,7 +15,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  FlutterRingtonePlayer.playNotification();
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +54,7 @@ class _MyAppState extends State<MyApp> {
     if (Platform.isIOS) {
       FirebaseMessaging.instance.requestPermission();
     }
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     return app;
   }
 

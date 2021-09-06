@@ -25,6 +25,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 4.0, top: 4.0, right: 4.0),
       child: RawMaterialButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         // margin: EdgeInsets.all(0),
         fillColor: Colors.white,
         onPressed: () {
@@ -130,6 +131,8 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                           ],
                         ),
                         RawMaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
                             fillColor: Theme.of(context).primaryColor,
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
@@ -157,6 +160,8 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                         Visibility(
                           visible: friendshipScores.friend.username != "sabeq",
                           child: RawMaterialButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
                               fillColor: Colors.grey,
                               onPressed: () async {
                                 bool deleted =

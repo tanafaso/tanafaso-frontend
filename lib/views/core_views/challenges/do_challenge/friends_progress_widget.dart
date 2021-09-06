@@ -7,12 +7,14 @@ class FriendsProgressWidget extends StatefulWidget {
   final List<String> challengedUsersIds;
   final List<String> challengedUsersFullNames;
   final int fontSize;
+  final int iconSize;
 
   FriendsProgressWidget({
     @required this.challenge,
     @required this.challengedUsersIds,
     @required this.challengedUsersFullNames,
     this.fontSize = 15,
+    this.iconSize = 15,
   });
 
   @override
@@ -86,7 +88,7 @@ class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
         .any((userFinished) => userFinished == userId)) {
       return Icon(
         Icons.done_outline,
-        size: 15,
+        size: widget.iconSize.toDouble(),
         color: Colors.green,
       );
     }
@@ -94,14 +96,14 @@ class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
     if (widget.challenge.deadlinePassed()) {
       return Icon(
         Icons.error_outline,
-        size: 15,
+        size: widget.iconSize.toDouble(),
         color: Colors.red,
       );
     }
 
     return Icon(
       Icons.not_started,
-      size: 15,
+      size: widget.iconSize.toDouble(),
       color: Colors.yellow,
     );
   }
