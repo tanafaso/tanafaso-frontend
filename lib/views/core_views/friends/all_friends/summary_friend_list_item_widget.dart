@@ -20,6 +20,8 @@ class SummaryFriendListItemWidget extends StatelessWidget {
         constraints:
             BoxConstraints(minHeight: MediaQuery.of(context).size.height / 12),
         child: RawMaterialButton(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           fillColor: Colors.white,
           onPressed: () {
             toggleViewCallback.call();

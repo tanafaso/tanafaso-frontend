@@ -9,6 +9,7 @@ class ChallengeListItemLoadingWidget extends StatelessWidget {
       child: RawMaterialButton(
         onPressed: () {},
         fillColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Shimmer.fromColors(
           baseColor: Colors.grey[500],
           highlightColor: Colors.grey[100],

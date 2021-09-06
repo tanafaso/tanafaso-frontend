@@ -123,9 +123,11 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
           builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return RawMaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
                 padding: EdgeInsets.all(4),
                 onPressed: () => onChallengePressed(),
-                elevation: 2.0,
+                elevation: 3.0,
                 fillColor: Colors.white,
                 child: !_showCloneAndDeleteFeatureDiscovery
                     ? getMainWidget()
@@ -283,6 +285,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                             challengedUsersIds: _challengedUsersIds,
                             challengedUsersFullNames: _challengedUsersFullNames,
                             fontSize: 20,
+                            iconSize: 25,
                           );
                         });
                   },
@@ -529,14 +532,14 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       return Icon(
         Icons.done_outline,
         color: Colors.green,
-        size: 20,
+        size: 25,
       );
     }
     if (widget.challenge.deadlinePassed()) {
       return Icon(
         Icons.error_outline,
         color: Colors.red,
-        size: 20,
+        size: 25,
       );
     }
     return Icon(
