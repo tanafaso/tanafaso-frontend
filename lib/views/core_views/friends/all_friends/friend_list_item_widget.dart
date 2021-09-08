@@ -32,7 +32,7 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
     _detailedView = false;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 1500), () async {
+      Future.delayed(const Duration(milliseconds: 500), () async {
         if (mounted) {
           String sabeqId = await ServiceProvider.usersService.getSabeqId();
           setState(() {
