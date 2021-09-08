@@ -10,6 +10,8 @@ import 'package:azkar/views/auth/signup/signup_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_state_button/iconed_button.dart';
+import 'package:progress_state_button/progress_button.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -25,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _passwordObscure = true;
   FocusNode passwordFocus;
   String _errorMessage;
+  ButtonState progressButtonState;
 
   @override
   void initState() {
@@ -34,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _errorMessage = "";
     _email = "";
     _password = "";
+    progressButtonState = ButtonState.idle;
   }
 
   @override
@@ -209,59 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: <Widget>[
                                 new Expanded(
                                   // ignore: deprecated_member_use
-                                  child: new FlatButton(
-                                    shape: new RoundedRectangleBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(30.0),
-                                    ),
-                                    color: Colors.white,
-                                    onPressed: () {
-                                      RegExp regex = new RegExp(
-                                          '^[\\w-_\\.+]*[\\w-_\\.]\\@'
-                                          '([\\w]+\\.)+[\\w]+[\\w]\$');
-                                      if (regex.stringMatch(_email) != _email) {
-                                        setState(() {
-                                          _errorMessage =
-                                              AppLocalizations.of(context)
-                                                  .emailIsInvalid;
-                                        });
-                                        return;
-                                      }
-                                      if (_password.length < 8) {
-                                        setState(() {
-                                          _errorMessage = AppLocalizations.of(
-                                                  context)
-                                              .passwordShouldBeOfAtLeast8Characters;
-                                        });
-                                        return;
-                                      }
-
-                                      loginWithEmail(new EmailLoginRequestBody(
-                                          email: _email, password: _password));
-                                    },
-                                    child: new Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 20.0,
-                                        horizontal: 20.0,
-                                      ),
-                                      child: new Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          new Expanded(
-                                            child: Text(
-                                              AppLocalizations.of(context)
-                                                  .login,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                  child: getLoginButton(),
                                 ),
                               ],
                             ),
@@ -461,6 +413,68 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget getLoginButton() {
+    return ProgressButton.icon(
+      textStyle: TextStyle(
+        color: Colors.black,
+      ),
+      iconedButtons: {
+        ButtonState.idle: IconedButton(
+            text: AppLocalizations.of(context).login,
+            icon: Icon(Icons.login, color: Colors.black),
+            color: Theme.of(context).buttonColor),
+        ButtonState.loading: IconedButton(
+            text: AppLocalizations.of(context).sending,
+            color: Colors.yellow.shade200),
+        ButtonState.fail: IconedButton(
+            text: AppLocalizations.of(context).failed,
+            icon: Icon(Icons.cancel, color: Colors.white),
+            color: Colors.red.shade300),
+        ButtonState.success: IconedButton(
+            text: "تم تسجيل الدخول بنجاح",
+            icon: Icon(
+              Icons.check_circle,
+              color: Colors.white,
+            ),
+            color: Colors.green.shade400)
+      },
+      onPressed: onProgressButtonClicked,
+      state: progressButtonState,
+    );
+  }
+
+  void onProgressButtonClicked() async {
+    if (progressButtonState == ButtonState.success ||
+        progressButtonState == ButtonState.loading) {
+      return;
+    }
+
+    setState(() {
+      progressButtonState = ButtonState.loading;
+    });
+
+    RegExp regex = new RegExp('^[\\w-_\\.+]*[\\w-_\\.]\\@'
+        '([\\w]+\\.)+[\\w]+[\\w]\$');
+    if (regex.stringMatch(_email) != _email) {
+      setState(() {
+        _errorMessage = AppLocalizations.of(context).emailIsInvalid;
+        progressButtonState = ButtonState.fail;
+      });
+      return;
+    }
+    if (_password.length < 8) {
+      setState(() {
+        _errorMessage =
+            AppLocalizations.of(context).passwordShouldBeOfAtLeast8Characters;
+        progressButtonState = ButtonState.fail;
+      });
+      return;
+    }
+
+    loginWithEmail(
+        new EmailLoginRequestBody(email: _email, password: _password));
+  }
+
   loginWithFacebook() async {
     try {
       await ServiceProvider.authenticationService.loginWithFacebook();
@@ -478,8 +492,15 @@ class _LoginScreenState extends State<LoginScreen> {
       await ServiceProvider.authenticationService.login(request);
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.error);
+      setState(() {
+        progressButtonState = ButtonState.fail;
+      });
       return;
     }
+
+    setState(() {
+      progressButtonState = ButtonState.success;
+    });
 
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context) => HomePage()), (_) => false);
