@@ -216,6 +216,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
               pendingFriends: _pendingFriends,
               onFriendRequestResolvedCallback: () {
                 setState(() {
+                  print('trying again');
                   _neededData = getNeededData();
                 });
               },

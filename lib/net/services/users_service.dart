@@ -237,6 +237,8 @@ class UsersService {
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<void> rejectFriend(String friendId) async {
@@ -249,6 +251,8 @@ class UsersService {
     if (response.hasError()) {
       throw new ApiException(response.getErrorMessage());
     }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<void> setNotificationsToken(
