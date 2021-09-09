@@ -20,44 +20,31 @@ class FriendRequestsWidget extends StatefulWidget {
 class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
   @override
   Widget build(BuildContext context) {
-    Widget mainWidget;
     if ((widget.pendingFriends?.length ?? 0) == 0) {
-      mainWidget = Center(
+      return Center(
         child: Text(AppLocalizations.of(context).noFriendRequestsFound),
       );
     } else {
-      mainWidget = ListView.builder(
-        itemCount: widget.pendingFriends.length,
-        itemBuilder: (context, index) {
-          return FriendRequestWidget(
-            friend: widget.pendingFriends[index],
-            onFriendRequestResolvedCallback:
-                widget.onFriendRequestResolvedCallback,
-          );
-        },
-      );
+      return RefreshIndicator(
+          onRefresh: () {
+            // Just to force parents to reload.
+            widget.onFriendRequestResolvedCallback();
+            return Future.value();
+          },
+          color: Colors.black,
+          child: ListView.builder(
+            itemCount: widget.pendingFriends.length,
+            physics:
+                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) {
+              return FriendRequestWidget(
+                friend: widget.pendingFriends[index],
+                onFriendRequestResolvedCallback:
+                    widget.onFriendRequestResolvedCallback,
+              );
+            },
+          ));
     }
-
-    return RefreshIndicator(
-      onRefresh: () {
-        // Just to force parents to reload.
-        widget.onFriendRequestResolvedCallback();
-        return Future.value();
-      },
-      color: Colors.black,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: mainWidget,
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height,
-            )
-          ],
-        ),
-      ),
-    );
   }
 }
