@@ -44,6 +44,7 @@ class SummaryFriendListItemWidget extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
                         (friendshipScores.currentUserScore -
