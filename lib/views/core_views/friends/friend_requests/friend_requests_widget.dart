@@ -20,7 +20,6 @@ class FriendRequestsWidget extends StatefulWidget {
 class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
   @override
   Widget build(BuildContext context) {
-    print(widget.pendingFriends);
     if ((widget.pendingFriends?.length ?? 0) == 0) {
       return Center(
         child: Text(AppLocalizations.of(context).noFriendRequestsFound),
