@@ -10,7 +10,7 @@ A Flutter application for Muslims that help them challenge and motivate themselv
 Also, take a look at the [Backend](https://github.com/challenge-azkar/azkar-api) repository.
 
 ## Stats
-- **10,000** App Downloads.
+- **10,000** App Installs.
 - **1908** signed-in users.
 - **482** users have at least one Azkar challenge.
 - **370** users have at least one Tafseer challenge.
