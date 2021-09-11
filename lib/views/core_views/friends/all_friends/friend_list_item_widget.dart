@@ -31,15 +31,13 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
     _isSabeq = false;
     _detailedView = false;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 500), () async {
-        if (mounted) {
-          String sabeqId = await ServiceProvider.usersService.getSabeqId();
-          setState(() {
-            _isSabeq = sabeqId == widget.friendshipScores.friend.userId;
-          });
-        }
-      });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        String sabeqId = await ServiceProvider.usersService.getSabeqId();
+        setState(() {
+          _isSabeq = sabeqId == widget.friendshipScores.friend.userId;
+        });
+      }
     });
   }
 

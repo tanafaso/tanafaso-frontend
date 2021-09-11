@@ -57,6 +57,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
         // Feature ids for every feature that we want to showcase in order.
         [
           Features.SABEQ_INTRODUCTION,
+          Features.ADD_FRIEND,
           Features.SHARE_USERNAME,
         ],
       );
@@ -330,14 +331,68 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
           Visibility(
             visible: !_addExpanded,
             maintainSize: false,
-            child: FloatingActionButton.extended(
-                heroTag: "addFloatingButton",
-                label: Icon(Icons.add),
-                onPressed: () {
-                  setState(() {
-                    _addExpanded = true;
-                  });
-                }),
+            child: DescribedFeatureOverlay(
+                featureId: Features.ADD_FRIEND,
+                barrierDismissible: false,
+                backgroundDismissible: false,
+                contentLocation: ContentLocation.above,
+                tapTarget: Icon(Icons.add),
+                // The widget that will be displayed as the tap target.
+                description: Center(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Padding(
+                            padding: EdgeInsets.all(0),
+                          )),
+                          Container(
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: Text(
+                              "إضافة صديق",
+                              softWrap: true,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.all(8)),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Padding(
+                            padding: EdgeInsets.all(0),
+                          )),
+                          Container(
+                            alignment: Alignment.centerRight,
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: Text(
+                              "اضغط هنا لإضافة صديق أو مشاركة التطبيق مع صديق",
+                              softWrap: true,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                backgroundColor: Theme.of(context).accentColor,
+                targetColor: Theme.of(context).primaryColor,
+                textColor: Colors.black,
+                overflowMode: OverflowMode.wrapBackground,
+                child: FloatingActionButton.extended(
+                    heroTag: "addFloatingButton",
+                    label: Icon(Icons.add),
+                    onPressed: () {
+                      setState(() {
+                        _addExpanded = true;
+                      });
+                    })),
           ),
           Visibility(
               visible: _addExpanded,
