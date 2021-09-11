@@ -282,7 +282,7 @@ class _CreateQuranReadingChallengeScreenState
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(
         context,
-        e.error,
+        e.errorStatus.errorMessage,
       );
       setState(() {
         progressButtonState = ButtonState.fail;

@@ -81,7 +81,7 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
                 } on ApiException catch (e) {
                   SnackBarUtils.showSnackBar(
                     context,
-                    e.error,
+                    e.errorStatus.errorMessage,
                   );
                   return;
                 }

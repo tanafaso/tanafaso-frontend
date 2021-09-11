@@ -99,7 +99,7 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
     try {
       await ServiceProvider.usersService.acceptFriend(widget.friend.userId);
     } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(context, e.error);
+      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
       return;
     }
     SnackBarUtils.showSnackBar(context,
@@ -112,7 +112,7 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
     try {
       await ServiceProvider.usersService.rejectFriend(widget.friend.userId);
     } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(context, e.error);
+      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
       return;
     }
     SnackBarUtils.showSnackBar(

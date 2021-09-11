@@ -240,7 +240,7 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(
         context,
-        e.error,
+        e.errorStatus.errorMessage,
       );
       return;
     }

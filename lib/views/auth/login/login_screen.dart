@@ -479,7 +479,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await ServiceProvider.authenticationService.loginWithFacebook();
     } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(context, e.error);
+      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
       return;
     }
 
@@ -491,7 +491,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await ServiceProvider.authenticationService.login(request);
     } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(context, e.error);
+      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
       setState(() {
         progressButtonState = ButtonState.fail;
       });

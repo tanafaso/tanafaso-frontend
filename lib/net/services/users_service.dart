@@ -2,14 +2,18 @@ import 'dart:convert';
 
 import 'package:azkar/models/friendship.dart';
 import 'package:azkar/models/friendship_scores.dart';
+import 'package:azkar/models/publicly_available_user.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/users/requests/set_notifications_token_request_body.dart';
 import 'package:azkar/net/api_interface/users/responses/add_friend_response.dart';
+import 'package:azkar/net/api_interface/users/responses/add_to_publicly_available_users_response.dart';
 import 'package:azkar/net/api_interface/users/responses/delete_friend_response.dart';
+import 'package:azkar/net/api_interface/users/responses/delete_from_publicly_available_users_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_friends_leaderboard_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_friends_response.dart';
+import 'package:azkar/net/api_interface/users/responses/get_publicly_available_users_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_user_response.dart';
 import 'package:azkar/net/api_interface/users/responses/resolve_friend_request_response.dart';
 import 'package:azkar/net/api_interface/users/responses/set_notifications_token_response.dart';
@@ -33,7 +37,7 @@ class UsersService {
     var responseBody = utf8.decode(httpResponse.body.codeUnits);
     var response = GetUserResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     prefs.setString(key, responseBody);
@@ -95,7 +99,7 @@ class UsersService {
     var response = GetUserResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
     prefs.setString(key, response.user.id);
     return response.user.id;
@@ -108,7 +112,7 @@ class UsersService {
     var response = GetUserResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
     return response.user;
   }
@@ -133,7 +137,7 @@ class UsersService {
     var response = GetUserResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
     return response.user;
   }
@@ -146,24 +150,79 @@ class UsersService {
     var response = GetUserResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
     return response.user;
   }
 
-  Future<void> addFriend(String username) async {
+  Future<List<PubliclyAvailableUser>> getPubliclyAvailableUsers() async {
+    http.Response httpResponse = await ApiCaller.get(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.GET_PUBLICLY_AVAILABLE_USERS));
+    var response = GetPubliclyAvailableUsersResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.error);
+    }
+    return response.publiclyAvailableUsers;
+  }
+
+  Future<void> deleteFromPubliclyAvailableUsers() async {
+    http.Response httpResponse = await ApiCaller.delete(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.DELETE_FROM_PUBLICLY_AVAILABLE_USERS));
+    var response = DeleteFromPubliclyAvailableUsersResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.error);
+    }
+  }
+
+  Future<void> addToPubliclyAvailableMales() async {
+    http.Response httpResponse = await ApiCaller.put(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.ADD_TO_PUBLICLY_AVAILABLE_MALES));
+    var response = AddToPubliclyAvailableUsersResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.error);
+    }
+  }
+
+  Future<void> addToPubliclyAvailableFemales() async {
+    http.Response httpResponse = await ApiCaller.put(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.ADD_TO_PUBLICLY_AVAILABLE_FEMALES));
+    var response = AddToPubliclyAvailableUsersResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.error);
+    }
+  }
+
+  Future<void> addFriendWithUsername(String username) async {
     User user = await getUserByUsername(username);
 
     String userId = user.id;
     assert(userId != null);
     http.Response httpResponse = await ApiCaller.put(
         route: Endpoint(
-            endpointRoute: EndpointRoute.ADD_FRIEND_BY_USERNAME,
-            pathVariables: [userId]));
+            endpointRoute: EndpointRoute.ADD_FRIEND, pathVariables: [userId]));
     var response = AddFriendResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
+    }
+  }
+
+  Future<void> addFriendWithId(String userId) async {
+    http.Response httpResponse = await ApiCaller.put(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.ADD_FRIEND, pathVariables: [userId]));
+    var response = AddFriendResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.error);
     }
   }
 
@@ -176,7 +235,7 @@ class UsersService {
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
 
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -197,7 +256,7 @@ class UsersService {
     var responseBody = utf8.decode(httpResponse.body.codeUnits);
     var response = GetFriendsResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     prefs.setString(key, responseBody);
@@ -220,7 +279,7 @@ class UsersService {
     var response =
         GetFriendsLeaderboardResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     prefs.setString(key, responseBody);
@@ -235,7 +294,7 @@ class UsersService {
     var response = ResolveFriendRequestResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -249,7 +308,7 @@ class UsersService {
     var response = ResolveFriendRequestResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -263,7 +322,7 @@ class UsersService {
     var response = SetNotificationsTokenResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
   }
 }

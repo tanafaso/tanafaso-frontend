@@ -231,7 +231,7 @@ class _DoReadingQuranChallengeScreenState
         await ServiceProvider.challengesService
             .finishReadingQuranChallenge(widget.challenge.id);
       } on ApiException catch (e) {
-        SnackBarUtils.showSnackBar(context, e.error);
+        SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
         return;
       }
       setState(() {

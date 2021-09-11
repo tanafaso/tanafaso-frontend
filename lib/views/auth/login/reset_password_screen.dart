@@ -242,7 +242,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       });
       SnackBarUtils.showSnackBar(
         context,
-        '${AppLocalizations.of(context).error}: ${e.error}',
+        '${AppLocalizations.of(context).error}: ${e.errorStatus.errorMessage}',
       );
       return;
     }

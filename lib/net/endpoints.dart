@@ -15,8 +15,12 @@ enum EndpointRoute {
   GET_USER_BY_ID,
   GET_USER_BY_USERNAME,
   GET_USER_BY_FACEBOOK_USER_ID,
+  GET_PUBLICLY_AVAILABLE_USERS,
+  DELETE_FROM_PUBLICLY_AVAILABLE_USERS,
+  ADD_TO_PUBLICLY_AVAILABLE_MALES,
+  ADD_TO_PUBLICLY_AVAILABLE_FEMALES,
   SET_NOTIFICATIONS_TOKEN,
-  ADD_FRIEND_BY_USERNAME,
+  ADD_FRIEND,
   DELETE_FRIEND,
   GET_FRIENDS,
   GET_FRIENDS_LEADERBOARD,
@@ -97,9 +101,19 @@ class ApiRoutesUtil {
         assert(route.requestParams.length == 1);
         assert(route.requestParams.keys.first == 'facebook_user_id');
         return '/users/search';
+      case EndpointRoute.GET_PUBLICLY_AVAILABLE_USERS:
+        return '/users/publicly_available_users';
+      case EndpointRoute.ADD_TO_PUBLICLY_AVAILABLE_MALES:
+        return '/users/publicly_available_males';
+      case EndpointRoute.ADD_TO_PUBLICLY_AVAILABLE_FEMALES:
+        return '/users/publicly_available_females';
+      case EndpointRoute.GET_PUBLICLY_AVAILABLE_USERS:
+        return '/users/publicly_available_users';
+      case EndpointRoute.DELETE_FROM_PUBLICLY_AVAILABLE_USERS:
+        return '/users/publicly_available_users';
       case EndpointRoute.SET_NOTIFICATIONS_TOKEN:
         return '/users/notifications/token';
-      case EndpointRoute.ADD_FRIEND_BY_USERNAME:
+      case EndpointRoute.ADD_FRIEND:
         assert(route.pathVariables.length == 1);
         return '/friends/${route.pathVariables[0]}';
       case EndpointRoute.DELETE_FRIEND:
