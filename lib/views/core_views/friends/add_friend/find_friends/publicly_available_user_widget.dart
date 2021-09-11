@@ -1,22 +1,22 @@
-import 'package:azkar/models/user.dart';
+import 'package:azkar/models/publicly_available_user.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:flutter/material.dart';
 
-class InviteFacebookFriendWidget extends StatefulWidget {
-  final User facebookFriend;
+class PubliclyAvailableUserWidget extends StatefulWidget {
+  final PubliclyAvailableUser publiclyAvailableUser;
 
-  InviteFacebookFriendWidget({@required this.facebookFriend});
+  PubliclyAvailableUserWidget({@required this.publiclyAvailableUser});
 
   @override
-  _InviteFacebookFriendWidgetState createState() =>
-      _InviteFacebookFriendWidgetState();
+  _PubliclyAvailableUserWidgetState createState() =>
+      _PubliclyAvailableUserWidgetState();
 }
 
-class _InviteFacebookFriendWidgetState
-    extends State<InviteFacebookFriendWidget> {
+class _PubliclyAvailableUserWidgetState
+    extends State<PubliclyAvailableUserWidget> {
   bool invited = false;
 
   @override
@@ -33,7 +33,7 @@ class _InviteFacebookFriendWidgetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${widget.facebookFriend.firstName} ${widget.facebookFriend.lastName}',
+                    '${widget.publiclyAvailableUser.firstName} ${widget.publiclyAvailableUser.lastName}',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   )
                 ],
@@ -65,7 +65,7 @@ class _InviteFacebookFriendWidgetState
   void onInvitePressed() async {
     try {
       await ServiceProvider.usersService
-          .addFriendWithUsername(widget.facebookFriend.username);
+          .addFriendWithId(widget.publiclyAvailableUser.userId);
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(
         context,
@@ -76,7 +76,7 @@ class _InviteFacebookFriendWidgetState
 
     SnackBarUtils.showSnackBar(
       context,
-      '${AppLocalizations.of(context).anInvitationHasBeenSentTo} ${widget.facebookFriend.firstName} ${widget.facebookFriend.lastName}',
+      '${AppLocalizations.of(context).anInvitationHasBeenSentTo} ${widget.publiclyAvailableUser.firstName} ${widget.publiclyAvailableUser.lastName}',
       color: Colors.green.shade400,
     );
 

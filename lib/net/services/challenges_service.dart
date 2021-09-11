@@ -34,7 +34,7 @@ class ChallengesService {
     var response = AddAzkarChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -49,7 +49,7 @@ class ChallengesService {
     var response = AddAzkarChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -64,7 +64,7 @@ class ChallengesService {
     var response = AddMeaningChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -80,7 +80,7 @@ class ChallengesService {
     var response = AddReadingQuranChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -95,7 +95,7 @@ class ChallengesService {
     var response = FinishMeaningChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -110,7 +110,7 @@ class ChallengesService {
     var response = FinishReadingQuranChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -130,7 +130,7 @@ class ChallengesService {
     String responseBody = utf8.decode(httpResponse.body.codeUnits);
     var response = GetChallengesResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     prefs.setString(key, responseBody);
@@ -145,7 +145,7 @@ class ChallengesService {
     var response = GetAzkarChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
     return response.challenge;
   }
@@ -158,7 +158,7 @@ class ChallengesService {
     var response = DeleteChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -178,7 +178,7 @@ class ChallengesService {
     var response = GetAzkarChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
     prefs.setString(key, json.encode(response.challenge.toJson()));
     return response.challenge;
@@ -195,7 +195,7 @@ class ChallengesService {
     var response = UpdateAzkarChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();

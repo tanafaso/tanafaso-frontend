@@ -74,7 +74,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       }
       _binary = _challengedUsersIds.length == 1;
     } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(context, e.error);
+      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
     }
   }
 
@@ -238,7 +238,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                 } on ApiException catch (e) {
                   SnackBarUtils.showSnackBar(
                     context,
-                    '${AppLocalizations.of(context).error}: ${e.error}',
+                    '${AppLocalizations.of(context).error}: ${e.errorStatus.errorMessage}',
                   );
                   return;
                 }
@@ -344,8 +344,8 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       challenge = await ServiceProvider.challengesService
           .getAzkarChallenge(widget.challenge.getId());
     } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(
-          context, '${AppLocalizations.of(context).error}: ${e.error}');
+      SnackBarUtils.showSnackBar(context,
+          '${AppLocalizations.of(context).error}: ${e.errorStatus.errorMessage}');
     }
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => DoAzkarChallengeScreen(
@@ -410,7 +410,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(
         context,
-        '${AppLocalizations.of(context).error}: ${e.error}',
+        '${AppLocalizations.of(context).error}: ${e.errorStatus.errorMessage}',
       );
       return;
     }

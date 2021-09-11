@@ -14,7 +14,7 @@ class CategoriesService {
     var response = GetCategoriesResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
     return response;
   }

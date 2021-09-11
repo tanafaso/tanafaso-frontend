@@ -288,7 +288,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
           await ServiceProvider.challengesService
               .finishMeaningChallenge(widget.challenge.id);
         } on ApiException catch (e) {
-          SnackBarUtils.showSnackBar(context, e.error);
+          SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
           return;
         }
       }

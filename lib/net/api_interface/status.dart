@@ -59,6 +59,8 @@ class Status {
   static const int TAFSEER_CHALLENGE_INCORRECT_NUMBER_OF_WORDS_ERROR = 52;
   static const int CANNOT_REMOVE_SABEQ__FROM_FRIENDS_ERROR = 53;
   static const int STARTING_VERSE_AFTER_ENDING_VERSE_ERROR = 54;
+  static const int USER_NOT_ADDED_TO_PUBLICLY_AVAILABLE_USERS_ERROR = 55;
+  static const int USER_ALREADY_IS_PUBLICLY_AVAILABLE_USER_ERROR = 56;
 
   static Map<int, String> conversions = const {
     API_USER_ALREADY_LOGGED_IN_ERROR: "لقد قمت بتسجيل الدخول بالفعل",
@@ -129,6 +131,10 @@ class Status {
     CANNOT_REMOVE_SABEQ__FROM_FRIENDS_ERROR: "لا يمكن إزالة سابق من الأصدقاء",
     STARTING_VERSE_AFTER_ENDING_VERSE_ERROR:
         "لا يمكن أن يكون رقم آية البداية أكبر من رقم آية النهاية",
+    USER_NOT_ADDED_TO_PUBLICLY_AVAILABLE_USERS_ERROR:
+        "يجب أن توافق أولاً على إضافتك إلى القائمة التي يراها الآخرون",
+    USER_ALREADY_IS_PUBLICLY_AVAILABLE_USER_ERROR:
+        "تمت إضافتك بالفعل إلى القائمة التي يراها الآخرون",
   };
 
   Status(int errorCode) {

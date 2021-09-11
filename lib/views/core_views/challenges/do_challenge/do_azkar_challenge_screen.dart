@@ -209,7 +209,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen> {
       await ServiceProvider.challengesService
           .updateAzkarChallenge(widget.challenge);
     } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(context, e.error);
+      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
     }
   }
 

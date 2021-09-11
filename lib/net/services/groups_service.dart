@@ -21,7 +21,7 @@ class GroupsService {
     var response = GetGroupResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
     return response.group;
   }
@@ -40,7 +40,7 @@ class GroupsService {
     var responseBody = utf8.decode(httpResponse.body.codeUnits);
     var response = GetGroupsResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
 
     prefs.setString(key, responseBody);
@@ -55,7 +55,7 @@ class GroupsService {
     var response = GetGroupLeaderboardResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
     return response.userScores;
   }

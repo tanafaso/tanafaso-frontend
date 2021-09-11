@@ -350,7 +350,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
     try {
       await ServiceProvider.authenticationService.loginWithFacebook();
     } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(context, e.error);
+      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
       return;
     }
 

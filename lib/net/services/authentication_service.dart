@@ -75,7 +75,7 @@ class AuthenticationService {
       await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
     }
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
   }
 
@@ -119,7 +119,7 @@ class AuthenticationService {
         FacebookAuthenticationResponse.fromJson(
             jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
   }
 
@@ -163,7 +163,7 @@ class AuthenticationService {
     var response = EmailRegistrationResponse.fromJson(
         jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
   }
 
@@ -188,14 +188,14 @@ class AuthenticationService {
       throw ApiException.withDefaultError();
     }
 
-    var emailLoginResponse = EmailLoginResponse.fromJson(
+    var response = EmailLoginResponse.fromJson(
         jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
 
-    if (!emailLoginResponse.hasError()) {
+    if (!response.hasError()) {
       final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
       await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
     } else {
-      throw new ApiException(emailLoginResponse.getErrorMessage());
+      throw new ApiException(response.error);
     }
   }
 
@@ -209,7 +209,7 @@ class AuthenticationService {
     var response = ResetPasswordResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.getErrorMessage());
+      throw new ApiException(response.error);
     }
   }
 }
