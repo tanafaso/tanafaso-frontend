@@ -447,7 +447,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
         progressButtonState = ButtonState.success;
       });
     } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(context, e.error);
+      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
       setState(() {
         progressButtonState = ButtonState.fail;
       });

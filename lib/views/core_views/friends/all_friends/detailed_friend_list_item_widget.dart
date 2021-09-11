@@ -221,7 +221,8 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                   await ServiceProvider.usersService
                       .deleteFriend(friendshipScores.friend.userId);
                 } on ApiException catch (e) {
-                  SnackBarUtils.showSnackBar(context, e.error);
+                  SnackBarUtils.showSnackBar(
+                      context, e.errorStatus.errorMessage);
                 }
                 Navigator.of(context).pop(/*deleted=*/ true);
               },

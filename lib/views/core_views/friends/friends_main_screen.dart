@@ -78,7 +78,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
       _pendingFriends =
           friendship.friends.where((friend) => friend.pending).toList();
     } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(context, e.error);
+      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
     }
   }
 
@@ -301,7 +301,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                     } on ApiException catch (e) {
                       SnackBarUtils.showSnackBar(
                         context,
-                        '${AppLocalizations.of(context).error}: ${e.error}',
+                        '${AppLocalizations.of(context).error}: ${e.errorStatus.errorMessage}',
                       );
                       return;
                     }

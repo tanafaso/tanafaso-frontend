@@ -7,7 +7,7 @@ class SnapshotUtils {
       BuildContext context, AsyncSnapshot<Object> snapshot) {
     String error;
     if (snapshot.error is ApiException) {
-      error = (snapshot.error as ApiException).error;
+      error = (snapshot.error as ApiException).errorStatus.errorMessage;
     } else {
       error = Status.getDefaultApiErrorStatus().errorMessage;
     }
