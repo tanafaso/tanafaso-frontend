@@ -24,6 +24,10 @@ class AuthenticationService {
   // Returns true if authentication was successful.
   Future<void> loginWithFacebook() async {
     final _facebookLogin = FacebookLogin();
+    try {
+      await _facebookLogin.logOut();
+    } on Exception catch (_) {}
+
     _facebookLogin.loginBehavior = FacebookLoginBehavior.nativeWithFallback;
 
     final facebookGraphApiResponse =
