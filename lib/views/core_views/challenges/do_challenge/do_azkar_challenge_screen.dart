@@ -43,13 +43,16 @@ class DoAzkarChallengeScreen extends StatefulWidget {
   _DoAzkarChallengeScreenState createState() => _DoAzkarChallengeScreenState();
 }
 
-class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen> {
+class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
+    with WidgetsBindingObserver {
   ConfettiController confettiControler;
   bool _finishedConfetti;
 
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
     _finishedConfetti = false;
     setState(() {
       initConfettiController();
@@ -221,9 +224,23 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen> {
   }
 
   @override
+  void deactivate() {
+    updateAzkarChallenge();
+    super.deactivate();
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     updateAzkarChallenge();
     confettiControler.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    updateAzkarChallenge();
   }
 }
