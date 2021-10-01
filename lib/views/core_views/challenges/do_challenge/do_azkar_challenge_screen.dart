@@ -154,6 +154,14 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
   }
 
   Widget getSubChallenges() {
+    int index = 0;
+    List<SubChallenge> finishedSubChallenges = widget.challenge.subChallenges
+        .where((subChallenge) => subChallenge.done())
+        .toList();
+    widget.challenge.subChallenges
+        .removeWhere((subChallenge) => subChallenge.done());
+    widget.challenge.subChallenges.addAll(finishedSubChallenges);
+
     return ListView.separated(
       padding: EdgeInsets.all(4),
       shrinkWrap: true,
@@ -164,11 +172,18 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
           Padding(padding: EdgeInsets.only(bottom: 4)),
       itemBuilder: (context, index) {
         return DoAzkarChallengeListItemWidget(
+          key: UniqueKey(),
           subChallenge: widget.challenge.subChallenges[index],
           challenge: widget.challenge,
           firstItemInList: index == 0,
           callback: (SubChallenge newSubChallenge) async {
             widget.challenge.subChallenges[index] = newSubChallenge;
+            if (newSubChallenge.done()) {
+              setState(() {
+                widget.challenge.subChallenges.add(newSubChallenge);
+                widget.challenge.subChallenges.removeAt(index);
+              });
+            }
 
             widget.challengeChangedCallback(widget.challenge);
             if (widget.challenge.done()) {

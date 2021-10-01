@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:flutter/material.dart';
 
@@ -30,29 +29,43 @@ class SummaryFriendListItemWidget extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
                   flex: 5,
-                  child: AutoSizeText(
-                    '${friendshipScore.firstName} ${friendshipScore.lastName}',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      '${friendshipScore.firstName} ${friendshipScore.lastName}',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
+                      maxLines: 1,
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      AutoSizeText(
-                        (friendshipScore.userTotalScore -
-                                friendshipScore.friendTotalScore)
-                            .abs()
-                            .toString(),
-                        style: TextStyle(color: getColor(), fontSize: 25),
+                      Expanded(
+                        child: FittedBox(
+                          alignment: Alignment.centerLeft,
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            (friendshipScore.userTotalScore -
+                                    friendshipScore.friendTotalScore)
+                                .abs()
+                                .toString(),
+                            style: TextStyle(color: getColor(), fontSize: 25),
+                            maxLines: 1,
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
                       ),
                       Padding(padding: EdgeInsets.only(right: 8)),
                       getArrowIcon(),
