@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -94,10 +93,13 @@ class DoChallengeUtils {
       child: Row(
         children: [
           Expanded(
-            child: AutoSizeText(
-              "لا شكرا",
-              maxLines: 1,
-              style: TextStyle(fontSize: 25),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "لا شكرا",
+                maxLines: 1,
+                style: TextStyle(fontSize: 25),
+              ),
             ),
           ),
         ],
@@ -111,10 +113,13 @@ class DoChallengeUtils {
       child: Row(
         children: [
           Expanded(
-            child: AutoSizeText(
-              "قيم التطبيق",
-              maxLines: 1,
-              style: TextStyle(fontSize: 25),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "قيم التطبيق",
+                maxLines: 1,
+                style: TextStyle(fontSize: 25),
+              ),
             ),
           ),
         ],
@@ -127,18 +132,23 @@ class DoChallengeUtils {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: AutoSizeText(
-        "تقييم التطبيق",
-        maxLines: 1,
-        style: TextStyle(fontSize: 35),
+      title: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          "تقييم التطبيق",
+          maxLines: 1,
+          style: TextStyle(fontSize: 35),
+        ),
       ),
       content: Expanded(
         child: Row(
           children: [
-            AutoSizeText(
-              "هل يمكنك تقييم التطبيق إذا كنت تعتقد أنه مفيد؟ 😊",
-              maxLines: 1,
-              style: TextStyle(fontSize: 25),
+            Expanded(
+              child: Text(
+                "هل يمكنك تقييم التطبيق إذا كنت تعتقد أنه مفيد؟ 😊",
+                style: TextStyle(fontSize: 25),
+                maxLines: 3,
+              ),
             ),
           ],
         ),
