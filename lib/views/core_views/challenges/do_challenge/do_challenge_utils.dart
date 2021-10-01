@@ -140,18 +140,16 @@ class DoChallengeUtils {
           style: TextStyle(fontSize: 35),
         ),
       ),
-      content: Expanded(
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                "هل يمكنك تقييم التطبيق إذا كنت تعتقد أنه مفيد؟ 😊",
-                style: TextStyle(fontSize: 25),
-                maxLines: 3,
-              ),
+      content: Row(
+        children: [
+          Expanded(
+            child: Text(
+              "هل يمكنك تقييم التطبيق إذا كنت تعتقد أنه مفيد؟ 😊",
+              style: TextStyle(fontSize: 20),
+              maxLines: 4,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       actions: [
         cancelButton,
