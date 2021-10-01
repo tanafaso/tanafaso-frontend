@@ -42,50 +42,34 @@ class _FriendWidgetState extends State<FriendWidget>
           color: _selected ? Colors.green.shade300 : Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: IntrinsicHeight(
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.person),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.person,
+                    size: 30,
                   ),
-                  VerticalDivider(
-                    width: 3,
-                    color: Colors.black,
+                ),
+                VerticalDivider(
+                  width: 3,
+                  thickness: 3,
+                  color: Colors.black,
+                ),
+                Padding(padding: EdgeInsets.only(left: 8)),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      widget.friend.firstName + " " + widget.friend.lastName,
+                      textAlign: TextAlign.start,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                      maxLines: 1,
+                    ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              widget.friend.firstName +
-                                  " " +
-                                  widget.friend.lastName,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Padding(padding: EdgeInsets.only(bottom: 8)),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              widget.friend.username,
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

@@ -45,9 +45,13 @@ class Challenge {
   }
 
   Map<String, dynamic> toJson() => {
-        "azkarChallenge": azkarChallenge.toJson(),
-        "meaningChallenge": meaningChallenge.toJson(),
-        "readingQuranChallenge": readingQuranChallenge.toJson(),
+        "azkarChallenge":
+            azkarChallenge == null ? null : azkarChallenge.toJson(),
+        "meaningChallenge":
+            meaningChallenge == null ? null : meaningChallenge.toJson(),
+        "readingQuranChallenge": readingQuranChallenge == null
+            ? null
+            : readingQuranChallenge.toJson(),
       };
 
   String getId() {

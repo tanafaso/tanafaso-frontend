@@ -1,8 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/models/friendship.dart';
-import 'package:azkar/models/friendship_scores.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/services/service_provider.dart';
@@ -31,7 +30,7 @@ class ChallengeListItemWidget extends StatefulWidget {
   final bool showName;
   final ChallengeChangedCallback challengeChangedCallback;
   final bool firstChallengeInList;
-  final List<FriendshipScores> friendshipScores;
+  final List<Friend> friendshipScores;
 
   ChallengeListItemWidget({
     Key key,
@@ -114,95 +113,97 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Visibility(
-      visible: !_deleted,
-      maintainSize: false,
-      maintainState: false,
-      child: FutureBuilder(
-          future: _neededData,
-          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return RawMaterialButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                padding: EdgeInsets.all(4),
-                onPressed: () => onChallengePressed(),
-                elevation: 3.0,
-                fillColor: Colors.white,
-                child: !_showCloneAndDeleteFeatureDiscovery
-                    ? getMainWidget()
-                    : DescribedFeatureOverlay(
-                        featureId: Features.CLONE_AND_DELETE,
-                        overflowMode: OverflowMode.wrapBackground,
-                        contentLocation: ContentLocation.below,
-                        barrierDismissible: false,
-                        backgroundDismissible: false,
-                        tapTarget: SlideTransition(
-                            position: _offsetAnimation,
-                            child: Icon(Icons.double_arrow)),
-                        // The widget that will be displayed as the tap target.
-                        title: Center(
-                          child: Row(
+    return SafeArea(
+      child: Visibility(
+        visible: !_deleted,
+        maintainSize: false,
+        maintainState: false,
+        child: FutureBuilder(
+            future: _neededData,
+            builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return RawMaterialButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  padding: EdgeInsets.all(4),
+                  onPressed: () => onChallengePressed(),
+                  elevation: 3.0,
+                  fillColor: Colors.white,
+                  child: !_showCloneAndDeleteFeatureDiscovery
+                      ? getMainWidget()
+                      : DescribedFeatureOverlay(
+                          featureId: Features.CLONE_AND_DELETE,
+                          overflowMode: OverflowMode.wrapBackground,
+                          contentLocation: ContentLocation.below,
+                          barrierDismissible: false,
+                          backgroundDismissible: false,
+                          tapTarget: SlideTransition(
+                              position: _offsetAnimation,
+                              child: Icon(Icons.double_arrow)),
+                          // The widget that will be displayed as the tap target.
+                          title: Center(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Padding(
+                                  padding: EdgeInsets.all(0),
+                                )),
+                                Text(
+                                  AppLocalizations.of(context)
+                                      .deleteAndCopyChallenge,
+                                  softWrap: true,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                          description: Row(
                             children: [
                               Expanded(
                                   child: Padding(
                                 padding: EdgeInsets.all(0),
                               )),
-                              Text(
-                                AppLocalizations.of(context)
-                                    .deleteAndCopyChallenge,
-                                softWrap: true,
-                                textAlign: TextAlign.center,
+                              Container(
+                                alignment: Alignment.centerRight,
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                      .swipeTheChallengeCardToTheRightToDeleteOrCopyAChallenge,
+                                  softWrap: true,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ],
                           ),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          targetColor: Colors.white,
+                          textColor: Colors.black,
+                          child: getMainWidget(),
                         ),
-                        description: Row(
-                          children: [
-                            Expanded(
-                                child: Padding(
-                              padding: EdgeInsets.all(0),
-                            )),
-                            Container(
-                              alignment: Alignment.centerRight,
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: Text(
-                                AppLocalizations.of(context)
-                                    .swipeTheChallengeCardToTheRightToDeleteOrCopyAChallenge,
-                                softWrap: true,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        ),
-                        backgroundColor: Theme.of(context).primaryColor,
-                        targetColor: Colors.white,
-                        textColor: Colors.black,
-                        child: getMainWidget(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.error_outline,
+                        color: Colors.red,
+                        size: 60,
                       ),
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.error_outline,
-                      color: Colors.red,
-                      size: 60,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: SnapshotUtils.getErrorWidget(context, snapshot),
-                    )
-                  ],
-                ),
-              );
-            } else {
-              return ChallengeListItemLoadingWidget();
-            }
-          }),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: SnapshotUtils.getErrorWidget(context, snapshot),
+                      )
+                    ],
+                  ),
+                );
+              } else {
+                return ChallengeListItemLoadingWidget();
+              }
+            }),
+      ),
     );
   }
 
@@ -259,81 +260,91 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
           ),
         ),
       ],
-      child: IntrinsicHeight(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Padding(padding: EdgeInsets.only(right: 8)),
-                getIcon(),
-                Padding(padding: EdgeInsets.only(right: 8)),
-                Text(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Padding(padding: EdgeInsets.only(right: 8)),
+              getIcon(),
+              Padding(padding: EdgeInsets.only(right: 16)),
+              Expanded(
+                child: AutoSizeText(
                   widget.challenge.getName(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                  minFontSize: 35,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                Expanded(
-                  child: Container(),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (_) {
-                          return FriendsProgressWidget(
-                            challenge: widget.challenge,
-                            challengedUsersIds: _challengedUsersIds,
-                            challengedUsersFullNames: _challengedUsersFullNames,
-                            fontSize: 20,
-                            iconSize: 25,
-                          );
-                        });
-                  },
-                  child: Icon(
-                    Icons.whatshot,
-                    color: Colors.green,
-                    size: 30,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 8),
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [],
-                  ),
-                  Visibility(
-                    visible: widget.challenge.challengeType ==
-                            ChallengeType.AZKAR &&
-                        (widget.challenge?.azkarChallenge?.motivation?.length ??
-                                0) !=
-                            0,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 2 / 3,
-                      child: Text(
-                        widget.challenge.azkarChallenge?.motivation ?? "",
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: false,
-                      ),
-                    ),
-                  ),
-                  getDeadlineText(context),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 3 / 4,
-                    child: getFriendsNames(),
-                  ),
-                ],
               ),
-            ),
-          ],
-        ),
+              Padding(padding: EdgeInsets.only(right: 8)),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0, top: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [],
+                      ),
+                      Visibility(
+                        visible: widget.challenge.challengeType ==
+                                ChallengeType.AZKAR &&
+                            (widget.challenge?.azkarChallenge?.motivation
+                                        ?.length ??
+                                    0) !=
+                                0,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 2 / 3,
+                          child: AutoSizeText(
+                            widget.challenge.azkarChallenge?.motivation ?? "",
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            maxLines: 2,
+                            style: TextStyle(fontSize: 25),
+                            minFontSize: 25,
+                          ),
+                        ),
+                      ),
+                      getDeadlineText(context),
+                      // getFriendsNames(),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 16),
+              ),
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (_) {
+                        return FriendsProgressWidget(
+                          challenge: widget.challenge,
+                          challengedUsersIds: _challengedUsersIds,
+                          challengedUsersFullNames: _challengedUsersFullNames,
+                          fontSize: 40,
+                          iconSize: 45,
+                        );
+                      });
+                },
+                child: Icon(
+                  Icons.group_sharp,
+                  color: Colors.green,
+                  size: 45,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 8),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -414,8 +425,9 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       );
       return;
     }
-    Friendship friends = await ServiceProvider.usersService.getFriends();
-    List<Friend> currentChallengeFriends = friends.friends
+    List<Friend> friends =
+        await ServiceProvider.usersService.getFriendsLeaderboard();
+    List<Friend> currentChallengeFriends = friends
         .where((friend) => _challengedUsersIds.contains(friend.userId))
         .toList();
     Navigator.push(
@@ -431,8 +443,9 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
   }
 
   void onCopyMeaningChallenge() async {
-    Friendship friends = await ServiceProvider.usersService.getFriends();
-    List<Friend> currentChallengeFriends = friends.friends
+    List<Friend> friends =
+        await ServiceProvider.usersService.getFriendsLeaderboard();
+    List<Friend> currentChallengeFriends = friends
         .where((friend) => _challengedUsersIds.contains(friend.userId))
         .toList();
     Navigator.push(
@@ -444,8 +457,9 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
   }
 
   void onCopyReadingChallenge() async {
-    Friendship friends = await ServiceProvider.usersService.getFriends();
-    List<Friend> currentChallengeFriends = friends.friends
+    List<Friend> friends =
+        await ServiceProvider.usersService.getFriendsLeaderboard();
+    List<Friend> currentChallengeFriends = friends
         .where((friend) => _challengedUsersIds.contains(friend.userId))
         .toList();
     Navigator.push(
@@ -509,22 +523,25 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
           : '${friendsFullNamesCopy[0]} ،${friendsFullNamesCopy[1]} ${AppLocalizations.of(context).and} ${ArabicUtils.englishToArabic((friendsFullNamesCopy.length - 2).toString())} $otherOrOthers';
     }
 
-    return RichText(
-        overflow: TextOverflow.ellipsis,
-        text: TextSpan(
-          style: TextStyle(
-            color: Colors.black,
+    return AutoSizeText.rich(
+      TextSpan(
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 25,
+        ),
+        children: <TextSpan>[
+          new TextSpan(
+              text: "مع ",
+              style: new TextStyle(
+                  color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
+          new TextSpan(
+            text: text,
           ),
-          children: <TextSpan>[
-            new TextSpan(
-                text: "تنافس مع ",
-                style: new TextStyle(
-                    color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
-            new TextSpan(
-              text: text,
-            ),
-          ],
-        ));
+        ],
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
   }
 
   Widget getIcon() {
@@ -532,20 +549,20 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       return Icon(
         Icons.done_outline,
         color: Colors.green,
-        size: 25,
+        size: 35,
       );
     }
     if (widget.challenge.deadlinePassed()) {
       return Icon(
         Icons.error_outline,
         color: Colors.red,
-        size: 25,
+        size: 35,
       );
     }
     return Icon(
       Icons.not_started,
       color: Colors.yellow,
-      size: 25,
+      size: 35,
     );
   }
 
@@ -554,7 +571,10 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       return Text(
         "انتهى التحدي",
         style: new TextStyle(
-            color: Colors.grey.shade700, fontWeight: FontWeight.bold),
+          color: Colors.grey.shade700,
+          fontWeight: FontWeight.bold,
+          fontSize: 25,
+        ),
       );
     }
     int hoursLeft = widget.challenge.hoursLeft();
@@ -565,6 +585,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
             text: TextSpan(
           style: TextStyle(
             color: Colors.black,
+            fontSize: 25,
           ),
           children: <TextSpan>[
             new TextSpan(
@@ -584,6 +605,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
           text: TextSpan(
         style: TextStyle(
           color: Colors.black,
+          fontSize: 25,
         ),
         children: <TextSpan>[
           new TextSpan(
@@ -603,6 +625,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
         text: TextSpan(
       style: TextStyle(
         color: Colors.black,
+        fontSize: 25,
       ),
       children: <TextSpan>[
         new TextSpan(

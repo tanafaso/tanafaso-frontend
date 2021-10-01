@@ -1,5 +1,4 @@
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/models/friendship.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/friend_widget.dart';
@@ -7,9 +6,9 @@ import 'package:azkar/views/core_views/friends/all_friends/how_to_add_friends_sc
 import 'package:flutter/material.dart';
 
 class SelectFriendsScreen extends StatefulWidget {
-  final Friendship friendship;
+  final List<Friend> friends;
 
-  SelectFriendsScreen({@required this.friendship});
+  SelectFriendsScreen({@required this.friends});
 
   @override
   _SelectFriendsScreenState createState() => _SelectFriendsScreenState();
@@ -28,7 +27,11 @@ class _SelectFriendsScreenState extends State<SelectFriendsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).selectFriends),
+        title: FittedBox(
+            child: Text(
+          AppLocalizations.of(context).selectFriends,
+          style: TextStyle(fontSize: 30),
+        )),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -38,7 +41,7 @@ class _SelectFriendsScreenState extends State<SelectFriendsScreen> {
                 child: Container(
                     child: getFriendsList(
                         context,
-                        widget.friendship?.friends
+                        widget.friends
                                 ?.where((friend) => !friend.pending)
                                 ?.toList() ??
                             []))),
@@ -51,14 +54,16 @@ class _SelectFriendsScreenState extends State<SelectFriendsScreen> {
                   child: FlatButton(
                     onPressed: () => onCreatePressed(),
                     child: Center(
-                        child: Text(
-                      readyToFinish()
-                          ? AppLocalizations.of(context).add
-                          : AppLocalizations.of(context).addNotReady,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
+                        child: FittedBox(
+                      child: Text(
+                        readyToFinish()
+                            ? AppLocalizations.of(context).add
+                            : AppLocalizations.of(context).addNotReady,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold),
+                      ),
                     )),
                   ),
                 ),
@@ -95,9 +100,11 @@ class _SelectFriendsScreenState extends State<SelectFriendsScreen> {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            AppLocalizations.of(context).noFriendsFound,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          FittedBox(
+            child: Text(
+              AppLocalizations.of(context).noFriendsFound,
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
           ),
           GestureDetector(
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
@@ -105,9 +112,11 @@ class _SelectFriendsScreenState extends State<SelectFriendsScreen> {
             child: Card(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  AppLocalizations.of(context).howToAddNewFriendsQuestion,
-                  style: TextStyle(fontSize: 20),
+                child: FittedBox(
+                  child: Text(
+                    AppLocalizations.of(context).howToAddNewFriendsQuestion,
+                    style: TextStyle(fontSize: 25),
+                  ),
                 ),
               ),
             ),

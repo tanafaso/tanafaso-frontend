@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/reading_quran_challenge.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_surahs/select_surah_screen.dart';
@@ -55,7 +56,10 @@ class _SelectedSurahsWidgetState extends State<SelectedSurahsWidget>
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Icon(Icons.list),
+                  child: Icon(
+                    Icons.list,
+                    size: 25,
+                  ),
                 ),
                 getTitle(),
               ],
@@ -111,9 +115,9 @@ class _SelectedSurahsWidgetState extends State<SelectedSurahsWidget>
       text = "السور المختارة";
       color = Colors.black;
     }
-    return Text(
+    return AutoSizeText(
       text,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: color),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: color),
     );
   }
 
@@ -130,42 +134,46 @@ class _SelectedSurahsWidgetState extends State<SelectedSurahsWidget>
           itemBuilder: (context, index) {
             return Row(
               children: [
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    style: TextStyle(
-                      color: Colors.grey.shade700,
-                    ),
-                    children: [
-                      TextSpan(
-                          text: _selectedSurahs[index].surahName,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black)),
-                      TextSpan(text: ' من الآية رقم '),
-                      TextSpan(
-                          text: ArabicUtils.englishToArabic(
-                              _selectedSurahs[index]
-                                  .startingVerseNumber
-                                  .toString()),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black)),
-                      TextSpan(
-                        text: ' إلى الآية رقم ',
+                Expanded(
+                  child: AutoSizeText.rich(
+                    TextSpan(
+                      style: TextStyle(
+                        color: Colors.grey.shade700,
+                        fontSize: 20,
                       ),
-                      TextSpan(
-                          text: ArabicUtils.englishToArabic(
-                              _selectedSurahs[index]
-                                  .endingVerseNumber
-                                  .toString()),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black)),
-                    ],
+                      children: [
+                        TextSpan(
+                            text: _selectedSurahs[index].surahName,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black)),
+                        TextSpan(text: ' من الآية رقم '),
+                        TextSpan(
+                            text: ArabicUtils.englishToArabic(
+                                _selectedSurahs[index]
+                                    .startingVerseNumber
+                                    .toString()),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black)),
+                        TextSpan(
+                          text: ' إلى الآية رقم ',
+                        ),
+                        TextSpan(
+                            text: ArabicUtils.englishToArabic(
+                                _selectedSurahs[index]
+                                    .endingVerseNumber
+                                    .toString()),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black)),
+                      ],
+                    ),
+                    minFontSize: 5,
+                    maxLines: 1,
                   ),
                 ),
-                Expanded(child: Container()),
+                Padding(padding: EdgeInsets.only(left: 8)),
                 GestureDetector(
                   onTap: () {
                     setState(() {

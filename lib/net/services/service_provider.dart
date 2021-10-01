@@ -3,6 +3,7 @@ import 'package:azkar/net/services/authentication_service.dart';
 import 'package:azkar/net/services/categories_service.dart';
 import 'package:azkar/net/services/challenges_service.dart';
 import 'package:azkar/net/services/groups_service.dart';
+import 'package:azkar/net/services/home_service.dart';
 import 'package:azkar/net/services/secure_storage_service.dart';
 import 'package:azkar/net/services/users_service.dart';
 import 'package:http/http.dart' as http;
@@ -11,6 +12,7 @@ import 'package:http/http.dart' as http;
 /// point to services used by widgets. That is to make mocking these services in
 /// tests as easy as setting the service instance to the mock instance.
 class ServiceProvider {
+  static HomeService homeService = HomeService();
   static AuthenticationService authenticationService = AuthenticationService();
   static ChallengesService challengesService = ChallengesService();
   static UsersService usersService = UsersService();

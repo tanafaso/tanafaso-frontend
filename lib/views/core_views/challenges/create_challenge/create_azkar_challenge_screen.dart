@@ -106,7 +106,11 @@ class _CreateAzkarChallengeScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("قراءة أذكار"),
+        title: FittedBox(
+            child: Text(
+          "قراءة أذكار",
+          style: TextStyle(fontSize: 30),
+        )),
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -150,14 +154,18 @@ class _CreateAzkarChallengeScreenState
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Icon(
-                                            Icons.drive_file_rename_outline),
+                                          Icons.drive_file_rename_outline,
+                                          size: 25,
+                                        ),
                                       ),
-                                      Text(
-                                        AppLocalizations.of(context)
-                                            .challengeName,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17),
+                                      FittedBox(
+                                        child: Text(
+                                          AppLocalizations.of(context)
+                                              .challengeName,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 25),
+                                        ),
                                       ),
                                       Expanded(
                                           child: Padding(
@@ -171,6 +179,7 @@ class _CreateAzkarChallengeScreenState
                                           child: Icon(
                                             Icons.info_outline,
                                             color: Colors.grey,
+                                            size: 25,
                                           ),
                                         ),
                                       )
@@ -181,11 +190,7 @@ class _CreateAzkarChallengeScreenState
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextField(
-                                  maxLength: 25,
-                                  autofocus:
-                                      (widget.initiallyChosenName?.length ??
-                                              0) ==
-                                          0,
+                                  maxLength: 20,
                                   maxLines: 1,
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.center,
@@ -239,13 +244,18 @@ class _CreateAzkarChallengeScreenState
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Icon(Icons.date_range),
+                                  child: Icon(
+                                    Icons.date_range,
+                                    size: 25,
+                                  ),
                                 ),
-                                Text(
-                                  AppLocalizations.of(context).deadline,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17),
+                                FittedBox(
+                                  child: Text(
+                                    AppLocalizations.of(context).deadline,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25),
+                                  ),
                                 ),
                               ]),
                               Padding(
@@ -301,17 +311,22 @@ class _CreateAzkarChallengeScreenState
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     children: [
-                                      Icon(Icons.directions_run),
+                                      Icon(
+                                        Icons.directions_run,
+                                        size: 25,
+                                      ),
                                       Padding(
                                           padding: EdgeInsets.only(left: 8)),
                                       Row(
                                         children: [
-                                          Text(
-                                            AppLocalizations.of(context)
-                                                .theMotivationMessage,
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold),
+                                          FittedBox(
+                                            child: Text(
+                                              AppLocalizations.of(context)
+                                                  .theMotivationMessage,
+                                              style: TextStyle(
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
                                           Padding(
                                               padding:
@@ -328,6 +343,7 @@ class _CreateAzkarChallengeScreenState
                                         child: Icon(
                                           Icons.info_outline,
                                           color: Colors.grey,
+                                          size: 25,
                                         ),
                                       )
                                     ],

@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/models/challenge.dart';
-import 'package:azkar/models/friendship_scores.dart';
+import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
@@ -27,7 +28,7 @@ class DoAzkarChallengeScreen extends StatefulWidget {
   final List<String> challengedUsersIds;
   final List<String> challengedUsersFullNames;
 
-  final List<FriendshipScores> friendshipScores;
+  final List<Friend> friendshipScores;
 
   DoAzkarChallengeScreen({
     @required this.challenge,
@@ -64,7 +65,10 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.challenge.name),
+          title: AutoSizeText(
+            widget.challenge.name,
+            style: TextStyle(fontSize: 30),
+          ),
         ),
         body: Stack(
           children: [
@@ -105,10 +109,13 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               width: MediaQuery.of(context).size.width * 3 / 4,
-                              child: Text(
+                              child: AutoSizeText(
                                 widget.challenge.motivation,
                                 textAlign: TextAlign.center,
                                 softWrap: true,
+                                style: TextStyle(fontSize: 25),
+                                maxLines: 4,
+                                minFontSize: 18,
                               ),
                             ),
                           )

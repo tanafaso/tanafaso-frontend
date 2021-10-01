@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/reading_quran_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
@@ -48,7 +49,10 @@ class _CreateQuranReadingChallengeScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('قراءة قرآن'),
+        title: AutoSizeText(
+          'قراءة قرآن',
+          style: TextStyle(fontSize: 30),
+        ),
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -107,11 +111,11 @@ class _CreateQuranReadingChallengeScreenState
                                     padding: const EdgeInsets.all(8.0),
                                     child: Icon(Icons.date_range),
                                   ),
-                                  Text(
+                                  AutoSizeText(
                                     AppLocalizations.of(context).deadline,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 17),
+                                        fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -120,13 +124,11 @@ class _CreateQuranReadingChallengeScreenState
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    RichText(
-                                        text: TextSpan(
+                                    AutoSizeText.rich(TextSpan(
                                       // Note: Styles for TextSpans must be explicitly defined.
                                       // Child text spans will inherit styles from parent
                                       style: new TextStyle(
-                                        color: Colors.black,
-                                      ),
+                                          color: Colors.black, fontSize: 20),
                                       children: <TextSpan>[
                                         new TextSpan(
                                           text: 'التحدي ينتهي بعد',
@@ -136,7 +138,7 @@ class _CreateQuranReadingChallengeScreenState
                                                 '  ${ArabicUtils.englishToArabic(_expiresAfterHoursNum.toString())}  ',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 20,
+                                              fontSize: 25,
                                             )),
                                         new TextSpan(
                                           text: 'ساعات.',

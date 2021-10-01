@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/challenge.dart';
-import 'package:azkar/models/friendship_scores.dart';
+import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/meaning_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
@@ -25,7 +26,7 @@ class DoMeaningChallengeScreen extends StatefulWidget {
   final List<String> challengedUsersIds;
   final List<String> challengedUsersFullNames;
 
-  final List<FriendshipScores> friendshipScores;
+  final List<Friend> friendshipScores;
 
   DoMeaningChallengeScreen({
     @required this.challenge,
@@ -80,11 +81,9 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
     _words = [];
     _meanings = [];
     for (int i = 0; i < widget.challenge.words.length; i++) {
-      print(widget.challenge.words[i]);
       _words.add(TextIndex(text: widget.challenge.words[i], index: i));
     }
     for (int i = 0; i < widget.challenge.meanings.length; i++) {
-      print(widget.challenge.meanings[i]);
       _meanings.add(TextIndex(text: widget.challenge.meanings[i], index: i));
     }
     _words.shuffle();
@@ -105,7 +104,10 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.challenge.getName()),
+          title: AutoSizeText(
+            widget.challenge.getName(),
+            style: TextStyle(fontSize: 30),
+          ),
         ),
         body: Stack(
           children: [
@@ -145,10 +147,10 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
-                                Text('الكلمات',
+                                AutoSizeText('الكلمات',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 25,
+                                      fontSize: 35,
                                     )),
                                 Padding(
                                   padding: EdgeInsets.only(top: 8),
@@ -177,12 +179,12 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
-                                                child: Text(
+                                                child: AutoSizeText(
                                                   _words[index].text,
                                                   textAlign: TextAlign.center,
                                                   softWrap: true,
                                                   style:
-                                                      TextStyle(fontSize: 17),
+                                                      TextStyle(fontSize: 25),
                                                 ),
                                               )),
                                     );
@@ -206,11 +208,11 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
-                                Text(
+                                AutoSizeText(
                                   'المعاني',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 25,
+                                    fontSize: 35,
                                   ),
                                 ),
                                 Padding(
@@ -237,11 +239,11 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
-                                                child: Text(
+                                                child: AutoSizeText(
                                                   _meanings[index].text,
                                                   textAlign: TextAlign.center,
                                                   style:
-                                                      TextStyle(fontSize: 17),
+                                                      TextStyle(fontSize: 25),
                                                   softWrap: true,
                                                 ),
                                               )),
@@ -271,9 +273,6 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
   }
 
   void onMeaningPressed(int indexInList) async {
-    print(_meanings[indexInList].index.toString() +
-        " " +
-        _chosenWordIndex.toString());
     if (_shouldChooseWord) {
       SnackBarUtils.showSnackBar(
         context,

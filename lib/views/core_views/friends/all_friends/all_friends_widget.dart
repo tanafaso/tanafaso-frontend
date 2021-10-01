@@ -1,4 +1,4 @@
-import 'package:azkar/models/friendship_scores.dart';
+import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/views/core_views/friends/all_friends/friend_list_item_widget.dart';
 import 'package:azkar/views/core_views/friends/all_friends/no_friends_found_widget.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 typedef OnRefreshRequested = void Function();
 
 class AllFriendsWidget extends StatefulWidget {
-  final List<FriendshipScores> friendshipScores;
+  final List<Friend> friendshipScores;
   final OnRefreshRequested onRefreshRequested;
 
   AllFriendsWidget(

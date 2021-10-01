@@ -1,3 +1,4 @@
+import 'package:azkar/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -17,46 +18,64 @@ class ChallengeListItemLoadingWidget extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     Padding(padding: EdgeInsets.only(right: 8)),
-                    LineWidget(width: MediaQuery.of(context).size.width / 3),
+                    Icon(Icons.not_started),
+                    Padding(padding: EdgeInsets.only(right: 16)),
+                    LineWidget(
+                        width: MediaQuery.of(context).size.width * 1 / 3),
+                    Padding(padding: EdgeInsets.only(right: 8)),
+                  ],
+                ),
+                Row(
+                  children: [
                     Expanded(
-                      child: Container(),
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8.0, top: 8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [],
+                            ),
+                            RichText(
+                                text: TextSpan(
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 25,
+                              ),
+                              children: <TextSpan>[
+                                new TextSpan(
+                                    text:
+                                        AppLocalizations.of(context).endsAfter,
+                                    style: new TextStyle(
+                                        color: Colors.grey.shade700,
+                                        fontWeight: FontWeight.bold)),
+                                new TextSpan(
+                                  text: ' ... ',
+                                ),
+                              ],
+                            )),
+                            // getFriendsNames(),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 16),
                     ),
                     Icon(
-                      Icons.whatshot,
+                      Icons.group_sharp,
                       color: Colors.green,
-                      size: 20,
+                      size: 45,
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 8),
-                    )
+                    ),
                   ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [],
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 2 / 3,
-                        child: LineWidget(
-                            width: MediaQuery.of(context).size.width / 3),
-                      ),
-                      Padding(padding: EdgeInsets.all(8)),
-                      LineWidget(width: MediaQuery.of(context).size.width / 3),
-                      Padding(padding: EdgeInsets.all(8)),
-                      LineWidget(
-                          width: MediaQuery.of(context).size.width * 2 / 3),
-                    ],
-                  ),
                 ),
               ],
             ),

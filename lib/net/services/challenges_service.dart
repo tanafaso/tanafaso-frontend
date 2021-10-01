@@ -17,6 +17,7 @@ import 'package:azkar/net/api_interface/challenges/responses/finish_meaning_chal
 import 'package:azkar/net/api_interface/challenges/responses/finish_reading_quran_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/get_azkar_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/get_challenges_response.dart';
+import 'package:azkar/net/api_interface/challenges/responses/get_finished_challenges_count_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/update_azkar_challenge_response.dart';
 import 'package:azkar/net/cache_manager.dart';
 import 'package:azkar/net/endpoints.dart';
@@ -199,5 +200,23 @@ class ChallengesService {
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+  }
+
+  Future<int> getFinishedChallengesCount() async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    String key = CacheManager.CACHE_KEY_FINISHED_CHALLENGES_COUNT.toString();
+    if (prefs.containsKey(key)) {
+      return prefs.getInt(key);
+    }
+    http.Response httpResponse = await ApiCaller.get(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.GET_FINISHED_CHALLENGES_COUNT));
+    var response = GetFinishedChallengesCountResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.error);
+    }
+    prefs.setInt(key, response.finishedChallengesCount);
+    return response.finishedChallengesCount;
   }
 }

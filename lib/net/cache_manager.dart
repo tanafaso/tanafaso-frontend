@@ -16,6 +16,7 @@ class CacheManager {
   static const String CACHE_KEY_FRIENDS_LEADERBOARD = "010";
   static const String CACHE_KEY_CURRENT_USER = "011";
   static const String CACHE_KEY_FRIENDS = "012";
+  static const String CACHE_KEY_FINISHED_CHALLENGES_COUNT = "013";
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -37,6 +38,7 @@ class CacheManager {
       prefs.remove(CACHE_KEY_FRIENDS_LEADERBOARD);
       prefs.remove(CACHE_KEY_CURRENT_USER);
       prefs.remove(CACHE_KEY_FRIENDS);
+      prefs.remove(CACHE_KEY_FINISHED_CHALLENGES_COUNT);
     });
   }
 
