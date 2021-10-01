@@ -20,11 +20,12 @@ class DoAzkarChallengeListItemWidget extends StatefulWidget {
   final AzkarChallenge challenge;
 
   DoAzkarChallengeListItemWidget({
+    Key key,
     @required this.subChallenge,
     @required this.callback,
     @required this.challenge,
     @required this.firstItemInList,
-  });
+  }) : super(key: key);
 
   @override
   _DoAzkarChallengeListItemWidgetState createState() =>
