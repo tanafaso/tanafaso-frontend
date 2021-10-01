@@ -123,47 +123,60 @@ class _DoReadingQuranChallengeScreenState
                               return Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  AutoSizeText.rich(
-                                    TextSpan(
-                                      style: TextStyle(
-                                          color: Colors.grey.shade700,
-                                          fontSize: 25),
-                                      children: [
-                                        TextSpan(
-                                            text: widget
-                                                .challenge
-                                                .surahSubChallenges[index]
-                                                .surahName,
+                                  Expanded(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: RichText(
+                                          maxLines: 1,
+                                          text: TextSpan(
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black)),
-                                        TextSpan(text: ' من الآية رقم '),
-                                        TextSpan(
-                                            text: ArabicUtils.englishToArabic(
-                                                widget
-                                                    .challenge
-                                                    .surahSubChallenges[index]
-                                                    .startingVerseNumber
-                                                    .toString()),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black)),
-                                        TextSpan(
-                                          text: ' إلى الآية رقم ',
+                                                color: Colors.grey.shade700,
+                                                fontSize: 25),
+                                            children: [
+                                              TextSpan(
+                                                  text: widget
+                                                      .challenge
+                                                      .surahSubChallenges[index]
+                                                      .surahName,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black)),
+                                              TextSpan(text: ' من الآية رقم '),
+                                              TextSpan(
+                                                  text: ArabicUtils
+                                                      .englishToArabic(widget
+                                                          .challenge
+                                                          .surahSubChallenges[
+                                                              index]
+                                                          .startingVerseNumber
+                                                          .toString()),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black)),
+                                              TextSpan(
+                                                text: ' إلى الآية رقم ',
+                                              ),
+                                              TextSpan(
+                                                  text: ArabicUtils
+                                                      .englishToArabic(widget
+                                                          .challenge
+                                                          .surahSubChallenges[
+                                                              index]
+                                                          .endingVerseNumber
+                                                          .toString()),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black)),
+                                            ],
+                                          ),
                                         ),
-                                        TextSpan(
-                                            text: ArabicUtils.englishToArabic(
-                                                widget
-                                                    .challenge
-                                                    .surahSubChallenges[index]
-                                                    .endingVerseNumber
-                                                    .toString()),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black)),
-                                      ],
+                                      ),
                                     ),
-                                    minFontSize: 10,
                                   ),
                                 ],
                               );
