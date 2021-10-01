@@ -1,4 +1,5 @@
-import 'package:azkar/models/friendship.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/authentication/responses/facebook_friends_response.dart';
@@ -32,7 +33,10 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).inviteFriends),
+          title: AutoSizeText(
+            AppLocalizations.of(context).inviteFriends,
+            style: TextStyle(fontSize: 30),
+          ),
         ),
         body: Container(
           child: Form(
@@ -56,16 +60,23 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                               Padding(
                                 padding:
                                     const EdgeInsets.only(right: 8, top: 8.0),
-                                child: Icon(Icons.drive_file_rename_outline),
+                                child: Icon(
+                                  Icons.drive_file_rename_outline,
+                                  size: 25,
+                                ),
                               ),
                               Padding(padding: EdgeInsets.only(right: 8)),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
-                                child: Text(
+                                child: AutoSizeText(
                                   AppLocalizations.of(context).enterAUsername,
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25,
+                                  ),
+                                  maxFontSize: 25,
+                                  minFontSize: 2,
+                                  maxLines: 1,
                                 ),
                               ),
                             ],
@@ -74,13 +85,13 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                             padding: const EdgeInsets.only(right: 8.0),
                             child: Container(
                               width: MediaQuery.of(context).size.width * 4 / 5,
-                              child: Text(
+                              child: AutoSizeText(
                                 AppLocalizations.of(context)
                                     .yourFriendCanFindHisUserCodeOnHisProfilePage,
                                 textAlign: TextAlign.right,
                                 softWrap: true,
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: 20,
                                   color: Colors.grey.shade700,
                                 ),
                               ),
@@ -143,21 +154,33 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                 left: 30.0, right: 30.0, top: 20.0),
                             alignment: Alignment.center,
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                new Expanded(
+                                new Flexible(
+                                  flex: 1,
                                   child: new Container(
                                     margin: EdgeInsets.all(8.0),
                                     decoration: BoxDecoration(
                                         border: Border.all(width: 0.25)),
                                   ),
                                 ),
-                                Text(
-                                  AppLocalizations.of(context).orAddFriendsBy,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                Flexible(
+                                  flex: 6,
+                                  child: FittedBox(
+                                    child: Text(
+                                      AppLocalizations.of(context)
+                                          .orAddFriendsBy,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25,
+                                      ),
+                                      maxLines: 1,
+                                    ),
                                   ),
                                 ),
-                                new Expanded(
+                                new Flexible(
+                                  flex: 1,
                                   child: new Container(
                                     margin: EdgeInsets.all(8.0),
                                     decoration: BoxDecoration(
@@ -279,14 +302,20 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Icon(Icons.search_sharp),
+                                      Icon(
+                                        Icons.search_sharp,
+                                        size: 25,
+                                      ),
                                       Padding(
                                           padding: EdgeInsets.only(right: 8)),
-                                      Text(
-                                        "ابحث عن أصدقاء",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17),
+                                      FittedBox(
+                                        child: Text(
+                                          "ابحث عن أصدقاء",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 25),
+                                          maxLines: 1,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -296,12 +325,12 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                       width: MediaQuery.of(context).size.width *
                                           4 /
                                           5,
-                                      child: Text(
+                                      child: AutoSizeText(
                                         "ابحث عن المستخدمين الذين قبلوا إضافتهم إلى قائمة مرئية للآخرين وأرسل لهم طلبات صداقة.",
                                         textAlign: TextAlign.right,
                                         softWrap: true,
                                         style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 20,
                                           color: Colors.grey.shade700,
                                         ),
                                       ),
@@ -503,9 +532,9 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
 
   Future<List<User>> getNotYetInvitedAppFriends(
       List<User> facebookFriends) async {
-    Friendship friendship;
+    List<Friend> friendship;
     try {
-      friendship = await ServiceProvider.usersService.getFriends();
+      friendship = await ServiceProvider.usersService.getFriendsLeaderboard();
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(
         context,
@@ -515,7 +544,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
 
     List<User> notYetAppFriends = [];
     for (User user in facebookFriends) {
-      if (!friendship.friends.any((friend) => friend.userId == user.id)) {
+      if (!friendship.any((friend) => friend.userId == user.id)) {
         notYetAppFriends.add(user);
       }
     }

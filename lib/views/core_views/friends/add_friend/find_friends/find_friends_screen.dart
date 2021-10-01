@@ -49,8 +49,11 @@ class _FindFriendsScreenState extends State<FindFriendsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-        "ابحث عن صديق",
+          title: FittedBox(
+        child: Text(
+          "ابحث عن صديق",
+          style: TextStyle(fontSize: 30),
+        ),
       )),
       body: Container(
         width: MediaQuery.of(context).size.width,

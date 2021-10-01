@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/models/zekr.dart';
 import 'package:azkar/utils/app_localizations.dart';
@@ -52,7 +53,12 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).selectAzkar),
+          title: AutoSizeText(
+            AppLocalizations.of(context).selectAzkar,
+            style: TextStyle(
+              fontSize: 30,
+            ),
+          ),
         ),
         body: GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -111,13 +117,13 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
                     child: FlatButton(
                       onPressed: () => onCreatePressed(),
                       child: Center(
-                          child: Text(
+                          child: AutoSizeText(
                         readyToFinish()
                             ? AppLocalizations.of(context).add
                             : AppLocalizations.of(context).addNotReady,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 25,
                             fontWeight: FontWeight.bold),
                       )),
                     ),

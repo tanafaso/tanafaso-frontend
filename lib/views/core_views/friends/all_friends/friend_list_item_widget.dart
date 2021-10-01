@@ -1,4 +1,4 @@
-import 'package:azkar/models/friendship_scores.dart';
+import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/features.dart';
@@ -8,7 +8,7 @@ import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 
 class FriendListItemWidget extends StatefulWidget {
-  final FriendshipScores friendshipScores;
+  final Friend friendshipScores;
   final OnFriendDeletedCallback onFriendDeletedCallback;
 
   FriendListItemWidget({
@@ -35,7 +35,7 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
       if (mounted) {
         String sabeqId = await ServiceProvider.usersService.getSabeqId();
         setState(() {
-          _isSabeq = sabeqId == widget.friendshipScores.friend.userId;
+          _isSabeq = sabeqId == widget.friendshipScores.userId;
         });
       }
     });
@@ -119,7 +119,7 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
   Widget getMainWidget() {
     return _detailedView
         ? DetailedFriendListItemWidget(
-            friendshipScores: widget.friendshipScores,
+            friendshipScore: widget.friendshipScores,
             toggleViewCallback: () {
               setState(() {
                 _detailedView = false;
@@ -130,7 +130,7 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
             },
           )
         : SummaryFriendListItemWidget(
-            friendshipScores: widget.friendshipScores,
+            friendshipScore: widget.friendshipScores,
             toggleViewCallback: () {
               setState(() {
                 _detailedView = true;

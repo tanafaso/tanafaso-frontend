@@ -12,7 +12,7 @@ description: A new Flutter project.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.8.8+88
+version: 1.9.1+89
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -50,6 +50,7 @@ dependencies:
   crypto: ^3.0.1
   shimmer: ^2.0.0
   flutter_ringtone_player: ^3.0.0
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:

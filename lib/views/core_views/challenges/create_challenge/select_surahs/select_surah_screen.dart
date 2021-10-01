@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/reading_quran_challenge.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/quran_surahs.dart';
@@ -10,7 +11,10 @@ class SelectSurahScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("اختر سورة"),
+        title: AutoSizeText(
+          "اختر سورة",
+          style: TextStyle(fontSize: 30),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -28,9 +32,8 @@ class SelectSurahScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        RichText(
-                            text: TextSpan(
-                          style: TextStyle(color: Colors.black, fontSize: 20),
+                        AutoSizeText.rich(TextSpan(
+                          style: TextStyle(color: Colors.black, fontSize: 25),
                           children: [
                             TextSpan(
                                 text: ArabicUtils.englishToArabic(
@@ -39,9 +42,10 @@ class SelectSurahScreen extends StatelessWidget {
                             TextSpan(text: quranSurahs[index].name),
                           ],
                         )),
-                        RichText(
-                          text: TextSpan(
-                            style: TextStyle(color: Colors.grey.shade700),
+                        AutoSizeText.rich(
+                          TextSpan(
+                            style: TextStyle(
+                                color: Colors.grey.shade700, fontSize: 20),
                             children: [
                               TextSpan(text: 'آياتها'),
                               TextSpan(text: ' '),

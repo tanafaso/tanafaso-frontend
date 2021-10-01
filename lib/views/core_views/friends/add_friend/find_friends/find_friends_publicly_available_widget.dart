@@ -39,7 +39,7 @@ class _FindFriendsPubliclyAvailableWidgetState
       child: Text(
         "لا يوجد أشخاص متاحون في هذه القائمة. نظرًا لأننا بدأنا دعم هذا مؤخرًا ، يرجى العودة لاحقًا ونأمل أن تجد المزيد من الأشخاص 😀",
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 20),
+        style: TextStyle(fontSize: 25),
       ),
     );
 
@@ -50,48 +50,38 @@ class _FindFriendsPubliclyAvailableWidgetState
           Card(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
+              child: Column(
                 children: [
-                  Flexible(
-                    flex: 3,
-                    child: Text(
-                      'إذا كنت لا تريد أن يراك الآخرون في هذه القائمة بعد الآن ، فاضغط على الزر التالي',
-                      style:
-                          TextStyle(fontSize: 15, color: Colors.grey.shade700),
-                      textAlign: TextAlign.start,
-                      softWrap: true,
-                    ),
+                  Text(
+                    'إذا كنت لا تريد أن يراك الآخرون في هذه القائمة بعد الآن ، فاضغط على الزر التالي',
+                    style: TextStyle(fontSize: 20, color: Colors.grey.shade700),
+                    textAlign: TextAlign.center,
+                    softWrap: true,
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: ProgressButton.icon(
-                      textStyle: TextStyle(
-                        color: Colors.black,
-                      ),
-                      iconedButtons: {
-                        ButtonState.idle: IconedButton(
-                            icon: Icon(Icons.delete, color: Colors.black),
-                            color: Colors.white),
-                        ButtonState.loading: IconedButton(
-                            text: AppLocalizations.of(context).sending,
-                            icon: Icon(Icons.circle, color: Colors.white),
-                            color: Colors.yellow.shade200),
-                        ButtonState.fail: IconedButton(
-                            icon: Icon(Icons.cancel, color: Colors.white),
-                            color: Colors.red.shade300),
-                        ButtonState.success: IconedButton(
-                            icon: Icon(
-                              Icons.check_circle,
-                              color: Colors.white,
-                            ),
-                            color: Colors.green.shade400)
-                      },
-                      onPressed: onRemoveFromPubliclyAvailableListPressed,
-                      state: _removeFromPubliclyAvailableListButtonState,
+                  ProgressButton.icon(
+                    textStyle: TextStyle(
+                      color: Colors.black,
                     ),
+                    iconedButtons: {
+                      ButtonState.idle: IconedButton(
+                          icon: Icon(Icons.delete, color: Colors.black),
+                          color: Colors.white),
+                      ButtonState.loading: IconedButton(
+                          text: AppLocalizations.of(context).sending,
+                          icon: Icon(Icons.circle, color: Colors.white),
+                          color: Colors.yellow.shade200),
+                      ButtonState.fail: IconedButton(
+                          icon: Icon(Icons.cancel, color: Colors.white),
+                          color: Colors.red.shade300),
+                      ButtonState.success: IconedButton(
+                          icon: Icon(
+                            Icons.check_circle,
+                            color: Colors.white,
+                          ),
+                          color: Colors.green.shade400)
+                    },
+                    onPressed: onRemoveFromPubliclyAvailableListPressed,
+                    state: _removeFromPubliclyAvailableListButtonState,
                   )
                 ],
               ),

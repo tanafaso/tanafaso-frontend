@@ -7,7 +7,8 @@ abstract class ResponseBase {
 
   @protected
   setError(Map<String, dynamic> json) {
-    error = new Status((json['status'] ?? const {})['code']);
+    error =
+        new Status((json['status'] ?? const {})['code'] ?? Status.API_SUCCESS);
   }
 
   void setErrorMessage(int errorCode) {

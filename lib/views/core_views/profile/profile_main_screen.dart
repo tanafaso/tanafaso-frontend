@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
@@ -22,7 +23,8 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
 
   Future<void> getNeededData() async {
     _user = await ServiceProvider.usersService.getCurrentUser();
-    _userScore = _user.getFinishedChallengesCount();
+    _userScore =
+        await ServiceProvider.challengesService.getFinishedChallengesCount();
   }
 
   @override
@@ -51,103 +53,148 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                             children: [
                               Container(
                                 alignment: Alignment.center,
-                                child: Text(
+                                child: AutoSizeText(
                                   _user.firstName + " " + _user.lastName,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 30,
+                                    fontSize: 45,
                                   ),
                                 ),
                               ),
-                              Container(
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        _user.username,
-                                        style: TextStyle(
-                                          color: Colors.black54,
-                                        ),
+                              Padding(padding: EdgeInsets.only(top: 8 * 3.0)),
+                              RawMaterialButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                fillColor: Colors.white,
+                                onPressed: () {},
+                                // elevation: 15,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          AutoSizeText(
+                                            'كود المستخدم',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 35),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    GestureDetector(
-                                      onTapDown: (_) {
-                                        Clipboard.setData(ClipboardData(
-                                          text: _user.username,
-                                        )).then((_) {
-                                          SnackBarUtils.showSnackBar(
-                                              context,
-                                              AppLocalizations.of(context)
-                                                  .usernameCopiedSuccessfully);
-                                        });
-                                      },
-                                      child: Icon(
-                                        Icons.copy,
-                                        size: 20,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          AutoSizeText(
+                                            _user.username,
+                                            style: TextStyle(
+                                              fontSize: 30,
+                                              color: Colors.grey.shade700,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 8),
-                                    ),
-                                    GestureDetector(
-                                      onTapDown: (_) {
-                                        Share.share(AppLocalizations.of(context)
-                                            .shareMessage(_user.username));
-                                      },
-                                      child: Icon(
-                                        Icons.share,
-                                        size: 20,
+                                      Padding(padding: EdgeInsets.only(top: 8)),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          GestureDetector(
+                                            onTapDown: (_) {
+                                              Clipboard.setData(ClipboardData(
+                                                text: _user.username,
+                                              )).then((_) {
+                                                SnackBarUtils.showSnackBar(
+                                                    context,
+                                                    AppLocalizations.of(context)
+                                                        .usernameCopiedSuccessfully);
+                                              });
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.copy,
+                                                  size: 25,
+                                                ),
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 8)),
+                                                AutoSizeText(
+                                                  'نسخ الكود',
+                                                  style: TextStyle(
+                                                    fontSize: 25,
+                                                    color: Colors.grey.shade700,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          GestureDetector(
+                                            onTapDown: (_) {
+                                              Share.share(
+                                                  AppLocalizations.of(context)
+                                                      .shareMessage(
+                                                          _user.username));
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.share,
+                                                  size: 25,
+                                                ),
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 8)),
+                                                AutoSizeText(
+                                                  'مشاركة الكود مع صديق',
+                                                  style: TextStyle(
+                                                    fontSize: 25,
+                                                    color: Colors.grey.shade700,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 8.0, right: 8, top: 20, bottom: 8),
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Visibility(
-                                visible: (_user?.email ?? null) != null,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.email,
-                                      size: 30,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(_user?.email ??
-                                          AppLocalizations.of(context)
-                                              .noEmailProvided),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(padding: EdgeInsets.all(30)),
-                          Card(
-                            elevation: 15,
+                          Padding(padding: EdgeInsets.all(8)),
+                          RawMaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            fillColor: Colors.white,
+                            onPressed: () {},
+                            // elevation: 15,
                             child: Container(
                               alignment: Alignment.center,
                               height: 300,
-                              width: 300,
+                              // width: 300,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(
+                                    child: AutoSizeText(
                                       AppLocalizations.of(context)
                                           .youHaveFinished,
-                                      style: TextStyle(fontSize: 30),
+                                      style: TextStyle(
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                   Text(
@@ -155,14 +202,17 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                           _userScore.toString()),
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 50,
+                                        fontSize: 60,
                                         color: Colors.green,
                                       )),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(
+                                    child: AutoSizeText(
                                       AppLocalizations.of(context).challenges,
-                                      style: TextStyle(fontSize: 30),
+                                      style: TextStyle(
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -171,28 +221,28 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                           ),
                           Padding(padding: EdgeInsets.all(10)),
                           Container(
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 16.0, horizontal: 30),
                             child: ButtonTheme(
                               height: 50,
                               // ignore: deprecated_member_use
-                              child: FlatButton(
+                              child: RawMaterialButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                fillColor: Colors.grey,
                                 onPressed: () async {
                                   performLogout(context);
                                 },
                                 child: Center(
-                                    child: Text(
-                                  AppLocalizations.of(context).logout,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: AutoSizeText(
+                                    AppLocalizations.of(context).logout,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 )),
                               ),
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(5),
                             ),
                           ),
                         ],
@@ -207,28 +257,28 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                         child: SnapshotUtils.getErrorWidget(context, snapshot),
                       ),
                       Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 30),
                         child: ButtonTheme(
                           height: 50,
                           // ignore: deprecated_member_use
-                          child: FlatButton(
+                          child: RawMaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            fillColor: Colors.grey,
                             onPressed: () async {
                               performLogout(context);
                             },
                             child: Center(
-                                child: Text(
-                              AppLocalizations.of(context).logout,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
+                                child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AutoSizeText(
+                                AppLocalizations.of(context).logout,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             )),
                           ),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
                     ],

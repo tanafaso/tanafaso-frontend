@@ -1,5 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/challenge.dart';
-import 'package:azkar/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class FriendsProgressWidget extends StatefulWidget {
@@ -13,8 +13,8 @@ class FriendsProgressWidget extends StatefulWidget {
     @required this.challenge,
     @required this.challengedUsersIds,
     @required this.challengedUsersFullNames,
-    this.fontSize = 15,
-    this.iconSize = 15,
+    this.fontSize = 25,
+    this.iconSize = 25,
   });
 
   @override
@@ -51,23 +51,13 @@ class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
                   child: getFriendProgressOnChallengeIcon(
                       widget.challengedUsersIds[index]),
                 ),
-                Text(
-                  widget.challengedUsersFullNames[index],
-                  style: TextStyle(
-                    fontSize: widget.fontSize.toDouble(),
-                  ),
-                ),
-                Visibility(
-                  visible: widget.challengedUsersIds[index] ==
-                      widget.challenge?.creatingUserId(),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Text(
-                      AppLocalizations.of(context).challengeCreator,
-                      style: TextStyle(
-                        fontSize: widget.fontSize.toDouble(),
-                      ),
+                Flexible(
+                  child: AutoSizeText(
+                    widget.challengedUsersFullNames[index],
+                    style: TextStyle(
+                      fontSize: widget.fontSize.toDouble(),
                     ),
+                    maxLines: 1,
                   ),
                 ),
               ],

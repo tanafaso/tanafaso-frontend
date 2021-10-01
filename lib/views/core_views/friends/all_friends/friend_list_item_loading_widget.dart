@@ -18,7 +18,7 @@ class FriendListItemLoadingWidget extends StatelessWidget {
             padding: const EdgeInsets.only(left: 4.0, right: 4.0),
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height / 12),
+                  minHeight: MediaQuery.of(context).size.height / 10),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(

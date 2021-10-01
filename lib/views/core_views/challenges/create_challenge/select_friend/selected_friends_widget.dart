@@ -1,5 +1,4 @@
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/models/friendship.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
@@ -55,7 +54,10 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Icon(Icons.person),
+                child: Icon(
+                  Icons.person,
+                  size: 25,
+                ),
               ),
               getTitle(),
             ],
@@ -75,9 +77,10 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30)))),
               onPressed: () async {
-                Friendship friendship;
+                List<Friend> friends;
                 try {
-                  friendship = await ServiceProvider.usersService.getFriends();
+                  friends = await ServiceProvider.usersService
+                      .getFriendsLeaderboard();
                 } on ApiException catch (e) {
                   SnackBarUtils.showSnackBar(
                     context,
@@ -89,7 +92,7 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
                   context,
                   MaterialPageRoute(
                     builder: (context) => SelectFriendsScreen(
-                      friendship: friendship,
+                      friends: friends,
                     ),
                   ),
                 ) as List<Friend>;
@@ -118,9 +121,12 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
       text = AppLocalizations.of(context).selectedFriends;
       color = Colors.black;
     }
-    return Text(
-      text,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: color),
+    return FittedBox(
+      child: Text(
+        text,
+        style:
+            TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: color),
+      ),
     );
   }
 
