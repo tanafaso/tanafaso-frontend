@@ -59,7 +59,8 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
                   size: 25,
                 ),
               ),
-              getTitle(),
+              Flexible(child: getTitle()),
+              Padding(padding: EdgeInsets.only(left: 16)),
             ],
           ),
           Visibility(

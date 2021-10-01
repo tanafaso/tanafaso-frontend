@@ -263,29 +263,39 @@ class _CreateAzkarChallengeScreenState
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    RichText(
-                                        text: TextSpan(
-                                      // Note: Styles for TextSpans must be explicitly defined.
-                                      // Child text spans will inherit styles from parent
-                                      style: new TextStyle(
-                                        color: Colors.black,
+                                    Flexible(
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: RichText(
+                                              maxLines: 1,
+                                              text: TextSpan(
+                                                // Note: Styles for TextSpans must be explicitly defined.
+                                                // Child text spans will inherit styles from parent
+                                                style: new TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 25),
+                                                children: <TextSpan>[
+                                                  new TextSpan(
+                                                    text: 'التحدي ينتهي بعد',
+                                                  ),
+                                                  new TextSpan(
+                                                      text:
+                                                          '  ${ArabicUtils.englishToArabic(_expiresAfterHoursNum.toString())}  ',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 30,
+                                                      )),
+                                                  new TextSpan(
+                                                    text: 'ساعات.',
+                                                  ),
+                                                ],
+                                              )),
+                                        ),
                                       ),
-                                      children: <TextSpan>[
-                                        new TextSpan(
-                                          text: 'التحدي ينتهي بعد',
-                                        ),
-                                        new TextSpan(
-                                            text:
-                                                '  ${ArabicUtils.englishToArabic(_expiresAfterHoursNum.toString())}  ',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            )),
-                                        new TextSpan(
-                                          text: 'ساعات.',
-                                        ),
-                                      ],
-                                    )),
+                                    ),
                                   ],
                                 ),
                               ),
