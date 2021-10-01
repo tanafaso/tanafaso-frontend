@@ -1,6 +1,5 @@
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
-import 'package:azkar/models/friendship_scores.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/services/service_provider.dart';
@@ -31,7 +30,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
   TabController _tabController;
   bool _addExpanded;
 
-  List<FriendshipScores> _friendshipScores;
+  List<Friend> _friendshipScores;
   List<Friend> _pendingFriends;
 
   Future<void> _neededData;
@@ -68,10 +67,11 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
 
   Future<void> getNeededData() async {
     try {
+      await ServiceProvider.homeService.getHomeDataAndCacheIt();
       _friendshipScores =
           await ServiceProvider.usersService.getFriendsLeaderboard();
       _friendshipScores = _friendshipScores
-          .where((friendshipScore) => !friendshipScore.friend.pending)
+          .where((friendshipScore) => !friendshipScore.pending)
           .toList();
 
       Friendship friendship = await ServiceProvider.usersService.getFriends();

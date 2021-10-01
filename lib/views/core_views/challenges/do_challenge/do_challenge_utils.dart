@@ -1,16 +1,14 @@
-import 'package:azkar/models/friendship_scores.dart';
+import 'package:azkar/models/friend.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 
 class DoChallengeUtils {
-  static Future<void> showFriendsScoreDialog(
-      BuildContext context,
-      List<FriendshipScores> friendshipScores,
-      List<String> challengeUserIds) async {
-    List<FriendshipScores> relevantFriendScores = friendshipScores
+  static Future<void> showFriendsScoreDialog(BuildContext context,
+      List<Friend> friendshipScores, List<String> challengeUserIds) async {
+    List<Friend> relevantFriendScores = friendshipScores
         .where((friendshipScore) =>
-            challengeUserIds.contains(friendshipScore.friend.userId))
+            challengeUserIds.contains(friendshipScore.userId))
         .toList();
 
     var scrollController = ScrollController();
@@ -129,7 +127,7 @@ class DoChallengeUtils {
 // A widget that takes and old friendship score and adds one to the current user
 // with animation to celebrate progress after finishing a challenge.
 class AnimatedScoreChangeWidget extends StatefulWidget {
-  final FriendshipScores friendshipScores;
+  final Friend friendshipScores;
 
   AnimatedScoreChangeWidget({@required this.friendshipScores});
 
@@ -149,7 +147,7 @@ class _AnimatedScoreChangeWidgetState extends State<AnimatedScoreChangeWidget>
     showOldScore = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        widget.friendshipScores.currentUserScore++;
+        widget.friendshipScores.userTotalScore++;
         showOldScore = false;
       });
     });
@@ -166,7 +164,7 @@ class _AnimatedScoreChangeWidgetState extends State<AnimatedScoreChangeWidget>
           Expanded(
             flex: 5,
             child: Text(
-              '${widget.friendshipScores.friend.firstName} ${widget.friendshipScores.friend.lastName}',
+              '${widget.friendshipScores.firstName} ${widget.friendshipScores.lastName}',
               textAlign: TextAlign.right,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -184,8 +182,8 @@ class _AnimatedScoreChangeWidgetState extends State<AnimatedScoreChangeWidget>
                     duration: Duration(seconds: 2),
                     child: showOldScore
                         ? Text(
-                            (widget.friendshipScores.currentUserScore -
-                                    widget.friendshipScores.friendScore)
+                            (widget.friendshipScores.userTotalScore -
+                                    widget.friendshipScores.friendTotalScore)
                                 .abs()
                                 .toString(),
                             style: TextStyle(
@@ -195,8 +193,8 @@ class _AnimatedScoreChangeWidgetState extends State<AnimatedScoreChangeWidget>
                             softWrap: false,
                           )
                         : Text(
-                            (widget.friendshipScores.currentUserScore -
-                                    widget.friendshipScores.friendScore)
+                            (widget.friendshipScores.userTotalScore -
+                                    widget.friendshipScores.friendTotalScore)
                                 .abs()
                                 .toString(),
                             style: TextStyle(
@@ -225,15 +223,15 @@ class _AnimatedScoreChangeWidgetState extends State<AnimatedScoreChangeWidget>
   }
 
   Icon getArrowIcon(Key key) {
-    if (widget.friendshipScores.friendScore >
-        widget.friendshipScores.currentUserScore) {
+    if (widget.friendshipScores.friendTotalScore >
+        widget.friendshipScores.userTotalScore) {
       return Icon(
         Icons.arrow_downward,
         key: key,
         color: getColor(),
       );
-    } else if (widget.friendshipScores.friendScore <
-        widget.friendshipScores.currentUserScore) {
+    } else if (widget.friendshipScores.friendTotalScore <
+        widget.friendshipScores.userTotalScore) {
       return Icon(
         Icons.arrow_upward,
         key: key,
@@ -248,11 +246,11 @@ class _AnimatedScoreChangeWidgetState extends State<AnimatedScoreChangeWidget>
   }
 
   Color getColor() {
-    if (widget.friendshipScores.friendScore >
-        widget.friendshipScores.currentUserScore) {
+    if (widget.friendshipScores.friendTotalScore >
+        widget.friendshipScores.userTotalScore) {
       return Colors.red;
-    } else if (widget.friendshipScores.friendScore <
-        widget.friendshipScores.currentUserScore) {
+    } else if (widget.friendshipScores.friendTotalScore <
+        widget.friendshipScores.userTotalScore) {
       return Colors.green;
     }
     return Colors.yellow.shade700;

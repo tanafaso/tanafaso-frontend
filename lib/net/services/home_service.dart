@@ -1,0 +1,47 @@
+import 'dart:convert';
+
+import 'package:azkar/net/api_caller.dart';
+import 'package:azkar/net/api_exception.dart';
+import 'package:azkar/net/api_interface/challenges/responses/get_challenges_response.dart';
+import 'package:azkar/net/api_interface/groups/responses/get_group_response.dart';
+import 'package:azkar/net/api_interface/groups/responses/get_groups_response.dart';
+import 'package:azkar/net/api_interface/home/get_home_response.dart';
+import 'package:azkar/net/api_interface/users/responses/get_friends_leaderboard_response.dart';
+import 'package:azkar/net/cache_manager.dart';
+import 'package:azkar/net/endpoints.dart';
+import 'package:azkar/net/services/service_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
+class HomeService {
+  Future<void> getHomeDataAndCacheIt() async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    String challengesKey = CacheManager.CACHE_KEY_CHALLENGES.toString();
+    String groupsKey = CacheManager.CACHE_KEY_GROUPS.toString();
+    String friendsKey = CacheManager.CACHE_KEY_FRIENDS_LEADERBOARD.toString();
+
+    // The three keys are invalidated together, so if only one of them
+    // exists then no need to send a new request and return immediately.
+    if (!prefs.containsKey(challengesKey)) {
+      return Future.value();
+    }
+
+    http.Response httpResponse = await ApiCaller.get(
+        route: Endpoint(endpointRoute: EndpointRoute.GET_HOME));
+    String responseBody = utf8.decode(httpResponse.body.codeUnits);
+    var response = GetHomeResponse.fromJson(jsonDecode(responseBody));
+    if (response.hasError()) {
+      throw new ApiException(response.error);
+    }
+
+    var challengesResponse =
+        GetChallengesResponse(challenges: response.challenges);
+    var groupsResponse = GetGroupsResponse(groups: response.groups);
+    var friendsResponse =
+        GetFriendsLeaderboardResponse(friends: response.friends);
+    prefs.setString(challengesKey, jsonEncode(challengesResponse.toJson()));
+    prefs.setString(groupsKey, jsonEncode(groupsResponse.toJson()));
+    prefs.setString(friendsKey, jsonEncode(friendsResponse.toJson()));
+    return Future.value();
+  }
+}

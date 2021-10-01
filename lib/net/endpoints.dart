@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 enum EndpointRoute {
   BASE_URL,
+  GET_HOME,
   LOGIN_WITH_FACEBOOK,
   CONNECT_FACEBOOK,
   REGISTER_WITH_EMAIL_V2,
@@ -46,6 +47,7 @@ enum EndpointRoute {
   UPDATE_AZKAR_CHALLENGE,
   UPDATE_PERSONAL_CHALLENGE,
   GET_PERSONAL_CHALLENGES,
+  GET_FINISHED_CHALLENGES_COUNT,
 }
 
 class Endpoint {
@@ -64,8 +66,8 @@ class ApiRoutesUtil {
       case EndpointRoute.BASE_URL:
         if (Platform.isAndroid) {
           // Use the following for testing locally.
-          // return '10.0.2.2:8080';
-          return 'www.tanafaso.com';
+          return '10.0.2.2:8080';
+          // return 'www.tanafaso.com';
         }
         if (Platform.isIOS) {
           // Use the following for testing locally.
@@ -74,6 +76,8 @@ class ApiRoutesUtil {
         }
         assert(false);
         break;
+      case EndpointRoute.GET_HOME:
+        return '/apiHome';
       case EndpointRoute.LOGIN_WITH_FACEBOOK:
         return '/login/facebook';
       case EndpointRoute.CONNECT_FACEBOOK:
@@ -87,7 +91,7 @@ class ApiRoutesUtil {
       case EndpointRoute.GET_CATEGORIES:
         return '/categories';
       case EndpointRoute.GET_CURRENT_USER_PROFILE:
-        return 'users/me';
+        return 'users/me/v2';
       case EndpointRoute.GET_SABEQ:
         return 'users/sabeq';
       case EndpointRoute.GET_USER_BY_ID:
@@ -122,7 +126,7 @@ class ApiRoutesUtil {
       case EndpointRoute.GET_FRIENDS:
         return '/friends';
       case EndpointRoute.GET_FRIENDS_LEADERBOARD:
-        return '/friends/leaderboard';
+        return '/friends/leaderboard/v2';
       case EndpointRoute.ACCEPT_FRIEND:
         assert(route.pathVariables.length == 1);
         return '/friends/${route.pathVariables[0]}/accept';
@@ -180,6 +184,8 @@ class ApiRoutesUtil {
         return '/challenges/personal/${route.pathVariables[0]}';
       case EndpointRoute.GET_PERSONAL_CHALLENGES:
         return '/challenges/personal';
+      case EndpointRoute.GET_FINISHED_CHALLENGES_COUNT:
+        return '/challenges/finished-challenges-count';
       default:
         print('Route enum is not registered.');
     }

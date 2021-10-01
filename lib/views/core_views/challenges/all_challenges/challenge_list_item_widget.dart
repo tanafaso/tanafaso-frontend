@@ -2,7 +2,6 @@ import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
-import 'package:azkar/models/friendship_scores.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/services/service_provider.dart';
@@ -31,7 +30,7 @@ class ChallengeListItemWidget extends StatefulWidget {
   final bool showName;
   final ChallengeChangedCallback challengeChangedCallback;
   final bool firstChallengeInList;
-  final List<FriendshipScores> friendshipScores;
+  final List<Friend> friendshipScores;
 
   ChallengeListItemWidget({
     Key key,

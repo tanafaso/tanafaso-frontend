@@ -22,7 +22,8 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
 
   Future<void> getNeededData() async {
     _user = await ServiceProvider.usersService.getCurrentUser();
-    _userScore = _user.getFinishedChallengesCount();
+    _userScore =
+        await ServiceProvider.challengesService.getFinishedChallengesCount();
   }
 
   @override
@@ -55,90 +56,139 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                   _user.firstName + " " + _user.lastName,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 30,
+                                    fontSize: 40,
                                   ),
                                 ),
                               ),
-                              Container(
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        _user.username,
-                                        style: TextStyle(
-                                          color: Colors.black54,
-                                        ),
+                              Padding(padding: EdgeInsets.only(top: 8 * 3.0)),
+                              RawMaterialButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                fillColor: Colors.white,
+                                onPressed: () {},
+                                // elevation: 15,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          RichText(
+                                            textAlign: TextAlign.center,
+                                            text: TextSpan(
+                                                style: TextStyle(
+                                                  color: Colors.grey.shade700,
+                                                  fontSize: 25,
+                                                ),
+                                                children: [
+                                                  TextSpan(
+                                                      text: 'كود المستخدم',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black)),
+                                                ]),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    GestureDetector(
-                                      onTapDown: (_) {
-                                        Clipboard.setData(ClipboardData(
-                                          text: _user.username,
-                                        )).then((_) {
-                                          SnackBarUtils.showSnackBar(
-                                              context,
-                                              AppLocalizations.of(context)
-                                                  .usernameCopiedSuccessfully);
-                                        });
-                                      },
-                                      child: Icon(
-                                        Icons.copy,
-                                        size: 20,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            _user.username,
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 8),
-                                    ),
-                                    GestureDetector(
-                                      onTapDown: (_) {
-                                        Share.share(AppLocalizations.of(context)
-                                            .shareMessage(_user.username));
-                                      },
-                                      child: Icon(
-                                        Icons.share,
-                                        size: 20,
+                                      Padding(padding: EdgeInsets.only(top: 8)),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          GestureDetector(
+                                            onTapDown: (_) {
+                                              Clipboard.setData(ClipboardData(
+                                                text: _user.username,
+                                              )).then((_) {
+                                                SnackBarUtils.showSnackBar(
+                                                    context,
+                                                    AppLocalizations.of(context)
+                                                        .usernameCopiedSuccessfully);
+                                              });
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.copy,
+                                                  size: 25,
+                                                ),
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 8)),
+                                                Text(
+                                                  'نسخ الكود',
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.grey.shade700,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          GestureDetector(
+                                            onTapDown: (_) {
+                                              Share.share(
+                                                  AppLocalizations.of(context)
+                                                      .shareMessage(
+                                                          _user.username));
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.share,
+                                                  size: 20,
+                                                ),
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 8)),
+                                                Text(
+                                                  'مشاركة الكود مع صديق',
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.grey.shade700,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 8.0, right: 8, top: 20, bottom: 8),
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Visibility(
-                                visible: (_user?.email ?? null) != null,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.email,
-                                      size: 30,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(_user?.email ??
-                                          AppLocalizations.of(context)
-                                              .noEmailProvided),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(padding: EdgeInsets.all(30)),
-                          Card(
-                            elevation: 15,
+                          Padding(padding: EdgeInsets.all(8)),
+                          RawMaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            fillColor: Colors.white,
+                            onPressed: () {},
+                            // elevation: 15,
                             child: Container(
                               alignment: Alignment.center,
                               height: 300,
-                              width: 300,
+                              // width: 300,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -155,7 +205,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                           _userScore.toString()),
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 50,
+                                        fontSize: 60,
                                         color: Colors.green,
                                       )),
                                   Padding(

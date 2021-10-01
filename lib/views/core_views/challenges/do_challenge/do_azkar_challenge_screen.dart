@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/models/challenge.dart';
-import 'package:azkar/models/friendship_scores.dart';
+import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
@@ -27,7 +27,7 @@ class DoAzkarChallengeScreen extends StatefulWidget {
   final List<String> challengedUsersIds;
   final List<String> challengedUsersFullNames;
 
-  final List<FriendshipScores> friendshipScores;
+  final List<Friend> friendshipScores;
 
   DoAzkarChallengeScreen({
     @required this.challenge,

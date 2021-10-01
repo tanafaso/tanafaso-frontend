@@ -1,4 +1,4 @@
-import 'package:azkar/models/friendship_scores.dart';
+import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
@@ -10,12 +10,12 @@ typedef OnToggleViewCallback = void Function();
 typedef OnFriendDeletedCallback = void Function();
 
 class DetailedFriendListItemWidget extends StatelessWidget {
-  final FriendshipScores friendshipScores;
+  final Friend friendshipScore;
   final OnToggleViewCallback toggleViewCallback;
   final OnFriendDeletedCallback onFriendDeletedCallback;
 
   DetailedFriendListItemWidget({
-    @required this.friendshipScores,
+    @required this.friendshipScore,
     @required this.toggleViewCallback,
     @required this.onFriendDeletedCallback,
   });
@@ -50,7 +50,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                               Column(
                                 children: [
                                   Text(
-                                    '${friendshipScores.friend.firstName} ${friendshipScores.friend.lastName}',
+                                    '${friendshipScore.firstName} ${friendshipScore.lastName}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -67,8 +67,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                                         Padding(
                                             padding: EdgeInsets.only(left: 8)),
                                         Text(
-                                          "@" +
-                                              friendshipScores.friend.username,
+                                          "@" + friendshipScore.username,
                                           textDirection: TextDirection.ltr,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
@@ -98,7 +97,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        friendshipScores.friendScore.toString(),
+                                        friendshipScore.toString(),
                                         style: TextStyle(
                                           color: getColor(),
                                         ),
@@ -117,7 +116,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        friendshipScores.currentUserScore
+                                        friendshipScore.userTotalScore
                                             .toString(),
                                         style: TextStyle(
                                           color: getColor(),
@@ -138,7 +137,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => CreateChallengeScreen(
                                         initiallySelectedFriends: [
-                                          friendshipScores.friend
+                                          friendshipScore
                                         ],
                                       )));
                             },
@@ -158,7 +157,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                               ),
                             )),
                         Visibility(
-                          visible: friendshipScores.friend.username != "sabeq",
+                          visible: friendshipScore.username != "sabeq",
                           child: RawMaterialButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
@@ -219,7 +218,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
               onPressed: () async {
                 try {
                   await ServiceProvider.usersService
-                      .deleteFriend(friendshipScores.friend.userId);
+                      .deleteFriend(friendshipScore.userId);
                 } on ApiException catch (e) {
                   SnackBarUtils.showSnackBar(
                       context, e.errorStatus.errorMessage);
@@ -240,10 +239,10 @@ class DetailedFriendListItemWidget extends StatelessWidget {
   }
 
   Color getColor() {
-    if (friendshipScores.friendScore > friendshipScores.currentUserScore) {
+    if (friendshipScore.friendTotalScore > friendshipScore.userTotalScore) {
       return Colors.red;
-    } else if (friendshipScores.friendScore <
-        friendshipScores.currentUserScore) {
+    } else if (friendshipScore.friendTotalScore <
+        friendshipScore.userTotalScore) {
       return Colors.green;
     }
     return Colors.yellow.shade700;

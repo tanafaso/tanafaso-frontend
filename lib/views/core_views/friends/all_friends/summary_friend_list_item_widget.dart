@@ -1,14 +1,14 @@
-import 'package:azkar/models/friendship_scores.dart';
+import 'package:azkar/models/friend.dart';
 import 'package:flutter/material.dart';
 
 typedef OnToggleViewCallback = void Function();
 
 class SummaryFriendListItemWidget extends StatelessWidget {
-  final FriendshipScores friendshipScores;
+  final Friend friendshipScore;
   final OnToggleViewCallback toggleViewCallback;
 
   SummaryFriendListItemWidget({
-    @required this.friendshipScores,
+    @required this.friendshipScore,
     @required this.toggleViewCallback,
   });
 
@@ -33,7 +33,7 @@ class SummaryFriendListItemWidget extends StatelessWidget {
                 Expanded(
                   flex: 5,
                   child: Text(
-                    '${friendshipScores.friend.firstName} ${friendshipScores.friend.lastName}',
+                    '${friendshipScore.firstName} ${friendshipScore.lastName}',
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -47,8 +47,8 @@ class SummaryFriendListItemWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        (friendshipScores.currentUserScore -
-                                friendshipScores.friendScore)
+                        (friendshipScore.userTotalScore -
+                                friendshipScore.friendTotalScore)
                             .abs()
                             .toString(),
                         style: TextStyle(
@@ -69,13 +69,13 @@ class SummaryFriendListItemWidget extends StatelessWidget {
   }
 
   Icon getArrowIcon() {
-    if (friendshipScores.friendScore > friendshipScores.currentUserScore) {
+    if (friendshipScore.friendTotalScore > friendshipScore.userTotalScore) {
       return Icon(
         Icons.arrow_downward,
         color: getColor(),
       );
-    } else if (friendshipScores.friendScore <
-        friendshipScores.currentUserScore) {
+    } else if (friendshipScore.friendTotalScore <
+        friendshipScore.userTotalScore) {
       return Icon(
         Icons.arrow_upward,
         color: getColor(),
@@ -88,10 +88,10 @@ class SummaryFriendListItemWidget extends StatelessWidget {
   }
 
   Color getColor() {
-    if (friendshipScores.friendScore > friendshipScores.currentUserScore) {
+    if (friendshipScore.friendTotalScore > friendshipScore.userTotalScore) {
       return Colors.red;
-    } else if (friendshipScores.friendScore <
-        friendshipScores.currentUserScore) {
+    } else if (friendshipScore.friendTotalScore <
+        friendshipScore.userTotalScore) {
       return Colors.green;
     }
     return Colors.yellow.shade700;

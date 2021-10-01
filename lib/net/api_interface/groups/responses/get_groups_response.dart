@@ -4,6 +4,8 @@ import 'package:azkar/net/api_interface/response_base.dart';
 class GetGroupsResponse extends ResponseBase {
   List<Group> groups;
 
+  GetGroupsResponse({this.groups});
+
   static GetGroupsResponse fromJson(Map<String, dynamic> json) {
     GetGroupsResponse response = new GetGroupsResponse();
     response.setError(json);
@@ -16,4 +18,7 @@ class GetGroupsResponse extends ResponseBase {
     }
     return response;
   }
+
+  Map<String, dynamic> toJson() =>
+      {'data': List<dynamic>.from(groups.map((x) => x.toJson()))};
 }

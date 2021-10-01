@@ -1,5 +1,5 @@
 import 'package:azkar/models/challenge.dart';
-import 'package:azkar/models/friendship_scores.dart';
+import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
@@ -59,7 +59,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
   }
 
   Widget getChallengesListWidget(List<Challenge> challenges, List<Group> groups,
-      List<FriendshipScores> friendshipScores) {
+      List<Friend> friendshipScores) {
     if (challenges == null || challenges.isEmpty) {
       return Center(
         child: Text(

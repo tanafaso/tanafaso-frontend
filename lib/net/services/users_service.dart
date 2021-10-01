@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/friendship.dart';
-import 'package:azkar/models/friendship_scores.dart';
 import 'package:azkar/models/publicly_available_user.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_caller.dart';
@@ -263,14 +263,14 @@ class UsersService {
     return response.friendship;
   }
 
-  Future<List<FriendshipScores>> getFriendsLeaderboard() async {
+  Future<List<Friend>> getFriendsLeaderboard() async {
     SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
     String key = CacheManager.CACHE_KEY_FRIENDS_LEADERBOARD.toString();
 
     if (prefs.containsKey(key)) {
       return GetFriendsLeaderboardResponse.fromJson(
               jsonDecode(prefs.getString(key)))
-          .friendshipScores;
+          .friends;
     }
 
     http.Response httpResponse = await ApiCaller.get(
@@ -283,7 +283,7 @@ class UsersService {
     }
 
     prefs.setString(key, responseBody);
-    return response.friendshipScores;
+    return response.friends;
   }
 
   Future<void> acceptFriend(String friendId) async {

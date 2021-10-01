@@ -4,6 +4,8 @@ import 'package:azkar/net/api_interface/response_base.dart';
 class GetChallengesResponse extends ResponseBase {
   List<Challenge> challenges;
 
+  GetChallengesResponse({this.challenges});
+
   static GetChallengesResponse fromJson(Map<String, dynamic> json) {
     GetChallengesResponse response = new GetChallengesResponse();
     response.setError(json);
@@ -16,4 +18,7 @@ class GetChallengesResponse extends ResponseBase {
     }
     return response;
   }
+
+  Map<String, dynamic> toJson() =>
+      {'data': List<dynamic>.from(challenges.map((x) => x.toJson()))};
 }
