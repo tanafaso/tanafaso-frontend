@@ -36,7 +36,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       imagePadding: EdgeInsets.zero,
     );
 
-    print(Theme.of(context).primaryColor);
     return IntroductionScreen(
       key: introKey,
       globalBackgroundColor: Theme.of(context).primaryColor,

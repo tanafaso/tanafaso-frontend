@@ -115,6 +115,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               showUnselectedLabels: true,
               currentIndex: _selectedIdx,
               onTap: _onItemTapped,
+              unselectedFontSize: 18,
+              selectedFontSize: 20,
+              iconSize: 25,
             ));
       },
     );
@@ -153,7 +156,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
-            label: AppLocalizations.of(context).profile,
+            label: 'الملف',
             backgroundColor: Theme.of(context).primaryColor,
           ),
           topicType: TopicType.PROFILE),

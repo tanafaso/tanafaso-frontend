@@ -54,7 +54,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20,
+                                      fontSize: 25,
                                     ),
                                   ),
                                   Padding(padding: EdgeInsets.only(top: 4)),
@@ -91,16 +91,19 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                             Flexible(
                               child: Column(
                                 children: [
-                                  Text(AppLocalizations.of(context).yourFriend),
+                                  Text(
+                                    AppLocalizations.of(context).yourFriend,
+                                    style: TextStyle(fontSize: 20),
+                                  ),
                                   Padding(padding: EdgeInsets.only(top: 4)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        friendshipScore.toString(),
+                                        friendshipScore.friendTotalScore
+                                            .toString(),
                                         style: TextStyle(
-                                          color: getColor(),
-                                        ),
+                                            color: getColor(), fontSize: 25),
                                       ),
                                     ],
                                   ),
@@ -110,7 +113,10 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                             Flexible(
                               child: Column(
                                 children: [
-                                  Text(AppLocalizations.of(context).you),
+                                  Text(
+                                    AppLocalizations.of(context).you,
+                                    style: TextStyle(fontSize: 20),
+                                  ),
                                   Padding(padding: EdgeInsets.only(top: 4)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -120,6 +126,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                                             .toString(),
                                         style: TextStyle(
                                           color: getColor(),
+                                          fontSize: 25,
                                         ),
                                       ),
                                     ],
@@ -129,6 +136,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                             ),
                           ],
                         ),
+                        Padding(padding: EdgeInsets.only(top: 8)),
                         RawMaterialButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
@@ -152,6 +160,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                                     AppLocalizations.of(context)
                                         .challengeThisFriend,
                                     textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ],
                               ),

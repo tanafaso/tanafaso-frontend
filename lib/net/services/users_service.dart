@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/models/friendship.dart';
 import 'package:azkar/models/publicly_available_user.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_caller.dart';
@@ -12,7 +11,6 @@ import 'package:azkar/net/api_interface/users/responses/add_to_publicly_availabl
 import 'package:azkar/net/api_interface/users/responses/delete_friend_response.dart';
 import 'package:azkar/net/api_interface/users/responses/delete_from_publicly_available_users_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_friends_leaderboard_response.dart';
-import 'package:azkar/net/api_interface/users/responses/get_friends_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_publicly_available_users_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_user_response.dart';
 import 'package:azkar/net/api_interface/users/responses/resolve_friend_request_response.dart';
@@ -239,28 +237,6 @@ class UsersService {
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
-  }
-
-  Future<Friendship> getFriends() async {
-    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
-    String key = CacheManager.CACHE_KEY_FRIENDS.toString();
-
-    if (prefs.containsKey(key)) {
-      return GetFriendsResponse.fromJson(jsonDecode(prefs.getString(key)))
-          .friendship;
-    }
-
-    http.Response httpResponse = await ApiCaller.get(
-        route: Endpoint(endpointRoute: EndpointRoute.GET_FRIENDS));
-
-    var responseBody = utf8.decode(httpResponse.body.codeUnits);
-    var response = GetFriendsResponse.fromJson(jsonDecode(responseBody));
-    if (response.hasError()) {
-      throw new ApiException(response.error);
-    }
-
-    prefs.setString(key, responseBody);
-    return response.friendship;
   }
 
   Future<List<Friend>> getFriendsLeaderboard() async {

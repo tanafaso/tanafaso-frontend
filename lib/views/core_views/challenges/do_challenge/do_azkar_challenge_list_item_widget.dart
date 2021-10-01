@@ -145,7 +145,7 @@ class _DoAzkarChallengeListItemWidgetState
             child: Text(
               widget.subChallenge.zekr.zekr,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 25),
             ),
           ),
           Padding(

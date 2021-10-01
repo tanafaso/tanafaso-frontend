@@ -71,7 +71,10 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Icon(Icons.list),
+                child: Icon(
+                  Icons.list,
+                  size: 25,
+                ),
               ),
               getAzkarSelectedTitleConditionally(),
             ],
@@ -225,9 +228,12 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
         ? AppLocalizations.of(context).noAzkarSelected
         : AppLocalizations.of(context).theSelectedAzkar;
     Color color = _subChallenges.length == 0 ? Colors.pink : Colors.black;
-    return Text(
-      text,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: color),
+    return FittedBox(
+      child: Text(
+        text,
+        style:
+            TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: color),
+      ),
     );
   }
 

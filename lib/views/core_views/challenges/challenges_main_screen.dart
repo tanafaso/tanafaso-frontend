@@ -42,7 +42,10 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
                 barrierDismissible: false,
                 backgroundDismissible: false,
                 contentLocation: ContentLocation.above,
-                tapTarget: Icon(Icons.create),
+                tapTarget: Icon(
+                  Icons.create,
+                  size: 25,
+                ),
                 // The widget that will be displayed as the tap target.
                 description: Center(
                   child: Column(
@@ -93,7 +96,10 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
                 overflowMode: OverflowMode.wrapBackground,
                 child: FloatingActionButton.extended(
                     heroTag: "addFloatingButton",
-                    label: Icon(Icons.create),
+                    label: Icon(
+                      Icons.create,
+                      size: 25,
+                    ),
                     onPressed: () {
                       Navigator.push(
                           context,

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class SummaryFriendListItemWidget extends StatelessWidget {
       padding: const EdgeInsets.only(left: 4.0, top: 4.0, right: 4.0),
       child: ConstrainedBox(
         constraints:
-            BoxConstraints(minHeight: MediaQuery.of(context).size.height / 12),
+            BoxConstraints(minHeight: MediaQuery.of(context).size.height / 10),
         child: RawMaterialButton(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -32,12 +33,12 @@ class SummaryFriendListItemWidget extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 5,
-                  child: Text(
+                  child: AutoSizeText(
                     '${friendshipScore.firstName} ${friendshipScore.lastName}',
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 25,
                     ),
                   ),
                 ),
@@ -46,14 +47,12 @@ class SummaryFriendListItemWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
+                      AutoSizeText(
                         (friendshipScore.userTotalScore -
                                 friendshipScore.friendTotalScore)
                             .abs()
                             .toString(),
-                        style: TextStyle(
-                          color: getColor(),
-                        ),
+                        style: TextStyle(color: getColor(), fontSize: 25),
                       ),
                       Padding(padding: EdgeInsets.only(right: 8)),
                       getArrowIcon(),
@@ -83,6 +82,7 @@ class SummaryFriendListItemWidget extends StatelessWidget {
     }
     return Icon(
       Icons.done_all,
+      size: 25,
       color: getColor(),
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/group.dart';
@@ -69,7 +70,10 @@ class _DoReadingQuranChallengeScreenState
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.challenge.getName()),
+          title: AutoSizeText(
+            widget.challenge.getName(),
+            style: TextStyle(fontSize: 30),
+          ),
         ),
         body: Stack(
           children: [
@@ -119,12 +123,11 @@ class _DoReadingQuranChallengeScreenState
                               return Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(
+                                  AutoSizeText.rich(
+                                    TextSpan(
                                       style: TextStyle(
                                           color: Colors.grey.shade700,
-                                          fontSize: 15),
+                                          fontSize: 25),
                                       children: [
                                         TextSpan(
                                             text: widget
@@ -160,6 +163,7 @@ class _DoReadingQuranChallengeScreenState
                                                 color: Colors.black)),
                                       ],
                                     ),
+                                    minFontSize: 10,
                                   ),
                                 ],
                               );

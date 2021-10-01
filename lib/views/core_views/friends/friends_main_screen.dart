@@ -1,5 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/models/friendship.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/services/service_provider.dart';
@@ -74,22 +74,19 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
           .where((friendshipScore) => !friendshipScore.pending)
           .toList();
 
-      Friendship friendship = await ServiceProvider.usersService.getFriends();
-      _pendingFriends =
-          friendship.friends.where((friend) => friend.pending).toList();
+      List<Friend> friendship =
+          await ServiceProvider.usersService.getFriendsLeaderboard();
+      _pendingFriends = friendship.where((friend) => friend.pending).toList();
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
     }
   }
 
   Widget getAllFriendsTabTitle() {
-    return RichText(
-        text: TextSpan(
+    return AutoSizeText.rich(TextSpan(
       // Note: Styles for TextSpans must be explicitly defined.
       // Child text spans will inherit styles from parent
-      style: new TextStyle(
-        color: Colors.black,
-      ),
+      style: new TextStyle(color: Colors.black, fontSize: 18),
       children: <TextSpan>[
         new TextSpan(
             text: 'الأصدقاء',
@@ -105,13 +102,10 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
   }
 
   Widget getFriendRequestsTabTitle() {
-    return RichText(
-        text: TextSpan(
+    return AutoSizeText.rich(TextSpan(
       // Note: Styles for TextSpans must be explicitly defined.
       // Child text spans will inherit styles from parent
-      style: new TextStyle(
-        color: Colors.black,
-      ),
+      style: new TextStyle(color: Colors.black, fontSize: 18),
       children: <TextSpan>[
         new TextSpan(
             text: 'طلبات صداقة',
@@ -291,8 +285,14 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                 overflowMode: OverflowMode.wrapBackground,
                 child: FloatingActionButton.extended(
                   heroTag: "shareWithFriend",
-                  icon: Icon(Icons.share),
-                  label: Text(AppLocalizations.of(context).shareWithFriend),
+                  icon: Icon(
+                    Icons.share,
+                    size: 25,
+                  ),
+                  label: Text(
+                    AppLocalizations.of(context).shareWithFriend,
+                    style: TextStyle(fontSize: 25),
+                  ),
                   onPressed: () async {
                     User currentUser;
                     try {
@@ -319,8 +319,14 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
             maintainSize: false,
             child: FloatingActionButton.extended(
                 heroTag: "addFriend",
-                icon: Icon(Icons.add),
-                label: Text(AppLocalizations.of(context).addFriend),
+                icon: Icon(
+                  Icons.add,
+                  size: 25,
+                ),
+                label: Text(
+                  AppLocalizations.of(context).addFriend,
+                  style: TextStyle(fontSize: 25),
+                ),
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -336,7 +342,10 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                 barrierDismissible: false,
                 backgroundDismissible: false,
                 contentLocation: ContentLocation.above,
-                tapTarget: Icon(Icons.add),
+                tapTarget: Icon(
+                  Icons.add,
+                  size: 25,
+                ),
                 // The widget that will be displayed as the tap target.
                 description: Center(
                   child: Column(
@@ -387,7 +396,10 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                 overflowMode: OverflowMode.wrapBackground,
                 child: FloatingActionButton.extended(
                     heroTag: "addFloatingButton",
-                    label: Icon(Icons.add),
+                    label: Icon(
+                      Icons.add,
+                      size: 25,
+                    ),
                     onPressed: () {
                       setState(() {
                         _addExpanded = true;

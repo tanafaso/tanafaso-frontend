@@ -1,4 +1,3 @@
-import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/net/api_interface/response_base.dart';
 
 class GetFinishedChallengesCountResponse extends ResponseBase {

@@ -1,5 +1,3 @@
-import 'package:azkar/models/azkar_challenge.dart';
-import 'package:azkar/models/user_group.dart';
 import 'package:flutter/cupertino.dart';
 
 class User {

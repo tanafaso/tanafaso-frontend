@@ -76,7 +76,7 @@ class ZekrWidgetState extends State<ZekrWidget>
                                           textAlign: TextAlign.center,
                                           textDirection: TextDirection.rtl,
                                           style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 25,
                                           ),
                                         ),
                                       ),
@@ -108,6 +108,7 @@ class ZekrWidgetState extends State<ZekrWidget>
                                       Text(
                                         ArabicUtils.englishToArabic("10"),
                                         textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 20),
                                       ),
                                     ],
                                   ),
@@ -130,6 +131,7 @@ class ZekrWidgetState extends State<ZekrWidget>
                                       Text(
                                         ArabicUtils.englishToArabic("1"),
                                         textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 20),
                                       ),
                                     ],
                                   ),
@@ -149,7 +151,7 @@ class ZekrWidgetState extends State<ZekrWidget>
                                       AppLocalizations.of(context).repetitions,
                                       textAlign: TextAlign.center,
                                       textDirection: TextDirection.rtl,
-                                      style: TextStyle(fontSize: 20),
+                                      style: TextStyle(fontSize: 25),
                                     ),
                                     Padding(padding: EdgeInsets.only(right: 8)),
                                     Text(
@@ -174,6 +176,7 @@ class ZekrWidgetState extends State<ZekrWidget>
                                     Text(
                                       ArabicUtils.englishToArabic("1"),
                                       textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 20),
                                     ),
                                   ],
                                 )),
@@ -195,6 +198,7 @@ class ZekrWidgetState extends State<ZekrWidget>
                                       Text(
                                         ArabicUtils.englishToArabic("10"),
                                         textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 20),
                                       ),
                                     ],
                                   ),

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/challenges/requests/add_meaning_challenge_request_body.dart';
@@ -45,7 +46,10 @@ class _CreateMeaningChallengeScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("معاني كلمات القرآن"),
+        title: AutoSizeText(
+          "معاني كلمات القرآن",
+          style: TextStyle(fontSize: 30),
+        ),
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -88,7 +92,7 @@ class _CreateMeaningChallengeScreenState
                                     child: Text(
                                       '*',
                                       style: TextStyle(
-                                          color: Colors.red, fontSize: 17),
+                                          color: Colors.red, fontSize: 25),
                                     ),
                                   ),
                                   Padding(
@@ -99,7 +103,7 @@ class _CreateMeaningChallengeScreenState
                                     "عدد الكلمات",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 17),
+                                        fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -108,29 +112,39 @@ class _CreateMeaningChallengeScreenState
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    RichText(
-                                        text: TextSpan(
-                                      // Note: Styles for TextSpans must be explicitly defined.
-                                      // Child text spans will inherit styles from parent
-                                      style: new TextStyle(
-                                        color: Colors.black,
+                                    Flexible(
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: RichText(
+                                              maxLines: 1,
+                                              text: TextSpan(
+                                                // Note: Styles for TextSpans must be explicitly defined.
+                                                // Child text spans will inherit styles from parent
+                                                style: new TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20),
+                                                children: <TextSpan>[
+                                                  new TextSpan(
+                                                    text: 'سيتكون التحدي من',
+                                                  ),
+                                                  new TextSpan(
+                                                      text:
+                                                          '  ${ArabicUtils.englishToArabic(_numberOfWords.toString())}  ',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 25,
+                                                      )),
+                                                  new TextSpan(
+                                                    text: 'كلمات ومعانيها.',
+                                                  ),
+                                                ],
+                                              )),
+                                        ),
                                       ),
-                                      children: <TextSpan>[
-                                        new TextSpan(
-                                          text: 'سيتكون التحدي من',
-                                        ),
-                                        new TextSpan(
-                                            text:
-                                                '  ${ArabicUtils.englishToArabic(_numberOfWords.toString())}  ',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            )),
-                                        new TextSpan(
-                                          text: 'كلمات ومعانيها.',
-                                        ),
-                                      ],
-                                    )),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -169,7 +183,7 @@ class _CreateMeaningChallengeScreenState
                                     AppLocalizations.of(context).deadline,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 17),
+                                        fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -178,29 +192,35 @@ class _CreateMeaningChallengeScreenState
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    RichText(
-                                        text: TextSpan(
-                                      // Note: Styles for TextSpans must be explicitly defined.
-                                      // Child text spans will inherit styles from parent
-                                      style: new TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                      children: <TextSpan>[
-                                        new TextSpan(
-                                          text: 'التحدي ينتهي بعد',
-                                        ),
-                                        new TextSpan(
-                                            text:
-                                                '  ${ArabicUtils.englishToArabic(_expiresAfterHoursNum.toString())}  ',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
+                                    Flexible(
+                                      child: FittedBox(
+                                        child: RichText(
+                                            maxLines: 1,
+                                            text: TextSpan(
+                                              // Note: Styles for TextSpans must be explicitly defined.
+                                              // Child text spans will inherit styles from parent
+                                              style: new TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20),
+                                              children: <TextSpan>[
+                                                new TextSpan(
+                                                  text: 'التحدي ينتهي بعد',
+                                                ),
+                                                new TextSpan(
+                                                    text:
+                                                        '  ${ArabicUtils.englishToArabic(_expiresAfterHoursNum.toString())}  ',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 25,
+                                                    )),
+                                                new TextSpan(
+                                                  text: 'ساعات.',
+                                                ),
+                                              ],
                                             )),
-                                        new TextSpan(
-                                          text: 'ساعات.',
-                                        ),
-                                      ],
-                                    )),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

@@ -15,45 +15,54 @@ class AllChallengesWidget extends StatefulWidget {
 }
 
 class _AllChallengesWidgetState extends State<AllChallengesWidget> {
+  List<Challenge> challenges;
+  List<Group> groups;
+  List<Friend> friends;
+
+  Future<void> getNeededData() async {
+    await ServiceProvider.homeService.getHomeDataAndCacheIt();
+    challenges = await ServiceProvider.challengesService.getAllChallenges();
+    groups = await ServiceProvider.groupsService.getGroups();
+    friends = await ServiceProvider.usersService.getFriendsLeaderboard();
+    return Future.value();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: FutureBuilder<List<dynamic>>(
-        future: Future.wait([
-          ServiceProvider.challengesService.getAllChallenges(),
-          ServiceProvider.groupsService.getGroups(),
-          ServiceProvider.usersService.getFriendsLeaderboard(),
-        ]),
-        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-          List<Widget> children;
-          if (snapshot.hasData &&
-              snapshot.connectionState == ConnectionState.done) {
-            return getChallengesListWidget(
-                snapshot.data[0], snapshot.data[1], snapshot.data[2]);
-          } else if (snapshot.hasError) {
-            children = <Widget>[
-              Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 60,
+    return SafeArea(
+      child: Container(
+        child: FutureBuilder<void>(
+          future: getNeededData(),
+          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+            List<Widget> children;
+            if (snapshot.connectionState == ConnectionState.done) {
+              return getChallengesListWidget(challenges, groups, friends);
+            } else if (snapshot.hasError) {
+              print(snapshot.error);
+              children = <Widget>[
+                Icon(
+                  Icons.error_outline,
+                  color: Colors.red,
+                  size: 60,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: SnapshotUtils.getErrorWidget(context, snapshot),
+                )
+              ];
+            } else {
+              children =
+                  List.generate(3, (_) => ChallengeListItemLoadingWidget());
+            }
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: children,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: SnapshotUtils.getErrorWidget(context, snapshot),
-              )
-            ];
-          } else {
-            children =
-                List.generate(3, (_) => ChallengeListItemLoadingWidget());
-          }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: children,
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -84,7 +93,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
           // Cache half screen after and half screen before the current screen.
           cacheExtent: MediaQuery.of(context).size.height * 0.5,
           separatorBuilder: (context, index) => Padding(
-            padding: EdgeInsets.only(bottom: 4),
+            padding: EdgeInsets.only(bottom: 8),
           ),
           itemCount: challenges.length,
           itemBuilder: (context, index) {

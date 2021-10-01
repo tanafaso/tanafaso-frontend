@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
@@ -52,11 +53,11 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                             children: [
                               Container(
                                 alignment: Alignment.center,
-                                child: Text(
+                                child: AutoSizeText(
                                   _user.firstName + " " + _user.lastName,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 40,
+                                    fontSize: 45,
                                   ),
                                 ),
                               ),
@@ -68,45 +69,38 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                 onPressed: () {},
                                 // elevation: 15,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(16.0),
                                   child: Column(
                                     children: [
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          RichText(
-                                            textAlign: TextAlign.center,
-                                            text: TextSpan(
-                                                style: TextStyle(
-                                                  color: Colors.grey.shade700,
-                                                  fontSize: 25,
-                                                ),
-                                                children: [
-                                                  TextSpan(
-                                                      text: 'كود المستخدم',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black)),
-                                                ]),
+                                          AutoSizeText(
+                                            'كود المستخدم',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 35),
                                           ),
                                         ],
                                       ),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                            MainAxisAlignment.center,
                                         children: [
-                                          Text(
+                                          AutoSizeText(
                                             _user.username,
-                                            style: TextStyle(fontSize: 18),
+                                            style: TextStyle(
+                                              fontSize: 30,
+                                              color: Colors.grey.shade700,
+                                            ),
                                           ),
                                         ],
                                       ),
                                       Padding(padding: EdgeInsets.only(top: 8)),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                            MainAxisAlignment.center,
                                         children: [
                                           GestureDetector(
                                             onTapDown: (_) {
@@ -128,10 +122,10 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                                 Padding(
                                                     padding: EdgeInsets.only(
                                                         left: 8)),
-                                                Text(
+                                                AutoSizeText(
                                                   'نسخ الكود',
                                                   style: TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: 25,
                                                     color: Colors.grey.shade700,
                                                   ),
                                                 ),
@@ -142,7 +136,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                       ),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                            MainAxisAlignment.center,
                                         children: [
                                           GestureDetector(
                                             onTapDown: (_) {
@@ -155,15 +149,15 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                               children: [
                                                 Icon(
                                                   Icons.share,
-                                                  size: 20,
+                                                  size: 25,
                                                 ),
                                                 Padding(
                                                     padding: EdgeInsets.only(
                                                         left: 8)),
-                                                Text(
+                                                AutoSizeText(
                                                   'مشاركة الكود مع صديق',
                                                   style: TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: 25,
                                                     color: Colors.grey.shade700,
                                                   ),
                                                 ),
@@ -194,10 +188,13 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(
+                                    child: AutoSizeText(
                                       AppLocalizations.of(context)
                                           .youHaveFinished,
-                                      style: TextStyle(fontSize: 30),
+                                      style: TextStyle(
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                   Text(
@@ -210,9 +207,12 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                       )),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(
+                                    child: AutoSizeText(
                                       AppLocalizations.of(context).challenges,
-                                      style: TextStyle(fontSize: 30),
+                                      style: TextStyle(
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -221,28 +221,28 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                           ),
                           Padding(padding: EdgeInsets.all(10)),
                           Container(
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 16.0, horizontal: 30),
                             child: ButtonTheme(
                               height: 50,
                               // ignore: deprecated_member_use
-                              child: FlatButton(
+                              child: RawMaterialButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                fillColor: Colors.grey,
                                 onPressed: () async {
                                   performLogout(context);
                                 },
                                 child: Center(
-                                    child: Text(
-                                  AppLocalizations.of(context).logout,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: AutoSizeText(
+                                    AppLocalizations.of(context).logout,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 )),
                               ),
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(5),
                             ),
                           ),
                         ],
@@ -257,28 +257,28 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                         child: SnapshotUtils.getErrorWidget(context, snapshot),
                       ),
                       Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 30),
                         child: ButtonTheme(
                           height: 50,
                           // ignore: deprecated_member_use
-                          child: FlatButton(
+                          child: RawMaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            fillColor: Colors.grey,
                             onPressed: () async {
                               performLogout(context);
                             },
                             child: Center(
-                                child: Text(
-                              AppLocalizations.of(context).logout,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
+                                child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AutoSizeText(
+                                AppLocalizations.of(context).logout,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             )),
                           ),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
                     ],

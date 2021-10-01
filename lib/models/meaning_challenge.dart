@@ -37,8 +37,8 @@ class MeaningChallenge {
         "creatingUserId": creatingUserId,
         "expiryDate": expiryDate,
         "usersFinished": List<String>.from(usersFinished.map((x) => x)),
-        "words": List<dynamic>.from(words.map((x) => x)),
-        "meanings": List<dynamic>.from(meanings.map((x) => x)),
+        "words": List<String>.from(words.map((x) => x)),
+        "meanings": List<String>.from(meanings.map((x) => x)),
         "finished": finished,
       };
 

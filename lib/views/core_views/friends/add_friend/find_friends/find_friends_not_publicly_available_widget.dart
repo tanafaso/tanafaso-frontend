@@ -82,7 +82,10 @@ class _FindFriendsNotPubliclyAvailableWidgetState
                               fillColor: _maleButtonColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50)),
-                              child: Text('ذكر'),
+                              child: Text(
+                                'ذكر',
+                                style: TextStyle(fontSize: 25),
+                              ),
                             ),
                           ),
                           Padding(padding: EdgeInsets.only(left: 8)),
@@ -97,7 +100,8 @@ class _FindFriendsNotPubliclyAvailableWidgetState
                               fillColor: _femaleButtonColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50)),
-                              child: Text('أنثى'),
+                              child:
+                                  Text('أنثى', style: TextStyle(fontSize: 25)),
                             ),
                           ),
                           Padding(padding: EdgeInsets.only(left: 8)),
@@ -120,11 +124,11 @@ class _FindFriendsNotPubliclyAvailableWidgetState
                     children: [
                       Text(
                         'قبل البحث عن أصدقاء ، يجب أن توافق على أن المستخدمين الآخرين سيتمكنون من رؤية اسمك وسيتمكنون من إرسال طلبات صداقة إليك.',
-                        style: TextStyle(fontSize: 17),
+                        style: TextStyle(fontSize: 20),
                       ),
                       RichText(
                           text: TextSpan(
-                        style: TextStyle(color: Colors.black, fontSize: 17),
+                        style: TextStyle(color: Colors.black, fontSize: 20),
                         children: [
                           TextSpan(
                               text: "ملاحظة: ",
@@ -153,7 +157,7 @@ class _FindFriendsNotPubliclyAvailableWidgetState
                           ),
                           Text(
                             "أنا موافق",
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 25),
                           ),
                         ],
                       ),

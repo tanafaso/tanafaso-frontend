@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -90,14 +91,34 @@ class DoChallengeUtils {
   static Future<void> showReviewDialog(BuildContext context) {
     // ignore: deprecated_member_use
     Widget cancelButton = FlatButton(
-      child: Text("لا شكرا"),
+      child: Row(
+        children: [
+          Expanded(
+            child: AutoSizeText(
+              "لا شكرا",
+              maxLines: 1,
+              style: TextStyle(fontSize: 25),
+            ),
+          ),
+        ],
+      ),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
     // ignore: deprecated_member_use
     Widget continueButton = FlatButton(
-      child: Text("قيم التطبيق"),
+      child: Row(
+        children: [
+          Expanded(
+            child: AutoSizeText(
+              "قيم التطبيق",
+              maxLines: 1,
+              style: TextStyle(fontSize: 25),
+            ),
+          ),
+        ],
+      ),
       onPressed: () {
         InAppReview.instance.openStoreListing();
         Navigator.of(context).pop();
@@ -106,8 +127,22 @@ class DoChallengeUtils {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("تقييم التطبيق"),
-      content: Text("هل يمكنك تقييم التطبيق إذا كنت تعتقد أنه مفيد؟ 😊"),
+      title: AutoSizeText(
+        "تقييم التطبيق",
+        maxLines: 1,
+        style: TextStyle(fontSize: 35),
+      ),
+      content: Expanded(
+        child: Row(
+          children: [
+            AutoSizeText(
+              "هل يمكنك تقييم التطبيق إذا كنت تعتقد أنه مفيد؟ 😊",
+              maxLines: 1,
+              style: TextStyle(fontSize: 25),
+            ),
+          ],
+        ),
+      ),
       actions: [
         cancelButton,
         continueButton,
