@@ -11,6 +11,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:clear_all_notifications/clear_all_notifications.dart';
 
 class Topic {
   BottomNavigationBarItem bottomNavigationBarItem;
@@ -77,6 +78,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   initFirebase() async {
     // Get the token each time the application loads.
     String token = await FirebaseMessaging.instance.getToken();
+
+    ClearAllNotifications.clear();
 
     // Send initial token to database.
     sendTokenToDatabase(token);
