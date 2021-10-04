@@ -67,7 +67,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
           key: _signUpFormKey,
           child: new Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
               child: SingleChildScrollView(
                 child: new Column(
@@ -81,8 +81,8 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                             child: new Text(
                               AppLocalizations.of(context).firstName,
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
+                                // fontWeight: FontWeight.bold,
+                                fontSize: 25.0,
                               ),
                             ),
                           ),
@@ -131,8 +131,8 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                             child: new Text(
                               AppLocalizations.of(context).lastName,
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
+                                // fontWeight: FontWeight.bold,
+                                fontSize: 25.0,
                               ),
                             ),
                           ),
@@ -181,8 +181,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                             child: new Text(
                               AppLocalizations.of(context).email,
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
+                                fontSize: 25.0,
                               ),
                             ),
                           ),
@@ -232,8 +231,8 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                             child: new Text(
                               AppLocalizations.of(context).password,
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
+                                // fontWeight: FontWeight.bold,
+                                fontSize: 25.0,
                               ),
                             ),
                           ),
@@ -299,8 +298,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                             child: new Text(
                               AppLocalizations.of(context).confirmPassword,
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
+                                fontSize: 25.0,
                               ),
                             ),
                           ),
@@ -399,9 +397,22 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                     Visibility(
                       visible: _errorMessage.length > 0,
                       maintainSize: false,
-                      child: Text(
-                        _errorMessage,
-                        style: TextStyle(color: Colors.red),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: FittedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  _errorMessage,
+                                  style: TextStyle(
+                                      color: Colors.red, fontSize: 15),
+                                  maxLines: 1,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                     new Container(
@@ -458,12 +469,13 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
     return ProgressButton.icon(
       textStyle: TextStyle(
         color: Colors.black,
+        fontSize: 25,
       ),
       iconedButtons: {
         ButtonState.idle: IconedButton(
             text: AppLocalizations.of(context).signUp,
             icon: Icon(Icons.login, color: Colors.black),
-            color: Theme.of(context).buttonColor),
+            color: Theme.of(context).buttonTheme.colorScheme.primary),
         ButtonState.loading: IconedButton(
             text: AppLocalizations.of(context).sending,
             color: Colors.yellow.shade200),

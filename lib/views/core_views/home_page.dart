@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               child: getWidgetForTopicType(topics[_selectedIdx].topicType),
             ),
             bottomNavigationBar: BottomNavigationBar(
-              backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               items: topics.map((e) => e.bottomNavigationBarItem).toList(),
               selectedItemColor: Colors.green,
               unselectedItemColor: Colors.black,
@@ -147,27 +147,27 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           bottomNavigationBarItem: BottomNavigationBarItem(
               icon: Icon(Icons.whatshot),
               label: AppLocalizations.of(context).theChallenges,
-              backgroundColor: Theme.of(context).primaryColor),
+              backgroundColor: Theme.of(context).colorScheme.primary),
           topicType: TopicType.CHALLENGES),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
             label: AppLocalizations.of(context).friends,
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).colorScheme.primary,
           ),
           topicType: TopicType.FRIENDS),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             label: 'الملف',
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).colorScheme.primary,
           ),
           topicType: TopicType.PROFILE),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: Icon(Icons.help),
             label: "استفسار",
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).colorScheme.primary,
           ),
           topicType: TopicType.LIVE_SUPPORT),
     ];

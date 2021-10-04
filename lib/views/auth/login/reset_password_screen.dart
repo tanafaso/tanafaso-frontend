@@ -46,7 +46,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             child: new Container(
                               height: MediaQuery.of(context).size.height,
                               decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                               child: SingleChildScrollView(
                                 child: Column(
@@ -185,7 +185,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         ButtonState.idle: IconedButton(
             text: AppLocalizations.of(context).send,
             icon: Icon(Icons.add, color: Colors.black),
-            color: Theme.of(context).buttonColor),
+            color: Theme.of(context).buttonTheme.colorScheme.primary),
         ButtonState.loading: IconedButton(
             text: AppLocalizations.of(context).sending,
             color: Colors.yellow.shade200),

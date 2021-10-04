@@ -145,14 +145,17 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                             child: Row(
                               children: [
                                 Expanded(
-                                    child: Padding(
-                                  padding: EdgeInsets.all(0),
-                                )),
-                                Text(
-                                  AppLocalizations.of(context)
-                                      .deleteAndCopyChallenge,
-                                  softWrap: true,
-                                  textAlign: TextAlign.center,
+                                  child: FittedBox(
+                                    child: Text(
+                                        AppLocalizations.of(context)
+                                            .deleteAndCopyChallenge,
+                                        softWrap: true,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                        )),
+                                  ),
                                 ),
                               ],
                             ),
@@ -160,22 +163,19 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                           description: Row(
                             children: [
                               Expanded(
-                                  child: Padding(
-                                padding: EdgeInsets.all(0),
-                              )),
-                              Container(
-                                alignment: Alignment.centerRight,
-                                width: MediaQuery.of(context).size.width / 2,
                                 child: Text(
-                                  AppLocalizations.of(context)
-                                      .swipeTheChallengeCardToTheRightToDeleteOrCopyAChallenge,
-                                  softWrap: true,
-                                  textAlign: TextAlign.center,
-                                ),
+                                    AppLocalizations.of(context)
+                                        .swipeTheChallengeCardToTheRightToDeleteOrCopyAChallenge,
+                                    softWrap: true,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    )),
                               ),
                             ],
                           ),
-                          backgroundColor: Theme.of(context).primaryColor,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           targetColor: Colors.white,
                           textColor: Colors.black,
                           child: getMainWidget(),

@@ -10,6 +10,9 @@ import 'package:azkar/views/auth/signup/signup_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
@@ -52,13 +55,12 @@ class _LoginScreenState extends State<LoginScreen> {
         body: Center(
             child: Container(
                 height: MediaQuery.of(context).size.height,
-                child: new SingleChildScrollView(
-                    child: Form(
+                child: Form(
                   key: _loginFormKey,
                   child: new Container(
                     height: MediaQuery.of(context).size.height,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                     child: SingleChildScrollView(
                       child: new Column(
@@ -75,9 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       child: new Text(
                                         AppLocalizations.of(context).email,
                                         style: TextStyle(
-                                          fontWeight: FontWeight.bold,
                                           color: Colors.black,
-                                          fontSize: 15.0,
+                                          fontSize: 25.0,
                                         ),
                                       ),
                                     ),
@@ -135,9 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: new Text(
                                     AppLocalizations.of(context).password,
                                     style: TextStyle(
-                                      fontWeight: FontWeight.bold,
                                       color: Colors.black,
-                                      fontSize: 15.0,
+                                      fontSize: 25.0,
                                     ),
                                   ),
                                 ),
@@ -199,13 +199,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           Visibility(
                             visible: _errorMessage.length > 0,
                             maintainSize: false,
-                            child: Text(
-                              _errorMessage,
-                              style: TextStyle(color: Colors.red),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: FittedBox(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        _errorMessage,
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           new Container(
-                            width: MediaQuery.of(context).size.width,
                             margin: const EdgeInsets.only(
                                 left: 30.0, right: 30.0, top: 20.0),
                             alignment: Alignment.center,
@@ -221,7 +231,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           Visibility(
                             visible: Platform.isAndroid,
                             child: new Container(
-                              width: MediaQuery.of(context).size.width,
                               margin: const EdgeInsets.only(
                                   left: 30.0, right: 30.0, top: 20.0),
                               alignment: Alignment.center,
@@ -253,162 +262,115 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           Visibility(
-                            visible: Platform.isAndroid,
-                            child: new Container(
-                              width: MediaQuery.of(context).size.width,
-                              margin: const EdgeInsets.only(
-                                  left: 30.0, right: 30.0, top: 20.0),
-                              child: new Row(
-                                children: <Widget>[
-                                  new Expanded(
-                                    child: new Container(
-                                      alignment: Alignment.center,
-                                      child: new Row(
-                                        children: <Widget>[
-                                          new Expanded(
-                                            // ignore: deprecated_member_use
-                                            child: new FlatButton(
-                                              shape: new RoundedRectangleBorder(
+                              visible: Platform.isAndroid,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 8 * 2.0),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 8.0,
+                                            right: 8.0,
+                                          ),
+                                          child: SignInButton(
+                                            Buttons.Google,
+                                            shape: new RoundedRectangleBorder(
                                                 borderRadius:
                                                     new BorderRadius.circular(
-                                                        30.0),
-                                              ),
-                                              color: Color(0Xff3B5998),
-                                              onPressed: () => {},
-                                              child: new Container(
-                                                child: new Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    new Container(
-                                                      padding: EdgeInsets.only(
-                                                        left: 20.0,
-                                                      ),
-                                                    ),
-                                                    new Expanded(
-                                                      // ignore: deprecated_member_use
-                                                      child: new FlatButton(
-                                                        onPressed: () =>
-                                                            loginWithFacebook(),
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                          top: 20.0,
-                                                          bottom: 20.0,
-                                                        ),
-                                                        child: new Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: <Widget>[
-                                                            Expanded(
-                                                              child: Text(
-                                                                AppLocalizations.of(
-                                                                        context)
-                                                                    .facebook,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ),
-                                                            Icon(
-                                                              const IconData(
-                                                                  0xea90,
-                                                                  fontFamily:
-                                                                      'icomoon'),
-                                                              color:
-                                                                  Colors.white,
-                                                              size: 20.0,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    new Container(
-                                                      padding: EdgeInsets.only(
-                                                        left: 20.0,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
+                                                        30.0)),
+                                            onPressed: () {
+                                              loginWithGoogle(context);
+                                            },
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 8.0,
+                                            right: 8.0,
+                                          ),
+                                          child: SignInButton(
+                                            Buttons.Facebook,
+                                            shape: new RoundedRectangleBorder(
+                                                borderRadius:
+                                                    new BorderRadius.circular(
+                                                        30.0)),
+                                            onPressed: () {
+                                              loginWithFacebook();
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: new Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                // ignore: deprecated_member_use
-                                new FlatButton(
-                                  child: new Text(
-                                    AppLocalizations.of(context)
-                                        .youDoNotHaveAnAccount,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: 15.0,
-                                    ),
-                                    textAlign: TextAlign.end,
+                              )),
+                          // ignore: deprecated_member_use
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              // ignore: deprecated_member_use
+                              new FlatButton(
+                                child: new Text(
+                                  AppLocalizations.of(context)
+                                      .youDoNotHaveAnAccount,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15.0,
                                   ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                new SignUpMainScreen()));
-                                  },
+                                  textAlign: TextAlign.end,
                                 ),
-                                Expanded(
-                                    child: Padding(
-                                  padding: EdgeInsets.all(1),
-                                )),
-                                new Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    // ignore: deprecated_member_use
-                                    new FlatButton(
-                                      child: new Text(
-                                        AppLocalizations.of(context)
-                                            .forgotPassword,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 15.0,
-                                        ),
-                                        textAlign: TextAlign.end,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    new ResetPasswordScreen()));
-                                      },
-                                    ),
-                                  ],
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              new SignUpMainScreen()));
+                                },
+                              ),
+                            ],
+                          ),
+                          // ignore: deprecated_member_use
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              // ignore: deprecated_member_use
+                              new FlatButton(
+                                child: new Text(
+                                  AppLocalizations.of(context).forgotPassword,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 15.0,
+                                  ),
+                                  textAlign: TextAlign.end,
                                 ),
-                              ],
-                            ),
-                          )
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              new ResetPasswordScreen()));
+                                },
+                              ),
+                            ],
+                          ),
+                          Padding(padding: EdgeInsets.all(8)),
                         ],
                       ),
                     ),
                   ),
-                )))),
+                ))),
       ),
     );
   }
@@ -417,12 +379,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return ProgressButton.icon(
       textStyle: TextStyle(
         color: Colors.black,
+        fontSize: 25,
       ),
       iconedButtons: {
         ButtonState.idle: IconedButton(
             text: AppLocalizations.of(context).login,
             icon: Icon(Icons.login, color: Colors.black),
-            color: Theme.of(context).buttonColor),
+            color: Theme.of(context).buttonTheme.colorScheme.primary),
         ButtonState.loading: IconedButton(
             text: AppLocalizations.of(context).sending,
             color: Colors.yellow.shade200),
@@ -485,6 +448,33 @@ class _LoginScreenState extends State<LoginScreen> {
 
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => HomePage()));
+  }
+
+  loginWithGoogle(BuildContext context) async {
+    GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: [
+        'email',
+      ],
+    );
+    String googleIdToken;
+    try {
+      GoogleSignInAccount account = await _googleSignIn.signIn();
+      GoogleSignInAuthentication authentication = await account.authentication;
+      googleIdToken = authentication.idToken;
+    } catch (error) {
+      print(error);
+    }
+
+    try {
+      await ServiceProvider.authenticationService
+          .loginWithGoogle(googleIdToken);
+    } on ApiException catch (e) {
+      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
+      return;
+    }
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => new HomePage()));
   }
 
   loginWithEmail(EmailLoginRequestBody request) async {

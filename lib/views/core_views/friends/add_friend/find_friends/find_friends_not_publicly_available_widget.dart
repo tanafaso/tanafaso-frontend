@@ -185,7 +185,10 @@ class _FindFriendsNotPubliclyAvailableWidgetState
                       ButtonState.loading: IconedButton(
                           icon:
                               Icon(Icons.search, color: Colors.yellow.shade200),
-                          color: Theme.of(context).buttonColor),
+                          color: Theme.of(context)
+                              .buttonTheme
+                              .colorScheme
+                              .primary),
                       ButtonState.fail: IconedButton(
                           icon: Icon(Icons.cancel, color: Colors.white),
                           color: Colors.red.shade300),

@@ -350,23 +350,33 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                           text: "ابحث",
                                           icon: Icon(Icons.search,
                                               color: Colors.black),
-                                          color:
-                                              Theme.of(context).primaryColor),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary),
                                       ButtonState.success: IconedButton(
                                           text: "ابحث",
                                           icon: Icon(Icons.search,
                                               color: Colors.black),
-                                          color: Theme.of(context).buttonColor),
+                                          color: Theme.of(context)
+                                              .buttonTheme
+                                              .colorScheme
+                                              .primary),
                                       ButtonState.loading: IconedButton(
                                           text: "ابحث",
                                           icon: Icon(Icons.search,
                                               color: Colors.black),
-                                          color: Theme.of(context).buttonColor),
+                                          color: Theme.of(context)
+                                              .buttonTheme
+                                              .colorScheme
+                                              .primary),
                                       ButtonState.fail: IconedButton(
                                           text: "ابحث",
                                           icon: Icon(Icons.search,
                                               color: Colors.black),
-                                          color: Theme.of(context).buttonColor),
+                                          color: Theme.of(context)
+                                              .buttonTheme
+                                              .colorScheme
+                                              .primary),
                                     },
                                     onPressed: () {
                                       Navigator.of(context).push(
@@ -404,7 +414,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
         ButtonState.idle: IconedButton(
             text: AppLocalizations.of(context).invite,
             icon: Icon(Icons.add, color: Colors.black),
-            color: Theme.of(context).primaryColor),
+            color: Theme.of(context).colorScheme.primary),
         ButtonState.loading: IconedButton(
             text: AppLocalizations.of(context).sending,
             color: Colors.yellow.shade200),

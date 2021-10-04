@@ -44,7 +44,7 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
                 contentLocation: ContentLocation.above,
                 tapTarget: Icon(
                   Icons.create,
-                  size: 25,
+                  size: 30,
                 ),
                 // The widget that will be displayed as the tap target.
                 description: Center(
@@ -53,18 +53,16 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
                       Row(
                         children: [
                           Expanded(
-                              child: Padding(
-                            padding: EdgeInsets.all(0),
-                          )),
-                          Container(
-                            alignment: Alignment.center,
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Text(
-                              "أضف تحدي",
-                              softWrap: true,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                "أضف تحدي",
+                                maxLines: 1,
+                                softWrap: true,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ],
@@ -73,16 +71,13 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
                       Row(
                         children: [
                           Expanded(
-                              child: Padding(
-                            padding: EdgeInsets.all(0),
-                          )),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            width: MediaQuery.of(context).size.width / 2,
                             child: Text(
                               'اضغط هذا الزر لتحدي صديق أو لتحدي صديقك الافتراضي سابق.',
                               softWrap: true,
                               textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ],
@@ -90,8 +85,8 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
                     ],
                   ),
                 ),
-                backgroundColor: Theme.of(context).accentColor,
-                targetColor: Theme.of(context).primaryColor,
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                targetColor: Theme.of(context).colorScheme.primary,
                 textColor: Colors.black,
                 overflowMode: OverflowMode.wrapBackground,
                 child: FloatingActionButton.extended(

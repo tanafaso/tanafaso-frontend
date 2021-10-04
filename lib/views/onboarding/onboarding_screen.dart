@@ -32,13 +32,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           color: Colors.green.shade900),
       bodyTextStyle: bodyStyle,
       descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-      pageColor: Theme.of(context).primaryColor,
+      pageColor: Theme.of(context).colorScheme.primary,
       imagePadding: EdgeInsets.zero,
     );
 
     return IntroductionScreen(
       key: introKey,
-      globalBackgroundColor: Theme.of(context).primaryColor,
+      globalBackgroundColor: Theme.of(context).colorScheme.primary,
       globalHeader: Align(
         alignment: Alignment.topRight,
         child: SafeArea(
@@ -122,7 +122,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
       ),
       dotsContainerDecorator: ShapeDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).colorScheme.primary,
         shape: RoundedRectangleBorder(),
       ),
     );

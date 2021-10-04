@@ -301,8 +301,10 @@ class _CreateAzkarChallengeScreenState
                               ),
                               Slider(
                                 value: _expiresAfterHoursNum.toDouble(),
-                                activeColor: Theme.of(context).primaryColor,
-                                inactiveColor: Theme.of(context).primaryColor,
+                                activeColor:
+                                    Theme.of(context).colorScheme.primary,
+                                inactiveColor:
+                                    Theme.of(context).colorScheme.primary,
                                 min: 1,
                                 max: 24,
                                 divisions: 24,

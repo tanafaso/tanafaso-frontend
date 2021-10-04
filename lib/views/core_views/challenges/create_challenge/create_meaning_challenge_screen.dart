@@ -150,8 +150,10 @@ class _CreateMeaningChallengeScreenState
                               ),
                               Slider(
                                 value: _numberOfWords.toDouble(),
-                                activeColor: Theme.of(context).primaryColor,
-                                inactiveColor: Theme.of(context).primaryColor,
+                                activeColor:
+                                    Theme.of(context).colorScheme.primary,
+                                inactiveColor:
+                                    Theme.of(context).colorScheme.primary,
                                 min: 3,
                                 max: 9,
                                 divisions: 8,
@@ -226,8 +228,10 @@ class _CreateMeaningChallengeScreenState
                               ),
                               Slider(
                                 value: _expiresAfterHoursNum.toDouble(),
-                                activeColor: Theme.of(context).primaryColor,
-                                inactiveColor: Theme.of(context).primaryColor,
+                                activeColor:
+                                    Theme.of(context).colorScheme.primary,
+                                inactiveColor:
+                                    Theme.of(context).colorScheme.primary,
                                 min: 1,
                                 max: 24,
                                 divisions: 24,

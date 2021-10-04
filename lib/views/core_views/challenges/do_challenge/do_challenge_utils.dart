@@ -19,7 +19,7 @@ class DoChallengeUtils {
         child: SizedBox(
           width: double.maxFinite,
           child: Card(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,

@@ -6,6 +6,7 @@ enum EndpointRoute {
   BASE_URL,
   GET_HOME,
   LOGIN_WITH_FACEBOOK,
+  LOGIN_WITH_GOOGLE,
   CONNECT_FACEBOOK,
   REGISTER_WITH_EMAIL_V2,
   LOGIN_WITH_EMAIL,
@@ -66,8 +67,8 @@ class ApiRoutesUtil {
       case EndpointRoute.BASE_URL:
         if (Platform.isAndroid) {
           // Use the following for testing locally.
-          // return '10.0.2.2:8080';
-          return 'www.tanafaso.com';
+          return '10.0.2.2:8080';
+          // return 'www.tanafaso.com';
         }
         if (Platform.isIOS) {
           // Use the following for testing locally.
@@ -80,6 +81,8 @@ class ApiRoutesUtil {
         return '/apiHome';
       case EndpointRoute.LOGIN_WITH_FACEBOOK:
         return '/login/facebook';
+      case EndpointRoute.LOGIN_WITH_GOOGLE:
+        return '/login/google';
       case EndpointRoute.CONNECT_FACEBOOK:
         return '/connect/facebook';
       case EndpointRoute.REGISTER_WITH_EMAIL_V2:
