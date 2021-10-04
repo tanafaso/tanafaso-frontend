@@ -62,6 +62,7 @@ class Status {
   static const int USER_NOT_ADDED_TO_PUBLICLY_AVAILABLE_USERS_ERROR = 55;
   static const int USER_ALREADY_IS_PUBLICLY_AVAILABLE_USER_ERROR = 56;
   static const int FACEBOOK_RETURNED_NULL_EMAIL_ADDRESS_ERROR = 57;
+  static const int AUTHENTICATION_WITH_GOOGLE_ERROR = 58;
 
   static Map<int, String> conversions = const {
     API_USER_ALREADY_LOGGED_IN_ERROR: "لقد قمت بتسجيل الدخول بالفعل",
@@ -137,7 +138,9 @@ class Status {
     USER_ALREADY_IS_PUBLICLY_AVAILABLE_USER_ERROR:
         "تمت إضافتك بالفعل إلى القائمة التي يراها الآخرون",
     FACEBOOK_RETURNED_NULL_EMAIL_ADDRESS_ERROR:
-        "فيسبوك لم يرسل عنوان بريدك الإلكتروني إلى تنافسوا، على الأرجح لأن فيسبوك لم  يتحقق من بريدك الإلكتروني بعد. إما أن تأكد بريدك الإلكتروني باستخدام مع فيسبوك أولاً أو حاول تسجيل الدخول باستخدام بريدك الإلكتروني مباشرةً."
+        "فيسبوك لم يرسل عنوان بريدك الإلكتروني إلى تنافسوا، على الأرجح لأن فيسبوك لم  يتحقق من بريدك الإلكتروني بعد. إما أن تأكد بريدك الإلكتروني باستخدام مع فيسبوك أولاً أو حاول تسجيل الدخول باستخدام بريدك الإلكتروني مباشرةً.",
+    AUTHENTICATION_WITH_GOOGLE_ERROR:
+        'حدث خطأ أثناء محاولة تسجيل الدخول باستخدام جوجل',
   };
 
   Status(int errorCode) {

@@ -193,6 +193,8 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
           title: TabBar(
             controller: _tabController,
             tabs: friendsTabs,
+            // indicatorColor: Theme.of(context).colorScheme.primary,
+            // overlayColor: MaterialStateProperty<Color>().resolve((states) -> Theme.of(context).colorScheme.primary),
           )),
       body: TabBarView(
         controller: _tabController,
@@ -279,8 +281,8 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                     ],
                   ),
                 ),
-                backgroundColor: Theme.of(context).accentColor,
-                targetColor: Theme.of(context).primaryColor,
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                targetColor: Theme.of(context).colorScheme.primary,
                 textColor: Colors.black,
                 overflowMode: OverflowMode.wrapBackground,
                 child: FloatingActionButton.extended(
@@ -344,7 +346,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                 contentLocation: ContentLocation.above,
                 tapTarget: Icon(
                   Icons.add,
-                  size: 25,
+                  size: 30,
                 ),
                 // The widget that will be displayed as the tap target.
                 description: Center(
@@ -353,18 +355,16 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                       Row(
                         children: [
                           Expanded(
-                              child: Padding(
-                            padding: EdgeInsets.all(0),
-                          )),
-                          Container(
-                            alignment: Alignment.center,
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Text(
-                              "إضافة صديق",
-                              softWrap: true,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                "إضافة صديق",
+                                maxLines: 1,
+                                softWrap: true,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ],
@@ -373,16 +373,13 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                       Row(
                         children: [
                           Expanded(
-                              child: Padding(
-                            padding: EdgeInsets.all(0),
-                          )),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            width: MediaQuery.of(context).size.width / 2,
                             child: Text(
                               "اضغط هنا لإضافة صديق أو مشاركة التطبيق مع صديق",
                               softWrap: true,
                               textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ],
@@ -390,8 +387,8 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                     ],
                   ),
                 ),
-                backgroundColor: Theme.of(context).accentColor,
-                targetColor: Theme.of(context).primaryColor,
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                targetColor: Theme.of(context).colorScheme.primary,
                 textColor: Colors.black,
                 overflowMode: OverflowMode.wrapBackground,
                 child: FloatingActionButton.extended(

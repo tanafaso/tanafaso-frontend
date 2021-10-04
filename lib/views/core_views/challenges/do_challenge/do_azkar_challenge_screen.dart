@@ -154,7 +154,6 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
   }
 
   Widget getSubChallenges() {
-    int index = 0;
     List<SubChallenge> finishedSubChallenges = widget.challenge.subChallenges
         .where((subChallenge) => subChallenge.done())
         .toList();
