@@ -6,11 +6,13 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/authentication/requests/email_login_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/requests/email_registration_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/requests/facebook_authentication_request_body.dart';
+import 'package:azkar/net/api_interface/authentication/requests/google_authentication_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/requests/reset_password_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/responses/email_login_response.dart';
 import 'package:azkar/net/api_interface/authentication/responses/email_registration_response.dart';
 import 'package:azkar/net/api_interface/authentication/responses/facebook_authentication_response.dart';
 import 'package:azkar/net/api_interface/authentication/responses/facebook_friends_response.dart';
+import 'package:azkar/net/api_interface/authentication/responses/google_authentication_response.dart';
 import 'package:azkar/net/api_interface/authentication/responses/reset_password_response.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/net/services/service_provider.dart';
@@ -57,7 +59,7 @@ class AuthenticationService {
   Future<void> _loginWithFacebookAccessToken(
       FacebookAccessToken facebookAccessToken) async {
     final http.Response apiResponse = await http.put(
-        Uri.https(
+        Uri.http(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(
@@ -72,6 +74,33 @@ class AuthenticationService {
 
     FacebookAuthenticationResponse response =
         FacebookAuthenticationResponse.fromJson(
+            jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
+
+    if (!response.hasError()) {
+      final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
+      await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
+    }
+    if (response.hasError()) {
+      throw new ApiException(response.error);
+    }
+  }
+
+  Future<void> loginWithGoogle(String googleIdToken) async {
+    final http.Response apiResponse = await http.put(
+        Uri.http(
+            ApiRoutesUtil.apiRouteToString(
+                Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
+            ApiRoutesUtil.apiRouteToString(
+                Endpoint(endpointRoute: EndpointRoute.LOGIN_WITH_GOOGLE))),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(new GoogleAuthenticationRequestBody(
+          googleIdToken: googleIdToken,
+        ).toJson()));
+
+    GoogleAuthenticationResponse response =
+        GoogleAuthenticationResponse.fromJson(
             jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
 
     if (!response.hasError()) {
@@ -132,7 +161,7 @@ class AuthenticationService {
         await ServiceProvider.secureStorageService.getFacebookToken();
     String facebookUserId =
         await ServiceProvider.secureStorageService.getFacebookUserId();
-    http.Response response = await http.get(Uri.https("graph.facebook.com",
+    http.Response response = await http.get(Uri.http("graph.facebook.com",
         "v9.0/$facebookUserId/friends/", {'access_token': facebookToken}));
     if (response.statusCode == FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE) {
       throw ApiException.withDefaultError();
@@ -150,7 +179,7 @@ class AuthenticationService {
     http.Response apiResponse;
     try {
       apiResponse = await http.put(
-        Uri.https(
+        Uri.http(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(
@@ -175,7 +204,7 @@ class AuthenticationService {
     http.Response apiResponse;
     try {
       apiResponse = await http.put(
-        Uri.https(
+        Uri.http(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(

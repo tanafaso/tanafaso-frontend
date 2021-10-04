@@ -113,17 +113,38 @@ class _MyAppState extends State<MyApp> {
           body: body,
         ),
         theme: ThemeData(
-          primaryColor: Color(0xffcef5ce),
-          accentColor: Colors.white,
-          scaffoldBackgroundColor: Color(0xffcef5ce),
-          floatingActionButtonTheme:
-              FloatingActionButtonThemeData(backgroundColor: Colors.white),
-          buttonColor: Colors.white,
-          elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.resolveWith((_) => Colors.white),
+          primaryColor: Color(0xffcef6ce),
+          colorScheme: ColorScheme(
+            primary: Color(0xffcef5ce),
+            primaryVariant: Color(0xffcee6ce),
+            secondary: Colors.white,
+            secondaryVariant: Colors.white30,
+            surface: Colors.white,
+            background: Color(0xffcef5ce),
+            error: Colors.red.shade600,
+            onPrimary: Color(0xffcef5ce),
+            onSecondary: Colors.white,
+            onSurface: Colors.white,
+            onBackground: Color(0xffcef5ce),
+            onError: Colors.red.shade600,
+            brightness: Brightness.light,
+          ),
+          buttonTheme: ButtonThemeData(
+              colorScheme: ColorScheme.light(
+            primary: Colors.white,
           )),
+          scaffoldBackgroundColor: Color(0xffcef5ce),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+              backgroundColor: Colors.white, foregroundColor: Colors.black),
+          // elevatedButtonTheme: ElevatedButtonThemeData(
+          //     style: ButtonStyle(
+          //   // backgroundColor:
+          //   //     MaterialStateProperty.resolveWith((_) => Colors.white),
+          //   //     textStyle: MaterialStateProperty<TextStyle>().resolve() {}
+          //   foregroundColor:
+          //       MaterialStateColor.resolveWith((_) => Colors.black),
+          //       textStyle: MaterialStateProperty<TextStyle>().
+          // )),
           cardTheme: CardTheme(elevation: 10),
           iconTheme: IconThemeData(color: Colors.black),
           textTheme: TextTheme(
@@ -138,6 +159,17 @@ class _MyAppState extends State<MyApp> {
             bodyText1: TextStyle(color: Colors.black),
             bodyText2: TextStyle(color: Colors.black),
             button: TextStyle(color: Colors.black),
+          ),
+          indicatorColor: Colors.white,
+          tabBarTheme: TabBarTheme(
+            labelColor: Color(0xffcef5ce),
+          ),
+          appBarTheme: AppBarTheme(
+            backgroundColor: Color(0xffcef5ce),
+            titleTextStyle: TextStyle(color: Colors.black, fontSize: 30),
+            iconTheme: IconThemeData(
+              color: Colors.black, //change your color here
+            ),
           ),
         ),
       ),

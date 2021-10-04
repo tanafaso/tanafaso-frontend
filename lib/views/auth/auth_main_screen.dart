@@ -7,8 +7,9 @@ import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:azkar/views/auth/signup/signup_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
-import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthMainScreen extends StatefulWidget {
   @override
@@ -41,314 +42,191 @@ class _AuthMainScreenState extends State<AuthMainScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Center(
-          child: Container(
-              height: MediaQuery.of(context).size.height,
-              child: new SingleChildScrollView(
-                child: new Container(
-                  height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  child: new Column(
-                    children: <Widget>[
-                      Flexible(
-                          flex: Platform.isAndroid ? 4 : 7,
-                          fit: FlexFit.tight,
-                          child: Column(children: [
-                            Expanded(
-                                flex: 1,
-                                child: Padding(padding: EdgeInsets.all(16))),
-                            Expanded(
-                              flex: 1,
-                              child: new Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    AppLocalizations.of(context).title,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 30.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 4,
-                              child: Center(
-                                child: RotationTransition(
-                                  child: Image.asset('assets/images/logo.png'),
-                                  turns: Tween(begin: 0.0, end: 1.0)
-                                      .animate(_controller),
-                                ),
-                              ),
-                            ),
-                          ])),
-                      Flexible(
-                          fit: FlexFit.tight,
-                          flex: 3,
-                          child: Column(children: [
-                            Text(AppLocalizations.of(context).areYouANewUser,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 30.0,
-                                    fontWeight: FontWeight.bold)),
-                            Padding(padding: EdgeInsets.only(top: 8 * 3.0)),
-                            IntrinsicHeight(
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      margin: const EdgeInsets.only(
-                                          left: 4.0, right: 30.0),
-                                      alignment: Alignment.center,
-                                      child: new Column(
-                                        children: <Widget>[
-                                          new Expanded(
-                                            // ignore: deprecated_member_use
-                                            child: new FlatButton(
-                                              key: Keys
-                                                  .authMainScreenLoginButton,
-                                              shape: new RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      new BorderRadius.circular(
-                                                          30.0)),
-                                              color: Colors.white,
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            SignUpMainScreen()));
-                                              },
-                                              child: new Container(
-                                                child: new Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    new Expanded(
-                                                      child: Text(
-                                                        AppLocalizations.of(
-                                                                context)
-                                                            .yes,
-                                                        key: Keys
-                                                            .authMainScreenSignUpText,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            color: Colors
-                                                                .green.shade900,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      margin: const EdgeInsets.only(
-                                          left: 30.0, right: 4.0),
-                                      alignment: Alignment.center,
-                                      child: new Column(
-                                        children: <Widget>[
-                                          new Expanded(
-                                            // ignore: deprecated_member_use
-                                            child: new OutlineButton(
-                                              key: Keys
-                                                  .authMainScreenSignUpButton,
-                                              shape: new RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      new BorderRadius.circular(
-                                                          30.0)),
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              highlightedBorderColor:
-                                                  Colors.white,
-                                              onPressed: () => Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          LoginScreen())),
-                                              child: new Container(
-                                                child: new Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    new Expanded(
-                                                      child: Text(
-                                                        AppLocalizations.of(
-                                                                context)
-                                                            .no,
-                                                        key: Keys
-                                                            .authMainScreenLoginText,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            color: Colors
-                                                                .green.shade900,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Visibility(
-                              visible: Platform.isAndroid,
-                              child: Expanded(
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  margin: const EdgeInsets.only(
-                                      left: 30.0, right: 30.0),
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    children: <Widget>[
-                                      new Expanded(
-                                        child: new Container(
-                                          height: 1,
-                                          margin: EdgeInsets.all(8.0),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(width: 0.25)),
-                                        ),
-                                      ),
-                                      Text(
-                                        AppLocalizations.of(context)
-                                            .orLoginWith,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      new Expanded(
-                                        child: new Container(
-                                          height: 1,
-                                          margin: EdgeInsets.all(8.0),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(width: 0.25)),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Visibility(
-                              visible: Platform.isAndroid,
-                              child: Flexible(
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  margin: const EdgeInsets.only(
-                                      left: 30.0, right: 30.0),
-                                  child: new Row(
-                                    children: <Widget>[
-                                      new Flexible(
-                                        // ignore: deprecated_member_use
-                                        child: new FlatButton(
-                                          key:
-                                              Keys.authMainScreenFacebookButton,
-                                          shape: new RoundedRectangleBorder(
-                                            borderRadius:
-                                                new BorderRadius.circular(30.0),
-                                          ),
-                                          color: Color(0Xff3B5998),
-                                          onPressed: () => {},
-                                          child: new Container(
-                                            child: new Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                new Flexible(
-                                                  // ignore: deprecated_member_use
-                                                  child: new FlatButton(
-                                                    onPressed: () =>
-                                                        loginWithFacebook(
-                                                            context),
-                                                    child: new Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        Icon(
-                                                          const IconData(0xea90,
-                                                              fontFamily:
-                                                                  'icomoon'),
-                                                          color: Colors.white,
-                                                          size: 20.0,
-                                                        ),
-                                                        Expanded(
-                                                          child: Text(
-                                                            AppLocalizations.of(
-                                                                    context)
-                                                                .facebook,
-                                                            key: Keys
-                                                                .authMainScreenFacebookText,
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                new Container(
-                                                  padding: EdgeInsets.only(
-                                                    right: 20.0,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(16),
-                            )
-                          ]))
-                    ],
-                  ),
+        body: Center(
+            child: SingleChildScrollView(
+      child: new Column(
+        children: <Widget>[
+          Column(children: [
+            Padding(padding: EdgeInsets.all(16)),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  AppLocalizations.of(context).title,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold),
                 ),
-              ))),
-    ));
+              ],
+            ),
+            Center(
+              child: RotationTransition(
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  width: MediaQuery.of(context).size.width,
+                  height: Platform.isAndroid
+                      ? MediaQuery.of(context).size.height * 2 / 5
+                      : MediaQuery.of(context).size.height / 2,
+                ),
+                turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
+              ),
+            ),
+          ]),
+          Column(
+            children: [
+              Text(AppLocalizations.of(context).areYouANewUser,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold)),
+              Padding(padding: EdgeInsets.only(top: 8)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 4.0, right: 30.0),
+                    alignment: Alignment.center,
+                    // ignore: deprecated_member_use
+                    child: new FlatButton(
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0)),
+                      color: Colors.white,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpMainScreen()));
+                      },
+                      child: Text(
+                        AppLocalizations.of(context).yes,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.green.shade900,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 30.0, right: 4.0),
+                    alignment: Alignment.center,
+                    child: new Column(
+                      children: <Widget>[
+                        // ignore: deprecated_member_use
+                        new FlatButton(
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0)),
+                          color: Colors.white,
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen())),
+                          child: Text(
+                            AppLocalizations.of(context).no,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 25,
+                                color: Colors.green.shade900,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Visibility(
+                  visible: Platform.isAndroid,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 8 * 2.0),
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 8.0,
+                                right: 8.0,
+                              ),
+                              child: SignInButton(
+                                Buttons.Google,
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(30.0)),
+                                onPressed: () {
+                                  loginWithGoogle(context);
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 8.0,
+                                right: 8.0,
+                              ),
+                              child: SignInButton(
+                                Buttons.Facebook,
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(30.0)),
+                                onPressed: () {
+                                  loginWithFacebook(context);
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )),
+              Padding(
+                padding: EdgeInsets.all(16),
+              )
+            ],
+          ),
+        ],
+      ),
+    )));
   }
 
   loginWithFacebook(BuildContext context) async {
     try {
       await ServiceProvider.authenticationService.loginWithFacebook();
+    } on ApiException catch (e) {
+      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
+      return;
+    }
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => new HomePage()));
+  }
+
+  loginWithGoogle(BuildContext context) async {
+    GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: [
+        'email',
+      ],
+    );
+    String googleIdToken;
+    try {
+      GoogleSignInAccount account = await _googleSignIn.signIn();
+      GoogleSignInAuthentication authentication = await account.authentication;
+      googleIdToken = authentication.idToken;
+    } catch (error) {
+      print(error);
+    }
+
+    try {
+      await ServiceProvider.authenticationService
+          .loginWithGoogle(googleIdToken);
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
       return;

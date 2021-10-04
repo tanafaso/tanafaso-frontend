@@ -128,9 +128,9 @@ class SelectSurahScreen extends StatelessWidget {
                                       values: RangeValues(firstAyah.toDouble(),
                                           lastAyah.toDouble()),
                                       activeColor:
-                                          Theme.of(context).primaryColor,
+                                          Theme.of(context).colorScheme.primary,
                                       inactiveColor:
-                                          Theme.of(context).primaryColor,
+                                          Theme.of(context).colorScheme.primary,
                                       min: 1,
                                       max: quranSurahs[index].versesCount * 1.0,
                                       divisions: quranSurahs[index].versesCount,

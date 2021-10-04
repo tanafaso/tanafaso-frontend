@@ -140,7 +140,7 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                         RawMaterialButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
-                            fillColor: Theme.of(context).primaryColor,
+                            fillColor: Theme.of(context).colorScheme.primary,
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => CreateChallengeScreen(

@@ -60,6 +60,17 @@ class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
                     maxLines: 1,
                   ),
                 ),
+                Visibility(
+                  visible: widget.challengedUsersIds[index] ==
+                      widget.challenge?.creatingUserId(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Icon(
+                      Icons.create,
+                      size: widget.iconSize.toDouble(),
+                    ),
+                  ),
+                ),
               ],
             );
           },

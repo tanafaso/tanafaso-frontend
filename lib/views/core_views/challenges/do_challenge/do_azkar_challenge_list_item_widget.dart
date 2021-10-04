@@ -51,65 +51,57 @@ class _DoAzkarChallengeListItemWidgetState
 
     if (buttonColor == null) {
       buttonColor = widget.subChallenge.done()
-          ? Theme.of(context).primaryColor
-          : Theme.of(context).buttonColor;
+          ? Theme.of(context).colorScheme.primary
+          : Theme.of(context).buttonTheme.colorScheme.primary;
     }
 
     return !widget.firstItemInList
         ? getMainWidget()
         : DescribedFeatureOverlay(
             featureId: Features.CLICK_ZEKR_AFTER_FINISH,
-            overflowMode: OverflowMode.wrapBackground,
+            overflowMode: OverflowMode.extendBackground,
             barrierDismissible: false,
             backgroundDismissible: false,
-            contentLocation: ContentLocation.below,
+            contentLocation: ContentLocation.trivial,
             tapTarget: Icon(Icons.done),
             // The widget that will be displayed as the tap target.
-            description: Center(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                          child: Padding(
-                        padding: EdgeInsets.all(0),
-                      )),
-                      Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width / 2,
+            description: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
                         child: Text(
                           AppLocalizations.of(context).doingAChallenge,
+                          maxLines: 1,
                           softWrap: true,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 25, fontWeight: FontWeight.bold),
                         ),
                       ),
-                    ],
-                  ),
-                  Padding(padding: EdgeInsets.all(8)),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: Padding(
-                        padding: EdgeInsets.all(0),
-                      )),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        width: MediaQuery.of(context).size.width / 2,
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .clickOnZekrAfterReadingIt,
-                          softWrap: true,
-                          textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                Padding(padding: EdgeInsets.all(8)),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context).clickOnZekrAfterReadingIt,
+                        softWrap: true,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
                         ),
                       ),
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                  ],
+                )
+              ],
             ),
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             targetColor: Colors.white,
             textColor: Colors.black,
             child: getMainWidget(),
@@ -133,7 +125,7 @@ class _DoAzkarChallengeListItemWidgetState
         setState(() {
           widget.subChallenge.repetitions -= 1;
           if (widget.subChallenge.repetitions == 0) {
-            buttonColor = Theme.of(context).primaryColor;
+            buttonColor = Theme.of(context).colorScheme.primary;
           }
           widget.callback.call(widget.subChallenge);
         });
@@ -158,7 +150,7 @@ class _DoAzkarChallengeListItemWidgetState
             // Reversed them. This is just a hack as I am afraid that
             // widget.subChallenge.repetitions maybe zero at some point.
             color: Colors.white,
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             value: initialRepetitions == 0
                 ? 0
                 : widget.subChallenge.repetitions.toDouble() /

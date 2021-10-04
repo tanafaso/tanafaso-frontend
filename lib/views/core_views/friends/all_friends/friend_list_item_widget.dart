@@ -59,19 +59,16 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
                   Row(
                     children: [
                       Expanded(
-                          child: Padding(
-                        padding: EdgeInsets.all(0),
-                      )),
-                      Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width / 2,
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .sabeqAndDetailedViewTitle,
-                          softWrap: true,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            AppLocalizations.of(context)
+                                .sabeqAndDetailedViewTitle,
+                            softWrap: true,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ],
@@ -80,38 +77,34 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
                   Row(
                     children: [
                       Expanded(
-                          child: Padding(
-                        padding: EdgeInsets.all(0),
-                      )),
-                      Container(
-                          alignment: Alignment.centerRight,
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: RichText(
-                            text: TextSpan(
-                              // Note: Styles for TextSpans must be explicitly defined.
-                              // Child text spans will inherit styles from parent
-                              style: new TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.black,
-                              ),
-                              children: <TextSpan>[
-                                new TextSpan(
-                                    text: 'سابق',
-                                    style: new TextStyle(
-                                        fontWeight: FontWeight.bold)),
-                                new TextSpan(
-                                    text:
-                                        ' هو صديق افتراضي لك على التطبيق. اضغط على سابق لتتمكن من تحديه ولرؤية المزيد من المعلومات حول صداقتكم.'),
-                              ],
+                        child: RichText(
+                          maxLines: 10,
+                          text: TextSpan(
+                            // Note: Styles for TextSpans must be explicitly defined.
+                            // Child text spans will inherit styles from parent
+                            style: new TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.black,
                             ),
-                          )),
+                            children: <TextSpan>[
+                              new TextSpan(
+                                  text: 'سابق',
+                                  style: new TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              new TextSpan(
+                                  text:
+                                      ' هو صديق افتراضي لك على التطبيق. اضغط على سابق لتتمكن من تحديه ولرؤية المزيد من المعلومات حول صداقتكم.'),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   )
                 ],
               ),
             ),
-            backgroundColor: Theme.of(context).primaryColor,
-            targetColor: Theme.of(context).accentColor,
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            targetColor: Theme.of(context).colorScheme.secondary,
             textColor: Colors.black,
             child: getMainWidget());
   }
