@@ -32,8 +32,8 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
     _detailedView = false;
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      String sabeqId = await ServiceProvider.usersService.getSabeqId();
       if (mounted) {
-        String sabeqId = await ServiceProvider.usersService.getSabeqId();
         setState(() {
           _isSabeq = sabeqId == widget.friendshipScores.userId;
         });

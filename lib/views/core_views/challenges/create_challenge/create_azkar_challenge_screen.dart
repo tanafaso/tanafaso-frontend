@@ -194,13 +194,21 @@ class _CreateAzkarChallengeScreenState
                                   maxLines: 1,
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.center,
-                                  decoration: new InputDecoration(
-                                    alignLabelWithHint: true,
-                                    border: new OutlineInputBorder(
-                                        borderSide:
-                                            new BorderSide(color: Colors.teal)),
-                                  ),
                                   controller: _challengeNameController,
+                                  decoration: new InputDecoration(
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.grey, width: 0.0),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.grey, width: 0.0),
+                                    ),
+                                    border: const OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.grey, width: 0.0),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -369,10 +377,18 @@ class _CreateAzkarChallengeScreenState
                                   maxLines: 1,
                                   textAlign: TextAlign.center,
                                   decoration: new InputDecoration(
-                                    alignLabelWithHint: true,
-                                    border: new OutlineInputBorder(
-                                        borderSide:
-                                            new BorderSide(color: Colors.teal)),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.grey, width: 0.0),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.grey, width: 0.0),
+                                    ),
+                                    border: const OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.grey, width: 0.0),
+                                    ),
                                   ),
                                   controller: _motivationController,
                                 ),
