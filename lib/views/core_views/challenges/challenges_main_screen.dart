@@ -23,7 +23,6 @@ class _ChallengesMainScreenState extends State<ChallengesMainScreen>
         [
           Features.ADD_CHALLENGE,
           Features.CLONE_AND_DELETE,
-          Features.CLICK_ZEKR_AFTER_FINISH,
         ],
       );
     });
