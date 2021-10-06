@@ -64,6 +64,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
   int _chosenWordIndex;
 
   ScrollController _pageScrollController;
+  bool _friendsTileExpanded;
 
   @override
   void initState() {
@@ -77,6 +78,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
     )..repeat(reverse: true);
     _colorAnimation = ColorTween(begin: Color(0xffcef5ce), end: Colors.white)
         .animate(_colorAnimationController);
+    _friendsTileExpanded = true;
 
     _words = [];
     _meanings = [];
@@ -116,27 +118,43 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Card(
-                    child: Visibility(
-                      visible: widget.group != null,
-                      child: widget.group == null
-                          ? Container()
-                          : ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxHeight:
-                                    MediaQuery.of(context).size.height / 5,
-                              ),
-                              child: FriendsProgressWidget(
+                  ExpansionTile(
+                    title: Text(
+                      "الأصدقاء",
+                      style: TextStyle(
+                          fontSize: _friendsTileExpanded ? 25 : 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    initiallyExpanded: true,
+                    backgroundColor: Colors.white,
+                    collapsedBackgroundColor: Colors.white,
+                    textColor: Colors.black,
+                    iconColor: Colors.black,
+                    collapsedTextColor: Colors.black,
+                    collapsedIconColor: Colors.black,
+                    trailing: Icon(
+                      _friendsTileExpanded
+                          ? Icons.arrow_drop_down_circle
+                          : Icons.arrow_drop_down,
+                    ),
+                    onExpansionChanged: (bool expanded) {
+                      setState(() => _friendsTileExpanded = expanded);
+                    },
+                    children: [
+                      Visibility(
+                        visible: widget.group != null,
+                        child: widget.group == null
+                            ? Container()
+                            : FriendsProgressWidget(
                                 challenge: Challenge(
                                     meaningChallenge: widget.challenge),
                                 challengedUsersIds: widget.challengedUsersIds,
                                 challengedUsersFullNames:
                                     widget.challengedUsersFullNames,
                               ),
-                            ),
-                    ),
+                      ),
+                    ],
                   ),
-                  Divider(),
                   Row(
                     children: [
                       Expanded(
@@ -197,7 +215,6 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                       ),
                     ],
                   ),
-                  Divider(),
                   Row(
                     children: [
                       Expanded(
