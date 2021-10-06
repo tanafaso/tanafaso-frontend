@@ -2,9 +2,7 @@ import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
-import 'package:azkar/utils/features.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
-import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 
 typedef SubChallengeChangedCallback = void Function(
@@ -13,7 +11,6 @@ typedef SubChallengeChangedCallback = void Function(
 class DoAzkarChallengeListItemWidget extends StatefulWidget {
   final SubChallenge subChallenge;
   final SubChallengeChangedCallback callback;
-  final bool firstItemInList;
 
   // Only use to check if the challenge is expired, since other data may change
   // and will not be consistent.
@@ -24,7 +21,6 @@ class DoAzkarChallengeListItemWidget extends StatefulWidget {
     @required this.subChallenge,
     @required this.callback,
     @required this.challenge,
-    @required this.firstItemInList,
   }) : super(key: key);
 
   @override
@@ -55,60 +51,6 @@ class _DoAzkarChallengeListItemWidgetState
           : Theme.of(context).buttonTheme.colorScheme.primary;
     }
 
-    return !widget.firstItemInList
-        ? getMainWidget()
-        : DescribedFeatureOverlay(
-            featureId: Features.CLICK_ZEKR_AFTER_FINISH,
-            overflowMode: OverflowMode.extendBackground,
-            barrierDismissible: false,
-            backgroundDismissible: false,
-            contentLocation: ContentLocation.trivial,
-            tapTarget: Icon(Icons.done),
-            // The widget that will be displayed as the tap target.
-            description: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          AppLocalizations.of(context).doingAChallenge,
-                          maxLines: 1,
-                          softWrap: true,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(padding: EdgeInsets.all(8)),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        AppLocalizations.of(context).clickOnZekrAfterReadingIt,
-                        softWrap: true,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            targetColor: Colors.white,
-            textColor: Colors.black,
-            child: getMainWidget(),
-          );
-  }
-
-  Widget getMainWidget() {
     return RawMaterialButton(
       onPressed: () {
         if (widget.subChallenge.done()) {

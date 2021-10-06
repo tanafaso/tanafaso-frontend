@@ -18,6 +18,7 @@ import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_
 import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
 class DoAzkarChallengeScreen extends StatefulWidget {
   final AzkarChallenge challenge;
@@ -47,6 +48,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
     with WidgetsBindingObserver {
   ConfettiController confettiControler;
   bool _finishedConfetti;
+  bool _friendsTileExpanded;
 
   @override
   void initState() {
@@ -54,6 +56,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
 
     WidgetsBinding.instance.addObserver(this);
     _finishedConfetti = false;
+    _friendsTileExpanded = true;
     setState(() {
       initConfettiController();
     });
@@ -78,53 +81,76 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
             Center(
               child: Column(
                 children: [
-                  Card(
-                    child: Visibility(
-                      visible: widget.group != null,
-                      child: widget.group == null
-                          ? Container()
-                          : ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxHeight:
-                                    MediaQuery.of(context).size.height / 5,
-                              ),
-                              child: FriendsProgressWidget(
-                                challenge:
-                                    Challenge(azkarChallenge: widget.challenge),
-                                challengedUsersIds: widget.challengedUsersIds,
-                                challengedUsersFullNames:
-                                    widget.challengedUsersFullNames,
-                              ),
-                            ),
+                  ExpansionTile(
+                    title: Text(
+                      "الأصدقاء",
+                      style: TextStyle(
+                          fontSize: _friendsTileExpanded ? 25 : 20,
+                          fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  Visibility(
-                    visible: (widget.challenge.motivation?.length ?? 0) != 0,
-                    maintainSize: false,
-                    child: Card(
-                      child: Row(
+                    initiallyExpanded: true,
+                    backgroundColor: Colors.white,
+                    collapsedBackgroundColor: Colors.white,
+                    textColor: Colors.black,
+                    iconColor: Colors.black,
+                    collapsedTextColor: Colors.black,
+                    collapsedIconColor: Colors.black,
+                    trailing: Icon(
+                      _friendsTileExpanded
+                          ? Icons.arrow_drop_down_circle
+                          : Icons.arrow_drop_down,
+                    ),
+                    onExpansionChanged: (bool expanded) {
+                      setState(() => _friendsTileExpanded = expanded);
+                    },
+                    children: [
+                      Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Icon(Icons.directions_run),
+                          Visibility(
+                            visible: widget.group != null,
+                            child: widget.group == null
+                                ? Container()
+                                : FriendsProgressWidget(
+                                    challenge: Challenge(
+                                        azkarChallenge: widget.challenge),
+                                    challengedUsersIds:
+                                        widget.challengedUsersIds,
+                                    challengedUsersFullNames:
+                                        widget.challengedUsersFullNames,
+                                  ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 3 / 4,
-                              child: AutoSizeText(
-                                widget.challenge.motivation,
-                                textAlign: TextAlign.center,
-                                softWrap: true,
-                                style: TextStyle(fontSize: 25),
-                                maxLines: 4,
-                                minFontSize: 18,
-                              ),
+                          Visibility(
+                            visible:
+                                (widget.challenge.motivation?.length ?? 0) != 0,
+                            maintainSize: false,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Icon(Icons.directions_run),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        3 /
+                                        4,
+                                    child: AutoSizeText(
+                                      widget.challenge.motivation,
+                                      textAlign: TextAlign.center,
+                                      softWrap: true,
+                                      style: TextStyle(fontSize: 25),
+                                      maxLines: 4,
+                                      minFontSize: 18,
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
-                          )
+                          ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                   Expanded(child: getSubChallenges()),
                 ],
@@ -174,7 +200,6 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
           key: UniqueKey(),
           subChallenge: widget.challenge.subChallenges[index],
           challenge: widget.challenge,
-          firstItemInList: index == 0,
           callback: (SubChallenge newSubChallenge) async {
             widget.challenge.subChallenges[index] = newSubChallenge;
             if (newSubChallenge.done()) {

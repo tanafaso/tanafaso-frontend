@@ -82,6 +82,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-installations:16.3.5'
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+    implementation 'com.facebook.android:facebook-login:9.1.0'
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
     testImplementation 'junit:junit:4.12'

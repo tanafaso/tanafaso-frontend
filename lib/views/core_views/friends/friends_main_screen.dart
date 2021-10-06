@@ -235,7 +235,10 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                 barrierDismissible: false,
                 backgroundDismissible: false,
                 contentLocation: ContentLocation.above,
-                tapTarget: Icon(Icons.share),
+                tapTarget: Icon(
+                  Icons.share,
+                  size: 25,
+                ),
                 // The widget that will be displayed as the tap target.
                 description: Center(
                   child: Column(
@@ -243,18 +246,15 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                       Row(
                         children: [
                           Expanded(
-                              child: Padding(
-                            padding: EdgeInsets.all(0),
-                          )),
-                          Container(
-                            alignment: Alignment.center,
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Text(
-                              AppLocalizations.of(context).shareUsernameTitle,
-                              softWrap: true,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            child: FittedBox(
+                              child: Text(
+                                AppLocalizations.of(context).shareUsernameTitle,
+                                maxLines: 1,
+                                softWrap: true,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ],
@@ -263,18 +263,14 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                       Row(
                         children: [
                           Expanded(
-                              child: Padding(
-                            padding: EdgeInsets.all(0),
-                          )),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            width: MediaQuery.of(context).size.width / 2,
                             child: Text(
-                              AppLocalizations.of(context)
-                                  .shareUsernameExplanation,
-                              softWrap: true,
-                              textAlign: TextAlign.center,
-                            ),
+                                AppLocalizations.of(context)
+                                    .shareUsernameExplanation,
+                                softWrap: true,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                )),
                           ),
                         ],
                       )
