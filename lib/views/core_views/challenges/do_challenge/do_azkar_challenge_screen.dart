@@ -106,6 +106,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                     children: [
                       Column(
                         children: [
+                          Divider(),
                           Visibility(
                             visible: widget.group != null,
                             child: widget.group == null
@@ -119,6 +120,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                                         widget.challengedUsersFullNames,
                                   ),
                           ),
+                          Divider(),
                           Visibility(
                             visible:
                                 (widget.challenge.motivation?.length ?? 0) != 0,
