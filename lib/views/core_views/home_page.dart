@@ -7,11 +7,11 @@ import 'package:azkar/views/core_views/challenges/challenges_main_screen.dart';
 import 'package:azkar/views/core_views/friends/friends_main_screen.dart';
 import 'package:azkar/views/core_views/live_support_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_main_screen.dart';
+import 'package:clear_all_notifications/clear_all_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:clear_all_notifications/clear_all_notifications.dart';
 
 class Topic {
   BottomNavigationBarItem bottomNavigationBarItem;
@@ -43,6 +43,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
+      ClearAllNotifications.clear();
       setState(() {
         ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
       });
@@ -79,8 +80,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     // Get the token each time the application loads.
     String token = await FirebaseMessaging.instance.getToken();
 
-    ClearAllNotifications.clear();
-
     // Send initial token to database.
     sendTokenToDatabase(token);
 
@@ -94,6 +93,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
+    ClearAllNotifications.clear();
 
     _selectedIdx = topicToIndex(widget.initiallySelectedTopicType);
     initFirebase();
