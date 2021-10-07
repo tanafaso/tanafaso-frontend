@@ -26,6 +26,7 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
   @override
   void initState() {
     super.initState();
+
     filteredAzkarIds = HashSet();
     // All azkar are included at the beginning.
     widget.azkar.forEach((zekr) {
@@ -93,8 +94,13 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
               Expanded(
                 child: Container(
                   child: ListView.separated(
-                      separatorBuilder: (context, index) =>
-                          Padding(padding: EdgeInsets.only(bottom: 4)),
+                      separatorBuilder: (context, index) {
+                        if (filteredAzkarIds.contains(widget.azkar[index].id)) {
+                          return Padding(padding: EdgeInsets.only(bottom: 4));
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      },
                       padding: EdgeInsets.all(0),
                       shrinkWrap: true,
                       itemCount: widget.azkar.length,
