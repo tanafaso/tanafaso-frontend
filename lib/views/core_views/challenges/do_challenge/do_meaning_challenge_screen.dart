@@ -141,6 +141,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                       setState(() => _friendsTileExpanded = expanded);
                     },
                     children: [
+                      Divider(),
                       Visibility(
                         visible: widget.group != null,
                         child: widget.group == null
