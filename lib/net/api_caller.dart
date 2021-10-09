@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/request_base.dart';
 import 'package:azkar/net/endpoints.dart';
-import 'package:azkar/net/services/service_provider.dart';
+import 'package:azkar/services/service_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

@@ -5,7 +5,7 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:azkar/net/services/service_provider.dart';
+import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/landing_widget.dart';
 import 'package:feature_discovery/feature_discovery.dart';
@@ -32,6 +32,7 @@ void main() async {
     systemNavigationBarColor: Color(0xffcef5ce),
     statusBarColor: Color(0xffcef5ce),
   ));
+
   runApp(MyApp());
 }
 

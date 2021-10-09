@@ -1,5 +1,5 @@
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/services/service_provider.dart';
+import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';

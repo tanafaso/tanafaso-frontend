@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/user.dart';
-import 'package:azkar/net/services/service_provider.dart';
+import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
@@ -51,15 +51,23 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                         children: [
                           Column(
                             children: [
-                              Container(
-                                alignment: Alignment.center,
-                                child: AutoSizeText(
-                                  _user.firstName + " " + _user.lastName,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 45,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        _user.firstName + " " + _user.lastName,
+                                        maxLines: 1,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 45,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                               Padding(padding: EdgeInsets.only(top: 8 * 3.0)),
                               RawMaterialButton(
@@ -172,7 +180,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                               ),
                             ],
                           ),
-                          Padding(padding: EdgeInsets.all(8)),
+                          Padding(padding: EdgeInsets.all(4)),
                           RawMaterialButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
