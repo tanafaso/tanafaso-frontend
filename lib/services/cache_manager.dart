@@ -17,6 +17,7 @@ class CacheManager {
   static const String CACHE_KEY_CURRENT_USER = "011";
   static const String CACHE_KEY_FRIENDS = "012";
   static const String CACHE_KEY_FINISHED_CHALLENGES_COUNT = "013";
+  static const String CACHE_KEY_NUDGE_NOTIFICATIONS_INTERVAL = "014";
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 

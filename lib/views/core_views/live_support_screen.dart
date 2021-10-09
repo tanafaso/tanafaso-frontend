@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:azkar/net/api_caller.dart';
-import 'package:azkar/net/services/service_provider.dart';
+import 'package:azkar/services/service_provider.dart';
 import 'package:crisp/crisp.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';

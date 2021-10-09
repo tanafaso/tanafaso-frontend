@@ -1,5 +1,5 @@
 import 'package:azkar/models/friend.dart';
-import 'package:azkar/net/services/service_provider.dart';
+import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/features.dart';
 import 'package:azkar/views/core_views/friends/all_friends/detailed_friend_list_item_widget.dart';

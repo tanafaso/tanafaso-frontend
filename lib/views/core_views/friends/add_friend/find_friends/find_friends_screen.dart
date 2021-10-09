@@ -1,7 +1,7 @@
 import 'package:azkar/models/publicly_available_user.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/status.dart';
-import 'package:azkar/net/services/service_provider.dart';
+import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/friends/add_friend/find_friends/find_friends_not_publicly_available_widget.dart';
 import 'package:azkar/views/core_views/friends/add_friend/find_friends/find_friends_publicly_available_widget.dart';
