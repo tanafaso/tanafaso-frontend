@@ -56,7 +56,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
 
     WidgetsBinding.instance.addObserver(this);
     _finishedConfetti = false;
-    _friendsTileExpanded = true;
+    _friendsTileExpanded = false;
     setState(() {
       initConfettiController();
     });
@@ -88,7 +88,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                           fontSize: _friendsTileExpanded ? 25 : 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    initiallyExpanded: true,
+                    initiallyExpanded: false,
                     backgroundColor: Colors.white,
                     collapsedBackgroundColor: Colors.white,
                     textColor: Colors.black,
