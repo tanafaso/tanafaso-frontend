@@ -78,7 +78,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
     )..repeat(reverse: true);
     _colorAnimation = ColorTween(begin: Color(0xffcef5ce), end: Colors.white)
         .animate(_colorAnimationController);
-    _friendsTileExpanded = true;
+    _friendsTileExpanded = false;
 
     _words = [];
     _meanings = [];
@@ -125,7 +125,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                           fontSize: _friendsTileExpanded ? 25 : 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    initiallyExpanded: true,
+                    initiallyExpanded: false,
                     backgroundColor: Colors.white,
                     collapsedBackgroundColor: Colors.white,
                     textColor: Colors.black,
