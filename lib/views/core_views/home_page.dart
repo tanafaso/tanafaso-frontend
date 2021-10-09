@@ -1,12 +1,13 @@
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/users/requests/set_notifications_token_request_body.dart';
-import 'package:azkar/net/services/service_provider.dart';
+import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/challenges_main_screen.dart';
 import 'package:azkar/views/core_views/friends/friends_main_screen.dart';
 import 'package:azkar/views/core_views/live_support_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_main_screen.dart';
+import 'package:azkar/views/core_views/settings/settings_main_screen.dart';
 import 'package:clear_all_notifications/clear_all_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +26,7 @@ enum TopicType {
   FRIENDS,
   PROFILE,
   LIVE_SUPPORT,
+  SETTINGS,
 }
 
 class HomePage extends StatefulWidget {
@@ -44,6 +46,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       ClearAllNotifications.clear();
+      ServiceProvider.localNotificationsService
+          .configureNextNudgeNotification();
       setState(() {
         ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
       });
@@ -94,10 +98,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
-    ClearAllNotifications.clear();
-
     _selectedIdx = topicToIndex(widget.initiallySelectedTopicType);
+
+    // Clears all active notifications.
+    ClearAllNotifications.clear();
     initFirebase();
+    ServiceProvider.localNotificationsService.configureNextNudgeNotification();
+
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -115,13 +122,16 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               backgroundColor: Theme.of(context).colorScheme.primary,
               items: topics.map((e) => e.bottomNavigationBarItem).toList(),
               selectedItemColor: Colors.green,
+              type: BottomNavigationBarType.shifting,
               unselectedItemColor: Colors.black,
-              showUnselectedLabels: true,
+              showUnselectedLabels: false,
+              showSelectedLabels: false,
               currentIndex: _selectedIdx,
               onTap: _onItemTapped,
               unselectedFontSize: 18,
               selectedFontSize: 20,
-              iconSize: 25,
+              iconSize: 30,
+              selectedIconTheme: IconThemeData(size: 35),
             ));
       },
     );
@@ -130,14 +140,16 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   // ignore: missing_return
   int topicToIndex(TopicType topicType) {
     switch (topicType) {
-      case TopicType.CHALLENGES:
+      case TopicType.LIVE_SUPPORT:
         return 0;
       case TopicType.FRIENDS:
         return 1;
-      case TopicType.PROFILE:
+      case TopicType.CHALLENGES:
         return 2;
-      case TopicType.LIVE_SUPPORT:
+      case TopicType.PROFILE:
         return 3;
+      case TopicType.SETTINGS:
+        return 4;
     }
     assert(false);
   }
@@ -146,31 +158,38 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     return [
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
-              icon: Icon(Icons.whatshot),
-              label: AppLocalizations.of(context).theChallenges,
-              backgroundColor: Theme.of(context).colorScheme.primary),
-          topicType: TopicType.CHALLENGES),
+            icon: Icon(Icons.help_outline),
+            label: "استفسار",
+            backgroundColor: Theme.of(context).colorScheme.primary,
+          ),
+          topicType: TopicType.LIVE_SUPPORT),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
-            icon: Icon(Icons.contacts),
+            icon: Icon(Icons.contacts_outlined),
             label: AppLocalizations.of(context).friends,
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
           topicType: TopicType.FRIENDS),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
+              icon: Icon(Icons.whatshot_outlined),
+              label: AppLocalizations.of(context).theChallenges,
+              backgroundColor: Theme.of(context).colorScheme.primary),
+          topicType: TopicType.CHALLENGES),
+      Topic(
+          bottomNavigationBarItem: BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_outlined),
             label: 'الملف',
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
           topicType: TopicType.PROFILE),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
-            icon: Icon(Icons.help),
-            label: "استفسار",
+            icon: Icon(Icons.settings_outlined),
+            label: "الإعدادات",
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
-          topicType: TopicType.LIVE_SUPPORT),
+          topicType: TopicType.SETTINGS),
     ];
   }
 
@@ -185,6 +204,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         return ProfileMainScreen();
       case TopicType.LIVE_SUPPORT:
         return LiveSupportScreen();
+      case TopicType.SETTINGS:
+        return SettingsMainScreen();
     }
     assert(false);
   }

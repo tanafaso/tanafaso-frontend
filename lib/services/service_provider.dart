@@ -1,11 +1,12 @@
-import 'package:azkar/net/cache_manager.dart';
-import 'package:azkar/net/services/authentication_service.dart';
-import 'package:azkar/net/services/categories_service.dart';
-import 'package:azkar/net/services/challenges_service.dart';
-import 'package:azkar/net/services/groups_service.dart';
-import 'package:azkar/net/services/home_service.dart';
-import 'package:azkar/net/services/secure_storage_service.dart';
-import 'package:azkar/net/services/users_service.dart';
+import 'package:azkar/services/cache_manager.dart';
+import 'package:azkar/net/net_services/authentication_service.dart';
+import 'package:azkar/net/net_services/categories_service.dart';
+import 'package:azkar/net/net_services/challenges_service.dart';
+import 'package:azkar/net/net_services/groups_service.dart';
+import 'package:azkar/net/net_services/home_service.dart';
+import 'package:azkar/services/secure_storage_service.dart';
+import 'package:azkar/net/net_services/users_service.dart';
+import 'package:azkar/services/local_notifications_service.dart';
 import 'package:http/http.dart' as http;
 
 /// Holds instances of the application services. This should be the main access
@@ -20,5 +21,7 @@ class ServiceProvider {
   static SecureStorageService secureStorageService = SecureStorageService();
   static CategoriesService azkarService = CategoriesService();
   static CacheManager cacheManager = CacheManager();
+  static LocalNotificationsService localNotificationsService =
+      LocalNotificationsService();
   static http.Client httpClient = http.Client();
 }

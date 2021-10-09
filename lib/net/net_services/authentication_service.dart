@@ -15,7 +15,7 @@ import 'package:azkar/net/api_interface/authentication/responses/facebook_friend
 import 'package:azkar/net/api_interface/authentication/responses/google_authentication_response.dart';
 import 'package:azkar/net/api_interface/authentication/responses/reset_password_response.dart';
 import 'package:azkar/net/endpoints.dart';
-import 'package:azkar/net/services/service_provider.dart';
+import 'package:azkar/services/service_provider.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:http/http.dart' as http;
 

@@ -6,9 +6,9 @@ import 'package:azkar/net/api_interface/challenges/responses/get_challenges_resp
 import 'package:azkar/net/api_interface/groups/responses/get_groups_response.dart';
 import 'package:azkar/net/api_interface/home/get_home_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_friends_leaderboard_response.dart';
-import 'package:azkar/net/cache_manager.dart';
+import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/net/endpoints.dart';
-import 'package:azkar/net/services/service_provider.dart';
+import 'package:azkar/services/service_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -19,9 +19,9 @@ import 'package:azkar/net/api_interface/challenges/responses/get_azkar_challenge
 import 'package:azkar/net/api_interface/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/get_finished_challenges_count_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/update_azkar_challenge_response.dart';
-import 'package:azkar/net/cache_manager.dart';
+import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/net/endpoints.dart';
-import 'package:azkar/net/services/service_provider.dart';
+import 'package:azkar/services/service_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
