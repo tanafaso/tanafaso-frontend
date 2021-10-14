@@ -78,7 +78,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
     )..repeat(reverse: true);
     _colorAnimation = ColorTween(begin: Color(0xffcef5ce), end: Colors.white)
         .animate(_colorAnimationController);
-    _friendsTileExpanded = false;
+    _friendsTileExpanded = true;
 
     _words = [];
     _meanings = [];
@@ -125,9 +125,10 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                           fontSize: _friendsTileExpanded ? 25 : 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    initiallyExpanded: false,
-                    backgroundColor: Colors.white,
-                    collapsedBackgroundColor: Colors.white,
+                    initiallyExpanded: true,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    collapsedBackgroundColor:
+                        Theme.of(context).colorScheme.secondary,
                     textColor: Colors.black,
                     iconColor: Colors.black,
                     collapsedTextColor: Colors.black,
@@ -136,12 +137,12 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                       _friendsTileExpanded
                           ? Icons.arrow_drop_down_circle
                           : Icons.arrow_drop_down,
+                      size: 30,
                     ),
                     onExpansionChanged: (bool expanded) {
                       setState(() => _friendsTileExpanded = expanded);
                     },
                     children: [
-                      Divider(),
                       Visibility(
                         visible: widget.group != null,
                         child: widget.group == null
