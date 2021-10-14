@@ -56,7 +56,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
 
     WidgetsBinding.instance.addObserver(this);
     _finishedConfetti = false;
-    _friendsTileExpanded = false;
+    _friendsTileExpanded = true;
     setState(() {
       initConfettiController();
     });
@@ -88,9 +88,10 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                           fontSize: _friendsTileExpanded ? 25 : 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    initiallyExpanded: false,
-                    backgroundColor: Colors.white,
-                    collapsedBackgroundColor: Colors.white,
+                    initiallyExpanded: true,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    collapsedBackgroundColor:
+                        Theme.of(context).colorScheme.secondary,
                     textColor: Colors.black,
                     iconColor: Colors.black,
                     collapsedTextColor: Colors.black,
@@ -99,6 +100,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                       _friendsTileExpanded
                           ? Icons.arrow_drop_down_circle
                           : Icons.arrow_drop_down,
+                      size: 30,
                     ),
                     onExpansionChanged: (bool expanded) {
                       setState(() => _friendsTileExpanded = expanded);
@@ -106,7 +108,6 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                     children: [
                       Column(
                         children: [
-                          Divider(),
                           Visibility(
                             visible: widget.group != null,
                             child: widget.group == null

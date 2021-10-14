@@ -13,7 +13,6 @@ import 'package:azkar/views/core_views/friends/all_friends/friend_list_item_load
 import 'package:azkar/views/core_views/friends/friend_requests/friend_requests_widget.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:share_plus/share_plus.dart';
 
 class FriendsMainScreen extends StatefulWidget {
@@ -49,18 +48,6 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
     _pendingFriends = [];
 
     _neededData = getNeededData();
-
-    SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
-      FeatureDiscovery.discoverFeatures(
-        context,
-        // Feature ids for every feature that we want to showcase in order.
-        [
-          Features.SABEQ_INTRODUCTION,
-          Features.ADD_FRIEND,
-          Features.SHARE_USERNAME,
-        ],
-      );
-    });
 
     _tabIndex = 0;
   }
@@ -231,6 +218,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
             maintainSize: false,
             maintainState: false,
             child: DescribedFeatureOverlay(
+                // BUG: This is not shown at the moment.
                 featureId: Features.SHARE_USERNAME,
                 barrierDismissible: false,
                 backgroundDismissible: false,
@@ -370,7 +358,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
                         children: [
                           Expanded(
                             child: Text(
-                              "اضغط هنا لإضافة صديق أو مشاركة التطبيق مع صديق",
+                              "اضغط هنا لإضافة صديق جديد أو لمشاركة اسم المستخدم الخاص بك مع صديق أو للعثور على صديق من خلال التطبيق.",
                               softWrap: true,
                               textAlign: TextAlign.center,
                               style: TextStyle(
