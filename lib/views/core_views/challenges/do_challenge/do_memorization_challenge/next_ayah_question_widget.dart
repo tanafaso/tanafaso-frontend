@@ -28,6 +28,7 @@ class _NextAyahQuestionWidgetState extends State<NextAyahQuestionWidget> {
       children: [
         Text('select next ayah'),
         ChoicesWidget(
+          scrollController: widget.scrollController,
           choices: [
             Choice(
                 word: QuranAyahs.ayahs[widget.question.ayah + 1],

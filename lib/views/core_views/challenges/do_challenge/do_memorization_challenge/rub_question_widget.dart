@@ -28,6 +28,7 @@ class _RubQuestionWidgetState extends State<RubQuestionWidget> {
       children: [
         Text('select rub'),
         ChoicesWidget(
+          scrollController: widget.scrollController,
           choices: [
             Choice(
                 word: QuranAyahs.ayahs[widget.question.firstAyahInRub],

@@ -58,6 +58,7 @@ class _DoMemorizationChallengeScreenState
     confettiControler =
         ConfettiController(duration: const Duration(seconds: 1));
     _scrollController = ScrollController();
+    print(_scrollController);
   }
 
   @override
@@ -97,50 +98,45 @@ class _DoMemorizationChallengeScreenState
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Scrollbar(
-                      interactive: true,
-                      isAlwaysShown: true,
+                    child: ListView.separated(
                       controller: _scrollController,
-                      child: ListView.separated(
-                        controller: _scrollController,
-                        separatorBuilder: (BuildContext context, int index) =>
-                            Padding(padding: EdgeInsets.only(bottom: 4)),
-                        shrinkWrap: true,
-                        itemCount: widget.challenge.questions.length,
-                        itemBuilder: (context, index) {
-                          return DoMemorizationChallengeListItemWidget(
-                            key: UniqueKey(),
-                            question: widget.challenge.questions[index],
-                            challenge: widget.challenge,
-                            scrollController: _scrollController,
-                            onQuestionDoneCallback: () async {
-                              if (widget.challenge.questions[index].finished) {}
-                              widget.challenge.questions[index].finished = true;
+                      separatorBuilder: (BuildContext context, int index) =>
+                          Padding(padding: EdgeInsets.only(bottom: 4)),
+                      shrinkWrap: true,
+                      itemCount: widget.challenge.questions.length,
+                      itemBuilder: (context, index) {
+                        return DoMemorizationChallengeListItemWidget(
+                          key: UniqueKey(),
+                          question: widget.challenge.questions[index],
+                          challenge: widget.challenge,
+                          scrollController: _scrollController,
+                          onQuestionDoneCallback: () async {
+                            if (widget.challenge.questions[index].finished) {}
+                            widget.challenge.questions[index].finished = true;
 
-                              try {
-                                await ServiceProvider.challengesService
-                                    .finishMemorizationChallengeQuestion(
-                                        widget.challenge.id, index);
-                              } on ApiException catch (e) {
-                                SnackBarUtils.showSnackBar(
-                                    context, e.errorStatus.errorMessage);
-                                return;
-                              }
+                            try {
+                              await ServiceProvider.challengesService
+                                  .finishMemorizationChallengeQuestion(
+                                      widget.challenge.id, index);
+                            } on ApiException catch (e) {
+                              SnackBarUtils.showSnackBar(
+                                  context, e.errorStatus.errorMessage);
+                              return;
+                            }
 
-                              if (widget.challenge.done()) {
-                                confettiControler.addListener(() {
-                                  if (confettiControler.state ==
-                                      ConfettiControllerState.stopped) {
-                                    onFinishedConfetti();
-                                  }
-                                });
+                            if (widget.challenge.done()) {
+                              confettiControler.addListener(() {
+                                if (confettiControler.state ==
+                                    ConfettiControllerState.stopped) {
+                                  onFinishedConfetti();
+                                }
+                              });
 
-                                confettiControler.play();
-                              }
-                            },
-                          );
-                        },
-                      ),
+                              confettiControler.play();
+                            }
+                          },
+                        );
+                      },
                     ),
                   ),
                 ],

@@ -28,6 +28,7 @@ class _JuzQuestionWidgetState extends State<JuzQuestionWidget> {
       children: [
         Text('select juz'),
         ChoicesWidget(
+          scrollController: widget.scrollController,
           choices: [
             Choice(word: QuranAyahs.ayahs[widget.question.juz], correct: true),
             Choice(

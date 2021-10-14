@@ -30,7 +30,7 @@ class _PreviousAyahQuestionWidgetState
       children: [
         Text('select previous ayah'),
         ChoicesWidget(
-          choices: [
+          scrollController: widget.scrollController,           choices: [
             Choice(
                 word: QuranAyahs.ayahs[(widget.question.ayah - 1)],
                 correct: true),

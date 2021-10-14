@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 class ChoicesWidget extends StatelessWidget {
   final List<Choice> choices;
   final MemorizationChallengeStepDoneCallback onCorrectChoiceSelected;
+  final ScrollController scrollController;
 
   ChoicesWidget({
     this.choices,
     this.onCorrectChoiceSelected,
+    this.scrollController,
   });
 
   @override
@@ -20,9 +22,11 @@ class ChoicesWidget extends StatelessWidget {
           Padding(padding: EdgeInsets.only(bottom: 4)),
       shrinkWrap: true,
       itemCount: choices.length,
+      controller: scrollController,
       itemBuilder: (context, index) {
         return RawMaterialButton(
           child: Text(choices[index].word),
+          elevation: 10,
           onPressed: () {
             if (choices[index].correct) {
               SnackBarUtils.showSnackBar(
@@ -34,7 +38,7 @@ class ChoicesWidget extends StatelessWidget {
             } else {
               SnackBarUtils.showSnackBar(
                 context,
-                'اختيار خاطئ ، حاول مرة أخرى',
+                'اختيار خاطئ، حاول مرة أخرى',
               );
             }
           },

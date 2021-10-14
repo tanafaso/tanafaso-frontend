@@ -22,12 +22,14 @@ class SurahQuestionWidget extends StatefulWidget {
 class _SurahQuestionWidgetState extends State<SurahQuestionWidget> {
   @override
   Widget build(BuildContext context) {
+    print(widget.scrollController);
     return ListView(
       controller: widget.scrollController,
       shrinkWrap: true,
       children: [
         Text('select surah'),
         ChoicesWidget(
+         scrollController: widget.scrollController,
           choices: [
             Choice(
                 word: QuranSurahs.data[widget.question.surah]['name'],
