@@ -1,0 +1,49 @@
+import 'package:azkar/models/memorization_challenge.dart';
+import 'package:azkar/utils/quran_ayahs.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/choices_widget.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/memorization_challenge_step_done_callback.dart';
+import 'package:flutter/material.dart';
+
+class RubQuestionWidget extends StatefulWidget {
+  final Question question;
+  final MemorizationChallengeStepDoneCallback onStepDone;
+  final ScrollController scrollController;
+
+  RubQuestionWidget({
+    @required this.question,
+    @required this.onStepDone,
+    @required this.scrollController,
+  });
+
+  @override
+  _RubQuestionWidgetState createState() => _RubQuestionWidgetState();
+}
+
+class _RubQuestionWidgetState extends State<RubQuestionWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      controller: widget.scrollController,
+      shrinkWrap: true,
+      children: [
+        Text('select rub'),
+        ChoicesWidget(
+          choices: [
+            Choice(
+                word: QuranAyahs.ayahs[widget.question.firstAyahInRub],
+                correct: true),
+            Choice(
+                word: QuranAyahs
+                    .ayahs[widget.question.wrongFirstAyahInRubOptions[0]],
+                correct: false),
+            Choice(
+                word: QuranAyahs
+                    .ayahs[widget.question.wrongFirstAyahInRubOptions[1]],
+                correct: false),
+          ],
+          onCorrectChoiceSelected: () => widget.onStepDone.call(),
+        )
+      ],
+    );
+  }
+}

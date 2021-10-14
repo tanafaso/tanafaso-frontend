@@ -93,7 +93,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
           // Cache half screen after and half screen before the current screen.
           cacheExtent: MediaQuery.of(context).size.height * 0.5,
           separatorBuilder: (context, index) => Padding(
-            padding: EdgeInsets.only(bottom: 8),
+            padding: EdgeInsets.only(bottom: 4),
           ),
           itemCount: challenges.length,
           itemBuilder: (context, index) {

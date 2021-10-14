@@ -36,6 +36,7 @@ enum EndpointRoute {
   ADD_AZKAR_CHALLENGE,
   ADD_MEANING_CHALLENGE,
   ADD_READING_QURAN_CHALLENGE,
+  ADD_MEMORIZATION_CHALLENGE,
   FINISH_MEANING_CHALLENGE,
   FINISH_READING_QURAN_CHALLENGE,
   ADD_PERSONAL_CHALLENGE,
@@ -46,6 +47,7 @@ enum EndpointRoute {
   DELETE_PERSONAL_CHALLENGE,
   GET_ORIGINAL_CHALLENGE,
   UPDATE_AZKAR_CHALLENGE,
+  FINISH_MEMORIZATION_CHALLENGE_QUESTION,
   UPDATE_PERSONAL_CHALLENGE,
   GET_PERSONAL_CHALLENGES,
   GET_FINISHED_CHALLENGES_COUNT,
@@ -67,8 +69,8 @@ class ApiRoutesUtil {
       case EndpointRoute.BASE_URL:
         if (Platform.isAndroid) {
           // Use the following for testing locally.
-          // return '10.0.2.2:8080';
-          return 'www.tanafaso.com';
+          return '10.0.2.2:8080';
+          // return 'www.tanafaso.com';
         }
         if (Platform.isIOS) {
           // Use the following for testing locally.
@@ -154,6 +156,8 @@ class ApiRoutesUtil {
         return '/challenges/meaning';
       case EndpointRoute.ADD_READING_QURAN_CHALLENGE:
         return '/challenges/reading_quran';
+      case EndpointRoute.ADD_MEMORIZATION_CHALLENGE:
+        return '/challenges/memorization';
       case EndpointRoute.FINISH_MEANING_CHALLENGE:
         assert(route.pathVariables.length == 1);
         return '/challenges/finish/meaning/${route.pathVariables[0]}/';
@@ -182,6 +186,9 @@ class ApiRoutesUtil {
       case EndpointRoute.UPDATE_AZKAR_CHALLENGE:
         assert(route.pathVariables.length == 1);
         return '/challenges/${route.pathVariables[0]}';
+      case EndpointRoute.FINISH_MEMORIZATION_CHALLENGE_QUESTION:
+        assert(route.pathVariables.length == 2);
+        return '/challenges/finish/memorization/${route.pathVariables[0]}/${route.pathVariables[1]}';
       case EndpointRoute.UPDATE_PERSONAL_CHALLENGE:
         assert(route.pathVariables.length == 1);
         return '/challenges/personal/${route.pathVariables[0]}';

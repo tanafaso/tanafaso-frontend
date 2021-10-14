@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_azkar_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_meaning_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/create_memorization_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_quran_reading_challenge_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -155,7 +156,46 @@ class CreateChallengeScreen extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
+                  Padding(padding: EdgeInsets.all(4)),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: RawMaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    CreateMemorizationChallengeScreen(
+                                      initiallySelectedFriends:
+                                          initiallySelectedFriends,
+                                    )));
+                          },
+                          child: Column(
+                            children: [
+                              AutoSizeText(
+                                'اختبار حفظ قرآن',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                ),
+                              ),
+                              AutoSizeText(
+                                'تحدى نفسك وبعض أصدقائك في قوة حفظ بعض أجزاء القرآن.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.grey.shade700, fontSize: 25),
+                              ),
+                            ],
+                          ),
+                          elevation: 2.0,
+                          fillColor: Colors.white,
+                          padding: EdgeInsets.all(15.0),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
