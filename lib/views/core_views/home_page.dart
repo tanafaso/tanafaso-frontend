@@ -2,6 +2,7 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/users/requests/set_notifications_token_request_body.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/features.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/challenges_main_screen.dart';
 import 'package:azkar/views/core_views/friends/friends_main_screen.dart';
@@ -9,9 +10,11 @@ import 'package:azkar/views/core_views/live_support_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_main_screen.dart';
 import 'package:azkar/views/core_views/settings/settings_main_screen.dart';
 import 'package:clear_all_notifications/clear_all_notifications.dart';
+import 'package:feature_discovery/feature_discovery.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Topic {
@@ -38,7 +41,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+class _HomePageState extends State<HomePage>
+    with WidgetsBindingObserver, TickerProviderStateMixin {
   String userToken;
   int _selectedIdx;
 
@@ -106,6 +110,21 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     ServiceProvider.localNotificationsService.configureNextNudgeNotification();
 
     WidgetsBinding.instance.addObserver(this);
+
+    FeatureDiscovery.discoverFeatures(
+      context,
+      // Feature ids for every feature that we want to showcase in order.
+      [
+        Features.CHALLENGES_SCREEN,
+        Features.FRIENDS_SCREEN,
+        Features.PROFILE_SCREEN,
+        Features.LIVE_SUPPORT_SCREEN,
+        Features.SETTING_SCREEN,
+        Features.SABEQ_INTRODUCTION,
+        Features.ADD_FRIEND,
+        Features.SHARE_USERNAME,
+      ],
+    );
   }
 
   @override
@@ -158,34 +177,68 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     return [
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
-            icon: Icon(Icons.help_outline),
+            icon: getFeatureDiscoveryWith(
+              mainWidget: Icon(Icons.help_outline),
+              featureId: Features.LIVE_SUPPORT_SCREEN,
+              iconData: Icons.help_outline,
+              title: "صفحة الاستعلامات",
+              body:
+                  "يمكنك استخدام هذا الزر للانتقال إلى صفحة الاستفسارات حيث يمكنك طرح أي سؤال علينا أو اقتراح إضافة شيء جديد إلى التطبيق وسنقوم بالرد في أقرب وقت ممكن ان شاء الله.",
+            ),
             label: "استفسار",
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
           topicType: TopicType.LIVE_SUPPORT),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
-            icon: Icon(Icons.contacts_outlined),
+            icon: getFeatureDiscoveryWith(
+              mainWidget: Icon(Icons.contacts_outlined),
+              featureId: Features.FRIENDS_SCREEN,
+              iconData: Icons.contacts,
+              title: "صفحة الأصدقاء",
+              body:
+                  "يمكنك استخدام هذا الزر للانتقال إلى صفحة الأصدقاء حيث يمكنك رؤية لوحة النتائج بينك وبين كل صديق. يمكنك أيضًا إضافة أصدقاء جدد من هناك.",
+            ),
             label: AppLocalizations.of(context).friends,
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
           topicType: TopicType.FRIENDS),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
-              icon: Icon(Icons.whatshot_outlined),
+              icon: getFeatureDiscoveryWith(
+                mainWidget: Icon(Icons.whatshot_outlined),
+                featureId: Features.CHALLENGES_SCREEN,
+                iconData: Icons.whatshot_outlined,
+                title: "صفحة التحديات",
+                body:
+                    "يمكنك استخدام هذا الزر للانتقال إلى صفحة التحديات حيث يمكنك رؤية قائمة التحديات التي تم إنشاؤها بينك وبين أصدقائك ويمكنك أيضًا إنشاء التحديات أو نسخها أو حذفها من هناك.",
+              ),
               label: AppLocalizations.of(context).theChallenges,
               backgroundColor: Theme.of(context).colorScheme.primary),
           topicType: TopicType.CHALLENGES),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined),
+            icon: getFeatureDiscoveryWith(
+              mainWidget: Icon(Icons.account_circle_outlined),
+              featureId: Features.PROFILE_SCREEN,
+              iconData: Icons.account_circle_outlined,
+              title: "الصفحة الشخصية",
+              body:
+                  "يمكنك استخدام هذا الزر للانتقال إلى صفحة الملف الشخصي حيث يمكنك العثور على اسم المستخدم الخاص بك ونسخه ومشاركته مع الآخرين حتى يتمكنوا من إرسال طلبات صداقة إليك.",
+            ),
             label: 'الملف',
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
           topicType: TopicType.PROFILE),
       Topic(
           bottomNavigationBarItem: BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
+            icon: getFeatureDiscoveryWith(
+              mainWidget: Icon(Icons.settings_outlined),
+              featureId: Features.SETTING_SCREEN,
+              iconData: Icons.settings_outlined,
+              title: "صفحة الإعدادات",
+              body: "يمكنك استخدام هذا الزر للانتقال إلى صفحة الإعدادات.",
+            ),
             label: "الإعدادات",
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
@@ -208,6 +261,66 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         return SettingsMainScreen();
     }
     assert(false);
+  }
+
+  Widget getFeatureDiscoveryWith({
+    Widget mainWidget,
+    String featureId,
+    IconData iconData,
+    String title,
+    String body,
+  }) {
+    return DescribedFeatureOverlay(
+      featureId: featureId,
+      barrierDismissible: false,
+      backgroundDismissible: false,
+      contentLocation: ContentLocation.above,
+      tapTarget: Icon(
+        iconData,
+        size: 30,
+      ),
+      // The widget that will be displayed as the tap target.
+      description: Center(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: FittedBox(
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      softWrap: true,
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(padding: EdgeInsets.all(8)),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(body,
+                      softWrap: true,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                      )),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      targetColor: Theme.of(context).colorScheme.secondary,
+      textColor: Colors.black,
+      overflowMode: OverflowMode.wrapBackground,
+      child: mainWidget,
+    );
   }
 
   @override
