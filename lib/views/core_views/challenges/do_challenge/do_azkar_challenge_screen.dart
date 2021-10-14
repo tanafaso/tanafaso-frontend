@@ -91,7 +91,8 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                     initiallyExpanded: true,
                     backgroundColor: Theme.of(context).colorScheme.secondary,
                     collapsedBackgroundColor:
-                    Theme.of(context).colorScheme.secondary,                    textColor: Colors.black,
+                        Theme.of(context).colorScheme.secondary,
+                    textColor: Colors.black,
                     iconColor: Colors.black,
                     collapsedTextColor: Colors.black,
                     collapsedIconColor: Colors.black,
