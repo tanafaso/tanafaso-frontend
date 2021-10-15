@@ -59,7 +59,7 @@ class AuthenticationService {
   Future<void> _loginWithFacebookAccessToken(
       FacebookAccessToken facebookAccessToken) async {
     final http.Response apiResponse = await http.put(
-        Uri.http(
+        Uri.https(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(
@@ -87,7 +87,7 @@ class AuthenticationService {
 
   Future<void> loginWithGoogle(String googleIdToken) async {
     final http.Response apiResponse = await http.put(
-        Uri.http(
+        Uri.https(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(
@@ -161,7 +161,7 @@ class AuthenticationService {
         await ServiceProvider.secureStorageService.getFacebookToken();
     String facebookUserId =
         await ServiceProvider.secureStorageService.getFacebookUserId();
-    http.Response response = await http.get(Uri.http("graph.facebook.com",
+    http.Response response = await http.get(Uri.https("graph.facebook.com",
         "v9.0/$facebookUserId/friends/", {'access_token': facebookToken}));
     if (response.statusCode == FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE) {
       throw ApiException.withDefaultError();
@@ -179,7 +179,7 @@ class AuthenticationService {
     http.Response apiResponse;
     try {
       apiResponse = await http.put(
-        Uri.http(
+        Uri.https(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(
@@ -204,7 +204,7 @@ class AuthenticationService {
     http.Response apiResponse;
     try {
       apiResponse = await http.put(
-        Uri.http(
+        Uri.https(
             ApiRoutesUtil.apiRouteToString(
                 Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
             ApiRoutesUtil.apiRouteToString(
