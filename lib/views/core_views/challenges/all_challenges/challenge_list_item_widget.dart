@@ -13,9 +13,11 @@ import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_item_loading_widget.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_azkar_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_meaning_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/create_memorization_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_quran_reading_challenge_screen.dart';
-import 'package:azkar/views/core_views/challenges/do_challenge/do_azkar_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/do_azkar_challenge/do_azkar_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_meaning_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/do_memorization_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_reading_quran_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:feature_discovery/feature_discovery.dart';
@@ -268,12 +270,16 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
               getIcon(),
               Padding(padding: EdgeInsets.only(right: 16)),
               Expanded(
-                child: AutoSizeText(
-                  widget.challenge.getName(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-                  minFontSize: 35,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    widget.challenge.getName(),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                    maxLines: 1,
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
               Padding(padding: EdgeInsets.only(right: 8)),
@@ -396,6 +402,19 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
             })));
   }
 
+  void onMemorizationChallengePressed() {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => DoMemorizationChallengeScreen(
+            challenge: widget.challenge.memorizationChallenge,
+            group: widget.group,
+            challengedUsersIds: _challengedUsersIds,
+            challengedUsersFullNames: _challengedUsersFullNames,
+            friendshipScores: widget.friendshipScores,
+            challengeChangedCallback: (changedChallenge) {
+              widget.challengeChangedCallback(changedChallenge);
+            })));
+  }
+
   void onChallengePressed() {
     switch (widget.challenge.challengeType) {
       case ChallengeType.AZKAR:
@@ -406,6 +425,9 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
         return;
       case ChallengeType.READING_QURAN:
         onReadingChallengePressed();
+        return;
+      case ChallengeType.MEMORIZATION:
+        onMemorizationChallengePressed();
         return;
       case ChallengeType.OTHER:
         return;
@@ -472,9 +494,32 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                 )));
   }
 
+  void onCopyMemorizationChallenge() async {
+    List<Friend> friends =
+        await ServiceProvider.usersService.getFriendsLeaderboard();
+    List<Friend> currentChallengeFriends = friends
+        .where((friend) => _challengedUsersIds.contains(friend.userId))
+        .toList();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CreateMemorizationChallengeScreen(
+                  initiallySelectedFriends: currentChallengeFriends,
+                  initiallySelectedNumberOfQuestions:
+                      widget.challenge.memorizationChallenge.questions.length,
+                  initiallySelectedDifficulty:
+                      widget.challenge.memorizationChallenge.difficulty,
+                  initiallySelectedFirstJuz:
+                      widget.challenge.memorizationChallenge.firstJuz,
+                  initiallySelectedLastJuz:
+                      widget.challenge.memorizationChallenge.lastJuz,
+                )));
+  }
+
   String getCopyCaption() {
     return widget.challenge.challengeType == ChallengeType.AZKAR ||
             widget.challenge.challengeType == ChallengeType.READING_QURAN ||
+            widget.challenge.challengeType == ChallengeType.MEMORIZATION ||
             widget.challenge.challengeType == ChallengeType.OTHER
         ? AppLocalizations.of(context).copy
         : "إضافة";
@@ -483,6 +528,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
   IconData getCopyIcon() {
     return widget.challenge.challengeType == ChallengeType.AZKAR ||
             widget.challenge.challengeType == ChallengeType.READING_QURAN ||
+            widget.challenge.challengeType == ChallengeType.MEMORIZATION ||
             widget.challenge.challengeType == ChallengeType.OTHER
         ? Icons.copy
         : Icons.add;
@@ -498,6 +544,9 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
         return;
       case ChallengeType.READING_QURAN:
         onCopyReadingChallenge();
+        return;
+      case ChallengeType.MEMORIZATION:
+        onCopyMemorizationChallenge();
         return;
       case ChallengeType.OTHER:
         return;

@@ -7,6 +7,7 @@ import 'dart:ui';
 
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/quran_ayahs.dart';
 import 'package:azkar/views/landing_widget.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,7 +33,10 @@ void main() async {
     systemNavigationBarColor: Color(0xffcef5ce),
     statusBarColor: Color(0xffcef5ce),
   ));
-
+  if (QuranAyahs.ayahs.isEmpty) {
+    String quran = await rootBundle.loadString('assets/quran.txt');
+    QuranAyahs.ayahs = quran.split("\n");
+  }
   runApp(MyApp());
 }
 

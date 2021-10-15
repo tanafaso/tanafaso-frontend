@@ -7,13 +7,16 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/challenges/requests/add_azkar_challenge_in_group_request.dart';
 import 'package:azkar/net/api_interface/challenges/requests/add_azkar_challenge_request_body.dart';
 import 'package:azkar/net/api_interface/challenges/requests/add_meaning_challenge_request_body.dart';
+import 'package:azkar/net/api_interface/challenges/requests/add_memorization_challenge_request_body.dart';
 import 'package:azkar/net/api_interface/challenges/requests/add_reading_quran_challenge_request_body.dart';
 import 'package:azkar/net/api_interface/challenges/requests/update_azkar_challenge_request_body.dart';
 import 'package:azkar/net/api_interface/challenges/responses/add_azkar_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/add_meaning_challenge_response.dart';
+import 'package:azkar/net/api_interface/challenges/responses/add_memorization_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/add_reading_quran_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/delete_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/finish_meaning_challenge_response.dart';
+import 'package:azkar/net/api_interface/challenges/responses/finish_memorization_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/finish_reading_quran_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/get_azkar_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/get_challenges_response.dart';
@@ -79,6 +82,22 @@ class ChallengesService {
         requestBody: requestBody);
 
     var response = AddReadingQuranChallengeResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.error);
+    }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+  }
+
+  Future<void> addMemorizationChallenge(
+      AddMemorizationChallengeRequestBody requestBody) async {
+    http.Response httpResponse = await ApiCaller.post(
+        route:
+            Endpoint(endpointRoute: EndpointRoute.ADD_MEMORIZATION_CHALLENGE),
+        requestBody: requestBody);
+
+    var response = AddMemorizationChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
       throw new ApiException(response.error);
@@ -194,6 +213,25 @@ class ChallengesService {
             pathVariables: [challenge.id]),
         requestBody: requestBody);
     var response = UpdateAzkarChallengeResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.error);
+    }
+
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+  }
+
+  Future<void> finishMemorizationChallengeQuestion(
+      String challengeId, int questionId) async {
+    http.Response httpResponse = await ApiCaller.put(
+      route: Endpoint(
+          endpointRoute: EndpointRoute.FINISH_MEMORIZATION_CHALLENGE_QUESTION,
+          pathVariables: [
+            challengeId,
+            questionId.toString(),
+          ]),
+    );
+    var response = FinishMemorizationChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
       throw new ApiException(response.error);

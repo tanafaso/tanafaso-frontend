@@ -82,7 +82,8 @@ class SelectSurahScreen extends StatelessWidget {
                                             fontSize: 17),
                                         children: [
                                           TextSpan(
-                                              text: 'سوف تتحدى صديقك أن يقرأ'),
+                                              text:
+                                                  'سوف تتحدى أصدقائك أن يقرؤوا'),
                                           TextSpan(text: ' '),
                                           TextSpan(text: 'سورة'),
                                           TextSpan(text: ' '),
