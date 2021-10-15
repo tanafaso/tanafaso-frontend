@@ -28,19 +28,27 @@ class _PreviousAyahQuestionWidgetState
       controller: widget.scrollController,
       shrinkWrap: true,
       children: [
-        Text('select previous ayah'),
+        Text(
+          'اختر الآية السابقة',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         ChoicesWidget(
-          scrollController: widget.scrollController,           choices: [
+          scrollController: widget.scrollController,
+          choices: [
             Choice(
-                word: QuranAyahs.ayahs[(widget.question.ayah - 1)],
+                word: QuranAyahs.ayahs[(widget.question.ayah - 1) - 1],
                 correct: true),
             Choice(
                 word: QuranAyahs
-                    .ayahs[widget.question.wrongPreviousAyahOptions[0]],
+                    .ayahs[widget.question.wrongPreviousAyahOptions[0] - 1],
                 correct: false),
             Choice(
                 word: QuranAyahs
-                    .ayahs[widget.question.wrongPreviousAyahOptions[1]],
+                    .ayahs[widget.question.wrongPreviousAyahOptions[1] - 1],
                 correct: false),
           ],
           onCorrectChoiceSelected: () => widget.onStepDone.call(),

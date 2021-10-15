@@ -39,20 +39,20 @@ class _CreateMemorizationChallengeScreenState
   int _expiresAfterHoursNum;
   int _numberOfQuestions;
   int _difficulty;
-  int _firstJuz;
-  int _lastJuz;
+  double _firstJuz;
+  double _lastJuz;
 
   @override
   void initState() {
+    super.initState();
+
     _selectedFriends = widget.initiallySelectedFriends;
     progressButtonState = ButtonState.idle;
     _expiresAfterHoursNum = 24;
     _numberOfQuestions = widget.initiallySelectedNumberOfQuestions;
-    _firstJuz = widget.initiallySelectedFirstJuz;
-    _lastJuz = widget.initiallySelectedLastJuz;
+    _firstJuz = widget.initiallySelectedFirstJuz * 1.0;
+    _lastJuz = widget.initiallySelectedLastJuz * 1.0;
     _difficulty = widget.initiallySelectedDifficulty;
-
-    super.initState();
   }
 
   @override
@@ -137,7 +137,7 @@ class _CreateMemorizationChallengeScreenState
                                           TextSpan(text: 'تحدي في الأجزاء من '),
                                           TextSpan(
                                               text: ArabicUtils.englishToArabic(
-                                                  _firstJuz.toString()),
+                                                  _firstJuz.toInt().toString()),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 25,
@@ -145,7 +145,7 @@ class _CreateMemorizationChallengeScreenState
                                           TextSpan(text: ' إلى '),
                                           TextSpan(
                                               text: ArabicUtils.englishToArabic(
-                                                  _lastJuz.toString()),
+                                                  _lastJuz.toInt().toString()),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 25,
@@ -158,8 +158,8 @@ class _CreateMemorizationChallengeScreenState
                               ],
                             ),
                             RangeSlider(
-                              values: RangeValues(
-                                  _firstJuz.toDouble(), _lastJuz.toDouble()),
+                              values:
+                                  RangeValues(_firstJuz * 1.0, _lastJuz * 1.0),
                               activeColor:
                                   Theme.of(context).colorScheme.primary,
                               inactiveColor:
@@ -167,15 +167,17 @@ class _CreateMemorizationChallengeScreenState
                               min: 1,
                               max: 30,
                               divisions: 30,
-                              onChanged: (RangeValues newRange) => setState(() {
-                                _firstJuz = newRange.start.toInt();
-                                _lastJuz = newRange.end.toInt();
-                              }),
+                              onChanged: (newRange) {
+                                setState(() {
+                                  _firstJuz = newRange.start;
+                                  _lastJuz = newRange.end;
+                                });
+                              },
                               labels: RangeLabels(
                                   ArabicUtils.englishToArabic(
-                                      _firstJuz.toString()),
+                                      _firstJuz.toInt().toString()),
                                   ArabicUtils.englishToArabic(
-                                      _lastJuz.toString())),
+                                      _lastJuz.toInt().toString())),
                             ),
                           ]),
                         ),
@@ -512,8 +514,8 @@ class _CreateMemorizationChallengeScreenState
             Duration.secondsPerHour * _expiresAfterHoursNum,
         difficulty: _difficulty,
         numberOfQuestions: _numberOfQuestions,
-        firstJuz: _firstJuz,
-        lastJuz: _lastJuz,
+        firstJuz: _firstJuz.toInt(),
+        lastJuz: _lastJuz.toInt(),
       ));
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(

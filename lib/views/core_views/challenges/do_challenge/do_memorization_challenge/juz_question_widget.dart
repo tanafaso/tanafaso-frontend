@@ -26,18 +26,27 @@ class _JuzQuestionWidgetState extends State<JuzQuestionWidget> {
       controller: widget.scrollController,
       shrinkWrap: true,
       children: [
-        Text('select juz'),
+        Text(
+          'اختر الآية الأولى في الجزء',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         ChoicesWidget(
           scrollController: widget.scrollController,
           choices: [
-            Choice(word: QuranAyahs.ayahs[widget.question.juz], correct: true),
+            Choice(
+                word: QuranAyahs.ayahs[widget.question.firstAyahInJuz - 1],
+                correct: true),
             Choice(
                 word: QuranAyahs
-                    .ayahs[widget.question.wrongFirstAyahInJuzOptions[0]],
+                    .ayahs[widget.question.wrongFirstAyahInJuzOptions[0] - 1],
                 correct: false),
             Choice(
                 word: QuranAyahs
-                    .ayahs[widget.question.wrongFirstAyahInJuzOptions[1]],
+                    .ayahs[widget.question.wrongFirstAyahInJuzOptions[1] - 1],
                 correct: false),
           ],
           onCorrectChoiceSelected: () => widget.callback.call(),

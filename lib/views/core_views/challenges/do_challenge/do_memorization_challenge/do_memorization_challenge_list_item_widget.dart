@@ -95,7 +95,7 @@ class _DoMemorizationChallengeListItemWidgetState
     super.initState();
 
     _tileExpanded = false;
-    _currentStep = Step.SURAH_QUESTION;
+    _currentStep = widget.question.finished ? Step.DONE : Step.SURAH_QUESTION;
   }
 
   @override
@@ -137,12 +137,14 @@ class _DoMemorizationChallengeListItemWidgetState
           Column(
             children: [
               Text(
-                QuranAyahs.ayahs[widget.question.ayah],
+                QuranAyahs.ayahs[widget.question.ayah - 1],
                 style: TextStyle(fontSize: 25),
                 textAlign: TextAlign.center,
               ),
-              Divider(),
-              getStepQuestionWidget(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(child: getStepQuestionWidget()),
+              ),
             ],
           ),
         ],
@@ -183,9 +185,7 @@ class _DoMemorizationChallengeListItemWidgetState
           scrollController: widget.scrollController,
         );
       case Step.DONE:
-        return Card(
-          color: Colors.green,
-        );
+        return Container();
     }
 
     assert(false);
@@ -196,12 +196,20 @@ class _DoMemorizationChallengeListItemWidgetState
 
   void onStepDone() {
     setState(() {
-      _currentStep = nextStep(_currentStep);
+      if (widget.challenge.difficulty == 1 &&
+          _currentStep == Step.NEXT_AYAH_QUESTION) {
+        _currentStep = Step.DONE;
+      } else if (widget.challenge.difficulty == 2 &&
+          _currentStep == Step.PREVIOUS_AYAH_QUESTION) {
+        _currentStep = Step.DONE;
+      } else {
+        _currentStep = nextStep(_currentStep);
+      }
+      if (_currentStep == Step.DONE) {
+        widget.question.finished = true;
+        widget.onQuestionDoneCallback.call();
+      }
     });
-    if (_currentStep == Step.DONE) {
-      widget.question.finished = true;
-      widget.onQuestionDoneCallback.call();
-    }
   }
 
   Widget getIcon() {

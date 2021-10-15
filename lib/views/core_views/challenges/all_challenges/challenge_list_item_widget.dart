@@ -270,12 +270,16 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
               getIcon(),
               Padding(padding: EdgeInsets.only(right: 16)),
               Expanded(
-                child: AutoSizeText(
-                  widget.challenge.getName(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-                  minFontSize: 35,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    widget.challenge.getName(),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                    maxLines: 1,
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
               Padding(padding: EdgeInsets.only(right: 8)),

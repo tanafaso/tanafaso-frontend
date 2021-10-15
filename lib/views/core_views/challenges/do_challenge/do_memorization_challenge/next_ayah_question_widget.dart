@@ -26,18 +26,27 @@ class _NextAyahQuestionWidgetState extends State<NextAyahQuestionWidget> {
       controller: widget.scrollController,
       shrinkWrap: true,
       children: [
-        Text('select next ayah'),
+        Text(
+          'اختر الآية التالية',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         ChoicesWidget(
           scrollController: widget.scrollController,
           choices: [
             Choice(
-                word: QuranAyahs.ayahs[widget.question.ayah + 1],
+                word: QuranAyahs.ayahs[widget.question.ayah + 1 - 1],
                 correct: true),
             Choice(
-                word: QuranAyahs.ayahs[widget.question.wrongNextAyahOptions[0]],
+                word: QuranAyahs
+                    .ayahs[widget.question.wrongNextAyahOptions[0] - 1],
                 correct: false),
             Choice(
-                word: QuranAyahs.ayahs[widget.question.wrongNextAyahOptions[1]],
+                word: QuranAyahs
+                    .ayahs[widget.question.wrongNextAyahOptions[1] - 1],
                 correct: false),
           ],
           onCorrectChoiceSelected: () => widget.onStepDone.call(),

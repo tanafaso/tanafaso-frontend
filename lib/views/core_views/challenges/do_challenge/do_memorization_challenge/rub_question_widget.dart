@@ -26,20 +26,27 @@ class _RubQuestionWidgetState extends State<RubQuestionWidget> {
       controller: widget.scrollController,
       shrinkWrap: true,
       children: [
-        Text('select rub'),
+        Text(
+          'اختر الآية الأولى في الربع',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         ChoicesWidget(
           scrollController: widget.scrollController,
           choices: [
             Choice(
-                word: QuranAyahs.ayahs[widget.question.firstAyahInRub],
+                word: QuranAyahs.ayahs[widget.question.firstAyahInRub - 1],
                 correct: true),
             Choice(
                 word: QuranAyahs
-                    .ayahs[widget.question.wrongFirstAyahInRubOptions[0]],
+                    .ayahs[widget.question.wrongFirstAyahInRubOptions[0] - 1],
                 correct: false),
             Choice(
                 word: QuranAyahs
-                    .ayahs[widget.question.wrongFirstAyahInRubOptions[1]],
+                    .ayahs[widget.question.wrongFirstAyahInRubOptions[1] - 1],
                 correct: false),
           ],
           onCorrectChoiceSelected: () => widget.onStepDone.call(),

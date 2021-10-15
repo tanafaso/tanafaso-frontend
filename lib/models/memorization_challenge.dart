@@ -86,6 +86,7 @@ class Question {
   });
 
   int number;
+  // ALL ONE-BASED
   int juz;
   int ayah;
   int surah;

@@ -58,7 +58,6 @@ class _DoMemorizationChallengeScreenState
     confettiControler =
         ConfettiController(duration: const Duration(seconds: 1));
     _scrollController = ScrollController();
-    print(_scrollController);
   }
 
   @override
@@ -111,8 +110,9 @@ class _DoMemorizationChallengeScreenState
                           challenge: widget.challenge,
                           scrollController: _scrollController,
                           onQuestionDoneCallback: () async {
-                            if (widget.challenge.questions[index].finished) {}
-                            widget.challenge.questions[index].finished = true;
+                            setState(() {
+                              widget.challenge.questions[index].finished = true;
+                            });
 
                             try {
                               await ServiceProvider.challengesService
