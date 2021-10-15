@@ -63,6 +63,11 @@ class Status {
   static const int USER_ALREADY_IS_PUBLICLY_AVAILABLE_USER_ERROR = 56;
   static const int FACEBOOK_RETURNED_NULL_EMAIL_ADDRESS_ERROR = 57;
   static const int AUTHENTICATION_WITH_GOOGLE_ERROR = 58;
+  static const int MEMORIZATION_CHALLENGE_DIFFICULTY_LEVEL_INVALID_ERROR = 59;
+  static const int MEMORIZATION_CHALLENGE_JUZ_RANGE_INVALID_ERROR = 60;
+  static const int MEMORIZATION_CHALLENGE_NUMBER_OF_QUESTIONS_INVALID_ERROR =
+      61;
+  static const int MEMORIZATION_QUESTION_HAS_ALREADY_BEEN_FINISHED = 62;
 
   static Map<int, String> conversions = const {
     API_USER_ALREADY_LOGGED_IN_ERROR: "لقد قمت بتسجيل الدخول بالفعل",
@@ -141,6 +146,13 @@ class Status {
         "فيسبوك لم يرسل عنوان بريدك الإلكتروني إلى تنافسوا، على الأرجح لأن فيسبوك لم  يتحقق من بريدك الإلكتروني بعد. إما أن تأكد بريدك الإلكتروني باستخدام مع فيسبوك أولاً أو حاول تسجيل الدخول باستخدام بريدك الإلكتروني مباشرةً.",
     AUTHENTICATION_WITH_GOOGLE_ERROR:
         'حدث خطأ أثناء محاولة تسجيل الدخول باستخدام جوجل',
+    MEMORIZATION_CHALLENGE_DIFFICULTY_LEVEL_INVALID_ERROR:
+        'مستوى صعوبة غير صالح',
+    MEMORIZATION_CHALLENGE_JUZ_RANGE_INVALID_ERROR: 'أرقام أجزاء غير صالحة',
+    MEMORIZATION_CHALLENGE_NUMBER_OF_QUESTIONS_INVALID_ERROR:
+        'عدد غير صالح من الأسئلة',
+    MEMORIZATION_QUESTION_HAS_ALREADY_BEEN_FINISHED:
+        'لقد أجبت على هذا السؤال من قبل',
   };
 
   Status(int errorCode) {

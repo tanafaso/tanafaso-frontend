@@ -1,11 +1,13 @@
 import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/models/meaning_challenge.dart';
+import 'package:azkar/models/memorization_challenge.dart';
 import 'package:azkar/models/reading_quran_challenge.dart';
 
 enum ChallengeType {
   AZKAR,
   MEANING,
   READING_QURAN,
+  MEMORIZATION,
   OTHER,
 }
 
@@ -14,15 +16,19 @@ class Challenge {
     this.azkarChallenge,
     this.meaningChallenge,
     this.readingQuranChallenge,
+    this.memorizationChallenge,
   }) : challengeType = azkarChallenge != null
             ? ChallengeType.AZKAR
             : meaningChallenge != null
                 ? ChallengeType.MEANING
-                : ChallengeType.READING_QURAN;
+                : readingQuranChallenge != null
+                    ? ChallengeType.READING_QURAN
+                    : ChallengeType.MEMORIZATION;
 
   AzkarChallenge azkarChallenge;
   MeaningChallenge meaningChallenge;
   ReadingQuranChallenge readingQuranChallenge;
+  MemorizationChallenge memorizationChallenge;
   ChallengeType challengeType;
 
   factory Challenge.fromJson(Map<String, dynamic> json) {
@@ -39,6 +45,11 @@ class Challenge {
         readingQuranChallenge:
             ReadingQuranChallenge.fromJson(json["readingQuranChallenge"]),
       );
+    } else if (json["memorizationChallenge"] != null) {
+      return Challenge(
+        memorizationChallenge:
+            MemorizationChallenge.fromJson(json["memorizationChallenge"]),
+      );
     }
 
     return Challenge();
@@ -52,6 +63,9 @@ class Challenge {
         "readingQuranChallenge": readingQuranChallenge == null
             ? null
             : readingQuranChallenge.toJson(),
+        "memorizationChallenge": memorizationChallenge == null
+            ? null
+            : memorizationChallenge.toJson(),
       };
 
   String getId() {
@@ -62,6 +76,8 @@ class Challenge {
         return meaningChallenge.id;
       case ChallengeType.READING_QURAN:
         return readingQuranChallenge.id;
+      case ChallengeType.MEMORIZATION:
+        return memorizationChallenge.id;
       case ChallengeType.OTHER:
         return null;
     }
@@ -76,6 +92,8 @@ class Challenge {
         return meaningChallenge.groupId;
       case ChallengeType.READING_QURAN:
         return readingQuranChallenge.groupId;
+      case ChallengeType.MEMORIZATION:
+        return memorizationChallenge.groupId;
       case ChallengeType.OTHER:
         return null;
     }
@@ -90,6 +108,8 @@ class Challenge {
         return meaningChallenge.getName();
       case ChallengeType.READING_QURAN:
         return readingQuranChallenge.getName();
+      case ChallengeType.MEMORIZATION:
+        return memorizationChallenge.getName();
       case ChallengeType.OTHER:
         return null;
     }
@@ -104,6 +124,8 @@ class Challenge {
         return meaningChallenge.finished;
       case ChallengeType.READING_QURAN:
         return readingQuranChallenge.finished;
+      case ChallengeType.MEMORIZATION:
+        return memorizationChallenge.done();
       case ChallengeType.OTHER:
         return false;
     }
@@ -118,6 +140,8 @@ class Challenge {
         return meaningChallenge.expiryDate;
       case ChallengeType.READING_QURAN:
         return readingQuranChallenge.expiryDate;
+      case ChallengeType.MEMORIZATION:
+        return memorizationChallenge.expiryDate;
       case ChallengeType.OTHER:
         return 0;
     }
@@ -156,6 +180,8 @@ class Challenge {
         return meaningChallenge.usersFinished;
       case ChallengeType.READING_QURAN:
         return readingQuranChallenge.usersFinished;
+      case ChallengeType.MEMORIZATION:
+        return memorizationChallenge.usersFinished;
       case ChallengeType.OTHER:
         return [];
     }
@@ -170,6 +196,8 @@ class Challenge {
         return meaningChallenge.creatingUserId;
       case ChallengeType.READING_QURAN:
         return readingQuranChallenge.creatingUserId;
+      case ChallengeType.MEMORIZATION:
+        return memorizationChallenge.creatingUserId;
       case ChallengeType.OTHER:
         return null;
     }
