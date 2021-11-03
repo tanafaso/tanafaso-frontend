@@ -34,7 +34,7 @@ class _LandingWidgetState extends State<LandingWidget> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Image.asset('assets/images/logo.png'),
+        child: Image.asset('assets/images/logo_fore.png'),
       ),
     );
   }
