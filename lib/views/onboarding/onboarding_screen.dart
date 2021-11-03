@@ -51,7 +51,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         PageViewModel(
           title: "مرحبا بكم في تنافسوا 🔥",
           body: "شجع أقاربك و أصدقائك وتنافس معهم على ذكر الله",
-          image: _buildImage('logo.png'),
+          image: _buildImage('logo_fore.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(

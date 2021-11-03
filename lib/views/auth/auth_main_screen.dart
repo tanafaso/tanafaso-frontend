@@ -61,15 +61,12 @@ class _AuthMainScreenState extends State<AuthMainScreen>
               ],
             ),
             Center(
-              child: RotationTransition(
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  width: MediaQuery.of(context).size.width,
-                  height: Platform.isAndroid
-                      ? MediaQuery.of(context).size.height * 2 / 5
-                      : MediaQuery.of(context).size.height / 2,
-                ),
-                turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
+              child: Image.asset(
+                'assets/images/logo_fore.png',
+                width: MediaQuery.of(context).size.width,
+                height: Platform.isAndroid
+                    ? MediaQuery.of(context).size.height * 2 / 5
+                    : MediaQuery.of(context).size.height / 2,
               ),
             ),
           ]),
