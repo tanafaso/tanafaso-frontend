@@ -82,13 +82,14 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
               child: Column(
                 children: [
                   ExpansionTile(
+                    key: GlobalKey(),
                     title: Text(
                       "الأصدقاء",
                       style: TextStyle(
                           fontSize: _friendsTileExpanded ? 25 : 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    initiallyExpanded: true,
+                    initiallyExpanded: _friendsTileExpanded,
                     backgroundColor: Theme.of(context).colorScheme.secondary,
                     collapsedBackgroundColor:
                         Theme.of(context).colorScheme.secondary,
@@ -98,7 +99,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                     collapsedIconColor: Colors.black,
                     trailing: Icon(
                       _friendsTileExpanded
-                          ? Icons.arrow_drop_down_circle
+                          ? Icons.arrow_drop_up
                           : Icons.arrow_drop_down,
                       size: 30,
                     ),
@@ -121,7 +122,11 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                                         widget.challengedUsersFullNames,
                                   ),
                           ),
-                          Divider(),
+                          Visibility(
+                            child: Divider(),
+                            visible:
+                                (widget.challenge.motivation?.length ?? 0) != 0,
+                          ),
                           Visibility(
                             visible:
                                 (widget.challenge.motivation?.length ?? 0) != 0,
@@ -207,6 +212,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
             widget.challenge.subChallenges[index] = newSubChallenge;
             if (newSubChallenge.done()) {
               setState(() {
+                _friendsTileExpanded = false;
                 widget.challenge.subChallenges.add(newSubChallenge);
                 widget.challenge.subChallenges.removeAt(index);
               });
