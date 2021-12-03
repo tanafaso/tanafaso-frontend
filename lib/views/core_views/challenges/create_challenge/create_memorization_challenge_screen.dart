@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/api_exception.dart';
@@ -8,7 +10,9 @@ import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_friend/selected_friends_widget.dart';
 import 'package:azkar/views/core_views/home_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
@@ -39,8 +43,8 @@ class _CreateMemorizationChallengeScreenState
   int _expiresAfterHoursNum;
   int _numberOfQuestions;
   int _difficulty;
-  double _firstJuz;
-  double _lastJuz;
+  int _firstJuz;
+  int _lastJuz;
 
   @override
   void initState() {
@@ -50,8 +54,8 @@ class _CreateMemorizationChallengeScreenState
     progressButtonState = ButtonState.idle;
     _expiresAfterHoursNum = 24;
     _numberOfQuestions = widget.initiallySelectedNumberOfQuestions;
-    _firstJuz = widget.initiallySelectedFirstJuz * 1.0;
-    _lastJuz = widget.initiallySelectedLastJuz * 1.0;
+    _firstJuz = widget.initiallySelectedFirstJuz;
+    _lastJuz = widget.initiallySelectedLastJuz;
     _difficulty = widget.initiallySelectedDifficulty;
   }
 
@@ -114,7 +118,7 @@ class _CreateMemorizationChallengeScreenState
                                   child: Icon(Icons.pie_chart),
                                 ),
                                 AutoSizeText(
-                                  "أجزاء القرآن",
+                                  "أجزاء الإختبار",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 25),
@@ -122,62 +126,62 @@ class _CreateMemorizationChallengeScreenState
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Expanded(
-                                  child: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: RichText(
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      text: TextSpan(
-                                        style: TextStyle(
-                                            color: Colors.grey.shade700,
-                                            fontSize: 20),
-                                        children: [
-                                          TextSpan(text: 'تحدي في الأجزاء من '),
-                                          TextSpan(
-                                              text: ArabicUtils.englishToArabic(
-                                                  _firstJuz.toInt().toString()),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 25,
-                                                  color: Colors.black)),
-                                          TextSpan(text: ' إلى '),
-                                          TextSpan(
-                                              text: ArabicUtils.englishToArabic(
-                                                  _lastJuz.toInt().toString()),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 25,
-                                                  color: Colors.black)),
-                                        ],
+                                Flexible(
+                                    child: Text(
+                                  'من',
+                                  textAlign: TextAlign.center,
+                                )),
+                                Flexible(
+                                  child: NumberPicker(
+                                      zeroPad: true,
+                                      minValue: 1,
+                                      maxValue: 30,
+                                      value: _firstJuz,
+                                      textStyle: TextStyle(
+                                        fontSize: 25,
                                       ),
-                                    ),
-                                  ),
+                                      selectedTextStyle: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textMapper: (num) =>
+                                          ArabicUtils.englishToArabic(num),
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          _firstJuz = newValue;
+                                          _lastJuz = max(_lastJuz, _firstJuz);
+                                        });
+                                      }),
+                                ),
+                                Flexible(
+                                    child: Text(
+                                  'إلى',
+                                  textAlign: TextAlign.center,
+                                )),
+                                Flexible(
+                                  child: NumberPicker(
+                                      zeroPad: true,
+                                      minValue: _firstJuz,
+                                      maxValue: 30,
+                                      value: _lastJuz,
+                                      textStyle: TextStyle(
+                                        fontSize: 25,
+                                      ),
+                                      selectedTextStyle: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textMapper: (num) =>
+                                          ArabicUtils.englishToArabic(num),
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          _lastJuz = newValue;
+                                        });
+                                      }),
                                 ),
                               ],
-                            ),
-                            RangeSlider(
-                              values:
-                                  RangeValues(_firstJuz * 1.0, _lastJuz * 1.0),
-                              activeColor:
-                                  Theme.of(context).colorScheme.primary,
-                              inactiveColor:
-                                  Theme.of(context).colorScheme.primary,
-                              min: 1,
-                              max: 30,
-                              divisions: 30,
-                              onChanged: (newRange) {
-                                setState(() {
-                                  _firstJuz = newRange.start;
-                                  _lastJuz = newRange.end;
-                                });
-                              },
-                              labels: RangeLabels(
-                                  ArabicUtils.englishToArabic(
-                                      _firstJuz.toInt().toString()),
-                                  ArabicUtils.englishToArabic(
-                                      _lastJuz.toInt().toString())),
                             ),
                           ]),
                         ),
