@@ -11,10 +11,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 typedef QuestionFinishedCallback = void Function();
+typedef QuestionExpandedCallback = void Function();
 
 class DoMemorizationChallengeListItemWidget extends StatefulWidget {
   final Question question;
   final QuestionFinishedCallback onQuestionDoneCallback;
+  final QuestionExpandedCallback onQuestionExpandedCallback;
 
   // Only use to check if the challenge is expired, since other data may change
   // and will not be consistent.
@@ -25,6 +27,7 @@ class DoMemorizationChallengeListItemWidget extends StatefulWidget {
     Key key,
     @required this.question,
     @required this.onQuestionDoneCallback,
+    @required this.onQuestionExpandedCallback,
     @required this.challenge,
     @required this.scrollController,
   }) : super(key: key);
@@ -100,6 +103,7 @@ class _DoMemorizationChallengeListItemWidgetState
 
   @override
   Widget build(BuildContext context) {
+    print(_tileExpanded);
     return Container(
       child: ExpansionTile(
         title: Row(
@@ -127,11 +131,16 @@ class _DoMemorizationChallengeListItemWidgetState
         collapsedTextColor: Colors.black,
         collapsedIconColor: Colors.black,
         trailing: Icon(
-          _tileExpanded ? Icons.arrow_drop_down_circle : Icons.arrow_drop_down,
+          _tileExpanded ? Icons.arrow_drop_up
+              : Icons.arrow_drop_down,
           size: 30,
         ),
         onExpansionChanged: (bool expanded) {
-          setState(() => _tileExpanded = expanded);
+          setState(() {
+            _tileExpanded = expanded;
+          });
+
+          widget.onQuestionExpandedCallback.call();
         },
         children: [
           Column(

@@ -119,13 +119,14 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   ExpansionTile(
+                    key: GlobalKey(),
                     title: Text(
                       "الأصدقاء",
                       style: TextStyle(
                           fontSize: _friendsTileExpanded ? 25 : 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    initiallyExpanded: true,
+                    initiallyExpanded: _friendsTileExpanded,
                     backgroundColor: Theme.of(context).colorScheme.secondary,
                     collapsedBackgroundColor:
                         Theme.of(context).colorScheme.secondary,
@@ -135,7 +136,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                     collapsedIconColor: Colors.black,
                     trailing: Icon(
                       _friendsTileExpanded
-                          ? Icons.arrow_drop_down_circle
+                          ? Icons.arrow_drop_up
                           : Icons.arrow_drop_down,
                       size: 30,
                     ),
@@ -288,6 +289,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
     setState(() {
       _chosenWordIndex = _words[indexInList].index;
       _shouldChooseWord = false;
+      _friendsTileExpanded = false;
     });
   }
 
@@ -312,6 +314,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
       }
 
       setState(() {
+        _friendsTileExpanded = false;
         SnackBarUtils.showSnackBar(
           context,
           'اختيار صحيح',
