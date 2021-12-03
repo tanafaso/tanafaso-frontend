@@ -49,12 +49,14 @@ class _DoMemorizationChallengeScreenState
   ConfettiController confettiControler;
   bool _finishedConfetti;
   ScrollController _scrollController;
+  bool _friendsTileExpanded;
 
   @override
   void initState() {
     super.initState();
 
     _finishedConfetti = false;
+    _friendsTileExpanded = true;
     confettiControler =
         ConfettiController(duration: const Duration(seconds: 1));
     _scrollController = ScrollController();
@@ -80,19 +82,54 @@ class _DoMemorizationChallengeScreenState
                       visible: widget.group != null,
                       child: widget.group == null
                           ? Container()
-                          : ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxHeight:
-                                    MediaQuery.of(context).size.height / 5,
-                              ),
-                              child: FriendsProgressWidget(
-                                challenge: Challenge(
-                                    memorizationChallenge: widget.challenge),
-                                challengedUsersIds: widget.challengedUsersIds,
-                                challengedUsersFullNames:
-                                    widget.challengedUsersFullNames,
-                              ),
+                          : ExpansionTile(
+                            key: GlobalKey(),
+                            title: Text(
+                              "الأصدقاء",
+                              style: TextStyle(
+                                  fontSize: _friendsTileExpanded ? 25 : 20,
+                                  fontWeight: FontWeight.bold),
                             ),
+                            initiallyExpanded: _friendsTileExpanded,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondary,
+                            collapsedBackgroundColor:
+                                Theme.of(context).colorScheme.secondary,
+                            textColor: Colors.black,
+                            iconColor: Colors.black,
+                            collapsedTextColor: Colors.black,
+                            collapsedIconColor: Colors.black,
+                            trailing: Icon(
+                              _friendsTileExpanded
+                                  ? Icons.arrow_drop_up
+                                  : Icons.arrow_drop_down,
+                              size: 30,
+                            ),
+                            onExpansionChanged: (bool expanded) {
+                              setState(
+                                  () => _friendsTileExpanded = expanded);
+                            },
+                            children: [
+                              Column(
+                                children: [
+                                  Visibility(
+                                    visible: widget.group != null,
+                                    child: widget.group == null
+                                        ? Container()
+                                        : FriendsProgressWidget(
+                                            challenge: Challenge(
+                                                memorizationChallenge:
+                                                    widget.challenge),
+                                            challengedUsersIds:
+                                                widget.challengedUsersIds,
+                                            challengedUsersFullNames: widget
+                                                .challengedUsersFullNames,
+                                          ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                     ),
                   ),
                   Padding(
@@ -105,10 +142,14 @@ class _DoMemorizationChallengeScreenState
                       itemCount: widget.challenge.questions.length,
                       itemBuilder: (context, index) {
                         return DoMemorizationChallengeListItemWidget(
-                          key: UniqueKey(),
                           question: widget.challenge.questions[index],
                           challenge: widget.challenge,
                           scrollController: _scrollController,
+                          onQuestionExpandedCallback: () {
+                            setState(() {
+                              _friendsTileExpanded = false;
+                            });
+                          },
                           onQuestionDoneCallback: () async {
                             setState(() {
                               widget.challenge.questions[index].finished = true;
