@@ -278,19 +278,68 @@ class _CreateMemorizationChallengeScreenState
                                 padding: const EdgeInsets.all(4.0),
                                 child: getDifficultyDescriptionWidget(),
                               ),
-                              Slider(
-                                value: _difficulty.toDouble(),
-                                activeColor:
-                                    Theme.of(context).colorScheme.primary,
-                                inactiveColor:
-                                    Theme.of(context).colorScheme.primary,
-                                min: 1,
-                                max: 3,
-                                divisions: 3,
-                                onChanged: (value) =>
-                                    setState(() => _difficulty = value.toInt()),
-                                label:
-                                    "${ArabicUtils.englishToArabic(_difficulty.toString())}",
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 4.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _difficulty = 1;
+                                        });
+                                      },
+                                      child: Card(
+                                        elevation: 2,
+                                        color: _difficulty == 1
+                                            ? Theme.of(context).primaryColor
+                                            : Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                        child: Text(
+                                          'سهل',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    )),
+                                    Expanded(
+                                        child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _difficulty = 2;
+                                        });
+                                      },
+                                      child: Card(
+                                        elevation: 2,
+                                        color: _difficulty == 2
+                                            ? Theme.of(context).primaryColor
+                                            : Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                        child: Text('متوسط',
+                                            textAlign: TextAlign.center),
+                                      ),
+                                    )),
+                                    Expanded(
+                                        child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _difficulty = 3;
+                                        });
+                                      },
+                                      child: Card(
+                                        elevation: 2,
+                                        color: _difficulty == 3
+                                            ? Theme.of(context).primaryColor
+                                            : Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                        child: Text('صعب',
+                                            textAlign: TextAlign.center),
+                                      ),
+                                    )),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -393,21 +442,18 @@ class _CreateMemorizationChallengeScreenState
     String description;
     if (_difficulty == 1) {
       description = '''- اسأل عن السورة
-- اسأل عن الآية التالية
-     ''';
+- اسأل عن الآية التالية''';
     } else if (_difficulty == 2) {
       description = '''- اسأل عن السورة
 - اسأل عن الآية التالية
 - اسأل عن الجزء
-- إسأل عن الآية السابقة
-     ''';
+- إسأل عن الآية السابقة''';
     } else {
       description = '''- اسأل عن السورة
 - اسأل عن الآية التالية
 - اسأل عن الجزء
 - إسأل عن الآية السابقة
-- اسأل عن الربع
-     ''';
+- اسأل عن الربع''';
     }
 
     return Row(
