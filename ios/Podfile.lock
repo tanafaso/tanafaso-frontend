@@ -128,6 +128,8 @@ PODS:
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
+  - the_apple_sign_in (1.0.0):
+    - Flutter
   - url_launcher (0.0.1):
     - Flutter
 
@@ -147,6 +149,7 @@ DEPENDENCIES:
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - the_apple_sign_in (from `.symlinks/plugins/the_apple_sign_in/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
 SPEC REPOS:
@@ -200,6 +203,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
+  the_apple_sign_in:
+    :path: ".symlinks/plugins/the_apple_sign_in/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
 
@@ -236,6 +241,7 @@ SPEC CHECKSUMS:
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  the_apple_sign_in: 2e78c83cdb09eba07bb16dcc1f3bc12fcdc8263d
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
 
 PODFILE CHECKSUM: 070191b0442cfd9de3832f9072ef81d49324768e
