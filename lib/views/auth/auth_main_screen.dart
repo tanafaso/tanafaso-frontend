@@ -150,8 +150,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
                           child: SignInButton(
                             Buttons.Google,
                             shape: new RoundedRectangleBorder(
-                                borderRadius:
-                                    new BorderRadius.circular(30.0)),
+                                borderRadius: new BorderRadius.circular(30.0)),
                             onPressed: () {
                               loginWithGoogle(context);
                             },
@@ -171,8 +170,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
                           child: SignInButton(
                             Buttons.Facebook,
                             shape: new RoundedRectangleBorder(
-                                borderRadius:
-                                    new BorderRadius.circular(30.0)),
+                                borderRadius: new BorderRadius.circular(30.0)),
                             onPressed: () {
                               loginWithFacebook(context);
                             },
@@ -194,7 +192,8 @@ class _AuthMainScreenState extends State<AuthMainScreen>
                               child: SignInButton(
                                 Buttons.AppleDark,
                                 shape: new RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(30.0)),
+                                    borderRadius:
+                                        new BorderRadius.circular(30.0)),
                                 onPressed: () {
                                   loginWithApple(context);
                                 },
@@ -205,7 +204,6 @@ class _AuthMainScreenState extends State<AuthMainScreen>
                       )),
                 ],
               ),
-              
               Padding(
                 padding: EdgeInsets.all(16),
               )
@@ -263,6 +261,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
       SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
       return;
     } on Exception catch (e) {
+      print(e);
       SnackBarUtils.showSnackBar(context,
           new Status(Status.AUTHENTICATION_WITH_APPLE_ERROR).errorMessage);
       return;

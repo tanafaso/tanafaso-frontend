@@ -35,7 +35,7 @@ class SecureStorageService {
     final _storage = FlutterSecureStorage();
     await _storage.write(key: FACEBOOK_USER_ID_STORAGE_KEY, value: userId);
   }
-  
+
   Future<void> setAppleIdEmail(String email) async {
     final _storage = FlutterSecureStorage();
     await _storage.write(key: APPLE_ID_EMAIL, value: email);
@@ -45,7 +45,7 @@ class SecureStorageService {
     final _storage = FlutterSecureStorage();
     return await _storage.read(key: APPLE_ID_EMAIL);
   }
-  
+
   Future<void> setAppleIdGivenName(String firstName) async {
     final _storage = FlutterSecureStorage();
     await _storage.write(key: APPLE_ID_GIVEN_NAME, value: firstName);
@@ -55,7 +55,7 @@ class SecureStorageService {
     final _storage = FlutterSecureStorage();
     return await _storage.read(key: APPLE_ID_GIVEN_NAME);
   }
-  
+
   Future<void> setAppleIdFamilyName(String lastName) async {
     final _storage = FlutterSecureStorage();
     await _storage.write(key: APPLE_ID_FAMILY_NAME, value: lastName);
@@ -65,7 +65,7 @@ class SecureStorageService {
     final _storage = FlutterSecureStorage();
     return await _storage.read(key: APPLE_ID_FAMILY_NAME);
   }
-  
+
   Future<void> setJwtToken(String jwtToken) async {
     final _storage = FlutterSecureStorage();
     await _storage.write(key: JWT_TOKEN_STORAGE_KEY, value: jwtToken);

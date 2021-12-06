@@ -155,7 +155,7 @@ class Status {
     MEMORIZATION_QUESTION_HAS_ALREADY_BEEN_FINISHED:
         'لقد أجبت على هذا السؤال من قبل',
     AUTHENTICATION_WITH_APPLE_ERROR:
-    'حدث خطأ أثناء محاولة تسجيل الدخول باستخدام ابل',
+        'حدث خطأ أثناء محاولة تسجيل الدخول باستخدام ابل',
   };
 
   Status(int errorCode) {

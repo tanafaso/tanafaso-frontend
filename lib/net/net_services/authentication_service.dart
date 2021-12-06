@@ -148,7 +148,8 @@ class AuthenticationService {
       // https://developer.apple.com/forums/thread/121496
       await ServiceProvider.secureStorageService.setAppleIdEmail(email);
       await ServiceProvider.secureStorageService.setAppleIdGivenName(givenName);
-      await ServiceProvider.secureStorageService.setAppleIdFamilyName(familyName);
+      await ServiceProvider.secureStorageService
+          .setAppleIdFamilyName(familyName);
     }
 
     final http.Response apiResponse = await http.put(

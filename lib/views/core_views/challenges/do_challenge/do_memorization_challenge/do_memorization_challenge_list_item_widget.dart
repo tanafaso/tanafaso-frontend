@@ -131,8 +131,7 @@ class _DoMemorizationChallengeListItemWidgetState
         collapsedTextColor: Colors.black,
         collapsedIconColor: Colors.black,
         trailing: Icon(
-          _tileExpanded ? Icons.arrow_drop_up
-              : Icons.arrow_drop_down,
+          _tileExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
           size: 30,
         ),
         onExpansionChanged: (bool expanded) {
