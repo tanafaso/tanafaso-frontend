@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:azkar/net/api_exception.dart';
+import 'package:azkar/net/api_interface/status.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
@@ -133,57 +134,78 @@ class _AuthMainScreenState extends State<AuthMainScreen>
                   ),
                 ],
               ),
-              Visibility(
-                  visible: Platform.isAndroid,
-                  child: Column(
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 8 * 2.0),
+                  ),
+                  Row(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 8 * 2.0),
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 8.0,
-                                right: 8.0,
-                              ),
-                              child: SignInButton(
-                                Buttons.Google,
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(30.0)),
-                                onPressed: () {
-                                  loginWithGoogle(context);
-                                },
-                              ),
-                            ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 8.0,
+                            right: 8.0,
                           ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 8.0,
-                                right: 8.0,
-                              ),
-                              child: SignInButton(
-                                Buttons.Facebook,
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(30.0)),
-                                onPressed: () {
-                                  loginWithFacebook(context);
-                                },
-                              ),
-                            ),
+                          child: SignInButton(
+                            Buttons.Google,
+                            shape: new RoundedRectangleBorder(
+                                borderRadius:
+                                    new BorderRadius.circular(30.0)),
+                            onPressed: () {
+                              loginWithGoogle(context);
+                            },
                           ),
-                        ],
+                        ),
                       ),
                     ],
-                  )),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 8.0,
+                            right: 8.0,
+                          ),
+                          child: SignInButton(
+                            Buttons.Facebook,
+                            shape: new RoundedRectangleBorder(
+                                borderRadius:
+                                    new BorderRadius.circular(30.0)),
+                            onPressed: () {
+                              loginWithFacebook(context);
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Visibility(
+                      visible: Platform.isIOS,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 8.0,
+                                right: 8.0,
+                              ),
+                              child: SignInButton(
+                                Buttons.AppleDark,
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius: new BorderRadius.circular(30.0)),
+                                onPressed: () {
+                                  loginWithApple(context);
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
+                ],
+              ),
+              
               Padding(
                 padding: EdgeInsets.all(16),
               )
@@ -219,6 +241,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
       googleIdToken = authentication.idToken;
     } catch (error) {
       print(error);
+      return;
     }
 
     try {
@@ -226,6 +249,22 @@ class _AuthMainScreenState extends State<AuthMainScreen>
           .loginWithGoogle(googleIdToken);
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
+      return;
+    }
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => new HomePage()));
+  }
+
+  void loginWithApple(BuildContext context) async {
+    try {
+      await ServiceProvider.authenticationService.loginWithApple();
+    } on ApiException catch (e) {
+      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
+      return;
+    } on Exception catch (e) {
+      SnackBarUtils.showSnackBar(context,
+          new Status(Status.AUTHENTICATION_WITH_APPLE_ERROR).errorMessage);
       return;
     }
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 enum EndpointRoute {
   BASE_URL,
   GET_HOME,
+  LOGIN_WITH_APPLE,
   LOGIN_WITH_FACEBOOK,
   LOGIN_WITH_GOOGLE,
   CONNECT_FACEBOOK,
@@ -73,14 +74,16 @@ class ApiRoutesUtil {
           return 'www.tanafaso.com';
         }
         if (Platform.isIOS) {
-          // Use the following for testing locally.
-          // return '192.168.2.102:8080';
+          // Use your computer's private IP as the following example.
+          // return '192.168.1.111:8080';
           return 'www.tanafaso.com';
         }
         assert(false);
         break;
       case EndpointRoute.GET_HOME:
         return '/apiHome';
+      case EndpointRoute.LOGIN_WITH_APPLE:
+        return '/login/apple';
       case EndpointRoute.LOGIN_WITH_FACEBOOK:
         return '/login/facebook';
       case EndpointRoute.LOGIN_WITH_GOOGLE:
