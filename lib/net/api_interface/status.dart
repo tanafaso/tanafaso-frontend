@@ -68,6 +68,7 @@ class Status {
   static const int MEMORIZATION_CHALLENGE_NUMBER_OF_QUESTIONS_INVALID_ERROR =
       61;
   static const int MEMORIZATION_QUESTION_HAS_ALREADY_BEEN_FINISHED = 62;
+  static const int AUTHENTICATION_WITH_APPLE_ERROR = 63;
 
   static Map<int, String> conversions = const {
     API_USER_ALREADY_LOGGED_IN_ERROR: "لقد قمت بتسجيل الدخول بالفعل",
@@ -153,6 +154,8 @@ class Status {
         'عدد غير صالح من الأسئلة',
     MEMORIZATION_QUESTION_HAS_ALREADY_BEEN_FINISHED:
         'لقد أجبت على هذا السؤال من قبل',
+    AUTHENTICATION_WITH_APPLE_ERROR:
+        'حدث خطأ أثناء محاولة تسجيل الدخول باستخدام ابل',
   };
 
   Status(int errorCode) {

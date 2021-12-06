@@ -12,7 +12,7 @@ description: A new Flutter project.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.10.1+107
+version: 1.10.2+108
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -58,6 +58,7 @@ dependencies:
   flutter_signin_button: ^2.0.0
   flutter_local_notifications: ^9.0.0
   numberpicker: ^2.1.1
+  the_apple_sign_in: ^1.1.1
 
 dev_dependencies:
   flutter_test:
