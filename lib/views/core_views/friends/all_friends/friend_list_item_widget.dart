@@ -77,9 +77,8 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
                   Row(
                     children: [
                       Expanded(
-                        child: RichText(
-                          maxLines: 10,
-                          text: TextSpan(
+                        child: Text.rich(
+                          TextSpan(
                             // Note: Styles for TextSpans must be explicitly defined.
                             // Child text spans will inherit styles from parent
                             style: new TextStyle(
@@ -96,6 +95,7 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
                                       ' هو صديق افتراضي لك على التطبيق. اضغط على سابق لتتمكن من تحديه ولرؤية المزيد من المعلومات حول صداقتكم.'),
                             ],
                           ),
+                          maxLines: 10,
                         ),
                       ),
                     ],

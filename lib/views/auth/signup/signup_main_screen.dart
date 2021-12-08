@@ -94,13 +94,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                       margin: const EdgeInsets.only(
                           left: 16.0, right: 16.0, top: 10.0),
                       alignment: Alignment.center,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                        ),
-                      ),
-                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                       child: new Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -109,8 +102,20 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                             child: TextFormField(
                               textAlign: TextAlign.right,
                               autofocus: true,
+                              showCursor: true,
+                              cursorColor: Colors.black,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
+                                enabledBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(30.0),
+                                  borderSide:
+                                      new BorderSide(color: Colors.black),
+                                ),
+                                focusedBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide:
+                                      new BorderSide(color: Colors.black),
+                                ),
                               ),
                               onChanged: (name) => _firstName = name,
                               onEditingComplete: () =>
@@ -144,13 +149,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                       margin: const EdgeInsets.only(
                           left: 16.0, right: 16.0, top: 10.0),
                       alignment: Alignment.center,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                        ),
-                      ),
-                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                       child: new Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -159,8 +157,20 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                             child: TextFormField(
                               textAlign: TextAlign.right,
                               focusNode: lastNameFocus,
+                              showCursor: true,
+                              cursorColor: Colors.black,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
+                                enabledBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(30.0),
+                                  borderSide:
+                                      new BorderSide(color: Colors.black),
+                                ),
+                                focusedBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide:
+                                      new BorderSide(color: Colors.black),
+                                ),
                               ),
                               onChanged: (name) => _lastName = name,
                               onEditingComplete: () =>
@@ -193,13 +203,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                       margin: const EdgeInsets.only(
                           left: 16.0, right: 16.0, top: 10.0),
                       alignment: Alignment.center,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                        ),
-                      ),
-                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                       child: new Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -208,7 +211,19 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                             child: TextFormField(
                               textAlign: TextAlign.left,
                               focusNode: emailFocus,
+                              showCursor: true,
+                              cursorColor: Colors.black,
                               decoration: InputDecoration(
+                                enabledBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(30.0),
+                                  borderSide:
+                                      new BorderSide(color: Colors.black),
+                                ),
+                                focusedBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide:
+                                      new BorderSide(color: Colors.black),
+                                ),
                                 border: InputBorder.none,
                                 hintText: 'email@example.com',
                               ),
@@ -225,17 +240,29 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                     ),
                     new Row(
                       children: <Widget>[
-                        new Expanded(
-                          child: new Padding(
-                            padding: const EdgeInsets.only(right: 40.0),
-                            child: new Text(
-                              AppLocalizations.of(context).password,
-                              style: TextStyle(
-                                // fontWeight: FontWeight.bold,
-                                fontSize: 25.0,
-                              ),
+                        new Padding(
+                          padding: const EdgeInsets.only(right: 40.0),
+                          child: new Text(
+                            AppLocalizations.of(context).password,
+                            style: TextStyle(
+                              // fontWeight: FontWeight.bold,
+                              fontSize: 25.0,
                             ),
                           ),
+                        ),
+                        Expanded(child: Padding(padding: EdgeInsets.all(0))),
+                        GestureDetector(
+                          onTap: () {
+                            setState(
+                                () => _passwordObscure = !_passwordObscure);
+                          },
+                          child: const Padding(
+                              padding: const EdgeInsets.only(left: 8 * 3.0),
+                              child: const Icon(
+                                Icons.remove_red_eye,
+                                color: Colors.grey,
+                                size: 30,
+                              )),
                         ),
                       ],
                     ),
@@ -244,13 +271,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                       margin: const EdgeInsets.only(
                           left: 16.0, right: 16.0, top: 10.0),
                       alignment: Alignment.center,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                        ),
-                      ),
-                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                       child: new Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -260,24 +280,21 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               obscureText: _passwordObscure,
                               textDirection: TextDirection.ltr,
                               textAlign: TextAlign.left,
+                              showCursor: true,
+                              cursorColor: Colors.black,
                               focusNode: passwordFocus,
                               decoration: InputDecoration(
-                                border: InputBorder.none,
-                                icon: GestureDetector(
-                                  onTap: () {
-                                    setState(() =>
-                                        _passwordObscure = !_passwordObscure);
-                                  },
-                                  child: const Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 15.0),
-                                      child: const Icon(
-                                        Icons.remove_red_eye,
-                                        color: Colors.grey,
-                                      )),
+                                enabledBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(30.0),
+                                  borderSide:
+                                      new BorderSide(color: Colors.black),
                                 ),
-                                hintText: AppLocalizations.of(context)
-                                    .passwordHintText,
+                                focusedBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide:
+                                      new BorderSide(color: Colors.black),
+                                ),
+                                border: InputBorder.none,
                               ),
                               onChanged: (password) => _password = password,
                               onEditingComplete: () =>
@@ -292,16 +309,32 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                     ),
                     new Row(
                       children: <Widget>[
-                        new Expanded(
-                          child: new Padding(
-                            padding: const EdgeInsets.only(right: 40.0),
-                            child: new Text(
-                              AppLocalizations.of(context).confirmPassword,
-                              style: TextStyle(
-                                fontSize: 25.0,
-                              ),
+                        new Padding(
+                          padding: const EdgeInsets.only(right: 40.0),
+                          child: new Text(
+                            AppLocalizations.of(context).confirmPassword,
+                            style: TextStyle(
+                              fontSize: 25.0,
                             ),
                           ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.all(0),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() => _repeatedPasswordObscure =
+                                !_repeatedPasswordObscure);
+                          },
+                          child: const Padding(
+                              padding: const EdgeInsets.only(left: 8 * 3.0),
+                              child: const Icon(
+                                Icons.remove_red_eye,
+                                color: Colors.grey,
+                                size: 30,
+                              )),
                         ),
                       ],
                     ),
@@ -310,13 +343,6 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                       margin: const EdgeInsets.only(
                           left: 16.0, right: 16.0, top: 10.0),
                       alignment: Alignment.center,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                        ),
-                      ),
-                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                       child: new Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -325,27 +351,24 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                             child: TextFormField(
                               obscureText: _repeatedPasswordObscure,
                               focusNode: repeatedPasswordFocus,
+                              showCursor: true,
+                              cursorColor: Colors.black,
                               textAlign: TextAlign.left,
                               textDirection: TextDirection.ltr,
                               onChanged: (password) =>
                                   _confirmedPassword = password,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                icon: GestureDetector(
-                                  onTap: () {
-                                    setState(() => _repeatedPasswordObscure =
-                                        !_repeatedPasswordObscure);
-                                  },
-                                  child: const Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 15.0),
-                                      child: const Icon(
-                                        Icons.remove_red_eye,
-                                        color: Colors.grey,
-                                      )),
+                                enabledBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(30.0),
+                                  borderSide:
+                                      new BorderSide(color: Colors.black),
                                 ),
-                                hintText: AppLocalizations.of(context)
-                                    .passwordHintText,
+                                focusedBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide:
+                                      new BorderSide(color: Colors.black),
+                                ),
                               ),
                             ),
                           ),
@@ -368,7 +391,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                 style: TextStyle(fontSize: 14.0),
                                 textAlign: TextAlign.end,
                               ),
-                              const SizedBox(width: 2),
+                              const SizedBox(width: 8),
                               // ignore: deprecated_member_use
                               FlatButton(
                                 padding: EdgeInsets.zero,

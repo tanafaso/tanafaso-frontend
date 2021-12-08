@@ -128,9 +128,8 @@ class _DoReadingQuranChallengeScreenState
                                       fit: BoxFit.scaleDown,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: RichText(
-                                          maxLines: 1,
-                                          text: TextSpan(
+                                        child: Text.rich(
+                                          TextSpan(
                                             style: TextStyle(
                                                 color: Colors.grey.shade700,
                                                 fontSize: 25),
@@ -141,6 +140,12 @@ class _DoReadingQuranChallengeScreenState
                                                       .surahSubChallenges[index]
                                                       .surahName,
                                                   style: TextStyle(
+                                                      fontFamily: Theme.of(
+                                                              context)
+                                                          // ignore: deprecated_member_use
+                                                          .accentTextTheme
+                                                          .bodyText1
+                                                          .fontFamily,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black)),
@@ -174,6 +179,7 @@ class _DoReadingQuranChallengeScreenState
                                                       color: Colors.black)),
                                             ],
                                           ),
+                                          maxLines: 1,
                                         ),
                                       ),
                                     ),

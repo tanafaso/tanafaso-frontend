@@ -73,7 +73,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
     return AutoSizeText.rich(TextSpan(
       // Note: Styles for TextSpans must be explicitly defined.
       // Child text spans will inherit styles from parent
-      style: new TextStyle(color: Colors.black, fontSize: 18),
+      style: new TextStyle(color: Colors.black, fontSize: 15),
       children: <TextSpan>[
         new TextSpan(
             text: 'الأصدقاء',
@@ -92,7 +92,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
     return AutoSizeText.rich(TextSpan(
       // Note: Styles for TextSpans must be explicitly defined.
       // Child text spans will inherit styles from parent
-      style: new TextStyle(color: Colors.black, fontSize: 18),
+      style: new TextStyle(color: Colors.black, fontSize: 15),
       children: <TextSpan>[
         new TextSpan(
             text: 'طلبات صداقة',

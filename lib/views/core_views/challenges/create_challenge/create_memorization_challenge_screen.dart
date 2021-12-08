@@ -125,6 +125,9 @@ class _CreateMemorizationChallengeScreenState
                                 ),
                               ],
                             ),
+                            Padding(
+                              padding: EdgeInsets.all(8),
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -134,26 +137,29 @@ class _CreateMemorizationChallengeScreenState
                                   textAlign: TextAlign.center,
                                 )),
                                 Flexible(
-                                  child: NumberPicker(
-                                      zeroPad: true,
-                                      minValue: 1,
-                                      maxValue: 30,
-                                      value: _firstJuz,
-                                      textStyle: TextStyle(
-                                        fontSize: 25,
-                                      ),
-                                      selectedTextStyle: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textMapper: (num) =>
-                                          ArabicUtils.englishToArabic(num),
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          _firstJuz = newValue;
-                                          _lastJuz = max(_lastJuz, _firstJuz);
-                                        });
-                                      }),
+                                  child: Card(
+                                    elevation: 0,
+                                    child: NumberPicker(
+                                        zeroPad: true,
+                                        minValue: 1,
+                                        maxValue: 30,
+                                        value: _firstJuz,
+                                        textStyle: TextStyle(
+                                          fontSize: 17,
+                                        ),
+                                        selectedTextStyle: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textMapper: (num) =>
+                                            ArabicUtils.englishToArabic(num),
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            _firstJuz = newValue;
+                                            _lastJuz = max(_lastJuz, _firstJuz);
+                                          });
+                                        }),
+                                  ),
                                 ),
                                 Flexible(
                                     child: Text(
@@ -167,7 +173,7 @@ class _CreateMemorizationChallengeScreenState
                                       maxValue: 30,
                                       value: _lastJuz,
                                       textStyle: TextStyle(
-                                        fontSize: 25,
+                                        fontSize: 17,
                                       ),
                                       selectedTextStyle: TextStyle(
                                         fontSize: 30,

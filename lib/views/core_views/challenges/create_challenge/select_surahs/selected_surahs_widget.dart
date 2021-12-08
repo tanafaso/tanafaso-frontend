@@ -146,6 +146,11 @@ class _SelectedSurahsWidgetState extends State<SelectedSurahsWidget>
                             text: _selectedSurahs[index].surahName,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
+                                fontFamily: Theme.of(context)
+                                    // ignore: deprecated_member_use
+                                    .accentTextTheme
+                                    .bodyText1
+                                    .fontFamily,
                                 color: Colors.black)),
                         TextSpan(text: ' من الآية رقم '),
                         TextSpan(

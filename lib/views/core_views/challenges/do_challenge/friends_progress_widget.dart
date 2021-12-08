@@ -105,7 +105,7 @@ class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
     return Icon(
       Icons.not_started,
       size: widget.iconSize.toDouble(),
-      color: Colors.yellow,
+      color: Colors.yellow.shade600,
     );
   }
 }

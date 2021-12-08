@@ -204,8 +204,14 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                                                   _words[index].text,
                                                   textAlign: TextAlign.center,
                                                   softWrap: true,
-                                                  style:
-                                                      TextStyle(fontSize: 25),
+                                                  style: TextStyle(
+                                                      fontSize: 25,
+                                                      fontFamily: Theme.of(
+                                                              context)
+                                                          // ignore: deprecated_member_use
+                                                          .accentTextTheme
+                                                          .bodyText1
+                                                          .fontFamily),
                                                 ),
                                               )),
                                     );

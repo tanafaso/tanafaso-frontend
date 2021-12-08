@@ -77,6 +77,11 @@ class ZekrWidgetState extends State<ZekrWidget>
                                           textDirection: TextDirection.rtl,
                                           style: TextStyle(
                                             fontSize: 25,
+                                            fontFamily: Theme.of(context)
+                                                // ignore: deprecated_member_use
+                                                .accentTextTheme
+                                                .bodyText1
+                                                .fontFamily,
                                           ),
                                         ),
                                       ),
