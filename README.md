@@ -1,6 +1,6 @@
 <h1 align="center">:fire: تنافسوا</h1>
 
-![Code Formatter and Analyzer](https://github.com/challenge-azkar/azkar-frontend/workflows/Android%20Continuous%20Build%20and%20Test/badge.svg?branch=master)
+![Code Formatter and Analyzer]([![Code Formatter and Analayzer](https://github.com/tanafaso/tanafaso-frontend/actions/workflows/Code%20Formatter%20and%20Analayzer.yml/badge.svg)](https://github.com/tanafaso/tanafaso-frontend/actions/workflows/Code%20Formatter%20and%20Analayzer.yml))
 [![Notifications Disabled (for ease of open source contributions)](https://github.com/tanafaso/tanafaso-frontend/actions/workflows/Notifications%20Disabled%20Check.yml/badge.svg)](https://github.com/tanafaso/tanafaso-frontend/actions/workflows/Notifications%20Disabled%20Check.yml)
 
 A Flutter application for Muslims that help them challenge and motivate themselves and their friends to read Azkar in a fun way.
