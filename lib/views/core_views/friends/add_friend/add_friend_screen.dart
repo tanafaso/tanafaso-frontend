@@ -129,9 +129,6 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                 }
                               },
                               keyboardType: TextInputType.text,
-                              // style: new TextStyle(
-                              //   fontFamily: "Poppins",
-                              // ),
                             ),
                           ),
                           Align(

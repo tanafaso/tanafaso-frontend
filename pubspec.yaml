@@ -133,8 +133,6 @@ flutter:
         - asset: assets/fonts/arabic-Medium.ttf
         - asset: assets/fonts/arabic-SemiBold.ttf
         - asset: assets/fonts/arabic-VariableFont_wght.ttf
-#        - asset: assets/fonts/arabic-ExtraLight.ttf
-#        - asset: assets/fonts/arabic-Light.ttf
     - family: roboto
       fonts:
         - asset: assets/fonts/roboto-Black.ttf
