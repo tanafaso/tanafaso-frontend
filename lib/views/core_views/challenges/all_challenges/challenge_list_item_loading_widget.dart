@@ -41,8 +41,7 @@ class ChallengeListItemLoadingWidget extends StatelessWidget {
                             Row(
                               children: [],
                             ),
-                            RichText(
-                                text: TextSpan(
+                            Text.rich(TextSpan(
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,

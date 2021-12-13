@@ -44,84 +44,67 @@ class _AuthMainScreenState extends State<AuthMainScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-            child: SingleChildScrollView(
+            child: SafeArea(
       child: new Column(
         children: <Widget>[
-          Column(children: [
-            Padding(padding: EdgeInsets.all(16)),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  AppLocalizations.of(context).title,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold),
+          Flexible(
+            child: Column(
+              children: [
+                Padding(padding: EdgeInsets.all(8)),
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      AppLocalizations.of(context).title,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: FittedBox(
+                    child: Icon(
+                      Icons.directions_run,
+                      color: Colors.green.shade800,
+                    ),
+                  ),
                 ),
               ],
             ),
-            Center(
-              child: Image.asset(
-                'assets/images/logo_fore.png',
-                width: MediaQuery.of(context).size.width,
-                height: Platform.isAndroid
-                    ? MediaQuery.of(context).size.height * 2 / 5
-                    : MediaQuery.of(context).size.height / 2,
-              ),
-            ),
-          ]),
-          Column(
-            children: [
-              Text(AppLocalizations.of(context).areYouANewUser,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold)),
-              Padding(padding: EdgeInsets.only(top: 8)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 4.0, right: 30.0),
-                    alignment: Alignment.center,
-                    // ignore: deprecated_member_use
-                    child: new FlatButton(
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0)),
-                      color: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignUpMainScreen()));
-                      },
-                      child: Text(
-                        AppLocalizations.of(context).yes,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.green.shade900,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 30.0, right: 4.0),
-                    alignment: Alignment.center,
-                    child: new Column(
-                      children: <Widget>[
-                        // ignore: deprecated_member_use
-                        new FlatButton(
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0)),
-                          color: Colors.white,
-                          onPressed: () => Navigator.push(
+          ),
+          Flexible(
+            child: Column(
+              children: [
+                Padding(padding: EdgeInsets.only(top: 16)),
+                Text(AppLocalizations.of(context).areYouANewUser,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 4.0, right: 30.0),
+                      alignment: Alignment.center,
+                      // ignore: deprecated_member_use
+                      child: new RawMaterialButton(
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
+                        fillColor: Colors.white,
+                        elevation: 2,
+                        onPressed: () {
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreen())),
+                                  builder: (context) => SignUpMainScreen()));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            AppLocalizations.of(context).no,
+                            AppLocalizations.of(context).yes,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 25,
@@ -129,85 +112,138 @@ class _AuthMainScreenState extends State<AuthMainScreen>
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 8 * 2.0),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 8.0,
-                            right: 8.0,
-                          ),
-                          child: SignInButton(
-                            Buttons.Google,
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0)),
-                            onPressed: () {
-                              loginWithGoogle(context);
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 8.0,
-                            right: 8.0,
-                          ),
-                          child: SignInButton(
-                            Buttons.Facebook,
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0)),
-                            onPressed: () {
-                              loginWithFacebook(context);
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Visibility(
-                      visible: Platform.isIOS,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 8.0,
-                                right: 8.0,
-                              ),
-                              child: SignInButton(
-                                Buttons.AppleDark,
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(30.0)),
-                                onPressed: () {
-                                  loginWithApple(context);
-                                },
+                    Container(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: new Column(
+                          children: <Widget>[
+                            // ignore: deprecated_member_use
+                            new RawMaterialButton(
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius:
+                                      new BorderRadius.circular(30.0)),
+                              fillColor: Colors.white,
+                              elevation: 2,
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen())),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  AppLocalizations.of(context).no,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      color: Colors.green.shade900,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Divider(
+                    thickness: 2,
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 8.0,
+                                  right: 8.0,
+                                ),
+                                child: FittedBox(
+                                  child: SignInButton(
+                                    Buttons.Google,
+                                    text: "جوجل",
+                                    shape: new RoundedRectangleBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(50.0)),
+                                    onPressed: () {
+                                      loginWithGoogle(context);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 8.0,
+                                  right: 8.0,
+                                ),
+                                child: FittedBox(
+                                  child: SignInButton(
+                                    Buttons.Facebook,
+                                    text: "الفيسبوك",
+                                    shape: new RoundedRectangleBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(50.0)),
+                                    onPressed: () {
+                                      loginWithFacebook(context);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: Platform.isIOS,
+                        child: Expanded(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    right: 8.0,
+                                  ),
+                                  child: FittedBox(
+                                    child: SignInButton(
+                                      Buttons.AppleDark,
+                                      text: "أبل",
+                                      shape: new RoundedRectangleBorder(
+                                          borderRadius:
+                                              new BorderRadius.circular(50.0)),
+                                      onPressed: () {
+                                        loginWithApple(context);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      )),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.all(16),
-              )
-            ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

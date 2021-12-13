@@ -10,8 +10,6 @@ import 'package:azkar/views/auth/signup/signup_main_screen.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/button_list.dart';
-import 'package:flutter_signin_button/button_view.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
@@ -90,15 +88,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 margin: const EdgeInsets.only(
                                     left: 16.0, right: 16.0, top: 10.0),
                                 alignment: Alignment.center,
-                                decoration: ShapeDecoration(
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(width: 1),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(30)),
-                                  ),
-                                ),
-                                padding: const EdgeInsets.only(
-                                    left: 16.0, right: 0.0),
                                 child: new Row(
                                   // crossAxisAlignment: CrossAxisAlignment.center,
                                   // mainAxisAlignment: MainAxisAlignment.start,
@@ -107,6 +96,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       child: TextFormField(
                                         obscureText: false,
                                         autofocus: true,
+                                        showCursor: true,
+                                        cursorColor: Colors.black,
                                         textAlign: TextAlign.left,
                                         onChanged: (email) =>
                                             _email = email.trim(),
@@ -114,6 +105,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                             passwordFocus.requestFocus(),
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
+                                          enabledBorder: new OutlineInputBorder(
+                                            borderRadius:
+                                                new BorderRadius.circular(30.0),
+                                            borderSide: new BorderSide(
+                                                color: Colors.black),
+                                          ),
+                                          focusedBorder: new OutlineInputBorder(
+                                            borderRadius:
+                                                new BorderRadius.circular(15.0),
+                                            borderSide: new BorderSide(
+                                                color: Colors.black),
+                                          ),
                                           hintText: 'email@example.com',
                                           hintStyle:
                                               TextStyle(color: Colors.grey),
@@ -130,17 +133,31 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           new Row(
                             children: <Widget>[
-                              new Expanded(
-                                child: new Padding(
-                                  padding: const EdgeInsets.only(right: 40.0),
-                                  child: new Text(
-                                    AppLocalizations.of(context).password,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 25.0,
-                                    ),
+                              new Padding(
+                                padding: const EdgeInsets.only(right: 40.0),
+                                child: new Text(
+                                  AppLocalizations.of(context).password,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 25.0,
                                   ),
                                 ),
+                              ),
+                              Expanded(
+                                  child: Padding(padding: EdgeInsets.all(0))),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() =>
+                                      _passwordObscure = !_passwordObscure);
+                                },
+                                child: const Padding(
+                                    padding:
+                                        const EdgeInsets.only(left: 8 * 3.0),
+                                    child: const Icon(
+                                      Icons.remove_red_eye,
+                                      color: Colors.grey,
+                                      size: 30,
+                                    )),
                               ),
                             ],
                           ),
@@ -149,15 +166,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             margin: const EdgeInsets.only(
                                 left: 16.0, right: 16.0, top: 10.0),
                             alignment: Alignment.center,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(width: 1),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                              ),
-                            ),
-                            padding:
-                                const EdgeInsets.only(left: 16.0, right: 0.0),
                             child: new Row(
                               // crossAxisAlignment: CrossAxisAlignment.center,
                               // mainAxisAlignment: MainAxisAlignment.start,
@@ -166,23 +174,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: TextFormField(
                                     obscureText: _passwordObscure,
                                     focusNode: passwordFocus,
+                                    showCursor: true,
+                                    cursorColor: Colors.black,
                                     textAlign: TextAlign.left,
                                     onChanged: (password) =>
                                         _password = password,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      icon: GestureDetector(
-                                        onTap: () {
-                                          setState(() => _passwordObscure =
-                                              !_passwordObscure);
-                                        },
-                                        child: const Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 15.0),
-                                            child: const Icon(
-                                              Icons.remove_red_eye,
-                                              color: Colors.grey,
-                                            )),
+                                      enabledBorder: new OutlineInputBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(30.0),
+                                        borderSide:
+                                            new BorderSide(color: Colors.black),
+                                      ),
+                                      focusedBorder: new OutlineInputBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(15.0),
+                                        borderSide:
+                                            new BorderSide(color: Colors.black),
                                       ),
                                       hintText: AppLocalizations.of(context)
                                           .passwordHintText,
@@ -261,59 +270,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          Visibility(
-                              visible: Platform.isAndroid,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 8 * 2.0),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 8.0,
-                                            right: 8.0,
-                                          ),
-                                          child: SignInButton(
-                                            Buttons.Google,
-                                            shape: new RoundedRectangleBorder(
-                                                borderRadius:
-                                                    new BorderRadius.circular(
-                                                        30.0)),
-                                            onPressed: () {
-                                              loginWithGoogle(context);
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 8.0,
-                                            right: 8.0,
-                                          ),
-                                          child: SignInButton(
-                                            Buttons.Facebook,
-                                            shape: new RoundedRectangleBorder(
-                                                borderRadius:
-                                                    new BorderRadius.circular(
-                                                        30.0)),
-                                            onPressed: () {
-                                              loginWithFacebook();
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )),
                           // ignore: deprecated_member_use
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,

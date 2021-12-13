@@ -138,6 +138,7 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
         child: Padding(
           padding: const EdgeInsets.only(right: 16.0, top: 8),
           child: ListView.separated(
+            primary: false,
             controller: widget?.scrollController ?? ScrollController(),
             separatorBuilder: (BuildContext context, int index) => Divider(),
             shrinkWrap: true,

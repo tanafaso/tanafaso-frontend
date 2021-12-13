@@ -4,6 +4,7 @@ import 'package:azkar/net/net_services/categories_service.dart';
 import 'package:azkar/net/net_services/challenges_service.dart';
 import 'package:azkar/net/net_services/groups_service.dart';
 import 'package:azkar/net/net_services/home_service.dart';
+import 'package:azkar/services/font_service.dart';
 import 'package:azkar/services/secure_storage_service.dart';
 import 'package:azkar/net/net_services/users_service.dart';
 import 'package:azkar/services/local_notifications_service.dart';
@@ -21,6 +22,7 @@ class ServiceProvider {
   static SecureStorageService secureStorageService = SecureStorageService();
   static CategoriesService azkarService = CategoriesService();
   static CacheManager cacheManager = CacheManager();
+  static FontService fontService = FontService();
   static LocalNotificationsService localNotificationsService =
       LocalNotificationsService();
   static http.Client httpClient = http.Client();

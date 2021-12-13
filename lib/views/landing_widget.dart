@@ -32,9 +32,18 @@ class _LandingWidgetState extends State<LandingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Image.asset('assets/images/logo_fore.png'),
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: FittedBox(
+                child: Icon(
+              Icons.directions_run,
+              color: Colors.green.shade800,
+            )),
+          )
+        ],
       ),
     );
   }

@@ -47,20 +47,30 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Widget _landingWidget;
+  String _azkarAndQuranFontFamily;
+  String _nonAzkarAndNonQuranFontFamily;
+  FirebaseApp _firebaseApp;
 
-  Future<FirebaseApp> asyncInitialization(BuildContext context) async {
-    FirebaseApp app = await Firebase.initializeApp();
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true, // Required to display a heads up notification
-      badge: true,
-      sound: true,
-    );
-    if (Platform.isIOS) {
-      FirebaseMessaging.instance.requestPermission();
+  Future<void> asyncInitialization(BuildContext context) async {
+    if (_firebaseApp == null) {
+      _firebaseApp = await Firebase.initializeApp();
+      await FirebaseMessaging.instance
+          .setForegroundNotificationPresentationOptions(
+        alert: true, // Required to display a heads up notification
+        badge: true,
+        sound: true,
+      );
+      if (Platform.isIOS) {
+        FirebaseMessaging.instance.requestPermission();
+      }
+      FirebaseMessaging.onBackgroundMessage(
+          _firebaseMessagingBackgroundHandler);
     }
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-    return app;
+
+    _azkarAndQuranFontFamily =
+        await ServiceProvider.fontService.getPreferredAzkarAndQuranFontFamily();
+    _nonAzkarAndNonQuranFontFamily = await ServiceProvider.fontService
+        .getPreferredNonAzkarAndNonQuranFontFamily();
   }
 
   @override
@@ -141,37 +151,95 @@ class _MyAppState extends State<MyApp> {
           scaffoldBackgroundColor: Color(0xffcef5ce),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
               backgroundColor: Colors.white, foregroundColor: Colors.black),
-          // elevatedButtonTheme: ElevatedButtonThemeData(
-          //     style: ButtonStyle(
-          //   // backgroundColor:
-          //   //     MaterialStateProperty.resolveWith((_) => Colors.white),
-          //   //     textStyle: MaterialStateProperty<TextStyle>().resolve() {}
-          //   foregroundColor:
-          //       MaterialStateColor.resolveWith((_) => Colors.black),
-          //       textStyle: MaterialStateProperty<TextStyle>().
-          // )),
           cardTheme: CardTheme(elevation: 10),
           iconTheme: IconThemeData(color: Colors.black),
           textTheme: TextTheme(
-            headline1: TextStyle(color: Colors.black),
-            headline2: TextStyle(color: Colors.black),
-            headline3: TextStyle(color: Colors.black),
-            headline4: TextStyle(color: Colors.black),
-            headline5: TextStyle(color: Colors.black),
-            headline6: TextStyle(color: Colors.black),
-            subtitle1: TextStyle(color: Colors.black),
-            subtitle2: TextStyle(color: Colors.black),
-            bodyText1: TextStyle(color: Colors.black),
-            bodyText2: TextStyle(color: Colors.black),
-            button: TextStyle(color: Colors.black),
+            headline1: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            headline2: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            headline3: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            headline4: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            headline5: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            headline6: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            subtitle1: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            subtitle2: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            bodyText1: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            bodyText2: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            button: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+          ),
+          primaryTextTheme: TextTheme(
+            headline1: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            headline2: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            headline3: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            headline4: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            headline5: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            headline6: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            subtitle1: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            subtitle2: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            bodyText1: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            bodyText2: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            button: TextStyle(
+                color: Colors.black,
+                fontFamily: _nonAzkarAndNonQuranFontFamily),
           ),
           indicatorColor: Colors.white,
           tabBarTheme: TabBarTheme(
             labelColor: Color(0xffcef5ce),
           ),
+          fontFamily: _nonAzkarAndNonQuranFontFamily,
+          // That's a hack used to save a secondary font family only used
+          // throughout the whole app for azkar and quran.
+          // ignore: deprecated_member_use
+          accentTextTheme: TextTheme(
+              bodyText1: TextStyle(fontFamily: _azkarAndQuranFontFamily)),
           appBarTheme: AppBarTheme(
             backgroundColor: Color(0xffcef5ce),
-            titleTextStyle: TextStyle(color: Colors.black, fontSize: 30),
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+              fontSize: 30,
+              fontFamily: _nonAzkarAndNonQuranFontFamily,
+            ),
             iconTheme: IconThemeData(
               color: Colors.black, //change your color here
             ),

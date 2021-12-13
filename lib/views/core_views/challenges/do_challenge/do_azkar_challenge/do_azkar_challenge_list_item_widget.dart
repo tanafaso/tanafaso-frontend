@@ -80,7 +80,12 @@ class _DoAzkarChallengeListItemWidgetState
             child: Text(
               widget.subChallenge.zekr.zekr,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 25),
+              style: TextStyle(
+                fontSize: 25,
+                fontFamily:
+                    // ignore: deprecated_member_use
+                    Theme.of(context).accentTextTheme.bodyText1.fontFamily,
+              ),
             ),
           ),
           Padding(

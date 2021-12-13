@@ -117,31 +117,32 @@ class _CreateMeaningChallengeScreenState
                                         fit: BoxFit.scaleDown,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: RichText(
-                                              maxLines: 1,
-                                              text: TextSpan(
-                                                // Note: Styles for TextSpans must be explicitly defined.
-                                                // Child text spans will inherit styles from parent
-                                                style: new TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20),
-                                                children: <TextSpan>[
-                                                  new TextSpan(
-                                                    text: 'سيتكون التحدي من',
-                                                  ),
-                                                  new TextSpan(
-                                                      text:
-                                                          '  ${ArabicUtils.englishToArabic(_numberOfWords.toString())}  ',
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 25,
-                                                      )),
-                                                  new TextSpan(
-                                                    text: 'كلمات ومعانيها.',
-                                                  ),
-                                                ],
-                                              )),
+                                          child: Text.rich(
+                                            TextSpan(
+                                              // Note: Styles for TextSpans must be explicitly defined.
+                                              // Child text spans will inherit styles from parent
+                                              style: new TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20),
+                                              children: <TextSpan>[
+                                                new TextSpan(
+                                                  text: 'سيتكون التحدي من',
+                                                ),
+                                                new TextSpan(
+                                                    text:
+                                                        '  ${ArabicUtils.englishToArabic(_numberOfWords.toString())}  ',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 25,
+                                                    )),
+                                                new TextSpan(
+                                                  text: 'كلمات ومعانيها.',
+                                                ),
+                                              ],
+                                            ),
+                                            maxLines: 1,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -196,31 +197,31 @@ class _CreateMeaningChallengeScreenState
                                   children: [
                                     Flexible(
                                       child: FittedBox(
-                                        child: RichText(
-                                            maxLines: 1,
-                                            text: TextSpan(
-                                              // Note: Styles for TextSpans must be explicitly defined.
-                                              // Child text spans will inherit styles from parent
-                                              style: new TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20),
-                                              children: <TextSpan>[
-                                                new TextSpan(
-                                                  text: 'التحدي ينتهي بعد',
-                                                ),
-                                                new TextSpan(
-                                                    text:
-                                                        '  ${ArabicUtils.englishToArabic(_expiresAfterHoursNum.toString())}  ',
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 25,
-                                                    )),
-                                                new TextSpan(
-                                                  text: 'ساعات.',
-                                                ),
-                                              ],
-                                            )),
+                                        child: Text.rich(
+                                          TextSpan(
+                                            // Note: Styles for TextSpans must be explicitly defined.
+                                            // Child text spans will inherit styles from parent
+                                            style: new TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 20),
+                                            children: <TextSpan>[
+                                              new TextSpan(
+                                                text: 'التحدي ينتهي بعد',
+                                              ),
+                                              new TextSpan(
+                                                  text:
+                                                      '  ${ArabicUtils.englishToArabic(_expiresAfterHoursNum.toString())}  ',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 25,
+                                                  )),
+                                              new TextSpan(
+                                                text: 'ساعات.',
+                                              ),
+                                            ],
+                                          ),
+                                          maxLines: 1,
+                                        ),
                                       ),
                                     ),
                                   ],

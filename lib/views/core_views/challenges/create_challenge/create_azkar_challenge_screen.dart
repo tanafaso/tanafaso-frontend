@@ -125,6 +125,8 @@ class _CreateAzkarChallengeScreenState
         child: Center(
             child: Container(
           child: Scrollbar(
+            controller: pageScrollController,
+            interactive: false,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -191,18 +193,24 @@ class _CreateAzkarChallengeScreenState
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextField(
                                   maxLength: 20,
+                                  showCursor: true,
+                                  cursorColor: Colors.black,
                                   maxLines: 1,
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.center,
                                   controller: _challengeNameController,
                                   decoration: new InputDecoration(
-                                    enabledBorder: const OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.grey, width: 0.0),
+                                    enabledBorder: new OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(30.0),
+                                      borderSide:
+                                          new BorderSide(color: Colors.black),
                                     ),
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.grey, width: 0.0),
+                                    focusedBorder: new OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15.0),
+                                      borderSide:
+                                          new BorderSide(color: Colors.black),
                                     ),
                                     border: const OutlineInputBorder(
                                       borderSide: const BorderSide(
@@ -276,31 +284,32 @@ class _CreateAzkarChallengeScreenState
                                         fit: BoxFit.scaleDown,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: RichText(
-                                              maxLines: 1,
-                                              text: TextSpan(
-                                                // Note: Styles for TextSpans must be explicitly defined.
-                                                // Child text spans will inherit styles from parent
-                                                style: new TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 25),
-                                                children: <TextSpan>[
-                                                  new TextSpan(
-                                                    text: 'التحدي ينتهي بعد',
-                                                  ),
-                                                  new TextSpan(
-                                                      text:
-                                                          '  ${ArabicUtils.englishToArabic(_expiresAfterHoursNum.toString())}  ',
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 30,
-                                                      )),
-                                                  new TextSpan(
-                                                    text: 'ساعات.',
-                                                  ),
-                                                ],
-                                              )),
+                                          child: Text.rich(
+                                            TextSpan(
+                                              // Note: Styles for TextSpans must be explicitly defined.
+                                              // Child text spans will inherit styles from parent
+                                              style: new TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 25),
+                                              children: <TextSpan>[
+                                                new TextSpan(
+                                                  text: 'التحدي ينتهي بعد',
+                                                ),
+                                                new TextSpan(
+                                                    text:
+                                                        '  ${ArabicUtils.englishToArabic(_expiresAfterHoursNum.toString())}  ',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 30,
+                                                    )),
+                                                new TextSpan(
+                                                  text: 'ساعات.',
+                                                ),
+                                              ],
+                                            ),
+                                            maxLines: 1,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -376,14 +385,20 @@ class _CreateAzkarChallengeScreenState
                                   maxLength: 200,
                                   maxLines: 1,
                                   textAlign: TextAlign.center,
+                                  showCursor: true,
+                                  cursorColor: Colors.black,
                                   decoration: new InputDecoration(
-                                    enabledBorder: const OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.grey, width: 0.0),
+                                    enabledBorder: new OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(30.0),
+                                      borderSide:
+                                          new BorderSide(color: Colors.black),
                                     ),
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.grey, width: 0.0),
+                                    focusedBorder: new OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15.0),
+                                      borderSide:
+                                          new BorderSide(color: Colors.black),
                                     ),
                                     border: const OutlineInputBorder(
                                       borderSide: const BorderSide(
