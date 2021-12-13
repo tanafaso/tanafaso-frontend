@@ -4,18 +4,6 @@ import 'package:azkar/services/service_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AzkarAndQuranFontChangeNotification {
-  final String fontFamily;
-
-  AzkarAndQuranFontChangeNotification({@required this.fontFamily});
-}
-
-class NonAzkarAndNonQuranFontChangeNotification {
-  final String fontFamily;
-
-  NonAzkarAndNonQuranFontChangeNotification({@required this.fontFamily});
-}
-
 class FontService {
   static const String DEFAULT_AZKAR_AND_QURAN_FONT_FAMILY = 'uthmanic';
   static const String DEFAULT_NON_AZKAR_AND_NON_QURAN_FONT_FAMILY = 'arabic';
