@@ -11,13 +11,13 @@ Also, take a look at the [Backend](https://github.com/tanafaso/azkar-api) reposi
 
 ## Stats
 - **18,300** App Installs.
-- **5054** signed-in users.
-- **3613** users have at least 1 Azkar challenge.
-- **3504** users have at least 1 Tafseer challenge.
-- **3355** users have at least 1 Reading Quran challenge.
-- **416** users have at least 1 Memorization challenge.
-- **435** users have friends.
-- **140** users with more than 2 challenges (excluding the trial challenges).
+- **5089** signed-in users.
+- **382** users have > 1 Azkar challenge.
+- **432** users have > 1 Tafseer challenge.
+- **327** users have > 1 Reading Quran challenge.
+- **149** users have > 1 Memorization challenge.
+- **440** users have friends.
+- **141** users with more than 2 challenges (excluding the trial challenges).
 
 | ![Screenshot_1621806606](https://user-images.githubusercontent.com/13997703/122512358-07424a00-d009-11eb-8157-623b728dea03.jpeg) | ![Screenshot_1621806667](https://user-images.githubusercontent.com/13997703/122512360-07dae080-d009-11eb-9302-f5b096192161.jpeg) | ![Screenshot_1621806734](https://user-images.githubusercontent.com/13997703/122512364-08737700-d009-11eb-8722-b2542ed85f60.jpeg) |
 |-|-|-|
