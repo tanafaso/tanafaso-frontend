@@ -1,6 +1,7 @@
 name: Notifications Disabled (for ease of open source contributions)
 
 on:
+  pull_request:
   push:
       branches:
         - master
