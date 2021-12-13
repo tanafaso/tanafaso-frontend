@@ -33,7 +33,12 @@ class ChoicesWidget extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 choices[index].word,
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily:
+                      // ignore: deprecated_member_use
+                      Theme.of(context).accentTextTheme.bodyText1.fontFamily,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),

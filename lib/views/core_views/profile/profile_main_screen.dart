@@ -146,30 +146,37 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          GestureDetector(
-                                            onTapDown: (_) {
-                                              Share.share(
-                                                  AppLocalizations.of(context)
-                                                      .shareMessage(
-                                                          _user.username));
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.share,
-                                                  size: 25,
+                                          Expanded(
+                                            child: GestureDetector(
+                                              onTapDown: (_) {
+                                                Share.share(
+                                                    AppLocalizations.of(context)
+                                                        .shareMessage(
+                                                            _user.username));
+                                              },
+                                              child: FittedBox(
+                                                fit: BoxFit.scaleDown,
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.share,
+                                                      size: 25,
+                                                    ),
+                                                    Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 8)),
+                                                    AutoSizeText(
+                                                      'مشاركة الكود مع صديق',
+                                                      style: TextStyle(
+                                                        fontSize: 25,
+                                                        color: Colors
+                                                            .grey.shade700,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                                Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 8)),
-                                                AutoSizeText(
-                                                  'مشاركة الكود مع صديق',
-                                                  style: TextStyle(
-                                                    fontSize: 25,
-                                                    color: Colors.grey.shade700,
-                                                  ),
-                                                ),
-                                              ],
+                                              ),
                                             ),
                                           ),
                                         ],

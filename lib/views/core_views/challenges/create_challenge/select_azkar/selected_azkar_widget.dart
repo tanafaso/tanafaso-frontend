@@ -145,8 +145,12 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
                             textAlign: TextAlign.center,
                             textDirection: TextDirection.rtl,
                             style: TextStyle(
-                              fontSize: 20,
-                            ),
+                                fontSize: 20,
+                                fontFamily: Theme.of(context)
+                                    // ignore: deprecated_member_use
+                                    .accentTextTheme
+                                    .bodyText1
+                                    .fontFamily),
                           ),
                         ),
                       ),

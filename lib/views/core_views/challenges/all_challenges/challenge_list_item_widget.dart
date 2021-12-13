@@ -264,26 +264,29 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       ],
       child: Column(
         children: [
-          Row(
-            children: [
-              Padding(padding: EdgeInsets.only(right: 8)),
-              getIcon(),
-              Padding(padding: EdgeInsets.only(right: 16)),
-              Expanded(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    widget.challenge.getName(),
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-                    maxLines: 1,
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.ellipsis,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Padding(padding: EdgeInsets.only(right: 8)),
+                getIcon(),
+                Padding(padding: EdgeInsets.only(right: 16)),
+                Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      widget.challenge.getName(),
+                      style: TextStyle(fontSize: 35),
+                      maxLines: 1,
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
-              ),
-              Padding(padding: EdgeInsets.only(right: 8)),
-            ],
+                Padding(padding: EdgeInsets.only(right: 8)),
+              ],
+            ),
           ),
           Row(
             children: [
@@ -610,7 +613,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
     }
     return Icon(
       Icons.not_started,
-      color: Colors.yellow,
+      color: Colors.yellow.shade600,
       size: 35,
     );
   }
@@ -621,7 +624,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
         "انتهى التحدي",
         style: new TextStyle(
           color: Colors.grey.shade700,
-          fontWeight: FontWeight.bold,
+          // fontWeight: FontWeight.bold,
           fontSize: 25,
         ),
       );
@@ -630,8 +633,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
     if (hoursLeft == 0) {
       int minutesLeft = widget.challenge.minutesLeft();
       if (minutesLeft == 0) {
-        return RichText(
-            text: TextSpan(
+        return Text.rich(TextSpan(
           style: TextStyle(
             color: Colors.black,
             fontSize: 25,
@@ -650,8 +652,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
           ],
         ));
       }
-      return RichText(
-          text: TextSpan(
+      return Text.rich(TextSpan(
         style: TextStyle(
           color: Colors.black,
           fontSize: 25,
@@ -670,8 +671,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
         ],
       ));
     }
-    return RichText(
-        text: TextSpan(
+    return Text.rich(TextSpan(
       style: TextStyle(
         color: Colors.black,
         fontSize: 25,

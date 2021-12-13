@@ -126,8 +126,7 @@ class _FindFriendsNotPubliclyAvailableWidgetState
                         'قبل البحث عن أصدقاء ، يجب أن توافق على أن المستخدمين الآخرين سيتمكنون من رؤية اسمك وسيتمكنون من إرسال طلبات صداقة إليك.',
                         style: TextStyle(fontSize: 20),
                       ),
-                      RichText(
-                          text: TextSpan(
+                      Text.rich(TextSpan(
                         style: TextStyle(color: Colors.black, fontSize: 20),
                         children: [
                           TextSpan(

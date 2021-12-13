@@ -103,7 +103,6 @@ class _DoMemorizationChallengeListItemWidgetState
 
   @override
   Widget build(BuildContext context) {
-    print(_tileExpanded);
     return Container(
       child: ExpansionTile(
         title: Row(
@@ -146,12 +145,15 @@ class _DoMemorizationChallengeListItemWidgetState
             children: [
               Text(
                 QuranAyahs.ayahs[widget.question.ayah - 1],
-                style: TextStyle(fontSize: 25),
+                style: TextStyle(
+                  fontSize: 25,
+                  fontFamily: 'uthmanic',
+                ),
                 textAlign: TextAlign.center,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Card(child: getStepQuestionWidget()),
+                child: Card(child: getCurrentStepQuestionWidget()),
               ),
             ],
           ),
@@ -160,7 +162,7 @@ class _DoMemorizationChallengeListItemWidgetState
     );
   }
 
-  Widget getStepQuestionWidget() {
+  Widget getCurrentStepQuestionWidget() {
     switch (_currentStep) {
       case Step.SURAH_QUESTION:
         return SurahQuestionWidget(

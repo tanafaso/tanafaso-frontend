@@ -23,7 +23,7 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
   Widget build(BuildContext context) {
     return Card(
       child: IntrinsicHeight(
-        child: Row(
+        child: Column(
           children: [
             Flexible(
               flex: 7,

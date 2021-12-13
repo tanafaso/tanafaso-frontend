@@ -115,6 +115,8 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                       new BorderSide(color: Colors.black),
                                 ),
                               ),
+                              showCursor: true,
+                              cursorColor: Colors.black,
                               onChanged: (String username) {
                                 _friendUsername = username;
                               },
@@ -127,9 +129,6 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                 }
                               },
                               keyboardType: TextInputType.text,
-                              style: new TextStyle(
-                                fontFamily: "Poppins",
-                              ),
                             ),
                           ),
                           Align(

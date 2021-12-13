@@ -33,14 +33,20 @@ class CreateChallengeScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                     child: FittedBox(
                       child: Text(
-                        'وَفِي ذَٰلِكَ فَلْيَتَنَافَسِ الْمُتَنَافِسُونَ',
+                        '﴿وَفِي ذَٰلِكَ فَلْيَتَنَافَسِ الْمُتَنَافِسُونَُ﴾',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
+                            fontSize: 30,
+                            fontFamily: Theme.of(context)
+                                // ignore: deprecated_member_use
+                                .accentTextTheme
+                                .bodyText1
+                                .fontFamily),
                         maxLines: 1,
                       ),
                     ),
                   ),
+                  Padding(padding: EdgeInsets.all(8)),
                   ExpansionTile(
                     title: Row(
                       children: [
@@ -50,8 +56,7 @@ class CreateChallengeScreen extends StatelessWidget {
                             child: Text(
                               "قراءة أذكار",
                               maxLines: 1,
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
+                              style: TextStyle(fontSize: 30),
                             ),
                           ),
                         ),
@@ -125,8 +130,7 @@ class CreateChallengeScreen extends StatelessWidget {
                             child: Text(
                               "معاني كلمات القرآن",
                               maxLines: 1,
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
+                              style: TextStyle(fontSize: 30),
                             ),
                           ),
                         ),
@@ -201,8 +205,7 @@ class CreateChallengeScreen extends StatelessWidget {
                             child: Text(
                               "قراءة قرآن",
                               maxLines: 1,
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
+                              style: TextStyle(fontSize: 30),
                             ),
                           ),
                         ),
@@ -277,8 +280,7 @@ class CreateChallengeScreen extends StatelessWidget {
                             child: Text(
                               "اختبار حفظ قرآن",
                               maxLines: 1,
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
+                              style: TextStyle(fontSize: 30),
                             ),
                           ),
                         ),
