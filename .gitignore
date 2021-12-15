@@ -1,16 +1,15 @@
-/.idea
+.idea
 /.vscode
 /.packages
 /.pub
 /build
 /ios/.generated
 /.packages
-/.android/.idea
 /android/app/google-services.json
 /ios/GoogleService-Info.plist
 /.flutter-plugins-dependencies
 /.flutter-plugins
-/.DS_Store
+.DS_Store
 /.dart_tool
 /android/app/google-services.json
 /ios/GoogleService-Info.plist
@@ -18,3 +17,4 @@
 /android/key.properties
 /android/app/androidkey.jks
 /azkar/
+/ios/build
