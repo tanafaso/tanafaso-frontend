@@ -12,7 +12,7 @@ description: A new Flutter project.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.10.3+110
+version: 1.11.0+111
 
 environment:
   sdk: '>=2.10.0 <3.0.0'
@@ -91,6 +91,7 @@ flutter:
     - assets/images/challenge.png
     - assets/images/friends.png
     - assets/servercert.crt
+    - assets/servercert-2022.crt
     - assets/quran.txt
   # To add assets to your application, add an assets section, like this:
   # assets:
