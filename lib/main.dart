@@ -25,9 +25,11 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  ByteData data = await rootBundle.load('assets/servercert.crt');
+  ByteData serverCert1 = await rootBundle.load('assets/servercert.crt');
+  ByteData serverCert2 = await rootBundle.load('assets/servercert-2022.crt');
   SecurityContext context = SecurityContext.defaultContext;
-  context.setTrustedCertificatesBytes(data.buffer.asUint8List());
+  context.setTrustedCertificatesBytes(serverCert1.buffer.asUint8List());
+  context.setTrustedCertificatesBytes(serverCert2.buffer.asUint8List());
   FlutterStatusbarcolor.setStatusBarColor(Color(0xffcef5ce));
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarColor: Color(0xffcef5ce),
