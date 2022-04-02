@@ -96,7 +96,7 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
               child: (_subChallenges?.length ?? 0) == 0
                   ? Icon(Icons.add, color: Theme.of(context).iconTheme.color)
                   : Text(
-                      AppLocalizations.of(context).changeSelectedAzkar,
+                      AppLocalizations.of(context).addAzkar,
                       style: Theme.of(context).textTheme.button,
                     ),
             ),
@@ -266,7 +266,7 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
     }
 
     setState(() {
-      _subChallenges = selectedAzkar;
+      _subChallenges = mergeChallenges(_subChallenges, selectedAzkar);
       _repetitionsControllers = [];
       _subChallenges.forEach((subChallenge) {
         TextEditingController controller = TextEditingController(
@@ -335,6 +335,20 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
       return false;
     }
     return true;
+  }
+
+  List<SubChallenge> mergeChallenges(
+      List<SubChallenge> subChallenges, List<SubChallenge> newSubChallenges) {
+    Map<int, SubChallenge> merged = new Map();
+
+    for (SubChallenge subChallenge in subChallenges) {
+      merged[subChallenge.zekr.id] = subChallenge;
+    }
+    for (SubChallenge subChallenge in newSubChallenges) {
+      merged[subChallenge.zekr.id] = subChallenge;
+    }
+
+    return merged.values.toList();
   }
 
   @override
