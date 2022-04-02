@@ -197,7 +197,7 @@ class AppLocalizations {
       'please select azkar first': 'الرجاء اختيار الأذكار أولا',
       'select azkar': 'اختر الأذكار',
       'select azkar category': 'اختر فئة الأذكار',
-      'change selected azkar': 'تغيير الأذكار المختارة',
+      'add azkar': 'أضف أذكار',
       'please choose friends first': 'الرجاء اختيار الأصدقاء أولاً',
       'selected friends': 'الأصدقاء الذين تم اختيارهم',
       'and': 'و',
@@ -384,8 +384,8 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]['please choose friends first'];
   }
 
-  String get changeSelectedAzkar {
-    return _localizedValues[locale.languageCode]['change selected azkar'];
+  String get addAzkar {
+    return _localizedValues[locale.languageCode]['add azkar'];
   }
 
   String get selectAzkarCategory {
