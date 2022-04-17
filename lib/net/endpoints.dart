@@ -18,6 +18,7 @@ enum EndpointRoute {
   GET_USER_BY_ID,
   GET_USER_BY_USERNAME,
   GET_USER_BY_FACEBOOK_USER_ID,
+  DELETE_CURRENT_USER,
   GET_PUBLICLY_AVAILABLE_USERS,
   DELETE_FROM_PUBLICLY_AVAILABLE_USERS,
   ADD_TO_PUBLICLY_AVAILABLE_MALES,
@@ -100,6 +101,8 @@ class ApiRoutesUtil {
         return '/categories';
       case EndpointRoute.GET_CURRENT_USER_PROFILE:
         return 'users/me/v2';
+      case EndpointRoute.DELETE_CURRENT_USER:
+        return 'users/me';
       case EndpointRoute.GET_SABEQ:
         return 'users/sabeq';
       case EndpointRoute.GET_USER_BY_ID:

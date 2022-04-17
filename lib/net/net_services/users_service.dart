@@ -10,6 +10,7 @@ import 'package:azkar/net/api_interface/users/responses/add_friend_response.dart
 import 'package:azkar/net/api_interface/users/responses/add_to_publicly_available_users_response.dart';
 import 'package:azkar/net/api_interface/users/responses/delete_friend_response.dart';
 import 'package:azkar/net/api_interface/users/responses/delete_from_publicly_available_users_response.dart';
+import 'package:azkar/net/api_interface/users/responses/delete_user_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_friends_leaderboard_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_publicly_available_users_response.dart';
 import 'package:azkar/net/api_interface/users/responses/get_user_response.dart';
@@ -39,6 +40,18 @@ class UsersService {
     }
 
     prefs.setString(key, responseBody);
+    return response.user;
+  }
+
+  Future<User> deleteCurrentUser() async {
+    http.Response httpResponse = await ApiCaller.delete(
+        route: Endpoint(endpointRoute: EndpointRoute.DELETE_CURRENT_USER));
+    var responseBody = utf8.decode(httpResponse.body.codeUnits);
+    var response = DeleteUserResponse.fromJson(jsonDecode(responseBody));
+    if (response.hasError()) {
+      throw new ApiException(response.error);
+    }
+
     return response.user;
   }
 
