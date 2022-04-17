@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/user.dart';
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
@@ -84,23 +85,31 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          AutoSizeText(
-                                            'كود المستخدم',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 35),
-                                          ),
+                                          FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: Text(
+                                              'كود المستخدم',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 35),
+                                            ),
+                                          )
                                         ],
                                       ),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          AutoSizeText(
-                                            _user.username,
-                                            style: TextStyle(
-                                              fontSize: 30,
-                                              color: Colors.grey.shade700,
+                                          Expanded(
+                                            child: FittedBox(
+                                              fit: BoxFit.scaleDown,
+                                              child: Text(
+                                                _user.username,
+                                                style: TextStyle(
+                                                  fontSize: 30,
+                                                  color: Colors.grey.shade700,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -260,6 +269,47 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                               ),
                             ),
                           ),
+                          Padding(padding: EdgeInsets.all(10)),
+                          Container(
+                            child: ButtonTheme(
+                              height: 50,
+                              // ignore: deprecated_member_use
+                              child: RawMaterialButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                fillColor: Colors.red.shade600,
+                                onPressed: () async {
+                                  bool deleted =
+                                      await _showDeleteUserAlertDialog(context);
+                                  if (deleted) {
+                                    await ServiceProvider.secureStorageService
+                                        .clear();
+                                    await ServiceProvider.cacheManager
+                                        .clearPreferences();
+                                    SnackBarUtils.showSnackBar(
+                                        context, "تم حذف حسابك بنجاح.");
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                new AuthMainScreen()),
+                                        (_) => false);
+                                  }
+                                },
+                                child: Center(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: AutoSizeText(
+                                    "مسح الحساب",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -316,5 +366,47 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
         context,
         MaterialPageRoute(builder: (context) => new AuthMainScreen()),
         (_) => false);
+  }
+
+  Future<bool> _showDeleteUserAlertDialog(BuildContext context) async {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(' مسح الحساب 😢 '),
+          content: SingleChildScrollView(
+            child: Text(
+                'سنفتقدك. يمكنك إرسال أي شيء تريد تحسينه إلينا على azkar.challenge@gmail.com وسننظر في العمل عليه. هل تريد حقا حذف حسابك؟ 👀'),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'نعم',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () async {
+                try {
+                  await ServiceProvider.usersService.deleteCurrentUser();
+                } on ApiException catch (e) {
+                  SnackBarUtils.showSnackBar(
+                      context, e.errorStatus.errorMessage);
+                }
+                Navigator.of(context).pop(/*deleted=*/ true);
+              },
+            ),
+            TextButton(
+              child: const Text(
+                'لا',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(/*deleted=*/ false);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
