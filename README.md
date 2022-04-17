@@ -7,7 +7,7 @@ A Flutter application for Muslims that help them challenge and motivate themselv
 
 [On Play Store](https://play.google.com/store/apps/details?id=com.tanafaso.azkar) & [On App Store](https://apps.apple.com/us/app/تنافسوا/id1564309117?platform=iphone)
 
-Also, take a look at the [Backend](https://github.com/tanafaso/azkar-api) repository.
+Also, take a look at the [Backend](https://github.com/tanafaso/tanafaso-backend) repository.
 
 ## Stats
 - **18,300** App Installs.
