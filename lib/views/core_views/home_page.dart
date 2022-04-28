@@ -6,9 +6,9 @@ import 'package:azkar/utils/features.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/challenges_main_screen.dart';
 import 'package:azkar/views/core_views/friends/friends_main_screen.dart';
-import 'package:azkar/views/core_views/live_support_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_main_screen.dart';
 import 'package:azkar/views/core_views/settings/settings_main_screen.dart';
+import 'package:azkar/views/core_views/support/support_screen.dart';
 import 'package:clear_all_notifications/clear_all_notifications.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -256,7 +256,7 @@ class _HomePageState extends State<HomePage>
       case TopicType.PROFILE:
         return ProfileMainScreen();
       case TopicType.LIVE_SUPPORT:
-        return LiveSupportScreen();
+        return SupportScreen();
       case TopicType.SETTINGS:
         return SettingsMainScreen();
     }
