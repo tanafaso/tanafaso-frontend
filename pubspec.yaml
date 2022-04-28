@@ -12,7 +12,7 @@ description: A new Flutter project.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.11.0+111
+version: 1.11.1+114
 
 environment:
   sdk: '>=2.10.0 <3.0.0'
@@ -42,7 +42,7 @@ dependencies:
   confetti: ^0.5.5
   flutter_slidable: ^0.6.0
   feature_discovery: ^0.14.0
-  share_plus: ^2.1.2
+  share_plus: ^4.0.4
   toggle_switch: ^0.1.9
   introduction_screen: ^2.1.0
   in_app_review: ^2.0.2
@@ -59,6 +59,7 @@ dependencies:
   flutter_local_notifications: ^9.0.0
   numberpicker: ^2.1.1
   the_apple_sign_in: ^1.1.1
+  device_info_plus: ^3.2.3
 
 dev_dependencies:
   flutter_test:

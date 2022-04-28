@@ -76,7 +76,7 @@ class ApiRoutesUtil {
         }
         if (Platform.isIOS) {
           // Use your computer's private IP as the following example.
-          // return '192.168.1.111:8080';
+          // return '192.168.2.102:8080';
           return 'www.tanafaso.com';
         }
         assert(false);

@@ -68,9 +68,6 @@ class _LiveSupportScreenState extends State<LiveSupportScreen>
           )
         : SafeArea(
             child: CrispView(
-              loadingWidget: Center(
-                child: CircularProgressIndicator(),
-              ),
               crispMain: crispMain,
             ),
           );

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/user.dart';
@@ -14,6 +16,7 @@ import 'package:azkar/views/core_views/friends/friend_requests/friend_requests_w
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class FriendsMainScreen extends StatefulWidget {
   @override
@@ -36,6 +39,8 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
 
   int _tabIndex;
 
+  bool isIpad;
+
   @override
   void initState() {
     super.initState();
@@ -54,6 +59,8 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
 
   Future<void> getNeededData() async {
     try {
+      isIpad = await _isIpad();
+
       await ServiceProvider.homeService.getHomeDataAndCacheIt();
       _friendshipScores =
           await ServiceProvider.usersService.getFriendsLeaderboard();
@@ -214,7 +221,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Visibility(
-            visible: _addExpanded,
+            visible: _addExpanded && !isIpad,
             maintainSize: false,
             maintainState: false,
             child: DescribedFeatureOverlay(
@@ -406,5 +413,20 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
         ],
       ),
     );
+  }
+
+  Future<bool> _isIpad() async {
+    if (!Platform.isIOS) {
+      return false;
+    }
+
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+
+    if (iosInfo.model.toLowerCase().contains("ipad")) {
+      return true;
+    }
+    return false;
   }
 }
