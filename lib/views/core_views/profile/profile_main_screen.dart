@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_exception.dart';
@@ -8,6 +10,7 @@ import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_loading_widget.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
@@ -21,8 +24,11 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
   Future<void> _neededData;
   User _user;
   int _userScore;
+  bool isIpad;
 
   Future<void> getNeededData() async {
+    isIpad = await _isIpad();
+
     _user = await ServiceProvider.usersService.getCurrentUser();
     _userScore =
         await ServiceProvider.challengesService.getFinishedChallengesCount();
@@ -155,35 +161,38 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Expanded(
-                                            child: GestureDetector(
-                                              onTapDown: (_) {
-                                                Share.share(
-                                                    AppLocalizations.of(context)
-                                                        .shareMessage(
-                                                            _user.username));
-                                              },
-                                              child: FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.share,
-                                                      size: 25,
-                                                    ),
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 8)),
-                                                    AutoSizeText(
-                                                      'مشاركة الكود مع صديق',
-                                                      style: TextStyle(
-                                                        fontSize: 25,
-                                                        color: Colors
-                                                            .grey.shade700,
+                                          Visibility(
+                                            visible: !isIpad,
+                                            child: Expanded(
+                                              child: GestureDetector(
+                                                onTapDown: (_) {
+                                                  Share.share(
+                                                      AppLocalizations.of(context)
+                                                          .shareMessage(
+                                                              _user.username));
+                                                },
+                                                child: FittedBox(
+                                                  fit: BoxFit.scaleDown,
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.share,
+                                                        size: 25,
                                                       ),
-                                                    ),
-                                                  ],
+                                                      Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 8)),
+                                                      AutoSizeText(
+                                                        'مشاركة الكود مع صديق',
+                                                        style: TextStyle(
+                                                          fontSize: 25,
+                                                          color: Colors
+                                                              .grey.shade700,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -408,5 +417,19 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
         );
       },
     );
+  }
+
+  Future<bool> _isIpad() async {
+    if (!Platform.isIOS) {
+      return false;
+    }
+
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+    if (iosInfo.model.toLowerCase().contains("ipad")) {
+      return true;
+    }
+    return false;
   }
 }
