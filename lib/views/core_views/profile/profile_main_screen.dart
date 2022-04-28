@@ -167,7 +167,8 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                               child: GestureDetector(
                                                 onTapDown: (_) {
                                                   Share.share(
-                                                      AppLocalizations.of(context)
+                                                      AppLocalizations.of(
+                                                              context)
                                                           .shareMessage(
                                                               _user.username));
                                                 },
