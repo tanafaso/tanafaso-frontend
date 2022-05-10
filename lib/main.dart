@@ -19,7 +19,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
-
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('in main');
   RemoteNotification notification = message.notification;
@@ -90,14 +89,16 @@ class _MyAppState extends State<MyApp> {
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'challenges_and_friend_requests', // id
       'تحديات الاصدقاء وطلبات الصداقه', // title
-      description: 'اخطارات بخصوص تحديات الاصدقاء وطلبات الصداقه.', // description
+      description:
+          'اخطارات بخصوص تحديات الاصدقاء وطلبات الصداقه.', // description
       importance: Importance.max,
     );
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+        FlutterLocalNotificationsPlugin();
 
     await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     _azkarAndQuranFontFamily =

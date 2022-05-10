@@ -95,29 +95,29 @@ class _HomePageState extends State<HomePage>
     // Any time the token refreshes, store this in the database too.
     FirebaseMessaging.instance.onTokenRefresh.listen(sendTokenToDatabase);
 
-    FirebaseMessaging.onMessage.listen(
-        (RemoteMessage message) {
-          ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
-          print('in home page');
-          RemoteNotification notification = message.notification;
-          AndroidNotification android = message.notification?.android;
-          if (notification != null && android != null) {
-            var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-            flutterLocalNotificationsPlugin.show(
-              notification.hashCode,
-              notification.title,
-              notification.body,
-              NotificationDetails(
-                android: AndroidNotificationDetails(
-                  "challenges_and_friend_requests",
-                  "تفاعلات الأصدقاء",
-                  channelDescription: "اخطارات بخصوص تحديات الاصدقاء وطلبات الصداقه",
-                  icon: 'notification',
-                ),
-              ),
-            );
-          }
-        });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+      print('in home page');
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              "challenges_and_friend_requests",
+              "تفاعلات الأصدقاء",
+              channelDescription:
+                  "اخطارات بخصوص تحديات الاصدقاء وطلبات الصداقه",
+              icon: 'notification',
+            ),
+          ),
+        );
+      }
+    });
   }
 
   @override
