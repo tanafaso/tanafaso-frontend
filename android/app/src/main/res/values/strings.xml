@@ -3,4 +3,5 @@
   <string name="app_name">تنافسوا</string>
   <string name="facebook_app_id">143985681031200</string>
   <string name="fb_login_protocol_scheme">fb143985681031200</string>
+  <string name="facebook_client_token">9d1491d3636dc2ec9dd04e04620f711c</string>
 </resources>

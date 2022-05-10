@@ -6,16 +6,22 @@
        additional functionality it is fine to subclass or reimplement
        FlutterApplication and put your custom class here. -->
   <uses-permission android:name="android.permission.INTERNET"/>
+  <queries>
+    <provider android:authorities="com.facebook.katana.provider.PlatformProvider" /> <!-- allows app to access Facebook app features -->
+    <provider android:authorities="com.facebook.orca.provider.PlatformProvider" /> <!-- allows sharing to Messenger app -->
+  </queries>
   <application
     android:icon="@mipmap/ic_launcher"
     android:label="تنافسوا"
-    android:name="io.flutter.app.FlutterApplication">
+    android:name="${applicationName}">
+
     <activity
       android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
       android:hardwareAccelerated="true"
       android:launchMode="singleTop"
       android:name=".MainActivity"
       android:theme="@style/LaunchTheme"
+      android:exported="true"
       android:windowSoftInputMode="adjustResize">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -52,6 +58,10 @@
     <meta-data
       android:name="com.facebook.sdk.ApplicationId"
       android:value="@string/facebook_app_id" />
+    <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+    <meta-data
+        android:name="com.google.firebase.messaging.default_notification_channel_id"
+        android:value="challenges_and_friend_requests" />
 
 <!--    <provider-->
 <!--        android:name="com.pichillilorenzo.flutter_inappwebview.InAppWebViewFileProvider"-->
