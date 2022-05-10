@@ -1,14 +1,12 @@
 import 'dart:convert';
 
 import 'package:azkar/models/group.dart';
-import 'package:azkar/models/user_score.dart';
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/api_exception.dart';
-import 'package:azkar/net/api_interface/groups/responses/get_group_leaderboard_response.dart';
 import 'package:azkar/net/api_interface/groups/responses/get_group_response.dart';
 import 'package:azkar/net/api_interface/groups/responses/get_groups_response.dart';
-import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/net/endpoints.dart';
+import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,18 +43,5 @@ class GroupsService {
 
     prefs.setString(key, responseBody);
     return response.groups;
-  }
-
-  Future<List<UserScore>> getGroupLeaderboard(String groupId) async {
-    http.Response httpResponse = await ApiCaller.get(
-        route: Endpoint(
-            endpointRoute: EndpointRoute.GET_GROUP_LEADERBOARD,
-            pathVariables: [groupId]));
-    var response = GetGroupLeaderboardResponse.fromJson(
-        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
-    if (response.hasError()) {
-      throw new ApiException(response.error);
-    }
-    return response.userScores;
   }
 }
