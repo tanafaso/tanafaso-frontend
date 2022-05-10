@@ -18,7 +18,7 @@ import 'package:azkar/net/api_interface/authentication/responses/google_authenti
 import 'package:azkar/net/api_interface/authentication/responses/reset_password_response.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/services/service_provider.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:http/http.dart' as http;
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
@@ -29,17 +29,18 @@ class AuthenticationService {
   // Returns true if authentication was successful.
   Future<void> loginWithFacebook() async {
     final _facebookLogin = FacebookLogin();
+
     try {
       await _facebookLogin.logOut();
     } on Exception catch (_) {}
 
-    _facebookLogin.loginBehavior = FacebookLoginBehavior.nativeWithFallback;
-
-    final facebookGraphApiResponse =
-        await _facebookLogin.logIn(['email', 'user_friends']);
+    final facebookGraphApiResponse = await _facebookLogin.logIn(permissions: [
+      FacebookPermission.publicProfile,
+      FacebookPermission.email,
+    ]);
 
     switch (facebookGraphApiResponse.status) {
-      case FacebookLoginStatus.loggedIn:
+      case FacebookLoginStatus.success:
         final FacebookAccessToken _facebookAccessToken =
             facebookGraphApiResponse.accessToken;
         await ServiceProvider.secureStorageService
@@ -49,7 +50,7 @@ class AuthenticationService {
 
         await _loginWithFacebookAccessToken(_facebookAccessToken);
         break;
-      case FacebookLoginStatus.cancelledByUser:
+      case FacebookLoginStatus.cancel:
         throw ApiException.withDefaultError();
       case FacebookLoginStatus.error:
         throw ApiException.withDefaultError();
@@ -182,13 +183,15 @@ class AuthenticationService {
 
   Future<void> connectFacebook() async {
     final _facebookLogin = FacebookLogin();
-    _facebookLogin.loginBehavior = FacebookLoginBehavior.nativeWithFallback;
 
-    final facebookGraphApiResponse =
-        await _facebookLogin.logIn(['email', 'user_friends']);
+    final facebookGraphApiResponse = await _facebookLogin.logIn(permissions: [
+      FacebookPermission.publicProfile,
+      FacebookPermission.email,
+      FacebookPermission.userFriends,
+    ]);
 
     switch (facebookGraphApiResponse.status) {
-      case FacebookLoginStatus.loggedIn:
+      case FacebookLoginStatus.success:
         FacebookAccessToken facebookAccessToken =
             facebookGraphApiResponse.accessToken;
         await ServiceProvider.secureStorageService
@@ -198,7 +201,7 @@ class AuthenticationService {
 
         _connectFacebookWithFacebookAccessToken(facebookAccessToken);
         break;
-      case FacebookLoginStatus.cancelledByUser:
+      case FacebookLoginStatus.cancel:
         throw ApiException.withDefaultError();
       case FacebookLoginStatus.error:
         throw ApiException.withDefaultError();

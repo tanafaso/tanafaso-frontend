@@ -15,12 +15,31 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  FlutterRingtonePlayer.playNotification();
+  print('in main');
+  RemoteNotification notification = message.notification;
+  AndroidNotification android = message.notification?.android;
+  if (notification != null && android != null) {
+    var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin.show(
+      notification.hashCode,
+      notification.title,
+      notification.body,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          "challenges_and_friend_requests",
+          "تفاعلات الأصدقاء",
+          channelDescription: "اخطارات بخصوص تحديات الاصدقاء وطلبات الصداقه",
+          icon: 'notification',
+        ),
+      ),
+    );
+  }
 }
 
 void main() async {
@@ -30,7 +49,6 @@ void main() async {
   SecurityContext context = SecurityContext.defaultContext;
   context.setTrustedCertificatesBytes(serverCert1.buffer.asUint8List());
   context.setTrustedCertificatesBytes(serverCert2.buffer.asUint8List());
-  FlutterStatusbarcolor.setStatusBarColor(Color(0xffcef5ce));
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarColor: Color(0xffcef5ce),
     statusBarColor: Color(0xffcef5ce),
@@ -58,9 +76,9 @@ class _MyAppState extends State<MyApp> {
       _firebaseApp = await Firebase.initializeApp();
       await FirebaseMessaging.instance
           .setForegroundNotificationPresentationOptions(
-        alert: true, // Required to display a heads up notification
-        badge: true,
-        sound: true,
+        alert: false,
+        badge: false,
+        sound: false,
       );
       if (Platform.isIOS) {
         FirebaseMessaging.instance.requestPermission();
@@ -68,6 +86,19 @@ class _MyAppState extends State<MyApp> {
       FirebaseMessaging.onBackgroundMessage(
           _firebaseMessagingBackgroundHandler);
     }
+
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'challenges_and_friend_requests', // id
+      'تحديات الاصدقاء وطلبات الصداقه', // title
+      description: 'اخطارات بخصوص تحديات الاصدقاء وطلبات الصداقه.', // description
+      importance: Importance.max,
+    );
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
 
     _azkarAndQuranFontFamily =
         await ServiceProvider.fontService.getPreferredAzkarAndQuranFontFamily();

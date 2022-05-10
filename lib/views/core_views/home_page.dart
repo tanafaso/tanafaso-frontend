@@ -15,6 +15,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Topic {
@@ -95,7 +96,28 @@ class _HomePageState extends State<HomePage>
     FirebaseMessaging.instance.onTokenRefresh.listen(sendTokenToDatabase);
 
     FirebaseMessaging.onMessage.listen(
-        (_) => ServiceProvider.cacheManager.invalidateFrequentlyChangingData());
+        (RemoteMessage message) {
+          ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+          print('in home page');
+          RemoteNotification notification = message.notification;
+          AndroidNotification android = message.notification?.android;
+          if (notification != null && android != null) {
+            var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+            flutterLocalNotificationsPlugin.show(
+              notification.hashCode,
+              notification.title,
+              notification.body,
+              NotificationDetails(
+                android: AndroidNotificationDetails(
+                  "challenges_and_friend_requests",
+                  "تفاعلات الأصدقاء",
+                  channelDescription: "اخطارات بخصوص تحديات الاصدقاء وطلبات الصداقه",
+                  icon: 'notification',
+                ),
+              ),
+            );
+          }
+        });
   }
 
   @override
