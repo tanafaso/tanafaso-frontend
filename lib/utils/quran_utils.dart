@@ -146,7 +146,7 @@ class QuranUtils {
 
   static void computeSurahsFirstIndices() {
     int ayasCount = 0;
-    for (var surahMap in surahNameToVersesCount)  {
+    for (var surahMap in surahNameToVersesCount) {
       surahNameToFirstAyahIndex[surahMap['name']] = ayasCount;
       ayasCount += surahMap['versesCount'];
     }

@@ -1,5 +1,4 @@
 import 'package:azkar/models/friend.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 

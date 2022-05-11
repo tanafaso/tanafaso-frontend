@@ -17,7 +17,6 @@ import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_util
 import 'package:azkar/views/core_views/challenges/do_challenge/do_reading_quran_challenge/do_reading_surah_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:confetti/confetti.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
@@ -110,16 +109,13 @@ class _DoReadingQuranChallengeScreenState
                       controller: _scrollController,
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
-                            maxHeight:
-                                MediaQuery.of(context).size.height / 3),
+                            maxHeight: MediaQuery.of(context).size.height / 3),
                         child: ListView.separated(
                           controller: _scrollController,
-                          separatorBuilder:
-                              (BuildContext context, int index) =>
-                                  Padding(padding: EdgeInsets.all(4)),
+                          separatorBuilder: (BuildContext context, int index) =>
+                              Padding(padding: EdgeInsets.all(4)),
                           shrinkWrap: true,
-                          itemCount:
-                              widget.challenge.surahSubChallenges.length,
+                          itemCount: widget.challenge.surahSubChallenges.length,
                           itemBuilder: (context, index) {
                             return RawMaterialButton(
                               onPressed: () => Navigator.push(
@@ -149,8 +145,7 @@ class _DoReadingQuranChallengeScreenState
                                               TextSpan(
                                                   text: widget
                                                       .challenge
-                                                      .surahSubChallenges[
-                                                          index]
+                                                      .surahSubChallenges[index]
                                                       .surahName,
                                                   style: TextStyle(
                                                       fontFamily: Theme.of(
@@ -162,8 +157,7 @@ class _DoReadingQuranChallengeScreenState
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black)),
-                                              TextSpan(
-                                                  text: ' من الآية رقم '),
+                                              TextSpan(text: ' من الآية رقم '),
                                               TextSpan(
                                                   text: ArabicUtils
                                                       .englishToArabic(widget

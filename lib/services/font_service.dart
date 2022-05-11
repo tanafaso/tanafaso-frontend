@@ -1,7 +1,6 @@
 import 'package:azkar/main.dart';
 import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/services/service_provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FontService {

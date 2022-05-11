@@ -1,7 +1,6 @@
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/friends/friend_requests/friend_request_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FriendRequestsWidget extends StatefulWidget {
