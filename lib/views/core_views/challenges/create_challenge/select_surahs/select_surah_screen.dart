@@ -2,12 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/reading_quran_challenge.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/quran_surahs.dart';
+import 'package:azkar/utils/quran_utils.dart';
 import 'package:flutter/material.dart';
 
 class SelectSurahScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<QuranSurah> quranSurahs = QuranSurahs.getSortedQuranSuras();
+    List<QuranSurah> quranSurahs = QuranUtils.getSortedQuranSuras();
 
     return Scaffold(
       appBar: AppBar(
@@ -150,8 +151,8 @@ class SelectSurahScreen extends StatelessWidget {
                                       divisions: quranSurahs[index].versesCount,
                                       onChanged: (RangeValues newRange) =>
                                           setState(() {
-                                        firstAyah = newRange.start.toInt();
-                                        lastAyah = newRange.end.toInt();
+                                        firstAyah = newRange.start.round().toInt();
+                                        lastAyah = newRange.end.round().toInt();
                                       }),
                                       labels: RangeLabels(
                                           ArabicUtils.englishToArabic(

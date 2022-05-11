@@ -1,5 +1,6 @@
 import 'package:azkar/models/memorization_challenge.dart';
 import 'package:azkar/utils/quran_surahs.dart';
+import 'package:azkar/utils/quran_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/choices_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/memorization_challenge_step_done_callback.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,14 +40,14 @@ class _SurahQuestionWidgetState extends State<SurahQuestionWidget> {
           scrollController: widget.scrollController,
           choices: [
             Choice(
-                word: QuranSurahs.data[widget.question.surah - 1]['name'],
+                word: QuranUtils.surahNameToVersesCount[widget.question.surah - 1]['name'],
                 correct: true),
             Choice(
-                word: QuranSurahs.data[widget.question.wrongSurahOptions[0] - 1]
+                word: QuranUtils.surahNameToVersesCount[widget.question.wrongSurahOptions[0] - 1]
                     ['name'],
                 correct: false),
             Choice(
-                word: QuranSurahs.data[widget.question.wrongSurahOptions[1] - 1]
+                word: QuranUtils.surahNameToVersesCount[widget.question.wrongSurahOptions[1] - 1]
                     ['name'],
                 correct: false),
           ],

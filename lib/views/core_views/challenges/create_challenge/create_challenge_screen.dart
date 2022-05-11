@@ -3,7 +3,7 @@ import 'package:azkar/models/friend.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_azkar_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_meaning_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_memorization_challenge_screen.dart';
-import 'package:azkar/views/core_views/challenges/create_challenge/create_quran_reading_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/create_reading_quran_challenge_screen.dart';
 import 'package:flutter/material.dart';
 
 class CreateChallengeScreen extends StatelessWidget {
@@ -242,7 +242,7 @@ class CreateChallengeScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  CreateQuranReadingChallengeScreen(
+                                  CreateReadingQuranChallengeScreen(
                                     initiallySelectedFriends:
                                         initiallySelectedFriends,
                                   )));

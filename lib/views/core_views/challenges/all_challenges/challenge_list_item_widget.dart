@@ -14,11 +14,11 @@ import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_
 import 'package:azkar/views/core_views/challenges/create_challenge/create_azkar_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_meaning_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_memorization_challenge_screen.dart';
-import 'package:azkar/views/core_views/challenges/create_challenge/create_quran_reading_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/create_reading_quran_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_azkar_challenge/do_azkar_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_meaning_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/do_memorization_challenge_screen.dart';
-import 'package:azkar/views/core_views/challenges/do_challenge/do_reading_quran_challenge_screen.dart';
+import 'package:azkar/views/core_views/challenges/do_challenge/do_reading_quran_challenge/do_reading_quran_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
@@ -490,7 +490,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => CreateQuranReadingChallengeScreen(
+            builder: (context) => CreateReadingQuranChallengeScreen(
                   initiallySelectedFriends: currentChallengeFriends,
                   initiallySelectedSurahSubChallenges:
                       widget.challenge.readingQuranChallenge.surahSubChallenges,

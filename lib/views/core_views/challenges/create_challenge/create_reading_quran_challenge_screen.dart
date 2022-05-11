@@ -14,22 +14,22 @@ import 'package:flutter/material.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
-class CreateQuranReadingChallengeScreen extends StatefulWidget {
+class CreateReadingQuranChallengeScreen extends StatefulWidget {
   final List<Friend> initiallySelectedFriends;
   final List<SurahSubChallenge> initiallySelectedSurahSubChallenges;
 
-  CreateQuranReadingChallengeScreen({
+  CreateReadingQuranChallengeScreen({
     this.initiallySelectedFriends = const [],
     this.initiallySelectedSurahSubChallenges = const [],
   });
 
   @override
-  _CreateQuranReadingChallengeScreenState createState() =>
-      _CreateQuranReadingChallengeScreenState();
+  _CreateReadingQuranChallengeScreenState createState() =>
+      _CreateReadingQuranChallengeScreenState();
 }
 
-class _CreateQuranReadingChallengeScreenState
-    extends State<CreateQuranReadingChallengeScreen> {
+class _CreateReadingQuranChallengeScreenState
+    extends State<CreateReadingQuranChallengeScreen> {
   List<Friend> _selectedFriends;
   List<SurahSubChallenge> _selectedSurahSubChallenges;
   ButtonState progressButtonState;
