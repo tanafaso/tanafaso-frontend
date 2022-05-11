@@ -1,7 +1,7 @@
 import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/memorization_challenge.dart';
 import 'package:azkar/utils/arabic_utils.dart';
-import 'package:azkar/utils/quran_ayahs.dart';
+import 'package:azkar/utils/quran_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/juz_question_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/next_ayah_question_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/previous_ayah_widget.dart';
@@ -144,10 +144,11 @@ class _DoMemorizationChallengeListItemWidgetState
           Column(
             children: [
               Text(
-                QuranAyahs.ayahs[widget.question.ayah - 1],
+                QuranUtils.ayahs[widget.question.ayah - 1],
                 style: TextStyle(
                   fontSize: 25,
-                  fontFamily: 'uthmanic',
+                  // ignore: deprecated_member_use
+                  fontFamily: Theme.of(context).accentTextTheme.bodyText1.fontFamily,
                 ),
                 textAlign: TextAlign.center,
               ),

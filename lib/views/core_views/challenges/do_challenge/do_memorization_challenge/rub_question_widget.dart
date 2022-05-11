@@ -1,5 +1,5 @@
 import 'package:azkar/models/memorization_challenge.dart';
-import 'package:azkar/utils/quran_ayahs.dart';
+import 'package:azkar/utils/quran_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/choices_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/memorization_challenge_step_done_callback.dart';
 import 'package:flutter/material.dart';
@@ -38,14 +38,14 @@ class _RubQuestionWidgetState extends State<RubQuestionWidget> {
           scrollController: widget.scrollController,
           choices: [
             Choice(
-                word: QuranAyahs.ayahs[widget.question.firstAyahInRub - 1],
+                word: QuranUtils.ayahs[widget.question.firstAyahInRub - 1],
                 correct: true),
             Choice(
-                word: QuranAyahs
+                word: QuranUtils
                     .ayahs[widget.question.wrongFirstAyahInRubOptions[0] - 1],
                 correct: false),
             Choice(
-                word: QuranAyahs
+                word: QuranUtils
                     .ayahs[widget.question.wrongFirstAyahInRubOptions[1] - 1],
                 correct: false),
           ],
