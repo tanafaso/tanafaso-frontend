@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
@@ -17,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('in main');
@@ -165,8 +163,10 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Color(0xffcef6ce),
           colorScheme: ColorScheme(
             primary: Color(0xffcef5ce),
+            // ignore: deprecated_member_use
             primaryVariant: Color(0xffcee6ce),
             secondary: Colors.white,
+            // ignore: deprecated_member_use
             secondaryVariant: Colors.white30,
             surface: Colors.white,
             background: Color(0xffcef5ce),

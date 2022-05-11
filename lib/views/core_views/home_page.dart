@@ -12,9 +12,7 @@ import 'package:azkar/views/core_views/support/support_screen.dart';
 import 'package:clear_all_notifications/clear_all_notifications.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 

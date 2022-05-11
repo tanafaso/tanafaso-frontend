@@ -7,7 +7,6 @@ import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_c
 import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/previous_ayah_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/rub_question_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/surah_question_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 typedef QuestionFinishedCallback = void Function();
@@ -148,7 +147,9 @@ class _DoMemorizationChallengeListItemWidgetState
                 style: TextStyle(
                   fontSize: 25,
                   // ignore: deprecated_member_use
-                  fontFamily: Theme.of(context).accentTextTheme.bodyText1.fontFamily,
+                  fontFamily:
+                      // ignore: deprecated_member_use
+                      Theme.of(context).accentTextTheme.bodyText1.fontFamily,
                 ),
                 textAlign: TextAlign.center,
               ),

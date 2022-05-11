@@ -4,7 +4,6 @@ import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/models/zekr.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 typedef OnZekrRepetitionsChangedCallback = void Function(

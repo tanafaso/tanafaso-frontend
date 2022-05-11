@@ -4,7 +4,6 @@ import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 

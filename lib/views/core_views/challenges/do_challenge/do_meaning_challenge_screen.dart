@@ -14,7 +14,6 @@ import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:confetti/confetti.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DoMeaningChallengeScreen extends StatefulWidget {

@@ -3,7 +3,6 @@ import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/views/core_views/friends/all_friends/friend_list_item_widget.dart';
 import 'package:azkar/views/core_views/friends/all_friends/no_friends_found_widget.dart';
 import 'package:azkar/views/keys.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 typedef OnRefreshRequested = void Function();

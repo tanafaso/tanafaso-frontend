@@ -16,9 +16,7 @@ import 'package:azkar/views/core_views/challenges/do_challenge/do_azkar_challeng
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:confetti/confetti.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
 class DoAzkarChallengeScreen extends StatefulWidget {
   final AzkarChallenge challenge;

@@ -15,7 +15,6 @@ import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_util
 import 'package:azkar/views/core_views/challenges/do_challenge/do_memorization_challenge/do_memorization_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:confetti/confetti.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DoMemorizationChallengeScreen extends StatefulWidget {
