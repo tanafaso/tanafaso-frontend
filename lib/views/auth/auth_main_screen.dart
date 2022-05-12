@@ -168,16 +168,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
                                   right: 8.0,
                                 ),
                                 child: FittedBox(
-                                  child: SignInButton(
-                                    Buttons.Google,
-                                    text: "جوجل",
-                                    shape: new RoundedRectangleBorder(
-                                        borderRadius:
-                                            new BorderRadius.circular(50.0)),
-                                    onPressed: () {
-                                      loginWithGoogle(context);
-                                    },
-                                  ),
+                                  child: googleButton(),
                                 ),
                               ),
                             ),
@@ -194,16 +185,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
                                   right: 8.0,
                                 ),
                                 child: FittedBox(
-                                  child: SignInButton(
-                                    Buttons.Facebook,
-                                    text: "الفيسبوك",
-                                    shape: new RoundedRectangleBorder(
-                                        borderRadius:
-                                            new BorderRadius.circular(50.0)),
-                                    onPressed: () {
-                                      loginWithFacebook(context);
-                                    },
-                                  ),
+                                  child: facebookButton(),
                                 ),
                               ),
                             ),
@@ -222,15 +204,19 @@ class _AuthMainScreenState extends State<AuthMainScreen>
                                     right: 8.0,
                                   ),
                                   child: FittedBox(
-                                    child: SignInButton(
-                                      Buttons.AppleDark,
-                                      text: "أبل",
-                                      shape: new RoundedRectangleBorder(
-                                          borderRadius:
-                                              new BorderRadius.circular(50.0)),
-                                      onPressed: () {
-                                        loginWithApple(context);
-                                      },
+                                    child: Directionality(
+                                      textDirection: TextDirection.ltr,
+                                      child: SignInButton(
+                                        Buttons.AppleDark,
+                                        text: "Sign in with Apple",
+                                        shape: new RoundedRectangleBorder(
+                                            borderRadius:
+                                                new BorderRadius.circular(
+                                                    10.0)),
+                                        onPressed: () {
+                                          loginWithApple(context);
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -248,6 +234,58 @@ class _AuthMainScreenState extends State<AuthMainScreen>
         ],
       ),
     )));
+  }
+
+  Widget googleButton() {
+    if (Platform.isIOS) {
+      return Directionality(
+        textDirection: TextDirection.ltr,
+        child: SignInButton(
+          Buttons.Google,
+          text: "Sign in with Google",
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(10.0)),
+          onPressed: () {
+            loginWithGoogle(context);
+          },
+        ),
+      );
+    }
+    return SignInButton(
+      Buttons.Google,
+      text: "جوجل",
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(50.0)),
+      onPressed: () {
+        loginWithGoogle(context);
+      },
+    );
+  }
+
+  Widget facebookButton() {
+    if (Platform.isIOS) {
+      return Directionality(
+        textDirection: TextDirection.ltr,
+        child: SignInButton(
+          Buttons.Facebook,
+          text: "Sign in with Facebook",
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(10.0)),
+          onPressed: () {
+            loginWithFacebook(context);
+          },
+        ),
+      );
+    }
+    return SignInButton(
+      Buttons.Facebook,
+      text: "الفيسبوك",
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(50.0)),
+      onPressed: () {
+        loginWithFacebook(context);
+      },
+    );
   }
 
   loginWithFacebook(BuildContext context) async {

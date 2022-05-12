@@ -29,7 +29,14 @@ class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
       appBar: AppBar(
         title: AutoSizeText(
           widget.surahSubChallenge.surahName,
-          style: TextStyle(fontSize: 30),
+          style: TextStyle(
+            fontSize: 30,
+            fontFamily: Theme.of(context)
+                // ignore: deprecated_member_use
+                .accentTextTheme
+                .bodyText1
+                .fontFamily,
+          ),
         ),
       ),
       body: SingleChildScrollView(
