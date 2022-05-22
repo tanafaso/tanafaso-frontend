@@ -3,7 +3,9 @@ import 'package:azkar/models/category.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/select_azkar/select_azkar_screen.dart';
+import 'package:azkar/views/core_views/challenges/create_challenge/select_azkar/write_zekr_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SelectCategoryScreen extends StatelessWidget {
   final List<Category> categories;
@@ -22,45 +24,97 @@ class SelectCategoryScreen extends StatelessWidget {
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-              itemCount: categories.length,
-              // Cache everything
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            categories[index].name,
-                            style: TextStyle(
-                              fontSize: 30,
+          child: Column(
+            children: [
+              GestureDetector(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          children: [
+                            Shimmer.fromColors(
+                              baseColor: Colors.green,
+                              highlightColor: Theme.of(context).primaryColor,
+                              enabled: true,
+                              child: Text(
+                                'اكتب ذكر',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                ),
+                                maxLines: 1,
+                              ),
                             ),
-                            maxLines: 1,
-                          ),
+                            Text(
+                              ' ✍️',
+                              style: TextStyle(fontSize: 30),
+                            )
+                          ],
                         ),
                       ),
                     ),
                   ),
-                  onTapDown: (_) async {
-                    List<SubChallenge> selectedSubChallenges =
-                        await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SelectAzkarScreen(
-                                      azkar: categories[index].azkar,
-                                    ))) as List<SubChallenge>;
-                    if ((selectedSubChallenges?.length ?? 0) != 0) {
-                      Navigator.pop(context, selectedSubChallenges);
-                    }
-                  },
-                );
-              }),
+                ),
+                onTapDown: (_) async {
+                  List<SubChallenge> selectedSubChallenges =
+                      await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => WriteZekrScreen()))
+                          as List<SubChallenge>;
+                  if ((selectedSubChallenges?.length ?? 0) != 0) {
+                    Navigator.pop(context, selectedSubChallenges);
+                  }
+                },
+              ),
+              Flexible(
+                child: ListView.builder(
+                    itemCount: categories.length,
+                    // Cache everything
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  categories[index].name,
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                  ),
+                                  maxLines: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        onTapDown: (_) async {
+                          List<SubChallenge> selectedSubChallenges =
+                              await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SelectAzkarScreen(
+                                            azkar: categories[index].azkar,
+                                          ))) as List<SubChallenge>;
+                          if ((selectedSubChallenges?.length ?? 0) != 0) {
+                            Navigator.pop(context, selectedSubChallenges);
+                          }
+                        },
+                      );
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
     );
