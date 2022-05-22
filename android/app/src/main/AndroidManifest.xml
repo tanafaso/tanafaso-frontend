@@ -13,6 +13,8 @@
   <application
     android:icon="@mipmap/ic_launcher"
     android:label="تنافسوا"
+    android:allowBackup="false"
+    android:fullBackupContent="false"
     android:name="${applicationName}">
 
     <activity
