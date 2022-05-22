@@ -14,12 +14,17 @@ class DoReadingSurahScreen extends StatefulWidget {
 
 class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
   int currentAyah;
+  int startingVerseNumZeroBased;
+  int endingVerseNumZeroBased;
 
   @override
   void initState() {
     super.initState();
 
-    currentAyah = widget.surahSubChallenge.startingVerseNumber;
+    startingVerseNumZeroBased =
+        widget.surahSubChallenge.startingVerseNumber - 1;
+    endingVerseNumZeroBased = widget.surahSubChallenge.endingVerseNumber - 1;
+    currentAyah = startingVerseNumZeroBased;
   }
 
   @override
@@ -50,8 +55,7 @@ class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
                 child: RawMaterialButton(
                   fillColor: Colors.white,
                   onPressed: () {
-                    if (currentAyah ==
-                        widget.surahSubChallenge.endingVerseNumber) {
+                    if (currentAyah == endingVerseNumZeroBased) {
                       Navigator.pop(context);
                     }
                     setState(() {
@@ -67,14 +71,11 @@ class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
                             minHeight: 10,
                             color: Theme.of(context).colorScheme.primary,
                             backgroundColor: Colors.white,
-                            value: (currentAyah -
-                                    widget
-                                        .surahSubChallenge.startingVerseNumber +
-                                    1) /
-                                (widget.surahSubChallenge.endingVerseNumber -
-                                    widget
-                                        .surahSubChallenge.startingVerseNumber +
-                                    1),
+                            value:
+                                (currentAyah - startingVerseNumZeroBased + 1) /
+                                    (endingVerseNumZeroBased -
+                                        startingVerseNumZeroBased +
+                                        1),
                           ),
                           Flexible(
                             child: Center(
@@ -109,8 +110,7 @@ class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
                 children: [
                   Expanded(
                     child: Visibility(
-                      visible: currentAyah !=
-                          widget.surahSubChallenge.startingVerseNumber,
+                      visible: currentAyah != startingVerseNumZeroBased,
                       child: RawMaterialButton(
                           fillColor: Colors.white,
                           onPressed: () {
@@ -126,8 +126,7 @@ class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
                     child: RawMaterialButton(
                       fillColor: Colors.white,
                       onPressed: () {
-                        if (currentAyah ==
-                            widget.surahSubChallenge.endingVerseNumber) {
+                        if (currentAyah == endingVerseNumZeroBased) {
                           Navigator.pop(context);
                         }
                         setState(() {
@@ -135,12 +134,10 @@ class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
                         });
                       },
                       child: Icon(
-                        currentAyah ==
-                                widget.surahSubChallenge.endingVerseNumber
+                        currentAyah == endingVerseNumZeroBased
                             ? Icons.done_all_outlined
                             : Icons.arrow_forward_outlined,
-                        color: currentAyah ==
-                                widget.surahSubChallenge.endingVerseNumber
+                        color: currentAyah == endingVerseNumZeroBased
                             ? Colors.green.shade600
                             : Colors.black,
                       ),
