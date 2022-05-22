@@ -20,6 +20,11 @@ class CacheManager {
   static const String CACHE_KEY_NUDGE_NOTIFICATIONS_INTERVAL = "014";
   static const String CACHE_KEY_AZKAR_AND_QURAN_FONT_FAMILY = "015";
   static const String CACHE_KEY_NON_AZKAR_AND_NON_QURAN_FONT_FAMILY = "016";
+  // This key is true if Flutter Secure Storage deleteAll() function is
+  // called once if the device is android. This is to fix the freezing
+  // issue that happens after app update as per
+  // https://github.com/mogol/flutter_secure_storage/issues/53#issuecomment-503297858.
+  static const String CACHE_KEY_CLEARED_SECURE_STORAGE_ANDROID = "017";
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 

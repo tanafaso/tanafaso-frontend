@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/views/core_views/home_page.dart';
 import 'package:azkar/views/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingWidget extends StatefulWidget {
   @override
@@ -14,6 +19,8 @@ class _LandingWidgetState extends State<LandingWidget> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await clearSecureStorageOnce();
+
       bool isSignedIn =
           await ServiceProvider.secureStorageService.userSignedIn();
       if (mounted) {
@@ -46,5 +53,20 @@ class _LandingWidgetState extends State<LandingWidget> {
         ],
       ),
     );
+  }
+
+  // Fixes the freezing issue that happens on app updates with the
+  // solution mentioned in: https://github.com/mogol/flutter_secure_storage/issues/53.
+  Future<void> clearSecureStorageOnce() async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    if (Platform.isAndroid &&
+        !prefs.containsKey(
+            CacheManager.CACHE_KEY_CLEARED_SECURE_STORAGE_ANDROID)) {
+      final _storage = FlutterSecureStorage();
+      await _storage.deleteAll();
+      prefs.setBool(
+          CacheManager.CACHE_KEY_CLEARED_SECURE_STORAGE_ANDROID, true);
+    }
+    return Future.value();
   }
 }

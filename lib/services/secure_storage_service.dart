@@ -82,7 +82,12 @@ class SecureStorageService {
 
   Future<bool> userSignedIn() async {
     final _storage = FlutterSecureStorage();
-    String token = await _storage.read(key: JWT_TOKEN_STORAGE_KEY);
+    String token;
+    try {
+      token = await _storage.read(key: JWT_TOKEN_STORAGE_KEY);
+    } catch (e) {
+      return false;
+    }
     return (token?.length ?? 0) != 0;
   }
 }
