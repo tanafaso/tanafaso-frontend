@@ -48,10 +48,13 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
   bool _finishedConfetti;
   bool _friendsTileExpanded;
 
+  bool _updatedOnFinish;
+
   @override
   void initState() {
     super.initState();
 
+    _updatedOnFinish = false;
     WidgetsBinding.instance.addObserver(this);
     _finishedConfetti = false;
     _friendsTileExpanded = true;
@@ -226,7 +229,6 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                   onFinishedConfetti();
                 }
               });
-
               confettiControler.play();
             }
           },
@@ -257,10 +259,16 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
       await DoChallengeUtils.showFriendsScoreDialog(
           context, widget.friendshipScores, widget.challengedUsersIds);
     }
+    setState(() {
+      _updatedOnFinish = true;
+    });
     Navigator.of(context).pop();
   }
 
   updateAzkarChallenge() async {
+    if (_updatedOnFinish) {
+      return;
+    }
     try {
       await ServiceProvider.challengesService
           .updateAzkarChallenge(widget.challenge);
@@ -271,14 +279,18 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
 
   @override
   void deactivate() {
-    updateAzkarChallenge();
+    if (!_updatedOnFinish) {
+      updateAzkarChallenge();
+    }
     super.deactivate();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    updateAzkarChallenge();
+    if (!_updatedOnFinish) {
+      updateAzkarChallenge();
+    }
     confettiControler.dispose();
     super.dispose();
   }
