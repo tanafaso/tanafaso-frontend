@@ -10,7 +10,6 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
-import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
 import 'package:confetti/confetti.dart';
@@ -18,7 +17,6 @@ import 'package:flutter/material.dart';
 
 class DoMeaningChallengeScreen extends StatefulWidget {
   final MeaningChallenge challenge;
-  final ChallengeChangedCallback challengeChangedCallback;
   final Group group;
 
   // Note that some of the challenged users may not be friends.
@@ -32,7 +30,6 @@ class DoMeaningChallengeScreen extends StatefulWidget {
     @required this.group,
     @required this.challengedUsersIds,
     @required this.challengedUsersFullNames,
-    @required this.challengeChangedCallback,
     @required this.friendshipScores,
   });
 

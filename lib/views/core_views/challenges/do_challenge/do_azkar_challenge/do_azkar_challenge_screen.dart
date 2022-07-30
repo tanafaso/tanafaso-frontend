@@ -11,7 +11,6 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
-import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_azkar_challenge/do_azkar_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
@@ -20,7 +19,6 @@ import 'package:flutter/material.dart';
 
 class DoAzkarChallengeScreen extends StatefulWidget {
   final AzkarChallenge challenge;
-  final ChallengeChangedCallback challengeChangedCallback;
   final Group group;
 
   // Note that some of the challenged users may not be friends.
@@ -34,7 +32,6 @@ class DoAzkarChallengeScreen extends StatefulWidget {
     @required this.group,
     @required this.challengedUsersIds,
     @required this.challengedUsersFullNames,
-    @required this.challengeChangedCallback,
     @required this.friendshipScores,
   });
 
@@ -219,10 +216,8 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
               });
             }
 
-            widget.challengeChangedCallback(widget.challenge);
             if (widget.challenge.done()) {
               updateAzkarChallenge();
-
               confettiControler.addListener(() {
                 if (confettiControler.state ==
                     ConfettiControllerState.stopped) {
@@ -259,9 +254,6 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
       await DoChallengeUtils.showFriendsScoreDialog(
           context, widget.friendshipScores, widget.challengedUsersIds);
     }
-    setState(() {
-      _updatedOnFinish = true;
-    });
     Navigator.of(context).pop();
   }
 
@@ -269,6 +261,9 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
     if (_updatedOnFinish) {
       return;
     }
+    setState(() {
+      _updatedOnFinish = true;
+    });
     try {
       await ServiceProvider.challengesService
           .updateAzkarChallenge(widget.challenge);
@@ -279,18 +274,14 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
 
   @override
   void deactivate() {
-    if (!_updatedOnFinish) {
-      updateAzkarChallenge();
-    }
+    updateAzkarChallenge();
     super.deactivate();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    if (!_updatedOnFinish) {
-      updateAzkarChallenge();
-    }
+    updateAzkarChallenge();
     confettiControler.dispose();
     super.dispose();
   }

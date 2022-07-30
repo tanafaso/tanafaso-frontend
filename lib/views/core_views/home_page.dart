@@ -95,7 +95,6 @@ class _HomePageState extends State<HomePage>
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
-      print('in home page');
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification?.android;
       if (notification != null && android != null) {

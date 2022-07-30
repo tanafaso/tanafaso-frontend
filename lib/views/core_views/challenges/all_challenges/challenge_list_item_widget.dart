@@ -10,6 +10,7 @@ import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/features.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
+import 'package:azkar/views/core_views/challenges/all_challenges/all_challenges_widget.dart';
 import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_item_loading_widget.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_azkar_challenge_screen.dart';
 import 'package:azkar/views/core_views/challenges/create_challenge/create_meaning_challenge_screen.dart';
@@ -24,24 +25,22 @@ import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-typedef ChallengeChangedCallback = void Function(AzkarChallenge newChallenge);
-
 class ChallengeListItemWidget extends StatefulWidget {
   final Challenge challenge;
   final Group group;
   final bool showName;
-  final ChallengeChangedCallback challengeChangedCallback;
   final bool firstChallengeInList;
   final List<Friend> friendshipScores;
+  final ReloadAllChallengesWidget reloadAllChallengesWidget;
 
   ChallengeListItemWidget({
     Key key,
     this.challenge,
     @required this.group,
     this.showName = true,
-    @required this.challengeChangedCallback,
     this.firstChallengeInList = false,
     @required this.friendshipScores,
+    this.reloadAllChallengesWidget,
   }) : super(key: key);
 
   @override
@@ -358,7 +357,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
     );
   }
 
-  void onAzkarChallengePressed() async {
+  Future<void> onAzkarChallengePressed() async {
     AzkarChallenge challenge;
     try {
       challenge = await ServiceProvider.challengesService
@@ -367,74 +366,72 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       SnackBarUtils.showSnackBar(context,
           '${AppLocalizations.of(context).error}: ${e.errorStatus.errorMessage}');
     }
-    Navigator.of(context).push(MaterialPageRoute(
+    await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => DoAzkarChallengeScreen(
-            challenge: challenge,
-            group: widget.group,
-            challengedUsersIds: _challengedUsersIds,
-            challengedUsersFullNames: _challengedUsersFullNames,
-            friendshipScores: widget.friendshipScores,
-            challengeChangedCallback: (changedChallenge) {
-              widget.challengeChangedCallback(changedChallenge);
-            })));
+              challenge: challenge,
+              group: widget.group,
+              challengedUsersIds: _challengedUsersIds,
+              challengedUsersFullNames: _challengedUsersFullNames,
+              friendshipScores: widget.friendshipScores,
+            )));
+    return Future.value();
   }
 
-  void onMeaningChallengePressed() {
-    Navigator.of(context).push(MaterialPageRoute(
+  Future<void> onMeaningChallengePressed() async {
+    await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => DoMeaningChallengeScreen(
-            challenge: widget.challenge.meaningChallenge,
-            group: widget.group,
-            challengedUsersIds: _challengedUsersIds,
-            challengedUsersFullNames: _challengedUsersFullNames,
-            friendshipScores: widget.friendshipScores,
-            challengeChangedCallback: (changedChallenge) {
-              widget.challengeChangedCallback(changedChallenge);
-            })));
+              challenge: widget.challenge.meaningChallenge,
+              group: widget.group,
+              challengedUsersIds: _challengedUsersIds,
+              challengedUsersFullNames: _challengedUsersFullNames,
+              friendshipScores: widget.friendshipScores,
+            )));
+    return Future.value();
   }
 
-  void onReadingChallengePressed() {
-    Navigator.of(context).push(MaterialPageRoute(
+  Future<void> onReadingChallengePressed() async {
+    await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => DoReadingQuranChallengeScreen(
-            challenge: widget.challenge.readingQuranChallenge,
-            group: widget.group,
-            challengedUsersIds: _challengedUsersIds,
-            challengedUsersFullNames: _challengedUsersFullNames,
-            friendshipScores: widget.friendshipScores,
-            challengeChangedCallback: (changedChallenge) {
-              widget.challengeChangedCallback(changedChallenge);
-            })));
+              challenge: widget.challenge.readingQuranChallenge,
+              group: widget.group,
+              challengedUsersIds: _challengedUsersIds,
+              challengedUsersFullNames: _challengedUsersFullNames,
+              friendshipScores: widget.friendshipScores,
+            )));
+    return Future.value();
   }
 
-  void onMemorizationChallengePressed() {
-    Navigator.of(context).push(MaterialPageRoute(
+  Future<void> onMemorizationChallengePressed() async {
+    await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => DoMemorizationChallengeScreen(
-            challenge: widget.challenge.memorizationChallenge,
-            group: widget.group,
-            challengedUsersIds: _challengedUsersIds,
-            challengedUsersFullNames: _challengedUsersFullNames,
-            friendshipScores: widget.friendshipScores,
-            challengeChangedCallback: (changedChallenge) {
-              widget.challengeChangedCallback(changedChallenge);
-            })));
+              challenge: widget.challenge.memorizationChallenge,
+              group: widget.group,
+              challengedUsersIds: _challengedUsersIds,
+              challengedUsersFullNames: _challengedUsersFullNames,
+              friendshipScores: widget.friendshipScores,
+            )));
+    return Future.value();
   }
 
-  void onChallengePressed() {
+  void onChallengePressed() async {
     switch (widget.challenge.challengeType) {
       case ChallengeType.AZKAR:
-        onAzkarChallengePressed();
-        return;
+        await onAzkarChallengePressed();
+        break;
       case ChallengeType.MEANING:
-        onMeaningChallengePressed();
-        return;
+        await onMeaningChallengePressed();
+        break;
       case ChallengeType.READING_QURAN:
-        onReadingChallengePressed();
-        return;
+        await onReadingChallengePressed();
+        break;
       case ChallengeType.MEMORIZATION:
-        onMemorizationChallengePressed();
-        return;
+        await onMemorizationChallengePressed();
+        break;
       case ChallengeType.OTHER:
-        return;
+        break;
     }
+    setState(() {});
+    this.widget.reloadAllChallengesWidget();
   }
 
   void onCopyAzkarChallenge() async {

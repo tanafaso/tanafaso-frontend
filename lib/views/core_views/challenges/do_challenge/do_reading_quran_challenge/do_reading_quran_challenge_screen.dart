@@ -12,7 +12,6 @@ import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
-import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_reading_quran_challenge/do_reading_surah_screen.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
@@ -23,7 +22,6 @@ import 'package:progress_state_button/progress_button.dart';
 
 class DoReadingQuranChallengeScreen extends StatefulWidget {
   final ReadingQuranChallenge challenge;
-  final ChallengeChangedCallback challengeChangedCallback;
   final Group group;
 
   // Note that some of the challenged users may not be friends.
@@ -37,7 +35,6 @@ class DoReadingQuranChallengeScreen extends StatefulWidget {
     @required this.group,
     @required this.challengedUsersIds,
     @required this.challengedUsersFullNames,
-    @required this.challengeChangedCallback,
     @required this.friendshipScores,
   });
 
