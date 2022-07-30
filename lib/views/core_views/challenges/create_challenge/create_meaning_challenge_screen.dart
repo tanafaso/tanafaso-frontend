@@ -356,8 +356,6 @@ class _CreateMeaningChallengeScreenState
     }
 
     try {
-      print(DateTime.now().millisecondsSinceEpoch ~/ 1000 +
-          Duration.secondsPerHour * _expiresAfterHoursNum);
       await ServiceProvider.challengesService
           .addMeaningChallenge(AddMeaningChallengeRequestBody(
         friendsIds: _selectedFriends.map((friend) => friend.userId).toList(),

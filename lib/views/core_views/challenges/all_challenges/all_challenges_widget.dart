@@ -9,6 +9,8 @@ import 'package:azkar/views/core_views/challenges/all_challenges/challenge_list_
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 
+typedef ReloadAllChallengesWidget = void Function();
+
 class AllChallengesWidget extends StatefulWidget {
   @override
   _AllChallengesWidgetState createState() => _AllChallengesWidgetState();
@@ -38,7 +40,6 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
             if (snapshot.connectionState == ConnectionState.done) {
               return getChallengesListWidget(challenges, groups, friends);
             } else if (snapshot.hasError) {
-              print(snapshot.error);
               children = <Widget>[
                 Icon(
                   Icons.error_outline,
@@ -102,11 +103,11 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
               challenge: challenges[index],
               group: groups.firstWhere(
                   (group) => group.id == challenges[index].getGroupId()),
-              challengeChangedCallback: (_) {
-                setState(() {});
-              },
               firstChallengeInList: index == 0,
               friendshipScores: friendshipScores,
+              reloadAllChallengesWidget: () {
+                setState(() {});
+              },
             );
           },
         ),

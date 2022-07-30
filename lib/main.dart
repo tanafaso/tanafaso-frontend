@@ -18,7 +18,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print('in main');
   RemoteNotification notification = message.notification;
   AndroidNotification android = message.notification?.android;
   if (notification != null && android != null) {
@@ -123,8 +122,6 @@ class _MyAppState extends State<MyApp> {
             }
             return _landingWidget;
           } else if (snapshot.hasError) {
-            print('حدث خطأ أثناء إعداد هذا الجهاز لتلقي الإخطارات');
-
             if (_landingWidget == null) {
               _landingWidget = getMaterialAppWithBody(LandingWidget());
             }

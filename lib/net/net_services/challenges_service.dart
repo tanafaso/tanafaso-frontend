@@ -22,8 +22,8 @@ import 'package:azkar/net/api_interface/challenges/responses/get_azkar_challenge
 import 'package:azkar/net/api_interface/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/get_finished_challenges_count_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/update_azkar_challenge_response.dart';
-import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/net/endpoints.dart';
+import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,6 +31,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ChallengesService {
   Future<void> addGroupChallenge(
       AddAzkarChallengeInGroupRequest requestBody) async {
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+
     http.Response httpResponse = await ApiCaller.post(
         route: Endpoint(endpointRoute: EndpointRoute.ADD_GROUP_CHALLENGE),
         requestBody: requestBody);
@@ -40,12 +42,12 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
-
-    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<void> addAzkarChallenge(
       AddAzkarChallengeRequestBody requestBody) async {
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+
     http.Response httpResponse = await ApiCaller.post(
         route: Endpoint(endpointRoute: EndpointRoute.ADD_AZKAR_CHALLENGE),
         requestBody: requestBody);
@@ -55,12 +57,12 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
-
-    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<void> addMeaningChallenge(
       AddMeaningChallengeRequestBody requestBody) async {
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+
     http.Response httpResponse = await ApiCaller.post(
         route: Endpoint(endpointRoute: EndpointRoute.ADD_MEANING_CHALLENGE),
         requestBody: requestBody);
@@ -70,12 +72,12 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
-
-    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<void> addReadingQuranChallenge(
       AddReadingQuranChallengeRequestBody requestBody) async {
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+
     http.Response httpResponse = await ApiCaller.post(
         route:
             Endpoint(endpointRoute: EndpointRoute.ADD_READING_QURAN_CHALLENGE),
@@ -86,12 +88,12 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
-
-    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<void> addMemorizationChallenge(
       AddMemorizationChallengeRequestBody requestBody) async {
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+
     http.Response httpResponse = await ApiCaller.post(
         route:
             Endpoint(endpointRoute: EndpointRoute.ADD_MEMORIZATION_CHALLENGE),
@@ -102,11 +104,11 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
-
-    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<void> finishMeaningChallenge(String id) async {
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+
     http.Response httpResponse = await ApiCaller.put(
         route: Endpoint(
             endpointRoute: EndpointRoute.FINISH_MEANING_CHALLENGE,
@@ -117,11 +119,11 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
-
-    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<void> finishReadingQuranChallenge(String id) async {
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+
     http.Response httpResponse = await ApiCaller.put(
         route: Endpoint(
             endpointRoute: EndpointRoute.FINISH_READING_QURAN_CHALLENGE,
@@ -132,8 +134,6 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
-
-    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<List<Challenge>> getAllChallenges() async {
@@ -171,6 +171,8 @@ class ChallengesService {
   }
 
   Future<void> deleteChallenge(String challengeId) async {
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+
     http.Response httpResponse = await ApiCaller.delete(
         route: Endpoint(
             endpointRoute: EndpointRoute.DELETE_CHALLENGE,
@@ -180,8 +182,6 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
-
-    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<AzkarChallenge> getOriginalChallenge(String challengeId) async {
@@ -205,6 +205,8 @@ class ChallengesService {
   }
 
   Future<void> updateAzkarChallenge(AzkarChallenge challenge) async {
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+
     UpdateAzkarChallengeRequestBody requestBody =
         UpdateAzkarChallengeRequestBody(challenge: challenge);
     http.Response httpResponse = await ApiCaller.put(
@@ -217,12 +219,12 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
-
-    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<void> finishMemorizationChallengeQuestion(
       String challengeId, int questionId) async {
+    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
+
     http.Response httpResponse = await ApiCaller.put(
       route: Endpoint(
           endpointRoute: EndpointRoute.FINISH_MEMORIZATION_CHALLENGE_QUESTION,
@@ -236,8 +238,6 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
-
-    ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
   }
 
   Future<int> getFinishedChallengesCount() async {
