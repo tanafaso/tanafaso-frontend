@@ -14,6 +14,7 @@ import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_azkar_challenge/do_azkar_challenge_list_item_widget.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/do_challenge_utils.dart';
 import 'package:azkar/views/core_views/challenges/do_challenge/friends_progress_widget.dart';
+import 'package:collection/collection.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 
@@ -44,20 +45,17 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
   ConfettiController confettiControler;
   bool _finishedConfetti;
   bool _friendsTileExpanded;
-
-  bool _updatedOnFinish;
+  List<int> _lastUpdatedRepetitionsList;
 
   @override
   void initState() {
     super.initState();
 
-    _updatedOnFinish = false;
     WidgetsBinding.instance.addObserver(this);
     _finishedConfetti = false;
     _friendsTileExpanded = true;
-    setState(() {
-      initConfettiController();
-    });
+    updateLastUpdatedRepetitions();
+    initConfettiController();
   }
 
   void initConfettiController() {
@@ -258,17 +256,15 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
   }
 
   updateAzkarChallenge() async {
-    if (_updatedOnFinish) {
-      return;
-    }
-    setState(() {
-      _updatedOnFinish = true;
-    });
-    try {
-      await ServiceProvider.challengesService
-          .updateAzkarChallenge(widget.challenge);
-    } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
+    if (!ListEquality().equals(_lastUpdatedRepetitionsList,
+        widget.challenge.subChallenges.map((e) => e.repetitions).toList())) {
+      updateLastUpdatedRepetitions();
+      try {
+        await ServiceProvider.challengesService
+            .updateAzkarChallenge(widget.challenge);
+      } on ApiException catch (e) {
+        SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
+      }
     }
   }
 
@@ -291,5 +287,12 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
     super.didChangeAppLifecycleState(state);
 
     updateAzkarChallenge();
+  }
+
+  updateLastUpdatedRepetitions() {
+    _lastUpdatedRepetitionsList = [];
+    for (SubChallenge subChallenge in widget.challenge.subChallenges) {
+      _lastUpdatedRepetitionsList.add(subChallenge.repetitions);
+    }
   }
 }

@@ -430,7 +430,6 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       case ChallengeType.OTHER:
         break;
     }
-    setState(() {});
     this.widget.reloadAllChallengesWidget();
   }
 
