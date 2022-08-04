@@ -12,7 +12,7 @@ description: A new Flutter project.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.13.0+124
+version: 1.13.2+126
 
 environment:
   sdk: '>=2.10.0 <3.0.0'
@@ -61,6 +61,7 @@ dependencies:
   device_info_plus: ^3.2.3
   url_launcher: ^6.1.0
   synchronized: ^3.0.0+2
+  firebase_analytics: ^9.3.0
 
 dev_dependencies:
   flutter_test:
