@@ -4,6 +4,7 @@
 
 import 'dart:io';
 
+import 'package:azkar/firebase_options.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/quran_utils.dart';
@@ -69,7 +70,12 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> asyncInitialization(BuildContext context) async {
     if (_firebaseApp == null) {
-      _firebaseApp = await Firebase.initializeApp();
+      try {
+        _firebaseApp = await Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform);
+      } catch (e) {
+        print(e);
+      }
       await FirebaseMessaging.instance
           .setForegroundNotificationPresentationOptions(
         alert: false,
