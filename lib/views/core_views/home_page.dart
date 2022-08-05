@@ -95,25 +95,6 @@ class _HomePageState extends State<HomePage>
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
-      if (notification != null && android != null) {
-        var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-        flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
-              "challenges_and_friend_requests",
-              "تفاعلات الأصدقاء",
-              channelDescription:
-                  "اخطارات بخصوص تحديات الاصدقاء وطلبات الصداقه",
-              icon: 'notification',
-            ),
-          ),
-        );
-      }
     });
   }
 

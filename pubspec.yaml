@@ -34,8 +34,8 @@ dependencies:
   sprintf: "^4.0.0"
   flutter_localizations:
     sdk: flutter
-  firebase_core: ^1.15.0
-  firebase_messaging: ^11.2.15
+  firebase_core: ^1.20.0
+  firebase_messaging: ^12.0.1
   shared_preferences: ^2.0.5
   optional: ^5.0.0+1
   confetti: ^0.5.5
@@ -55,7 +55,7 @@ dependencies:
   firebase_auth: ^3.1.2
   googleapis: ^5.0.1
   flutter_signin_button: ^2.0.0
-  flutter_local_notifications: ^9.0.0
+  flutter_local_notifications: ^9.7.0
   numberpicker: ^2.1.1
   the_apple_sign_in: ^1.1.1
   device_info_plus: ^3.2.3
