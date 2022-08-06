@@ -4,8 +4,8 @@ import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/features.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
-import 'package:azkar/views/core_views/home/home_main_screen.dart';
 import 'package:azkar/views/core_views/friends/friends_main_screen.dart';
+import 'package:azkar/views/core_views/home/home_main_screen.dart';
 import 'package:azkar/views/core_views/profile/profile_main_screen.dart';
 import 'package:azkar/views/core_views/settings/settings_main_screen.dart';
 import 'package:azkar/views/core_views/support/support_screen.dart';
@@ -13,7 +13,6 @@ import 'package:clear_all_notifications/clear_all_notifications.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Topic {

@@ -28,9 +28,11 @@ class UserProgressLoadingWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Flexible(child: LineWidget(
-                    width: MediaQuery.of(context).size.width / 3,
-                  ),),
+                  Flexible(
+                    child: LineWidget(
+                      width: MediaQuery.of(context).size.width / 3,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -50,9 +52,11 @@ class UserProgressLoadingWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Flexible(child: LineWidget(
-                    width: MediaQuery.of(context).size.width / 3,
-                  ),),
+                  Flexible(
+                    child: LineWidget(
+                      width: MediaQuery.of(context).size.width / 3,
+                    ),
+                  ),
                 ],
               ),
             ),

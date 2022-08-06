@@ -37,7 +37,7 @@ class _UserProgressWidgetState extends State<UserProgressWidget>
   @override
   void initState() {
     animationController =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
 
     super.initState();
   }

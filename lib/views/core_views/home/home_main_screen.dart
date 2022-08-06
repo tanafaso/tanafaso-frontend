@@ -12,6 +12,7 @@ class HomeMainScreen extends StatefulWidget {
 }
 
 typedef ReloadHomeMainScreenCallback = void Function();
+
 class _HomeMainScreenState extends State<HomeMainScreen>
     with TickerProviderStateMixin {
   @override
@@ -42,9 +43,11 @@ class _HomeMainScreenState extends State<HomeMainScreen>
             ),
             Flexible(
               flex: 5,
-              child: AllChallengesWidget(reloadHomeMainScreenCallback: () {
-                setState(() {});
-              },),
+              child: AllChallengesWidget(
+                reloadHomeMainScreenCallback: () {
+                  setState(() {});
+                },
+              ),
             ),
           ],
         )),

@@ -1,8 +1,5 @@
 import 'package:azkar/services/font_service.dart';
 import 'package:azkar/services/service_provider.dart';
-import 'package:azkar/utils/app_localizations.dart';
-import 'package:azkar/utils/snack_bar_utils.dart';
-import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
