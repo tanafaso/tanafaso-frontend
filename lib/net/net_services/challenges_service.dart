@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/models/challenge.dart';
@@ -119,6 +120,8 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
+
+    await _updateStreakDataAfterFinishingChallenge();
   }
 
   Future<void> finishReadingQuranChallenge(String id) async {
@@ -134,6 +137,8 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
+
+    await _updateStreakDataAfterFinishingChallenge();
   }
 
   Future<List<Challenge>> getAllChallenges() async {
@@ -219,6 +224,10 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
+
+    if (challenge.done()) {
+      await _updateStreakDataAfterFinishingChallenge();
+    }
   }
 
   Future<void> finishMemorizationChallengeQuestion(
@@ -238,6 +247,8 @@ class ChallengesService {
     if (response.hasError()) {
       throw new ApiException(response.error);
     }
+
+    await _updateStreakDataAfterFinishingChallenge();
   }
 
   Future<int> getFinishedChallengesCount() async {
@@ -256,5 +267,66 @@ class ChallengesService {
     }
     prefs.setInt(key, response.finishedChallengesCount);
     return response.finishedChallengesCount;
+  }
+
+  Future<int> getConsecutiveDaysStreak() async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+
+    String lastFinishedDateKey =
+        CacheManager.CACHE_KEY_LAST_FINISHED_CHALLENGE_DATE;
+    String daysStreaksKey =
+        CacheManager.CACHE_KEY_LASTLY_INCREMENTED_CONSECUTIVE_DAYS_STREAK;
+    if (!prefs.containsKey(daysStreaksKey) ||
+        !prefs.containsKey(lastFinishedDateKey)) {
+      // Let's never show 0 to the user :)
+      return 1;
+    }
+
+    int daysDifference = DateTime.now()
+        .difference(DateTime.fromMillisecondsSinceEpoch(
+            prefs.getInt(lastFinishedDateKey)))
+        .inDays;
+    int daysStreakWas = prefs.getInt(daysStreaksKey);
+    return max(1, daysStreakWas - max(0, daysDifference - 1));
+  }
+
+  Future<void> _updateStreakDataAfterFinishingChallenge() async {
+    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+    String lastFinishedDateKey =
+        CacheManager.CACHE_KEY_LAST_FINISHED_CHALLENGE_DATE;
+    String daysStreaksKey =
+        CacheManager.CACHE_KEY_LASTLY_INCREMENTED_CONSECUTIVE_DAYS_STREAK;
+    DateTime now = DateTime.now();
+
+    if (!prefs.containsKey(lastFinishedDateKey)) {
+      await prefs.setInt(lastFinishedDateKey, now.millisecondsSinceEpoch);
+      // 2 because the least number we show users is 1 and now the user has
+      // finished one challenge so they deserve more than 1.
+      await prefs.setInt(daysStreaksKey, 2);
+      return;
+    }
+
+    DateTime lastFinishedChallengeDate =
+        DateTime.fromMillisecondsSinceEpoch(prefs.getInt(lastFinishedDateKey));
+    bool sameDay = _isSameDay(lastFinishedChallengeDate, now);
+
+    if (!sameDay) {
+      int daysDifference = DateTime.now()
+          .difference(DateTime.fromMillisecondsSinceEpoch(
+              prefs.getInt(lastFinishedDateKey)))
+          .inDays;
+      int daysStreakWas = prefs.getInt(daysStreaksKey);
+      await prefs.setInt(daysStreaksKey,
+          max(2, 1 + daysStreakWas - max(0, daysDifference - 1)));
+    }
+
+    await prefs.setInt(
+        lastFinishedDateKey, DateTime.now().millisecondsSinceEpoch);
+  }
+
+  bool _isSameDay(DateTime time1, DateTime time2) {
+    return time1.day == time2.day &&
+        time1.month == time2.month &&
+        time1.year == time2.year;
   }
 }

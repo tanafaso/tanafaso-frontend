@@ -7,7 +7,7 @@ import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/auth/login/login_screen.dart';
 import 'package:azkar/views/auth/signup/signup_main_screen.dart';
-import 'package:azkar/views/core_views/home_page.dart';
+import 'package:azkar/views/core_views/layout_organizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -35,7 +35,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
           await ServiceProvider.secureStorageService.userSignedIn();
       if (isSignedIn) {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => HomePage()), (_) => false);
+            MaterialPageRoute(builder: (context) => LayoutOrganizer()), (_) => false);
       }
     });
   }
@@ -297,7 +297,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
     }
 
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => new HomePage()));
+        context, MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
   }
 
   loginWithGoogle(BuildContext context) async {
@@ -325,7 +325,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
     }
 
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => new HomePage()));
+        context, MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
   }
 
   void loginWithApple(BuildContext context) async {
@@ -342,7 +342,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
     }
 
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => new HomePage()));
+        context, MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
   }
 
   @override

@@ -303,15 +303,4 @@ class _SettingsMainScreenState extends State<SettingsMainScreen> {
       ),
     );
   }
-
-  performLogout(BuildContext context) async {
-    await ServiceProvider.secureStorageService.clear();
-    await ServiceProvider.cacheManager.clearPreferences();
-    SnackBarUtils.showSnackBar(
-        context, AppLocalizations.of(context).youHaveLoggedOutSuccessfully);
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => new AuthMainScreen()),
-        (_) => false);
-  }
 }

@@ -1,3 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:azkar/services/service_provider.dart';
+import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/snack_bar_utils.dart';
+import 'package:azkar/views/auth/auth_main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -48,38 +53,6 @@ class ProfileLoadingWidget extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 8.0, right: 8, top: 20, bottom: 8),
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.email,
-                        size: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: LineWidget(
-                          width: MediaQuery.of(context).size.width * 2 / 3,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(padding: EdgeInsets.all(30)),
-              Card(
-                elevation: 0,
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 300,
-                  width: 300,
-                  child: Container(),
-                ),
               ),
             ],
           ),
