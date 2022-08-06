@@ -9,45 +9,35 @@ class SecureStorageService {
   static const String APPLE_ID_FAMILY_NAME = 'appleIdFamilyName';
 
   Future<String> getFacebookToken() async {
-    final _storage = FlutterSecureStorage();
-    String facebookToken = await _storage.read(
-        key: FACEBOOK_TOKEN_STORAGE_KEY, aOptions: _getAndroidOptions());
-    if (facebookToken == null) {
-      facebookToken = await _storage.read(key: FACEBOOK_TOKEN_STORAGE_KEY);
-      // Migrate if exists
-      if (facebookToken != null) {
-        setFacebookToken(facebookToken);
-      }
-    }
-    return facebookToken;
+    return await _readKey(FACEBOOK_TOKEN_STORAGE_KEY);
   }
 
   Future<String> getFacebookUserId() async {
-    final _storage = FlutterSecureStorage();
-    String facebookUserId = await _storage.read(
-        key: FACEBOOK_USER_ID_STORAGE_KEY, aOptions: _getAndroidOptions());
-    if (facebookUserId == null) {
-      facebookUserId = await _storage.read(key: FACEBOOK_USER_ID_STORAGE_KEY);
-      // Migrate if exists
-      if (facebookUserId != null) {
-        setFacebookUserId(facebookUserId);
-      }
-    }
-    return facebookUserId;
+    return await _readKey(FACEBOOK_USER_ID_STORAGE_KEY);
   }
 
   Future<String> getJwtToken() async {
+    return await _readKey(JWT_TOKEN_STORAGE_KEY);
+  }
+
+  Future<String> _readKey(String key) async {
     final _storage = FlutterSecureStorage();
-    String jwtToken = await _storage.read(
-        key: JWT_TOKEN_STORAGE_KEY, aOptions: _getAndroidOptions());
-    if (jwtToken == null) {
-      jwtToken = await _storage.read(key: JWT_TOKEN_STORAGE_KEY);
-      // Migrate if exists
-      if (jwtToken != null) {
-        setJwtToken(jwtToken);
-      }
+    bool keyInEncryptedStorage =
+        await _storage.containsKey(key: key, aOptions: _getAndroidOptions());
+    if (keyInEncryptedStorage) {
+      return await _storage.read(key: key, aOptions: _getAndroidOptions());
     }
-    return jwtToken;
+
+    bool keyInNonEncryptedStorage = await _storage.containsKey(key: key);
+    if (keyInNonEncryptedStorage) {
+      // Migrate to encrypted storage
+      String value = await _storage.read(key: key);
+      await _storage.write(
+          key: key, value: value, aOptions: _getAndroidOptions());
+      return value;
+    }
+
+    return null;
   }
 
   Future<void> setFacebookToken(String facebookToken) async {
@@ -75,8 +65,8 @@ class SecureStorageService {
   }
 
   AndroidOptions _getAndroidOptions() => const AndroidOptions(
-    encryptedSharedPreferences: true,
-  );
+        encryptedSharedPreferences: true,
+      );
 
   Future<void> setAppleIdEmail(String email) async {
     final _storage = FlutterSecureStorage();
@@ -110,9 +100,25 @@ class SecureStorageService {
 
   Future<void> clear() async {
     final _storage = FlutterSecureStorage();
-    await _storage.delete(key: JWT_TOKEN_STORAGE_KEY);
-    await _storage.delete(key: FACEBOOK_TOKEN_STORAGE_KEY);
-    await _storage.delete(key: FACEBOOK_USER_ID_STORAGE_KEY);
+    if (await _storage.containsKey(key: JWT_TOKEN_STORAGE_KEY))
+      await _storage.delete(key: JWT_TOKEN_STORAGE_KEY);
+    if (await _storage.containsKey(key: FACEBOOK_TOKEN_STORAGE_KEY))
+      await _storage.delete(key: FACEBOOK_TOKEN_STORAGE_KEY);
+    if (await _storage.containsKey(key: FACEBOOK_USER_ID_STORAGE_KEY))
+      await _storage.delete(key: FACEBOOK_USER_ID_STORAGE_KEY);
+
+    if (await _storage.containsKey(
+        key: JWT_TOKEN_STORAGE_KEY, aOptions: _getAndroidOptions()))
+      await _storage.delete(
+          key: JWT_TOKEN_STORAGE_KEY, aOptions: _getAndroidOptions());
+    if (await _storage.containsKey(
+        key: FACEBOOK_TOKEN_STORAGE_KEY, aOptions: _getAndroidOptions()))
+      await _storage.delete(
+          key: FACEBOOK_TOKEN_STORAGE_KEY, aOptions: _getAndroidOptions());
+    if (await _storage.containsKey(
+        key: FACEBOOK_USER_ID_STORAGE_KEY, aOptions: _getAndroidOptions()))
+      await _storage.delete(
+          key: FACEBOOK_USER_ID_STORAGE_KEY, aOptions: _getAndroidOptions());
     // Don't delete apple's email, names as these will only provided the
     // first time the user is trying to sign in: https://developer.apple.com/forums/thread/121496
   }

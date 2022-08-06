@@ -35,7 +35,8 @@ class _AuthMainScreenState extends State<AuthMainScreen>
           await ServiceProvider.secureStorageService.userSignedIn();
       if (isSignedIn) {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => LayoutOrganizer()), (_) => false);
+            MaterialPageRoute(builder: (context) => LayoutOrganizer()),
+            (_) => false);
       }
     });
   }
@@ -296,8 +297,8 @@ class _AuthMainScreenState extends State<AuthMainScreen>
       return;
     }
 
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
   }
 
   loginWithGoogle(BuildContext context) async {
@@ -324,8 +325,8 @@ class _AuthMainScreenState extends State<AuthMainScreen>
       return;
     }
 
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
   }
 
   void loginWithApple(BuildContext context) async {
@@ -341,8 +342,8 @@ class _AuthMainScreenState extends State<AuthMainScreen>
       return;
     }
 
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
   }
 
   @override

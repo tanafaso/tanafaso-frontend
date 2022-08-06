@@ -429,8 +429,8 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
   }
 
   loginWithEmail(EmailLoginRequestBody request) async {
@@ -448,7 +448,9 @@ class _LoginScreenState extends State<LoginScreen> {
       progressButtonState = ButtonState.success;
     });
 
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => LayoutOrganizer()), (_) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LayoutOrganizer()),
+        (_) => false);
   }
 }

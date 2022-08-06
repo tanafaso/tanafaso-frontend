@@ -25,7 +25,8 @@ class CacheManager {
   // issue that happens after app update as per
   // https://github.com/mogol/flutter_secure_storage/issues/53#issuecomment-503297858.
   static const String CACHE_KEY_CLEARED_SECURE_STORAGE_ANDROID = "017";
-  static const String CACHE_KEY_LASTLY_INCREMENTED_CONSECUTIVE_DAYS_STREAK = "018";
+  static const String CACHE_KEY_LASTLY_INCREMENTED_CONSECUTIVE_DAYS_STREAK =
+      "018";
   // Saved in milliseconds since epoch
   static const String CACHE_KEY_LAST_FINISHED_CHALLENGE_DATE = "019";
 
