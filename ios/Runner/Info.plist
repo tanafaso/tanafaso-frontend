@@ -24,6 +24,8 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>FacebookAppID</key>
 	<string>143985681031200</string>
+	<key>FacebookClientToken</key>
+    <string>9d1491d3636dc2ec9dd04e04620f711c</string>
 	<key>FacebookDisplayName</key>
 	<string>تنافسوا</string>
 	<key>LSApplicationQueriesSchemes</key>
