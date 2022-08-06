@@ -10,31 +10,73 @@ class SecureStorageService {
 
   Future<String> getFacebookToken() async {
     final _storage = FlutterSecureStorage();
-    String facebookToken = await _storage.read(key: FACEBOOK_TOKEN_STORAGE_KEY);
+    String facebookToken = await _storage.read(
+        key: FACEBOOK_TOKEN_STORAGE_KEY, aOptions: _getAndroidOptions());
+    if (facebookToken == null) {
+      facebookToken = await _storage.read(key: FACEBOOK_TOKEN_STORAGE_KEY);
+      // Migrate if exists
+      if (facebookToken != null) {
+        setFacebookToken(facebookToken);
+      }
+    }
     return facebookToken;
   }
 
   Future<String> getFacebookUserId() async {
     final _storage = FlutterSecureStorage();
-    String facebookUserId =
-        await _storage.read(key: FACEBOOK_USER_ID_STORAGE_KEY);
+    String facebookUserId = await _storage.read(
+        key: FACEBOOK_USER_ID_STORAGE_KEY, aOptions: _getAndroidOptions());
+    if (facebookUserId == null) {
+      facebookUserId = await _storage.read(key: FACEBOOK_USER_ID_STORAGE_KEY);
+      // Migrate if exists
+      if (facebookUserId != null) {
+        setFacebookUserId(facebookUserId);
+      }
+    }
     return facebookUserId;
   }
 
   Future<String> getJwtToken() async {
     final _storage = FlutterSecureStorage();
-    return await _storage.read(key: JWT_TOKEN_STORAGE_KEY);
+    String jwtToken = await _storage.read(
+        key: JWT_TOKEN_STORAGE_KEY, aOptions: _getAndroidOptions());
+    if (jwtToken == null) {
+      jwtToken = await _storage.read(key: JWT_TOKEN_STORAGE_KEY);
+      // Migrate if exists
+      if (jwtToken != null) {
+        setJwtToken(jwtToken);
+      }
+    }
+    return jwtToken;
   }
 
   Future<void> setFacebookToken(String facebookToken) async {
     final _storage = FlutterSecureStorage();
-    await _storage.write(key: FACEBOOK_TOKEN_STORAGE_KEY, value: facebookToken);
+    await _storage.write(
+        key: FACEBOOK_TOKEN_STORAGE_KEY,
+        value: facebookToken,
+        aOptions: _getAndroidOptions());
   }
 
   Future<void> setFacebookUserId(String userId) async {
     final _storage = FlutterSecureStorage();
-    await _storage.write(key: FACEBOOK_USER_ID_STORAGE_KEY, value: userId);
+    await _storage.write(
+        key: FACEBOOK_USER_ID_STORAGE_KEY,
+        value: userId,
+        aOptions: _getAndroidOptions());
   }
+
+  Future<void> setJwtToken(String jwtToken) async {
+    final _storage = FlutterSecureStorage();
+    await _storage.write(
+        key: JWT_TOKEN_STORAGE_KEY,
+        value: jwtToken,
+        aOptions: _getAndroidOptions());
+  }
+
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(
+    encryptedSharedPreferences: true,
+  );
 
   Future<void> setAppleIdEmail(String email) async {
     final _storage = FlutterSecureStorage();
@@ -66,11 +108,6 @@ class SecureStorageService {
     return await _storage.read(key: APPLE_ID_FAMILY_NAME);
   }
 
-  Future<void> setJwtToken(String jwtToken) async {
-    final _storage = FlutterSecureStorage();
-    await _storage.write(key: JWT_TOKEN_STORAGE_KEY, value: jwtToken);
-  }
-
   Future<void> clear() async {
     final _storage = FlutterSecureStorage();
     await _storage.delete(key: JWT_TOKEN_STORAGE_KEY);
@@ -84,7 +121,8 @@ class SecureStorageService {
     final _storage = FlutterSecureStorage();
     String token;
     try {
-      token = await _storage.read(key: JWT_TOKEN_STORAGE_KEY);
+      token = await _storage.read(
+          key: JWT_TOKEN_STORAGE_KEY, aOptions: _getAndroidOptions());
     } catch (e) {
       return false;
     }

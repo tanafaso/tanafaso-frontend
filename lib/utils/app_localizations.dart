@@ -162,7 +162,7 @@ class AppLocalizations {
       'total points': 'مجموع النقاط',
       'challenge this friend': 'تحدي هذا الصديق',
       'your friend': 'صديقك',
-      'you have finished': 'لقد أنهيت',
+      'you have finished': 'أنهيت',
       'challenges': 'تحديات',
       'username copied successfully': 'تم نسخ اسم المستخدم بنجاح',
       'search for a zekr': 'ابحث عن ذكر',

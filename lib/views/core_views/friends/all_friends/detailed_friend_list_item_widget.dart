@@ -3,7 +3,7 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
-import 'package:azkar/views/core_views/challenges/create_challenge/create_challenge_screen.dart';
+import 'package:azkar/views/core_views/home/create_challenge/create_challenge_screen.dart';
 import 'package:flutter/material.dart';
 
 typedef OnToggleViewCallback = void Function();

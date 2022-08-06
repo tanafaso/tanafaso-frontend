@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/services/service_provider.dart';
-import 'package:azkar/views/core_views/home_page.dart';
+import 'package:azkar/views/core_views/layout_organizer.dart';
 import 'package:azkar/views/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -26,7 +26,7 @@ class _LandingWidgetState extends State<LandingWidget> {
       if (mounted) {
         if (isSignedIn) {
           Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => LayoutOrganizer()),
               (_) => false);
         } else {
           Navigator.of(context).pushAndRemoveUntil(

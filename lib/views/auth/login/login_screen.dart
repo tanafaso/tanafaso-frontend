@@ -7,7 +7,7 @@ import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/auth/login/reset_password_screen.dart';
 import 'package:azkar/views/auth/signup/signup_main_screen.dart';
-import 'package:azkar/views/core_views/home_page.dart';
+import 'package:azkar/views/core_views/layout_organizer.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -403,7 +403,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
+        context, MaterialPageRoute(builder: (context) => LayoutOrganizer()));
   }
 
   loginWithGoogle(BuildContext context) async {
@@ -430,7 +430,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => new HomePage()));
+        context, MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
   }
 
   loginWithEmail(EmailLoginRequestBody request) async {
@@ -449,6 +449,6 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => HomePage()), (_) => false);
+        MaterialPageRoute(builder: (context) => LayoutOrganizer()), (_) => false);
   }
 }

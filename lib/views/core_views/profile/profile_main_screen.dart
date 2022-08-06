@@ -23,15 +23,12 @@ class ProfileMainScreen extends StatefulWidget {
 class _ProfileMainScreenState extends State<ProfileMainScreen> {
   Future<void> _neededData;
   User _user;
-  int _userScore;
   bool isIpad;
 
   Future<void> getNeededData() async {
     isIpad = await _isIpad();
 
     _user = await ServiceProvider.usersService.getCurrentUser();
-    _userScore =
-        await ServiceProvider.challengesService.getFinishedChallengesCount();
   }
 
   @override
@@ -205,53 +202,6 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                 ),
                               ),
                             ],
-                          ),
-                          Padding(padding: EdgeInsets.all(4)),
-                          RawMaterialButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            fillColor: Colors.white,
-                            onPressed: () {},
-                            // elevation: 15,
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 300,
-                              // width: 300,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: AutoSizeText(
-                                      AppLocalizations.of(context)
-                                          .youHaveFinished,
-                                      style: TextStyle(
-                                        fontSize: 40,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                      ArabicUtils.englishToArabic(
-                                          _userScore.toString()),
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 60,
-                                        color: Colors.green,
-                                      )),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: AutoSizeText(
-                                      AppLocalizations.of(context).challenges,
-                                      style: TextStyle(
-                                        fontSize: 40,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           ),
                           Padding(padding: EdgeInsets.all(10)),
                           Container(
