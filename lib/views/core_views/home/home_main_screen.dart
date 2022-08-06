@@ -36,7 +36,7 @@ class _HomeMainScreenState extends State<HomeMainScreen>
         body: SafeArea(
             child: Column(
           children: [
-            Flexible(
+            Expanded(
               flex: 2,
               child: UserProgressWidget(),
             ),
