@@ -19,24 +19,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  RemoteNotification notification = message.notification;
-  AndroidNotification android = message.notification?.android;
-  if (notification != null && android != null) {
-    var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    flutterLocalNotificationsPlugin.show(
-      notification.hashCode,
-      notification.title,
-      notification.body,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          "challenges_and_friend_requests",
-          "تفاعلات الأصدقاء",
-          channelDescription: "اخطارات بخصوص تحديات الاصدقاء وطلبات الصداقه",
-          icon: 'notification',
-        ),
-      ),
-    );
-  }
+  ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
 }
 
 void main() async {
