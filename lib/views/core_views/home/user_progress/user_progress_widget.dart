@@ -37,13 +37,14 @@ class _UserProgressWidgetState extends State<UserProgressWidget>
   @override
   void initState() {
     animationController =
-        AnimationController(duration: const Duration(seconds: 3), vsync: this);
+        AnimationController(duration: const Duration(seconds: 2), vsync: this);
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    animationController.reset();
     return FutureBuilder(
         future: getNeededData(),
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
