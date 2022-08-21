@@ -1,3 +1,5 @@
+import 'package:azkar/services/cache_manager.dart';
+import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/features.dart';
 import 'package:azkar/views/core_views/home/all_challenges/all_challenges_widget.dart';
 import 'package:azkar/views/core_views/home/create_challenge/create_challenge_screen.dart';
@@ -5,6 +7,8 @@ import 'package:azkar/views/core_views/home/user_progress/user_progress_widget.d
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomeMainScreen extends StatefulWidget {
   @override
@@ -19,7 +23,7 @@ class _HomeMainScreenState extends State<HomeMainScreen>
   void initState() {
     super.initState();
 
-    SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
+    SchedulerBinding.instance.addPostFrameCallback((Duration duration) async {
       FeatureDiscovery.discoverFeatures(
         context,
         // Feature ids for every feature that we want to showcase in order.
@@ -28,6 +32,13 @@ class _HomeMainScreenState extends State<HomeMainScreen>
           Features.CLONE_AND_DELETE,
         ],
       );
+
+      SharedPreferences sharedPreferences = await ServiceProvider.cacheManager.getPrefs();
+      if (!sharedPreferences.containsKey(CacheManager.ASKED_FOR_NOTIFICATIONS_PERMISSION)) {
+        await Permission.notification.request();
+
+        await sharedPreferences.setBool(CacheManager.ASKED_FOR_NOTIFICATIONS_PERMISSION, true);
+      }
     });
   }
 

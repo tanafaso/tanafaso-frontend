@@ -65,9 +65,19 @@ class _MyAppState extends State<MyApp> {
         badge: false,
         sound: false,
       );
+
       if (Platform.isIOS) {
-        FirebaseMessaging.instance.requestPermission();
+        await FirebaseMessaging.instance.requestPermission(
+          alert: true,
+          announcement: true,
+          badge: true,
+          carPlay: false,
+          criticalAlert: true,
+          provisional: true,
+          sound: true,
+        );
       }
+
       FirebaseMessaging.onBackgroundMessage(
           _firebaseMessagingBackgroundHandler);
     }
