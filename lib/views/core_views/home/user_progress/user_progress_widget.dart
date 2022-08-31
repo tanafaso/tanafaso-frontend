@@ -77,6 +77,7 @@ class _UserProgressWidgetState extends State<UserProgressWidget>
                             fit: BoxFit.scaleDown,
                             child: Directionality(
                               textDirection: TextDirection.ltr,
+                              // ignore: missing_required_param
                               child: SlideOdometerTransition(
                                 odometerAnimation: consecutiveDaysAnimation,
                                 numberTextStyle: const TextStyle(
@@ -113,6 +114,7 @@ class _UserProgressWidgetState extends State<UserProgressWidget>
                             fit: BoxFit.scaleDown,
                             child: Directionality(
                               textDirection: TextDirection.ltr,
+                              // ignore: missing_required_param
                               child: SlideOdometerTransition(
                                 odometerAnimation: finishedCountAnimation,
                                 numberTextStyle: const TextStyle(

@@ -1,12 +1,7 @@
-import 'dart:io';
-
-import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/views/core_views/layout_organizer.dart';
 import 'package:azkar/views/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingWidget extends StatefulWidget {
   @override

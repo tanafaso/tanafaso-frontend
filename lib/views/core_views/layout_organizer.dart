@@ -99,8 +99,6 @@ class _LayoutOrganizerState extends State<LayoutOrganizer>
 
   @override
   void initState() {
-    super.initState();
-
     _selectedIdx = topicToIndex(widget.initiallySelectedTopicType);
 
     // Clears all active notifications.
@@ -110,20 +108,24 @@ class _LayoutOrganizerState extends State<LayoutOrganizer>
 
     WidgetsBinding.instance.addObserver(this);
 
-    FeatureDiscovery.discoverFeatures(
-      context,
-      // Feature ids for every feature that we want to showcase in order.
-      [
-        Features.CHALLENGES_SCREEN,
-        Features.FRIENDS_SCREEN,
-        Features.PROFILE_SCREEN,
-        Features.LIVE_SUPPORT_SCREEN,
-        Features.SETTING_SCREEN,
-        Features.SABEQ_INTRODUCTION,
-        Features.ADD_FRIEND,
-        Features.SHARE_USERNAME,
-      ],
-    );
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   FeatureDiscovery.discoverFeatures(
+    //     context,
+    //     // Feature ids for every feature that we want to showcase in order.
+    //     [
+    //       Features.CHALLENGES_SCREEN,
+    //       Features.FRIENDS_SCREEN,
+    //       Features.PROFILE_SCREEN,
+    //       Features.LIVE_SUPPORT_SCREEN,
+    //       Features.SETTING_SCREEN,
+    //       Features.SABEQ_INTRODUCTION,
+    //       Features.ADD_FRIEND,
+    //       Features.SHARE_USERNAME,
+    //     ],
+    //   );
+    // });
+
+    super.initState();
   }
 
   @override

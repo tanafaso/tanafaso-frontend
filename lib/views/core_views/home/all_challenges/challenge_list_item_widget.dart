@@ -10,7 +10,6 @@ import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/features.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
-import 'package:azkar/views/core_views/home/all_challenges/all_challenges_widget.dart';
 import 'package:azkar/views/core_views/home/all_challenges/challenge_list_item_loading_widget.dart';
 import 'package:azkar/views/core_views/home/create_challenge/create_azkar_challenge_screen.dart';
 import 'package:azkar/views/core_views/home/create_challenge/create_meaning_challenge_screen.dart';

@@ -30,14 +30,25 @@ class _HomeMainScreenState extends State<HomeMainScreen>
         [
           Features.ADD_CHALLENGE,
           Features.CLONE_AND_DELETE,
+          Features.CHALLENGES_SCREEN,
+          Features.FRIENDS_SCREEN,
+          Features.PROFILE_SCREEN,
+          Features.LIVE_SUPPORT_SCREEN,
+          Features.SETTING_SCREEN,
+          Features.SABEQ_INTRODUCTION,
+          Features.ADD_FRIEND,
+          Features.SHARE_USERNAME,
         ],
       );
 
-      SharedPreferences sharedPreferences = await ServiceProvider.cacheManager.getPrefs();
-      if (!sharedPreferences.containsKey(CacheManager.ASKED_FOR_NOTIFICATIONS_PERMISSION)) {
+      SharedPreferences sharedPreferences =
+          await ServiceProvider.cacheManager.getPrefs();
+      if (!sharedPreferences
+          .containsKey(CacheManager.ASKED_FOR_NOTIFICATIONS_PERMISSION)) {
         await Permission.notification.request();
 
-        await sharedPreferences.setBool(CacheManager.ASKED_FOR_NOTIFICATIONS_PERMISSION, true);
+        await sharedPreferences.setBool(
+            CacheManager.ASKED_FOR_NOTIFICATIONS_PERMISSION, true);
       }
     });
   }
