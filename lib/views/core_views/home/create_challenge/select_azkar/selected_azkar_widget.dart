@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:azkar/models/category.dart';
 import 'package:azkar/models/sub_challenge.dart';
+import 'package:azkar/models/zekr.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/azkar/requests/get_categories_response.dart';
 import 'package:azkar/services/service_provider.dart';
@@ -341,10 +344,16 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
       List<SubChallenge> subChallenges, List<SubChallenge> newSubChallenges) {
     Map<int, SubChallenge> merged = new Map();
 
+    // Used to keep track of the last custom challenge ID.
+    int maxId = 0;
     for (SubChallenge subChallenge in subChallenges) {
       merged[subChallenge.zekr.id] = subChallenge;
+      maxId = max(maxId, subChallenge.zekr.id);
     }
     for (SubChallenge subChallenge in newSubChallenges) {
+      if (subChallenge.zekr.id == Zekr.customZekrIdOffset) {
+        subChallenge.zekr.id = maxId + 1;
+      }
       merged[subChallenge.zekr.id] = subChallenge;
     }
 

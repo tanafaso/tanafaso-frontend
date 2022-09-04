@@ -177,8 +177,9 @@ class _WriteZekrScreenState extends State<WriteZekrScreen> {
     }
     List<SubChallenge> selectedZekr = [
       SubChallenge(
-          zekr:
-              Zekr(id: Zekr.customZekrId, zekr: _zekrTextController.value.text),
+          zekr: Zekr(
+              id: Zekr.customZekrIdOffset,
+              zekr: _zekrTextController.value.text),
           repetitions: 1)
     ];
     Navigator.pop(context, selectedZekr);
