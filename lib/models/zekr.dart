@@ -1,6 +1,6 @@
 class Zekr {
   // This ID is preserved for Azkar created by users.
-  static final int customZekrId = 10000;
+  static final int customZekrIdOffset = 10000;
 
   int id;
   String zekr;

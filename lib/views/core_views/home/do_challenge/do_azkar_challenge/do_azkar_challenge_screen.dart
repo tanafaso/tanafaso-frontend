@@ -51,6 +51,13 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
   void initState() {
     super.initState();
 
+    List<SubChallenge> finishedSubChallenges = widget.challenge.subChallenges
+        .where((subChallenge) => subChallenge.done())
+        .toList();
+    widget.challenge.subChallenges
+        .removeWhere((subChallenge) => subChallenge.done());
+    widget.challenge.subChallenges.addAll(finishedSubChallenges);
+
     WidgetsBinding.instance.addObserver(this);
     _finishedConfetti = false;
     _friendsTileExpanded = true;
@@ -184,13 +191,6 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
   }
 
   Widget getSubChallenges() {
-    List<SubChallenge> finishedSubChallenges = widget.challenge.subChallenges
-        .where((subChallenge) => subChallenge.done())
-        .toList();
-    widget.challenge.subChallenges
-        .removeWhere((subChallenge) => subChallenge.done());
-    widget.challenge.subChallenges.addAll(finishedSubChallenges);
-
     return ListView.separated(
       padding: EdgeInsets.all(4),
       shrinkWrap: true,
