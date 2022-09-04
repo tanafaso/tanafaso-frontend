@@ -7,6 +7,7 @@ import 'package:azkar/models/friend.dart';
 import 'package:azkar/models/group.dart';
 import 'package:azkar/models/meaning_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
+import 'package:azkar/net/api_interface/status.dart';
 import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
@@ -304,14 +305,21 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
       return;
     }
     if (_meanings[indexInList].index == _chosenWordIndex) {
+      // last one is chosen correctly.
       if (_words.length == 1) {
-        // last one is chosen correctly.
-        try {
-          await ServiceProvider.challengesService
-              .finishMeaningChallenge(widget.challenge.id);
-        } on ApiException catch (e) {
-          SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
+        if (widget.challenge.finished) {
+          SnackBarUtils.showSnackBar(context,
+              Status(Status.CHALLENGE_HAS_ALREADY_BEEN_FINISHED).errorMessage);
+          Navigator.of(context).pop();
           return;
+        } else {
+          try {
+            await ServiceProvider.challengesService
+                .finishMeaningChallenge(widget.challenge.id);
+          } on ApiException catch (e) {
+            SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
+            return;
+          }
         }
       }
 
