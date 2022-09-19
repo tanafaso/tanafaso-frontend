@@ -175,6 +175,8 @@ PODS:
   - OrderedSet (5.0.0)
   - path_provider_ios (0.0.1):
     - Flutter
+  - permission_handler_apple (9.0.4):
+    - Flutter
   - PromisesObjC (2.1.1)
   - share_plus (0.0.1):
     - Flutter
@@ -201,6 +203,7 @@ DEPENDENCIES:
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - the_apple_sign_in (from `.symlinks/plugins/the_apple_sign_in/ios`)
@@ -262,6 +265,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/in_app_review/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_ios:
@@ -308,12 +313,13 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   the_apple_sign_in: 2e78c83cdb09eba07bb16dcc1f3bc12fcdc8263d
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 
-PODFILE CHECKSUM: 070191b0442cfd9de3832f9072ef81d49324768e
+PODFILE CHECKSUM: 7349e32a8d3042b7cb6b0224640fc2ee59c37aa0
 
 COCOAPODS: 1.11.3
