@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/features.dart';
@@ -43,7 +45,7 @@ class _HomeMainScreenState extends State<HomeMainScreen>
 
       SharedPreferences sharedPreferences =
           await ServiceProvider.cacheManager.getPrefs();
-      if (!sharedPreferences
+      if (Platform.isAndroid && !sharedPreferences
           .containsKey(CacheManager.ASKED_FOR_NOTIFICATIONS_PERMISSION)) {
         await Permission.notification.request();
 
