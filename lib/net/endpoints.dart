@@ -20,6 +20,7 @@ enum EndpointRoute {
   GET_USER_BY_FACEBOOK_USER_ID,
   DELETE_CURRENT_USER,
   GET_PUBLICLY_AVAILABLE_USERS,
+  GET_PUBLICLY_AVAILABLE_USERS_WITH_PAGE,
   DELETE_FROM_PUBLICLY_AVAILABLE_USERS,
   ADD_TO_PUBLICLY_AVAILABLE_MALES,
   ADD_TO_PUBLICLY_AVAILABLE_FEMALES,
@@ -114,13 +115,15 @@ class ApiRoutesUtil {
         assert(route.requestParams.length == 1);
         assert(route.requestParams.keys.first == 'facebook_user_id');
         return '/users/search';
-      case EndpointRoute.GET_PUBLICLY_AVAILABLE_USERS:
-        return '/users/publicly_available_users';
       case EndpointRoute.ADD_TO_PUBLICLY_AVAILABLE_MALES:
         return '/users/publicly_available_males';
       case EndpointRoute.ADD_TO_PUBLICLY_AVAILABLE_FEMALES:
         return '/users/publicly_available_females';
       case EndpointRoute.GET_PUBLICLY_AVAILABLE_USERS:
+        return '/users/publicly_available_users';
+      case EndpointRoute.GET_PUBLICLY_AVAILABLE_USERS_WITH_PAGE:
+        assert(route.requestParams.length == 1);
+        assert(route.requestParams.keys.first == 'page_num');
         return '/users/publicly_available_users';
       case EndpointRoute.DELETE_FROM_PUBLICLY_AVAILABLE_USERS:
         return '/users/publicly_available_users';
