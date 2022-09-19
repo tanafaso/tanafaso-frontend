@@ -48,7 +48,7 @@ class _FindFriendsScreenState extends State<FindFriendsScreen> {
     _neededData = getNeededData();
     _pageNum = 0;
     _pageEmpty = false;
-    _nextPageNeeded = true;
+    _nextPageNeeded = false;
   }
 
   @override
