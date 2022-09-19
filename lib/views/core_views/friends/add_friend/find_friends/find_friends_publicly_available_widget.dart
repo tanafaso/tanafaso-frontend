@@ -9,12 +9,15 @@ import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
 typedef OnRemovedFromPubliclyAvailableListCallback = void Function();
+typedef OnNeedNextPageCallback = void Function();
 
 class FindFriendsPubliclyAvailableWidget extends StatefulWidget {
   final List<PubliclyAvailableUser> publiclyAvailableUsers;
+  final OnNeedNextPageCallback onNeedNextPageCallback;
 
   FindFriendsPubliclyAvailableWidget({
     @required this.publiclyAvailableUsers,
+    @required this.onNeedNextPageCallback,
   });
 
   @override
@@ -25,11 +28,20 @@ class FindFriendsPubliclyAvailableWidget extends StatefulWidget {
 class _FindFriendsPubliclyAvailableWidgetState
     extends State<FindFriendsPubliclyAvailableWidget> {
   ButtonState _removeFromPubliclyAvailableListButtonState;
+  final _controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _removeFromPubliclyAvailableListButtonState = ButtonState.idle;
+    _controller.addListener(() {
+      if (_controller.position.atEdge) {
+        bool isTop = _controller.position.pixels == 0;
+        if (!isTop) {
+          this.widget.onNeedNextPageCallback();
+        }
+      }
+    });
   }
 
   @override
@@ -90,18 +102,23 @@ class _FindFriendsPubliclyAvailableWidgetState
           widget.publiclyAvailableUsers.length == 0
               ? noUsersWidget
               : Expanded(
-                  child: ListView.builder(
-                    itemCount: widget.publiclyAvailableUsers.length,
-                    physics: BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return PubliclyAvailableUserWidget(
-                        publiclyAvailableUser:
-                            widget.publiclyAvailableUsers[index],
-                      );
-                    },
+                  child: Scrollbar(
+                    controller: _controller,
+                    isAlwaysShown: true,
+                    child: ListView.builder(
+                      itemCount: widget.publiclyAvailableUsers.length,
+                      controller: _controller,
+                      physics: BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return PubliclyAvailableUserWidget(
+                          publiclyAvailableUser:
+                              widget.publiclyAvailableUsers[index],
+                        );
+                      },
+                    ),
                   ),
                 ),
         ],

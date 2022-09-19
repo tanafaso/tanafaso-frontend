@@ -18,11 +18,14 @@ class _FindFriendsScreenState extends State<FindFriendsScreen> {
   List<PubliclyAvailableUser> _publiclyAvailableUsers;
   bool _isPubliclyAvailableUser;
   String _errorMessage;
+  int _pageNum;
+  bool _pageEmpty;
+  bool _nextPageNeeded;
 
   Future<void> getNeededData() async {
     try {
-      _publiclyAvailableUsers =
-          await ServiceProvider.usersService.getPubliclyAvailableUsers();
+      _publiclyAvailableUsers = await ServiceProvider.usersService
+          .getPubliclyAvailableUsersWithPage(0);
       _isPubliclyAvailableUser = true;
     } on ApiException catch (e) {
       if (e.errorStatus.code ==
@@ -43,6 +46,9 @@ class _FindFriendsScreenState extends State<FindFriendsScreen> {
     _isPubliclyAvailableUser = true;
     _errorMessage = null;
     _neededData = getNeededData();
+    _pageNum = 0;
+    _pageEmpty = false;
+    _nextPageNeeded = false;
   }
 
   @override
@@ -86,8 +92,47 @@ class _FindFriendsScreenState extends State<FindFriendsScreen> {
                     },
                   );
                 }
-                return FindFriendsPubliclyAvailableWidget(
-                  publiclyAvailableUsers: _publiclyAvailableUsers,
+                return Column(
+                  children: [
+                    Flexible(
+                      flex: 6,
+                      child: FindFriendsPubliclyAvailableWidget(
+                        publiclyAvailableUsers: _publiclyAvailableUsers,
+                        onNeedNextPageCallback: () {
+                          setState(() {
+                            _nextPageNeeded = true;
+                          });
+                        },
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Visibility(
+                          visible: _nextPageNeeded && !_pageEmpty,
+                          maintainSize: false,
+                          child: RawMaterialButton(
+                              onPressed: () {
+                                setState(() {
+                                  _nextPageNeeded = false;
+                                });
+                                getNextPage();
+                              },
+                              fillColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.arrow_downward),
+                                  Text("ابحث عن المزيد من الأصدقاء")
+                                ],
+                              )),
+                        ),
+                      ),
+                    )
+                  ],
                 );
               } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return Column(
@@ -113,5 +158,15 @@ class _FindFriendsScreenState extends State<FindFriendsScreen> {
             }),
       ),
     );
+  }
+
+  void getNextPage() async {
+    List<PubliclyAvailableUser> newPageList = await ServiceProvider.usersService
+        .getPubliclyAvailableUsersWithPage(_pageNum + 1);
+    setState(() {
+      _pageNum = _pageNum + 1;
+      _pageEmpty = newPageList.isEmpty;
+      _publiclyAvailableUsers.addAll(newPageList);
+    });
   }
 }

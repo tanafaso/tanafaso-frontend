@@ -45,8 +45,9 @@ class _HomeMainScreenState extends State<HomeMainScreen>
 
       SharedPreferences sharedPreferences =
           await ServiceProvider.cacheManager.getPrefs();
-      if (Platform.isAndroid && !sharedPreferences
-          .containsKey(CacheManager.ASKED_FOR_NOTIFICATIONS_PERMISSION)) {
+      if (Platform.isAndroid &&
+          !sharedPreferences
+              .containsKey(CacheManager.ASKED_FOR_NOTIFICATIONS_PERMISSION)) {
         await Permission.notification.request();
 
         await sharedPreferences.setBool(

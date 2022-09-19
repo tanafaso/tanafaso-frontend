@@ -16,8 +16,8 @@ import 'package:azkar/net/api_interface/users/responses/get_publicly_available_u
 import 'package:azkar/net/api_interface/users/responses/get_user_response.dart';
 import 'package:azkar/net/api_interface/users/responses/resolve_friend_request_response.dart';
 import 'package:azkar/net/api_interface/users/responses/set_notifications_token_response.dart';
-import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/net/endpoints.dart';
+import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -170,6 +170,20 @@ class UsersService {
     http.Response httpResponse = await ApiCaller.get(
         route: Endpoint(
             endpointRoute: EndpointRoute.GET_PUBLICLY_AVAILABLE_USERS));
+    var response = GetPubliclyAvailableUsersResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.error);
+    }
+    return response.publiclyAvailableUsers;
+  }
+
+  Future<List<PubliclyAvailableUser>> getPubliclyAvailableUsersWithPage(
+      int pageNum) async {
+    http.Response httpResponse = await ApiCaller.get(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.GET_PUBLICLY_AVAILABLE_USERS_WITH_PAGE,
+            requestParams: {'page_num': pageNum.toString()}));
     var response = GetPubliclyAvailableUsersResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
