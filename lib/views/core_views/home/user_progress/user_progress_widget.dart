@@ -1,3 +1,4 @@
+import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/home/user_progress/user_progress_loading_widget.dart';
@@ -18,20 +19,24 @@ class _UserProgressWidgetState extends State<UserProgressWidget>
   Animation<OdometerNumber> consecutiveDaysAnimation;
 
   Future<void> getNeededData() async {
-    int finishedCount =
-        await ServiceProvider.challengesService.getFinishedChallengesCount();
-    int consecutiveDays =
-        await ServiceProvider.challengesService.getConsecutiveDaysStreak();
-    finishedCountAnimation = OdometerTween(
-            begin: OdometerNumber(0), end: OdometerNumber(finishedCount))
-        .animate(
-      CurvedAnimation(curve: Curves.easeIn, parent: animationController),
-    );
-    consecutiveDaysAnimation = OdometerTween(
-            begin: OdometerNumber(0), end: OdometerNumber(consecutiveDays))
-        .animate(
-      CurvedAnimation(curve: Curves.easeIn, parent: animationController),
-    );
+    try {
+      int finishedCount =
+          await ServiceProvider.challengesService.getFinishedChallengesCount();
+      int consecutiveDays =
+          await ServiceProvider.challengesService.getConsecutiveDaysStreak();
+      finishedCountAnimation = OdometerTween(
+              begin: OdometerNumber(0), end: OdometerNumber(finishedCount))
+          .animate(
+        CurvedAnimation(curve: Curves.easeIn, parent: animationController),
+      );
+      consecutiveDaysAnimation = OdometerTween(
+              begin: OdometerNumber(0), end: OdometerNumber(consecutiveDays))
+          .animate(
+        CurvedAnimation(curve: Curves.easeIn, parent: animationController),
+      );
+    } catch (e) {
+      return Future.error(e);
+    }
   }
 
   @override
@@ -48,7 +53,8 @@ class _UserProgressWidgetState extends State<UserProgressWidget>
     return FutureBuilder(
         future: getNeededData(),
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              !snapshot.hasError) {
             animationController.forward();
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -133,39 +139,23 @@ class _UserProgressWidgetState extends State<UserProgressWidget>
               ),
             );
           } else if (snapshot.hasError) {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SnapshotUtils.getErrorWidget(context, snapshot),
-                ),
-                // Container(
-                //   child: ButtonTheme(
-                //     height: 50,
-                //     // ignore: deprecated_member_use
-                //     child: RawMaterialButton(
-                //       shape: RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.circular(10)),
-                //       fillColor: Colors.grey,
-                //       onPressed: () async {
-                //         performLogout(context);
-                //       },
-                //       child: Center(
-                //           child: Padding(
-                //             padding: const EdgeInsets.all(8.0),
-                //             child: AutoSizeText(
-                //               AppLocalizations.of(context).logout,
-                //               style: TextStyle(
-                //                   color: Colors.white,
-                //                   fontSize: 25,
-                //                   fontWeight: FontWeight.bold),
-                //             ),
-                //           )),
-                //     ),
-                //   ),
-                // ),
-              ],
-            );
+            return (snapshot.error is ApiException)
+                ? Container()
+                : SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(2 * 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child:
+                                SnapshotUtils.getErrorWidget(context, snapshot),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
           } else {
             return UserProgressLoadingWidget();
           }

@@ -11,6 +11,9 @@ class SnapshotUtils {
     } else {
       error = Status.getDefaultApiErrorStatus().errorMessage;
     }
-    return Text(error);
+    return Text(
+      error,
+      textAlign: TextAlign.center,
+    );
   }
 }

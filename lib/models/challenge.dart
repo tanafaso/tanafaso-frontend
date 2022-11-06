@@ -1,4 +1,5 @@
 import 'package:azkar/models/azkar_challenge.dart';
+import 'package:azkar/models/custom_simple_challenge.dart';
 import 'package:azkar/models/meaning_challenge.dart';
 import 'package:azkar/models/memorization_challenge.dart';
 import 'package:azkar/models/reading_quran_challenge.dart';
@@ -8,6 +9,7 @@ enum ChallengeType {
   MEANING,
   READING_QURAN,
   MEMORIZATION,
+  CUSTOM_SIMPLE,
   OTHER,
 }
 
@@ -17,18 +19,24 @@ class Challenge {
     this.meaningChallenge,
     this.readingQuranChallenge,
     this.memorizationChallenge,
+    this.customSimpleChallenge,
   }) : challengeType = azkarChallenge != null
             ? ChallengeType.AZKAR
             : meaningChallenge != null
                 ? ChallengeType.MEANING
                 : readingQuranChallenge != null
                     ? ChallengeType.READING_QURAN
-                    : ChallengeType.MEMORIZATION;
+                    : memorizationChallenge != null
+                        ? ChallengeType.MEMORIZATION
+                        : customSimpleChallenge != null
+                            ? ChallengeType.CUSTOM_SIMPLE
+                            : ChallengeType.OTHER;
 
   AzkarChallenge azkarChallenge;
   MeaningChallenge meaningChallenge;
   ReadingQuranChallenge readingQuranChallenge;
   MemorizationChallenge memorizationChallenge;
+  CustomSimpleChallenge customSimpleChallenge;
   ChallengeType challengeType;
 
   factory Challenge.fromJson(Map<String, dynamic> json) {
@@ -50,6 +58,11 @@ class Challenge {
         memorizationChallenge:
             MemorizationChallenge.fromJson(json["memorizationChallenge"]),
       );
+    } else if (json["customSimpleChallenge"] != null) {
+      return Challenge(
+        customSimpleChallenge:
+            CustomSimpleChallenge.fromJson(json["customSimpleChallenge"]),
+      );
     }
 
     return Challenge();
@@ -66,6 +79,9 @@ class Challenge {
         "memorizationChallenge": memorizationChallenge == null
             ? null
             : memorizationChallenge.toJson(),
+        "customSimpleChallenge": customSimpleChallenge == null
+            ? null
+            : customSimpleChallenge.toJson(),
       };
 
   String getId() {
@@ -78,6 +94,8 @@ class Challenge {
         return readingQuranChallenge.id;
       case ChallengeType.MEMORIZATION:
         return memorizationChallenge.id;
+      case ChallengeType.CUSTOM_SIMPLE:
+        return customSimpleChallenge.id;
       case ChallengeType.OTHER:
         return null;
     }
@@ -94,6 +112,8 @@ class Challenge {
         return readingQuranChallenge.groupId;
       case ChallengeType.MEMORIZATION:
         return memorizationChallenge.groupId;
+      case ChallengeType.CUSTOM_SIMPLE:
+        return customSimpleChallenge.groupId;
       case ChallengeType.OTHER:
         return null;
     }
@@ -110,6 +130,8 @@ class Challenge {
         return readingQuranChallenge.getName();
       case ChallengeType.MEMORIZATION:
         return memorizationChallenge.getName();
+      case ChallengeType.CUSTOM_SIMPLE:
+        return customSimpleChallenge.getName();
       case ChallengeType.OTHER:
         return null;
     }
@@ -126,6 +148,8 @@ class Challenge {
         return readingQuranChallenge.finished;
       case ChallengeType.MEMORIZATION:
         return memorizationChallenge.done();
+      case ChallengeType.CUSTOM_SIMPLE:
+        return customSimpleChallenge.finished;
       case ChallengeType.OTHER:
         return false;
     }
@@ -142,6 +166,8 @@ class Challenge {
         return readingQuranChallenge.expiryDate;
       case ChallengeType.MEMORIZATION:
         return memorizationChallenge.expiryDate;
+      case ChallengeType.CUSTOM_SIMPLE:
+        return customSimpleChallenge.expiryDate;
       case ChallengeType.OTHER:
         return 0;
     }
@@ -151,6 +177,16 @@ class Challenge {
   bool deadlinePassed() {
     int secondsSinceEpoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     return secondsSinceEpoch >= getExpiryDate();
+  }
+
+  int daysLeft() {
+    if (deadlinePassed()) {
+      return 0;
+    }
+    int secondsSinceEpoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+    int secondsLeft = getExpiryDate() - secondsSinceEpoch;
+
+    return secondsLeft ~/ 60 ~/ 60 ~/ 24;
   }
 
   int hoursLeft() {
@@ -182,6 +218,8 @@ class Challenge {
         return readingQuranChallenge.usersFinished;
       case ChallengeType.MEMORIZATION:
         return memorizationChallenge.usersFinished;
+      case ChallengeType.CUSTOM_SIMPLE:
+        return customSimpleChallenge.usersFinished;
       case ChallengeType.OTHER:
         return [];
     }
@@ -198,6 +236,8 @@ class Challenge {
         return readingQuranChallenge.creatingUserId;
       case ChallengeType.MEMORIZATION:
         return memorizationChallenge.creatingUserId;
+      case ChallengeType.CUSTOM_SIMPLE:
+        return customSimpleChallenge.creatingUserId;
       case ChallengeType.OTHER:
         return null;
     }

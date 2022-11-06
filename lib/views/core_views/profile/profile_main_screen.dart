@@ -274,38 +274,42 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                     ),
                   );
                 } else if (snapshot.hasError) {
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SnapshotUtils.getErrorWidget(context, snapshot),
-                      ),
-                      Container(
-                        child: ButtonTheme(
-                          height: 50,
-                          // ignore: deprecated_member_use
-                          child: RawMaterialButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            fillColor: Colors.grey,
-                            onPressed: () async {
-                              performLogout(context);
-                            },
-                            child: Center(
-                                child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: AutoSizeText(
-                                AppLocalizations.of(context).logout,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            )),
+                  return Padding(
+                    padding: const EdgeInsets.all(2 * 8.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:
+                              SnapshotUtils.getErrorWidget(context, snapshot),
+                        ),
+                        Container(
+                          child: ButtonTheme(
+                            height: 50,
+                            // ignore: deprecated_member_use
+                            child: RawMaterialButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              fillColor: Colors.grey,
+                              onPressed: () async {
+                                performLogout(context);
+                              },
+                              child: Center(
+                                  child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: AutoSizeText(
+                                  AppLocalizations.of(context).logout,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 } else {
                   return ProfileLoadingWidget();
