@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:azkar/models/friend.dart';
 import 'package:azkar/views/core_views/home/create_challenge/create_azkar_challenge_screen.dart';
+import 'package:azkar/views/core_views/home/create_challenge/create_custom_simple_challenge_screen.dart';
 import 'package:azkar/views/core_views/home/create_challenge/create_meaning_challenge_screen.dart';
 import 'package:azkar/views/core_views/home/create_challenge/create_memorization_challenge_screen.dart';
 import 'package:azkar/views/core_views/home/create_challenge/create_reading_quran_challenge_screen.dart';
@@ -345,12 +346,121 @@ class CreateChallengeScreen extends StatelessWidget {
                       Padding(padding: EdgeInsets.all(4)),
                     ],
                   ),
+                  Padding(padding: EdgeInsets.all(4)),
+                  customChallengeWidget(
+                      context, "صيام", 'تحدى نفسك وبعض أصدقائك في الصيام.', [
+                    "يوم الإثنين",
+                    "يوم الخميس",
+                    "يوم عاشوراء",
+                    "يوم عرفة",
+                    "يوم من شوال"
+                  ]),
+                  Padding(padding: EdgeInsets.all(4)),
+                  customChallengeWidget(context, "صلاة",
+                      'تحدى نفسك وبعض أصدقائك في صلوات النوافل.', [
+                    "سنة الفجر",
+                    "سنة الظهر",
+                    "سنة العصر",
+                    "سنة المغرب",
+                    "سنة العشاء",
+                    "الوتر",
+                    "الضحى",
+                    "الخسوف والكسوف",
+                    "القيام",
+                  ]),
+                  Padding(padding: EdgeInsets.all(4)),
                 ],
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget customChallengeWidget(BuildContext context, String title,
+      String explanation, List<String> descriptions) {
+    return ExpansionTile(
+      title: Row(
+        children: [
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                title,
+                maxLines: 1,
+                style: TextStyle(fontSize: 30),
+              ),
+            ),
+          ),
+        ],
+      ),
+      initiallyExpanded: false,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+      collapsedBackgroundColor: Theme.of(context).colorScheme.secondary,
+      textColor: Colors.black,
+      iconColor: Colors.black,
+      collapsedTextColor: Colors.black,
+      collapsedIconColor: Colors.black,
+      trailing: Icon(
+        Icons.arrow_drop_down,
+        size: 30,
+      ),
+      onExpansionChanged: (bool expanded) {},
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            explanation,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.grey.shade700, fontSize: 25),
+          ),
+        ),
+        Padding(padding: EdgeInsets.all(4)),
+        ListView.builder(
+          itemCount: descriptions.length,
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RawMaterialButton(
+                fillColor: Theme.of(context).colorScheme.primary,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CreateCustomSimpleChallengeScreen(
+                            initiallySelectedFriends: initiallySelectedFriends,
+                            description: title + " " + descriptions[index],
+                          )));
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.create),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        descriptions[index],
+                        style: TextStyle(
+                          fontSize: 25,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+        Padding(padding: EdgeInsets.all(4)),
+      ],
     );
   }
 }

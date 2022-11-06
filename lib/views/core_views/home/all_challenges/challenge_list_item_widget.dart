@@ -12,10 +12,12 @@ import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/home/all_challenges/challenge_list_item_loading_widget.dart';
 import 'package:azkar/views/core_views/home/create_challenge/create_azkar_challenge_screen.dart';
+import 'package:azkar/views/core_views/home/create_challenge/create_custom_simple_challenge_screen.dart';
 import 'package:azkar/views/core_views/home/create_challenge/create_meaning_challenge_screen.dart';
 import 'package:azkar/views/core_views/home/create_challenge/create_memorization_challenge_screen.dart';
 import 'package:azkar/views/core_views/home/create_challenge/create_reading_quran_challenge_screen.dart';
 import 'package:azkar/views/core_views/home/do_challenge/do_azkar_challenge/do_azkar_challenge_screen.dart';
+import 'package:azkar/views/core_views/home/do_challenge/do_custom_simple_challenge_screen.dart';
 import 'package:azkar/views/core_views/home/do_challenge/do_meaning_challenge_screen.dart';
 import 'package:azkar/views/core_views/home/do_challenge/do_memorization_challenge/do_memorization_challenge_screen.dart';
 import 'package:azkar/views/core_views/home/do_challenge/do_reading_quran_challenge/do_reading_quran_challenge_screen.dart';
@@ -318,7 +320,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                           ),
                         ),
                       ),
-                      getDeadlineText(context),
+                      Visibility(child: getDeadlineText(context)),
                       // getFriendsNames(),
                     ],
                   ),
@@ -413,6 +415,18 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
     return Future.value();
   }
 
+  Future<void> onCustomSimpleChallengePressed() async {
+    await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => DoCustomSimpleChallengeScreen(
+              challenge: widget.challenge.customSimpleChallenge,
+              group: widget.group,
+              challengedUsersIds: _challengedUsersIds,
+              challengedUsersFullNames: _challengedUsersFullNames,
+              friendshipScores: widget.friendshipScores,
+            )));
+    return Future.value();
+  }
+
   void onChallengePressed() async {
     switch (widget.challenge.challengeType) {
       case ChallengeType.AZKAR:
@@ -426,6 +440,9 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
         break;
       case ChallengeType.MEMORIZATION:
         await onMemorizationChallengePressed();
+        break;
+      case ChallengeType.CUSTOM_SIMPLE:
+        await onCustomSimpleChallengePressed();
         break;
       case ChallengeType.OTHER:
         break;
@@ -515,10 +532,27 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                 )));
   }
 
+  void onCopyCustomSimpleChallenge() async {
+    List<Friend> friends =
+        await ServiceProvider.usersService.getFriendsLeaderboard();
+    List<Friend> currentChallengeFriends = friends
+        .where((friend) => _challengedUsersIds.contains(friend.userId))
+        .toList();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CreateCustomSimpleChallengeScreen(
+                  initiallySelectedFriends: currentChallengeFriends,
+                  description:
+                      widget.challenge.customSimpleChallenge.description,
+                )));
+  }
+
   String getCopyCaption() {
     return widget.challenge.challengeType == ChallengeType.AZKAR ||
             widget.challenge.challengeType == ChallengeType.READING_QURAN ||
             widget.challenge.challengeType == ChallengeType.MEMORIZATION ||
+            widget.challenge.challengeType == ChallengeType.CUSTOM_SIMPLE ||
             widget.challenge.challengeType == ChallengeType.OTHER
         ? AppLocalizations.of(context).copy
         : "إضافة";
@@ -528,6 +562,7 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
     return widget.challenge.challengeType == ChallengeType.AZKAR ||
             widget.challenge.challengeType == ChallengeType.READING_QURAN ||
             widget.challenge.challengeType == ChallengeType.MEMORIZATION ||
+            widget.challenge.challengeType == ChallengeType.CUSTOM_SIMPLE ||
             widget.challenge.challengeType == ChallengeType.OTHER
         ? Icons.copy
         : Icons.add;
@@ -546,6 +581,9 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
         return;
       case ChallengeType.MEMORIZATION:
         onCopyMemorizationChallenge();
+        return;
+      case ChallengeType.CUSTOM_SIMPLE:
+        onCopyCustomSimpleChallenge();
         return;
       case ChallengeType.OTHER:
         return;
@@ -625,29 +663,9 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
         ),
       );
     }
-    int hoursLeft = widget.challenge.hoursLeft();
-    if (hoursLeft == 0) {
-      int minutesLeft = widget.challenge.minutesLeft();
-      if (minutesLeft == 0) {
-        return Text.rich(TextSpan(
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 25,
-          ),
-          children: <TextSpan>[
-            new TextSpan(
-                text: AppLocalizations.of(context).endsAfterLessThan,
-                style: new TextStyle(
-                    color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
-            new TextSpan(
-              text: ' ١ ',
-            ),
-            new TextSpan(
-              text: AppLocalizations.of(context).minute,
-            )
-          ],
-        ));
-      }
+
+    int daysLeft = widget.challenge.daysLeft();
+    if (daysLeft != 0) {
       return Text.rich(TextSpan(
         style: TextStyle(
           color: Colors.black,
@@ -659,7 +677,53 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
               style: new TextStyle(
                   color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
           new TextSpan(
-            text: ' ${ArabicUtils.englishToArabic(minutesLeft.toString())} ',
+            text:
+                ' ${ArabicUtils.englishToArabic(widget.challenge.daysLeft().toString())} ',
+          ),
+          new TextSpan(
+            text: AppLocalizations.of(context).day,
+          )
+        ],
+      ));
+    }
+
+    int hoursLeft = widget.challenge.hoursLeft();
+    if (hoursLeft != 0) {
+      return Text.rich(TextSpan(
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 25,
+        ),
+        children: <TextSpan>[
+          new TextSpan(
+              text: AppLocalizations.of(context).endsAfter,
+              style: new TextStyle(
+                  color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
+          new TextSpan(
+            text:
+                ' ${ArabicUtils.englishToArabic(widget.challenge.hoursLeft().toString())} ',
+          ),
+          new TextSpan(
+            text: AppLocalizations.of(context).hour,
+          )
+        ],
+      ));
+    }
+
+    int minutesLeft = widget.challenge.minutesLeft();
+    if (minutesLeft == 0) {
+      return Text.rich(TextSpan(
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 25,
+        ),
+        children: <TextSpan>[
+          new TextSpan(
+              text: AppLocalizations.of(context).endsAfterLessThan,
+              style: new TextStyle(
+                  color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
+          new TextSpan(
+            text: ' ١ ',
           ),
           new TextSpan(
             text: AppLocalizations.of(context).minute,
@@ -678,11 +742,10 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
             style: new TextStyle(
                 color: Colors.grey.shade700, fontWeight: FontWeight.bold)),
         new TextSpan(
-          text:
-              ' ${ArabicUtils.englishToArabic(widget.challenge.hoursLeft().toString())} ',
+          text: ' ${ArabicUtils.englishToArabic(minutesLeft.toString())} ',
         ),
         new TextSpan(
-          text: AppLocalizations.of(context).hour,
+          text: AppLocalizations.of(context).minute,
         )
       ],
     ));

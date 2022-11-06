@@ -25,11 +25,15 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
   List<Friend> friends;
 
   Future<void> getNeededData() async {
-    await ServiceProvider.homeService.getHomeDataAndCacheIt();
-    challenges = await ServiceProvider.challengesService.getAllChallenges();
-    groups = await ServiceProvider.groupsService.getGroups();
-    friends = await ServiceProvider.usersService.getFriendsLeaderboard();
-    return Future.value();
+    try {
+      await ServiceProvider.homeService.getHomeDataAndCacheIt();
+      challenges = await ServiceProvider.challengesService.getAllChallenges();
+      groups = await ServiceProvider.groupsService.getGroups();
+      friends = await ServiceProvider.usersService.getFriendsLeaderboard();
+      return Future.value();
+    } catch (e) {
+      return Future.error(e);
+    }
   }
 
   @override
@@ -40,7 +44,8 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
           future: getNeededData(),
           builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
             List<Widget> children;
-            if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                !snapshot.hasError) {
               return getChallengesListWidget(challenges, groups, friends);
             } else if (snapshot.hasError) {
               children = <Widget>[
@@ -58,11 +63,14 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
               children =
                   List.generate(3, (_) => ChallengeListItemLoadingWidget());
             }
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: children,
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: children,
+                ),
               ),
             );
           },

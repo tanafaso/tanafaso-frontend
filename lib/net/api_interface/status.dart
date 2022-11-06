@@ -89,7 +89,8 @@ class Status {
         "خطأ أثناء تسجيل الدخول باستخدام الفيسبوك",
     API_SOMEONE_ELSE_ALREADY_CONNECTED_ERROR:
         "اتصل شخص آخر بالفعل بنفس الحساب من قبل",
-    API_AUTHENTICATION_ERROR: "خطأ أثناء المصادقة",
+    API_AUTHENTICATION_ERROR:
+        "من فضلك تأكد أنك متصل بالإنترنت أو أعد تسجيل الدخول خلال صفحة الملف الشخصي",
     API_GROUP_NOT_FOUND_ERROR: "المجموعة غير موجودة",
     API_NOT_GROUP_MEMBER_ERROR: "ليس عضوا في المجموعة",
     API_CHALLENGE_NOT_FOUND_ERROR: "التحدي غير موجود",
