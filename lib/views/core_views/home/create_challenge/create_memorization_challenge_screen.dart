@@ -7,6 +7,7 @@ import 'package:azkar/net/api_interface/challenges/requests/add_memorization_cha
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/arabic_utils.dart';
+import 'package:azkar/utils/quran_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/home/create_challenge/select_friend/selected_friends_widget.dart';
 import 'package:azkar/views/core_views/layout_organizer.dart';
@@ -21,6 +22,8 @@ class CreateMemorizationChallengeScreen extends StatefulWidget {
   final int initiallySelectedDifficulty;
   final int initiallySelectedFirstJuz;
   final int initiallySelectedLastJuz;
+  final int initiallySelectedFirstSurah;
+  final int initiallySelectedLastSurah;
 
   CreateMemorizationChallengeScreen({
     this.initiallySelectedFriends = const [],
@@ -28,11 +31,18 @@ class CreateMemorizationChallengeScreen extends StatefulWidget {
     this.initiallySelectedDifficulty = 1,
     this.initiallySelectedFirstJuz = 28,
     this.initiallySelectedLastJuz = 30,
+    this.initiallySelectedFirstSurah = 3,
+    this.initiallySelectedLastSurah = 3,
   });
 
   @override
   _CreateMemorizationChallengeScreenState createState() =>
       _CreateMemorizationChallengeScreenState();
+}
+
+enum Mode {
+  JUZ_SELECTION,
+  SURAH_SELECTION,
 }
 
 class _CreateMemorizationChallengeScreenState
@@ -44,18 +54,38 @@ class _CreateMemorizationChallengeScreenState
   int _difficulty;
   int _firstJuz;
   int _lastJuz;
+  int _firstSurah;
+  int _lastSurah;
+  Mode _mode;
 
   @override
   void initState() {
     super.initState();
 
+    print("hereeeeee");
+    print(widget.initiallySelectedFirstJuz);
+    if (widget.initiallySelectedFirstJuz != 0) {
+      switchToMode(Mode.JUZ_SELECTION);
+    } else {
+      switchToMode(Mode.SURAH_SELECTION);
+    }
     _selectedFriends = widget.initiallySelectedFriends;
     progressButtonState = ButtonState.idle;
     _expiresAfterHoursNum = 24;
     _numberOfQuestions = widget.initiallySelectedNumberOfQuestions;
-    _firstJuz = widget.initiallySelectedFirstJuz;
-    _lastJuz = widget.initiallySelectedLastJuz;
     _difficulty = widget.initiallySelectedDifficulty;
+  }
+
+  void switchToMode(Mode mode) {
+    if (mode == Mode.JUZ_SELECTION) {
+      _mode = Mode.JUZ_SELECTION;
+    } else {
+      _mode = Mode.SURAH_SELECTION;
+    }
+    _firstJuz = max(1, widget.initiallySelectedFirstJuz);
+    _lastJuz = max(1, widget.initiallySelectedLastJuz);
+    _firstSurah = max(2, widget.initiallySelectedFirstSurah);
+    _lastSurah = max(2, widget.initiallySelectedLastSurah);
   }
 
   @override
@@ -101,95 +131,85 @@ class _CreateMemorizationChallengeScreenState
                           },
                         ),
                         Card(
-                          child: Column(children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Text(
-                                    '*',
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Text(
+                                      '*',
+                                      style: TextStyle(
+                                          color: Colors.red, fontSize: 17),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(Icons.whatshot_rounded),
+                                  ),
+                                  AutoSizeText(
+                                    "تحديد الأختبار في",
                                     style: TextStyle(
-                                        color: Colors.red, fontSize: 17),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(Icons.pie_chart),
-                                ),
-                                AutoSizeText(
-                                  "أجزاء الإختبار",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Flexible(
-                                    child: Text(
-                                  'من',
-                                  textAlign: TextAlign.center,
-                                )),
-                                Flexible(
-                                  child: Card(
-                                    elevation: 0,
-                                    child: NumberPicker(
-                                        zeroPad: true,
-                                        minValue: 1,
-                                        maxValue: 30,
-                                        value: _firstJuz,
-                                        textStyle: TextStyle(
-                                          fontSize: 17,
-                                        ),
-                                        selectedTextStyle: TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textMapper: (num) =>
-                                            ArabicUtils.englishToArabic(num),
-                                        onChanged: (newValue) {
-                                          setState(() {
-                                            _firstJuz = newValue;
-                                            _lastJuz = max(_lastJuz, _firstJuz);
-                                          });
-                                        }),
-                                  ),
-                                ),
-                                Flexible(
-                                    child: Text(
-                                  'إلى',
-                                  textAlign: TextAlign.center,
-                                )),
-                                Flexible(
-                                  child: NumberPicker(
-                                      zeroPad: true,
-                                      minValue: _firstJuz,
-                                      maxValue: 30,
-                                      value: _lastJuz,
-                                      textStyle: TextStyle(
-                                        fontSize: 17,
-                                      ),
-                                      selectedTextStyle: TextStyle(
-                                        fontSize: 30,
                                         fontWeight: FontWeight.bold,
-                                      ),
-                                      textMapper: (num) =>
-                                          ArabicUtils.englishToArabic(num),
-                                      onChanged: (newValue) {
+                                        fontSize: 25),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 4.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: GestureDetector(
+                                      onTap: () {
                                         setState(() {
-                                          _lastJuz = newValue;
+                                          if (_mode == Mode.SURAH_SELECTION) {
+                                            switchToMode(Mode.JUZ_SELECTION);
+                                          }
                                         });
-                                      }),
+                                      },
+                                      child: Card(
+                                        elevation: 2,
+                                        color: _mode == Mode.JUZ_SELECTION
+                                            ? Theme.of(context).primaryColor
+                                            : Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                        child: Text(
+                                          'أجزاء',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    )),
+                                    Expanded(
+                                        child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          if (_mode == Mode.JUZ_SELECTION) {
+                                            switchToMode(Mode.SURAH_SELECTION);
+                                          }
+                                        });
+                                      },
+                                      child: Card(
+                                        elevation: 2,
+                                        color: _mode == Mode.SURAH_SELECTION
+                                            ? Theme.of(context).primaryColor
+                                            : Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                        child: Text('سور',
+                                            textAlign: TextAlign.center),
+                                      ),
+                                    )),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ]),
+                              ),
+                            ],
+                          ),
                         ),
+                        _mode == Mode.JUZ_SELECTION
+                            ? getJuzSelectionWidget()
+                            : getSurahSelectionWidget(),
                         Card(
                           child: Column(
                             children: [
@@ -569,8 +589,10 @@ class _CreateMemorizationChallengeScreenState
             Duration.secondsPerHour * _expiresAfterHoursNum,
         difficulty: _difficulty,
         numberOfQuestions: _numberOfQuestions,
-        firstJuz: _firstJuz.toInt(),
-        lastJuz: _lastJuz.toInt(),
+        firstJuz: _mode == Mode.JUZ_SELECTION ? _firstJuz.toInt() : 0,
+        lastJuz: _mode == Mode.JUZ_SELECTION ? _lastJuz.toInt() : 0,
+        firstSurah: _mode == Mode.SURAH_SELECTION ? _firstSurah.toInt() : 0,
+        lastSurah: _mode == Mode.SURAH_SELECTION ? _lastSurah.toInt() : 0,
       ));
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(
@@ -604,6 +626,195 @@ class _CreateMemorizationChallengeScreenState
     if ((_selectedFriends?.length ?? 0) == 0) {
       return false;
     }
+    if (_mode == Mode.JUZ_SELECTION) {
+      if (_firstJuz > _lastJuz) {
+        return false;
+      }
+    } else {
+      if (_firstSurah > _lastSurah) {
+        return false;
+      }
+    }
     return true;
+  }
+
+  Widget getJuzSelectionWidget() {
+    return Card(
+      child: Column(children: [
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Text(
+                '*',
+                style: TextStyle(color: Colors.red, fontSize: 17),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(Icons.pie_chart),
+            ),
+            AutoSizeText(
+              "أجزاء الإختبار",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+            ),
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.all(8),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+                child: Text(
+              'من',
+              textAlign: TextAlign.center,
+            )),
+            Flexible(
+              child: Card(
+                elevation: 0,
+                child: NumberPicker(
+                    zeroPad: true,
+                    minValue: 1,
+                    maxValue: 30,
+                    value: _firstJuz,
+                    textStyle: TextStyle(
+                      fontSize: 17,
+                    ),
+                    selectedTextStyle: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textMapper: (num) => ArabicUtils.englishToArabic(num),
+                    onChanged: (newValue) {
+                      setState(() {
+                        _firstJuz = newValue;
+                        _lastJuz = max(_lastJuz, _firstJuz);
+                      });
+                    }),
+              ),
+            ),
+            Flexible(
+                child: Text(
+              'إلى',
+              textAlign: TextAlign.center,
+            )),
+            Flexible(
+              child: NumberPicker(
+                  zeroPad: true,
+                  minValue: 1,
+                  maxValue: 30,
+                  value: _lastJuz,
+                  textStyle: TextStyle(
+                    fontSize: 17,
+                  ),
+                  selectedTextStyle: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textMapper: (num) => ArabicUtils.englishToArabic(num),
+                  onChanged: (newValue) {
+                    setState(() {
+                      _lastJuz = newValue;
+                    });
+                  }),
+            ),
+          ],
+        ),
+      ]),
+    );
+  }
+
+  Widget getSurahSelectionWidget() {
+    print(_firstSurah);
+    print(_lastSurah);
+    return Card(
+      child: Column(children: [
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Text(
+                '*',
+                style: TextStyle(color: Colors.red, fontSize: 17),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(Icons.pie_chart),
+            ),
+            AutoSizeText(
+              "سور الإختبار",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+            ),
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.all(8),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+                child: Text(
+              'من',
+              textAlign: TextAlign.center,
+            )),
+            Flexible(
+              child: Card(
+                elevation: 0,
+                child: NumberPicker(
+                    zeroPad: true,
+                    minValue: 2,
+                    maxValue: 57,
+                    value: _firstSurah,
+                    textStyle: TextStyle(
+                      fontSize: 17,
+                    ),
+                    selectedTextStyle: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textMapper: (num) => QuranUtils
+                        .surahNameToVersesCount[int.parse(num) - 1]['name'],
+                    onChanged: (newValue) {
+                      setState(() {
+                        _firstSurah = newValue;
+                        _lastSurah = max(_firstSurah, _lastSurah);
+                      });
+                    }),
+              ),
+            ),
+            Flexible(
+                child: Text(
+              'إلى',
+              textAlign: TextAlign.center,
+            )),
+            Flexible(
+              child: NumberPicker(
+                  zeroPad: true,
+                  minValue: 2,
+                  maxValue: 57,
+                  value: _lastSurah,
+                  textStyle: TextStyle(
+                    fontSize: 17,
+                  ),
+                  selectedTextStyle: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textMapper: (num) => QuranUtils
+                      .surahNameToVersesCount[int.parse(num) - 1]['name'],
+                  onChanged: (newValue) {
+                    setState(() {
+                      _lastSurah = newValue;
+                    });
+                  }),
+            ),
+          ],
+        ),
+      ]),
+    );
   }
 }

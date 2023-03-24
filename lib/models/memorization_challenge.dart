@@ -16,6 +16,8 @@ class MemorizationChallenge {
     this.questions,
     this.firstJuz,
     this.lastJuz,
+    this.firstSurah,
+    this.lastSurah,
     this.difficulty,
   });
 
@@ -27,21 +29,26 @@ class MemorizationChallenge {
   List<Question> questions;
   int firstJuz;
   int lastJuz;
+  int firstSurah;
+  int lastSurah;
   int difficulty;
 
   factory MemorizationChallenge.fromJson(Map<String, dynamic> json) =>
-      MemorizationChallenge(
-        id: json["id"],
-        groupId: json["groupId"],
-        creatingUserId: json["creatingUserId"],
-        expiryDate: json["expiryDate"],
-        usersFinished: List<String>.from(json["usersFinished"].map((x) => x)),
-        questions: List<Question>.from(
-            json["questions"].map((x) => Question.fromJson(x))),
-        firstJuz: json["firstJuz"],
-        lastJuz: json["lastJuz"],
-        difficulty: json["difficulty"],
-      );
+    MemorizationChallenge(
+      id: json["id"],
+      groupId: json["groupId"],
+      creatingUserId: json["creatingUserId"],
+      expiryDate: json["expiryDate"],
+      usersFinished: List<String>.from(json["usersFinished"].map((x) => x)),
+      questions: List<Question>.from(
+          json["questions"].map((x) => Question.fromJson(x))),
+      firstJuz: json["firstJuz"],
+      lastJuz: json["lastJuz"],
+      firstSurah: json["firstSurah"],
+      lastSurah: json["lastSurah"],
+      difficulty: json["difficulty"],
+    );
+
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -52,6 +59,8 @@ class MemorizationChallenge {
         "questions": List<dynamic>.from(questions.map((x) => x.toJson())),
         "firstJuz": firstJuz,
         "lastJuz": lastJuz,
+        "firstSurah": firstSurah,
+        "lastSurah": lastSurah,
         "difficulty": difficulty,
       };
 

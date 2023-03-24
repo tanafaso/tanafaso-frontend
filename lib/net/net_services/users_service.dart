@@ -21,26 +21,34 @@ import 'package:azkar/services/cache_manager.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:synchronized/synchronized.dart';
 
 class UsersService {
+  static final Lock lock = new Lock();
+
   Future<User> getCurrentUser() async {
-    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
-    String key = CacheManager.CACHE_KEY_CURRENT_USER.toString();
+    await lock.synchronized(() async {
+      SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+      String key = CacheManager.CACHE_KEY_CURRENT_USER.toString();
 
-    if (prefs.containsKey(key)) {
-      return GetUserResponse.fromJson(jsonDecode(prefs.getString(key))).user;
-    }
+      if (prefs.containsKey(key)) {
+        return GetUserResponse
+            .fromJson(jsonDecode(prefs.getString(key)))
+            .user;
+      }
 
-    http.Response httpResponse = await ApiCaller.get(
-        route: Endpoint(endpointRoute: EndpointRoute.GET_CURRENT_USER_PROFILE));
-    var responseBody = utf8.decode(httpResponse.body.codeUnits);
-    var response = GetUserResponse.fromJson(jsonDecode(responseBody));
-    if (response.hasError()) {
-      throw new ApiException(response.error);
-    }
+      http.Response httpResponse = await ApiCaller.get(
+          route: Endpoint(
+              endpointRoute: EndpointRoute.GET_CURRENT_USER_PROFILE));
+      var responseBody = utf8.decode(httpResponse.body.codeUnits);
+      var response = GetUserResponse.fromJson(jsonDecode(responseBody));
+      if (response.hasError()) {
+        throw new ApiException(response.error);
+      }
 
-    prefs.setString(key, responseBody);
-    return response.user;
+      prefs.setString(key, responseBody);
+      return response.user;
+    });
   }
 
   Future<User> deleteCurrentUser() async {
@@ -129,15 +137,17 @@ class UsersService {
   }
 
   Future<String> getUserFullNameById(String id) async {
-    SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
-    String key = CacheManager.CACHE_KEY_USER_FULL_NAME_PREFIX.toString() + id;
-    if (prefs.containsKey(key)) {
-      return prefs.getString(key);
-    }
-    User user = await getUserById(id);
-    String fullName = user.firstName + " " + user.lastName;
-    prefs.setString(key, fullName);
-    return fullName;
+    await lock.synchronized(() async {
+      SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
+      String key = CacheManager.CACHE_KEY_USER_FULL_NAME_PREFIX.toString() + id;
+      if (prefs.containsKey(key)) {
+        return prefs.getString(key);
+      }
+      User user = await getUserById(id);
+      String fullName = user.firstName + " " + user.lastName;
+      prefs.setString(key, fullName);
+      return fullName;
+    });
   }
 
   Future<User> getUserByUsername(String username) async {

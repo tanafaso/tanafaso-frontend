@@ -7,24 +7,31 @@ class AddMemorizationChallengeRequestBody extends RequestBodyBase {
   int difficulty;
   int firstJuz;
   int lastJuz;
+  int firstSurah;
+  int lastSurah;
   int numberOfQuestions;
 
   AddMemorizationChallengeRequestBody({
     @required this.friendsIds,
     @required this.expiryDate,
     @required this.difficulty,
-    @required this.firstJuz,
-    @required this.lastJuz,
     @required this.numberOfQuestions,
+    this.firstJuz,
+    this.lastJuz,
+    this.firstSurah,
+    this.lastSurah,
   });
 
   @override
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         'friendsIds': friendsIds,
         'expiryDate': expiryDate,
         'difficulty': difficulty,
         'firstJuz': firstJuz,
         'lastJuz': lastJuz,
+        'firstSurah': firstSurah,
+        'lastSurah': lastSurah,
         'numberOfQuestions': numberOfQuestions,
       };
 }

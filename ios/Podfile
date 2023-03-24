@@ -98,4 +98,4 @@ post_install do |installer|
     # End of the permission_handler configuration
   end
 end
-platform :ios, '12.0'
+platform :ios, '14.0'
