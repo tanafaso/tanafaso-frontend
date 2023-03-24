@@ -16,6 +16,8 @@ class MemorizationChallenge {
     this.questions,
     this.firstJuz,
     this.lastJuz,
+    this.firstSurah,
+    this.lastSurah,
     this.difficulty,
   });
 
@@ -27,6 +29,8 @@ class MemorizationChallenge {
   List<Question> questions;
   int firstJuz;
   int lastJuz;
+  int firstSurah;
+  int lastSurah;
   int difficulty;
 
   factory MemorizationChallenge.fromJson(Map<String, dynamic> json) =>
@@ -40,6 +44,8 @@ class MemorizationChallenge {
             json["questions"].map((x) => Question.fromJson(x))),
         firstJuz: json["firstJuz"],
         lastJuz: json["lastJuz"],
+        firstSurah: json["firstSurah"],
+        lastSurah: json["lastSurah"],
         difficulty: json["difficulty"],
       );
 
@@ -52,6 +58,8 @@ class MemorizationChallenge {
         "questions": List<dynamic>.from(questions.map((x) => x.toJson())),
         "firstJuz": firstJuz,
         "lastJuz": lastJuz,
+        "firstSurah": firstSurah,
+        "lastSurah": lastSurah,
         "difficulty": difficulty,
       };
 

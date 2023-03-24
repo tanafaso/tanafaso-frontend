@@ -529,6 +529,10 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                       widget.challenge.memorizationChallenge.firstJuz,
                   initiallySelectedLastJuz:
                       widget.challenge.memorizationChallenge.lastJuz,
+                  initiallySelectedFirstSurah:
+                      widget.challenge.memorizationChallenge.firstSurah,
+                  initiallySelectedLastSurah:
+                      widget.challenge.memorizationChallenge.lastSurah,
                 )));
   }
 
