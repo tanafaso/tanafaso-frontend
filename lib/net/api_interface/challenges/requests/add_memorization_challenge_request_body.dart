@@ -23,8 +23,7 @@ class AddMemorizationChallengeRequestBody extends RequestBodyBase {
   });
 
   @override
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'friendsIds': friendsIds,
         'expiryDate': expiryDate,
         'difficulty': difficulty,

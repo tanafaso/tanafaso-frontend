@@ -26,20 +26,19 @@ import 'package:synchronized/synchronized.dart';
 class UsersService {
   static final Lock lock = new Lock();
 
+  // ignore: missing_return
   Future<User> getCurrentUser() async {
     await lock.synchronized(() async {
       SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
       String key = CacheManager.CACHE_KEY_CURRENT_USER.toString();
 
       if (prefs.containsKey(key)) {
-        return GetUserResponse
-            .fromJson(jsonDecode(prefs.getString(key)))
-            .user;
+        return GetUserResponse.fromJson(jsonDecode(prefs.getString(key))).user;
       }
 
       http.Response httpResponse = await ApiCaller.get(
-          route: Endpoint(
-              endpointRoute: EndpointRoute.GET_CURRENT_USER_PROFILE));
+          route:
+              Endpoint(endpointRoute: EndpointRoute.GET_CURRENT_USER_PROFILE));
       var responseBody = utf8.decode(httpResponse.body.codeUnits);
       var response = GetUserResponse.fromJson(jsonDecode(responseBody));
       if (response.hasError()) {
@@ -136,6 +135,7 @@ class UsersService {
     return response.user;
   }
 
+  // ignore: missing_return
   Future<String> getUserFullNameById(String id) async {
     await lock.synchronized(() async {
       SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();

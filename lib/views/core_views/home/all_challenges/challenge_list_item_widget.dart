@@ -516,7 +516,6 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
     List<Friend> currentChallengeFriends = friends
         .where((friend) => _challengedUsersIds.contains(friend.userId))
         .toList();
-    print('here');
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -530,9 +529,11 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                       widget.challenge.memorizationChallenge.firstJuz,
                   initiallySelectedLastJuz:
                       widget.challenge.memorizationChallenge.lastJuz,
-              initiallySelectedFirstSurah: widget.challenge.memorizationChallenge.firstSurah,
-              initiallySelectedLastSurah: widget.challenge.memorizationChallenge.lastSurah,
-            )));
+                  initiallySelectedFirstSurah:
+                      widget.challenge.memorizationChallenge.firstSurah,
+                  initiallySelectedLastSurah:
+                      widget.challenge.memorizationChallenge.lastSurah,
+                )));
   }
 
   void onCopyCustomSimpleChallenge() async {

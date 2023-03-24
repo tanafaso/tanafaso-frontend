@@ -34,21 +34,20 @@ class MemorizationChallenge {
   int difficulty;
 
   factory MemorizationChallenge.fromJson(Map<String, dynamic> json) =>
-    MemorizationChallenge(
-      id: json["id"],
-      groupId: json["groupId"],
-      creatingUserId: json["creatingUserId"],
-      expiryDate: json["expiryDate"],
-      usersFinished: List<String>.from(json["usersFinished"].map((x) => x)),
-      questions: List<Question>.from(
-          json["questions"].map((x) => Question.fromJson(x))),
-      firstJuz: json["firstJuz"],
-      lastJuz: json["lastJuz"],
-      firstSurah: json["firstSurah"],
-      lastSurah: json["lastSurah"],
-      difficulty: json["difficulty"],
-    );
-
+      MemorizationChallenge(
+        id: json["id"],
+        groupId: json["groupId"],
+        creatingUserId: json["creatingUserId"],
+        expiryDate: json["expiryDate"],
+        usersFinished: List<String>.from(json["usersFinished"].map((x) => x)),
+        questions: List<Question>.from(
+            json["questions"].map((x) => Question.fromJson(x))),
+        firstJuz: json["firstJuz"],
+        lastJuz: json["lastJuz"],
+        firstSurah: json["firstSurah"],
+        lastSurah: json["lastSurah"],
+        difficulty: json["difficulty"],
+      );
 
   Map<String, dynamic> toJson() => {
         "id": id,
