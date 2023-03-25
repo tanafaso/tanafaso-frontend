@@ -152,8 +152,6 @@ class UsersService {
       fullName = user.firstName + " " + user.lastName;
       prefs.setString(key, fullName);
     });
-    print('hereeee');
-    print(fullName);
     return fullName;
   }
 
