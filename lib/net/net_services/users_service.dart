@@ -24,16 +24,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synchronized/synchronized.dart';
 
 class UsersService {
-  static final Lock lock = new Lock();
-
+  static final Lock getUserByIdLock = new Lock();
+  static final Lock getCurrentUserLock = new Lock();
   // ignore: missing_return
   Future<User> getCurrentUser() async {
-    await lock.synchronized(() async {
+    User result;
+    await getCurrentUserLock.synchronized(() async {
       SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
       String key = CacheManager.CACHE_KEY_CURRENT_USER.toString();
 
       if (prefs.containsKey(key)) {
-        return GetUserResponse.fromJson(jsonDecode(prefs.getString(key))).user;
+        result = GetUserResponse.fromJson(jsonDecode(prefs.getString(key))).user;
+        return;
       }
 
       http.Response httpResponse = await ApiCaller.get(
@@ -46,8 +48,9 @@ class UsersService {
       }
 
       prefs.setString(key, responseBody);
-      return response.user;
+      result = response.user;
     });
+    return result;
   }
 
   Future<User> deleteCurrentUser() async {
@@ -137,17 +140,19 @@ class UsersService {
 
   // ignore: missing_return
   Future<String> getUserFullNameById(String id) async {
-    await lock.synchronized(() async {
+    String fullName;
+    await getUserByIdLock.synchronized(() async {
       SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
       String key = CacheManager.CACHE_KEY_USER_FULL_NAME_PREFIX.toString() + id;
       if (prefs.containsKey(key)) {
-        return prefs.getString(key);
+        fullName = prefs.getString(key);
+        return;
       }
       User user = await getUserById(id);
-      String fullName = user.firstName + " " + user.lastName;
+      fullName = user.firstName + " " + user.lastName;
       prefs.setString(key, fullName);
-      return fullName;
     });
+    return fullName;
   }
 
   Future<User> getUserByUsername(String username) async {
