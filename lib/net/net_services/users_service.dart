@@ -34,7 +34,8 @@ class UsersService {
       String key = CacheManager.CACHE_KEY_CURRENT_USER.toString();
 
       if (prefs.containsKey(key)) {
-        result = GetUserResponse.fromJson(jsonDecode(prefs.getString(key))).user;
+        result =
+            GetUserResponse.fromJson(jsonDecode(prefs.getString(key))).user;
         return;
       }
 
