@@ -84,84 +84,105 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
             Center(
               child: Column(
                 children: [
-                  ExpansionTile(
-                    key: GlobalKey(),
-                    title: Text(
-                      "الأصدقاء",
-                      style: TextStyle(
-                          fontSize: _friendsTileExpanded ? 25 : 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    initiallyExpanded: _friendsTileExpanded,
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                    collapsedBackgroundColor:
-                        Theme.of(context).colorScheme.secondary,
-                    textColor: Colors.black,
-                    iconColor: Colors.black,
-                    collapsedTextColor: Colors.black,
-                    collapsedIconColor: Colors.black,
-                    trailing: Icon(
-                      _friendsTileExpanded
-                          ? Icons.arrow_drop_up
-                          : Icons.arrow_drop_down,
-                      size: 30,
-                    ),
-                    onExpansionChanged: (bool expanded) {
-                      setState(() => _friendsTileExpanded = expanded);
-                    },
-                    children: [
-                      Column(
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: ExpansionTile(
+                        key: GlobalKey(),
+                        title: Text(
+                          "الأصدقاء",
+                          style: TextStyle(
+                              fontSize: _friendsTileExpanded ? 25 : 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        initiallyExpanded: _friendsTileExpanded,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        collapsedBackgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        textColor: Colors.black,
+                        iconColor: Colors.black,
+                        collapsedTextColor: Colors.black,
+                        collapsedIconColor: Colors.black,
+                        trailing: Icon(
+                          _friendsTileExpanded
+                              ? Icons.arrow_drop_up
+                              : Icons.arrow_drop_down,
+                          size: 30,
+                        ),
+                        onExpansionChanged: (bool expanded) {
+                          setState(() => _friendsTileExpanded = expanded);
+                        },
                         children: [
-                          Visibility(
-                            visible: widget.group != null,
-                            child: widget.group == null
-                                ? Container()
-                                : FriendsProgressWidget(
-                                    challenge: Challenge(
-                                        azkarChallenge: widget.challenge),
-                                    challengedUsersIds:
-                                        widget.challengedUsersIds,
-                                    challengedUsersFullNames:
-                                        widget.challengedUsersFullNames,
-                                  ),
-                          ),
-                          Visibility(
-                            child: Divider(),
-                            visible:
-                                (widget.challenge.motivation?.length ?? 0) != 0,
-                          ),
-                          Visibility(
-                            visible:
-                                (widget.challenge.motivation?.length ?? 0) != 0,
-                            maintainSize: false,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Icon(Icons.directions_run),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        3 /
-                                        4,
-                                    child: AutoSizeText(
-                                      widget.challenge.motivation,
-                                      textAlign: TextAlign.center,
-                                      softWrap: true,
-                                      style: TextStyle(fontSize: 25),
-                                      maxLines: 4,
-                                      minFontSize: 18,
+                          Column(
+                            children: [
+                              Visibility(
+                                visible: widget.group != null,
+                                child: widget.group == null
+                                    ? Container()
+                                    : SingleChildScrollView(
+                                        child: ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                            maxHeight: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                5,
+                                          ),
+                                          child: FriendsProgressWidget(
+                                            challenge: Challenge(
+                                                azkarChallenge:
+                                                    widget.challenge),
+                                            challengedUsersIds:
+                                                widget.challengedUsersIds,
+                                            challengedUsersFullNames:
+                                                widget.challengedUsersFullNames,
+                                          ),
+                                        ),
+                                      ),
+                              ),
+                              Visibility(
+                                child: Divider(),
+                                visible: (widget.challenge.motivation?.length ??
+                                        0) !=
+                                    0,
+                              ),
+                              Visibility(
+                                visible: (widget.challenge.motivation?.length ??
+                                        0) !=
+                                    0,
+                                maintainSize: false,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: Icon(Icons.directions_run),
                                     ),
-                                  ),
-                                )
-                              ],
-                            ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                3 /
+                                                4,
+                                        child: AutoSizeText(
+                                          widget.challenge.motivation,
+                                          textAlign: TextAlign.center,
+                                          softWrap: true,
+                                          style: TextStyle(fontSize: 25),
+                                          maxLines: 4,
+                                          minFontSize: 18,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                   Expanded(child: getSubChallenges()),
                 ],
