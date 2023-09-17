@@ -47,6 +47,7 @@ android {
     defaultConfig {
         applicationId "com.tanafaso.azkar"
         minSdkVersion 19
+        targetSdkVersion 33
         compileSdkVersion 33
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
