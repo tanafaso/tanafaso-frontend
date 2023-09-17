@@ -562,7 +562,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
       return;
     }
 
-    RegExp regex = new RegExp('^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    RegExp regex = new RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
     if (regex.stringMatch(_email) != _email) {
       setState(() {
         progressButtonState = ButtonState.fail;
