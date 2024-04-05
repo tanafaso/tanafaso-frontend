@@ -9,12 +9,9 @@ class FontService {
 
   Future<String> getPreferredAzkarAndQuranFontFamily() async {
     var prefs = await ServiceProvider.cacheManager.getPrefs();
-    String font =
+    String? font =
         prefs.getString(CacheManager.CACHE_KEY_AZKAR_AND_QURAN_FONT_FAMILY);
-    if (font == null) {
-      font = DEFAULT_AZKAR_AND_QURAN_FONT_FAMILY;
-    }
-    return font;
+    return font ?? DEFAULT_AZKAR_AND_QURAN_FONT_FAMILY;
   }
 
   Future<void> setPreferredAzkarAndQuranFontFamily(
@@ -33,12 +30,9 @@ class FontService {
 
   Future<String> getPreferredNonAzkarAndNonQuranFontFamily() async {
     var prefs = await ServiceProvider.cacheManager.getPrefs();
-    String font = prefs
+    String? font = prefs
         .getString(CacheManager.CACHE_KEY_NON_AZKAR_AND_NON_QURAN_FONT_FAMILY);
-    if (font == null) {
-      font = DEFAULT_NON_AZKAR_AND_NON_QURAN_FONT_FAMILY;
-    }
-    return font;
+    return font ?? DEFAULT_NON_AZKAR_AND_NON_QURAN_FONT_FAMILY;
   }
 
   Future<void> setPreferredNonAzkarAndNonQuranFontFamily(

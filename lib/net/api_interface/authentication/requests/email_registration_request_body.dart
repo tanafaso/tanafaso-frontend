@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 
 import '../../request_base.dart';
 
@@ -9,10 +8,10 @@ class EmailRegistrationRequestBody extends RequestBodyBase {
   final String lastName;
 
   EmailRegistrationRequestBody({
-    @required this.email,
-    @required this.password,
-    @required this.firstName,
-    @required this.lastName,
+    required this.email,
+    required this.password,
+    required this.firstName,
+    required this.lastName,
   });
 
   @override

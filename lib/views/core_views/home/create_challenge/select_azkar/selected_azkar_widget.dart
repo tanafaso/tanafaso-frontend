@@ -23,8 +23,8 @@ class SelectedAzkarWidget extends StatefulWidget {
   final List<SubChallenge> initiallySelectedSubChallenges;
 
   SelectedAzkarWidget({
-    @required this.onSelectedAzkarChangedCallback,
-    @required this.onSelectedAzkarValidityChangedCallback,
+    required this.onSelectedAzkarChangedCallback,
+    required this.onSelectedAzkarValidityChangedCallback,
     this.initiallySelectedSubChallenges = const [],
   });
 
@@ -34,7 +34,7 @@ class SelectedAzkarWidget extends StatefulWidget {
 
 class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
     with AutomaticKeepAliveClientMixin {
-  List<SubChallenge> _subChallenges;
+  late List<SubChallenge> _subChallenges;
   List<TextEditingController> _repetitionsControllers = [];
 
   @override
@@ -96,11 +96,11 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
               onPressed: () {
                 onAddAzkarPressed();
               },
-              child: (_subChallenges?.length ?? 0) == 0
+              child: (_subChallenges.length ?? 0) == 0
                   ? Icon(Icons.add, color: Theme.of(context).iconTheme.color)
                   : Text(
                       AppLocalizations.of(context).addAzkar,
-                      style: Theme.of(context).textTheme.button,
+                      style: Theme.of(context).textTheme.labelLarge,
                     ),
             ),
           ),
@@ -144,15 +144,13 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: Text(
-                            _subChallenges[index].zekr.zekr,
+                            _subChallenges[index].zekr.zekr!,
                             textAlign: TextAlign.center,
                             textDirection: TextDirection.rtl,
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: Theme.of(context)
-                                    // ignore: deprecated_member_use
-                                    .accentTextTheme
-                                    .bodyText1
+                                    .primaryTextTheme.labelLarge!
                                     .fontFamily),
                           ),
                         ),
@@ -264,7 +262,7 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
                   categories: categories,
                 ))) as List<SubChallenge>;
 
-    if ((selectedAzkar?.length ?? 0) == 0) {
+    if ((selectedAzkar.length ?? 0) == 0) {
       return;
     }
 
@@ -347,14 +345,14 @@ class _SelectedAzkarWidgetState extends State<SelectedAzkarWidget>
     // Used to keep track of the last custom challenge ID.
     int maxId = 0;
     for (SubChallenge subChallenge in subChallenges) {
-      merged[subChallenge.zekr.id] = subChallenge;
-      maxId = max(maxId, subChallenge.zekr.id);
+      merged[subChallenge.zekr.id!] = subChallenge;
+      maxId = max(maxId, subChallenge.zekr.id!);
     }
     for (SubChallenge subChallenge in newSubChallenges) {
       if (subChallenge.zekr.id == Zekr.customZekrIdOffset) {
         subChallenge.zekr.id = maxId + 1;
       }
-      merged[subChallenge.zekr.id] = subChallenge;
+      merged[subChallenge.zekr.id!] = subChallenge;
     }
 
     return merged.values.toList();

@@ -1,7 +1,7 @@
 class Status {
   // errorMessage can be empty if the code is API_SUCCESS.
-  String errorMessage;
-  int code;
+  late String errorMessage;
+  late int code;
 
   static const int API_SUCCESS = 1000000;
   static const int API_USER_ALREADY_LOGGED_IN_ERROR = 1;
@@ -166,9 +166,9 @@ class Status {
     }
     print("Error with code " + errorCode.toString() + " has occured.");
     if (conversions.containsKey(errorCode)) {
-      errorMessage = conversions[errorCode];
+      errorMessage = conversions[errorCode]!;
     } else {
-      errorMessage = conversions[API_DEFAULT_ERROR];
+      errorMessage = conversions[API_DEFAULT_ERROR]!;
     }
   }
 

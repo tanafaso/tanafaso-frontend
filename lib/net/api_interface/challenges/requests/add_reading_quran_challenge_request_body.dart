@@ -1,14 +1,13 @@
 import 'package:azkar/models/reading_quran_challenge.dart';
 import 'package:azkar/net/api_interface/request_base.dart';
-import 'package:flutter/cupertino.dart';
 
 class AddReadingQuranChallengeRequestBody extends RequestBodyBase {
   List<String> friendsIds;
   ReadingQuranChallenge readingQuranChallenge;
 
   AddReadingQuranChallengeRequestBody({
-    @required this.friendsIds,
-    @required this.readingQuranChallenge,
+    required this.friendsIds,
+    required this.readingQuranChallenge,
   });
 
   @override

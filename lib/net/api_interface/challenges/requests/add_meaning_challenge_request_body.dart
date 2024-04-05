@@ -1,5 +1,4 @@
 import 'package:azkar/net/api_interface/request_base.dart';
-import 'package:flutter/cupertino.dart';
 
 class AddMeaningChallengeRequestBody extends RequestBodyBase {
   List<String> friendsIds;
@@ -7,9 +6,9 @@ class AddMeaningChallengeRequestBody extends RequestBodyBase {
   int numberOfWords;
 
   AddMeaningChallengeRequestBody({
-    @required this.friendsIds,
-    @required this.expiryDate,
-    @required this.numberOfWords,
+    required this.friendsIds,
+    required this.expiryDate,
+    required this.numberOfWords,
   });
 
   @override

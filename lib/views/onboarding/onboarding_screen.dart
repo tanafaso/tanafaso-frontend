@@ -1,5 +1,4 @@
 import 'package:azkar/views/auth/auth_main_screen.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -31,7 +30,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           fontWeight: FontWeight.w700,
           color: Colors.green.shade900),
       bodyTextStyle: bodyStyle,
-      descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
       pageColor: Theme.of(context).colorScheme.primary,
       imagePadding: EdgeInsets.zero,
     );
@@ -39,13 +37,54 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return IntroductionScreen(
       key: introKey,
       globalBackgroundColor: Theme.of(context).colorScheme.primary,
-      globalHeader: Align(
-        alignment: Alignment.topRight,
+      globalFooter: Align(
+        alignment: Alignment.center,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(top: 16, right: 16),
+            padding: const EdgeInsets.only(top: 16, right: 16, bottom: 16),
           ),
         ),
+      ),
+      globalHeader: Align(
+        alignment: Alignment.center,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 16, right: 16, bottom: 16),
+          ),
+        ),
+      ),
+      onDone: () => _onIntroEnd(context),
+      //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+      showNextButton: true,
+      next: const Icon(
+        Icons.arrow_back_ios,
+        color: Colors.black,
+      ),
+      done: Padding(
+        padding: const EdgeInsets.all(0),
+        child: Icon(
+          Icons.done,
+          size: 30,
+          color: Colors.black,
+        ),
+      ),
+      curve: Curves.fastLinearToSlowEaseIn,
+      controlsMargin: const EdgeInsets.only(bottom: 3 * 8.0, left: 8, right: 8),
+      rtl: true,
+      controlsPadding: const EdgeInsets.all(16.0),
+      dotsFlex: 2,
+      dotsDecorator: const DotsDecorator(
+        size: Size(10.0, 10.0),
+        color: Color(0xFFBDBDBD),
+        activeSize: Size(22.0, 10.0),
+        activeColor: Colors.black,
+        activeShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        ),
+      ),
+      dotsContainerDecorator: ShapeDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        shape: RoundedRectangleBorder(),
       ),
       pages: [
         PageViewModel(
@@ -107,43 +146,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           decoration: pageDecoration,
         ),
       ],
-      onDone: () => _onIntroEnd(context),
-      //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
-      showSkipButton: false,
-      showNextButton: false,
-      skipFlex: 0,
-      nextFlex: 0,
-      //rtl: true, // Display as right-to-left
-      next: const Icon(
-        Icons.arrow_forward,
-        color: Colors.black,
-      ),
-      done: Padding(
-        padding: const EdgeInsets.all(0),
-        child: Icon(
-          Icons.arrow_forward_ios_outlined,
-          size: 30,
-          color: Colors.black,
-        ),
-      ),
-      curve: Curves.fastLinearToSlowEaseIn,
-      controlsMargin: const EdgeInsets.only(bottom: 3 * 8.0, left: 8, right: 8),
-      controlsPadding: kIsWeb
-          ? const EdgeInsets.all(12.0)
-          : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
-      dotsDecorator: const DotsDecorator(
-        size: Size(10.0, 10.0),
-        color: Color(0xFFBDBDBD),
-        activeSize: Size(22.0, 10.0),
-        activeColor: Colors.black,
-        activeShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0)),
-        ),
-      ),
-      dotsContainerDecorator: ShapeDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        shape: RoundedRectangleBorder(),
-      ),
     );
   }
 }

@@ -36,7 +36,7 @@ class HomeService {
       var response = GetHomeResponse.fromJson(jsonDecode(responseBody));
 
       if (response.hasError()) {
-        throw new ApiException(response.error);
+        throw new ApiException(response.error!);
       }
 
       var challengesResponse =

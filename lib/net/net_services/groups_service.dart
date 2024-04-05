@@ -19,9 +19,9 @@ class GroupsService {
     var response = GetGroupResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
-    return response.group;
+    return response.group!;
   }
 
   Future<List<Group>> getGroups() async {
@@ -29,8 +29,8 @@ class GroupsService {
     String key = CacheManager.CACHE_KEY_GROUPS.toString();
 
     if (prefs.containsKey(key)) {
-      return GetGroupsResponse.fromJson(jsonDecode(prefs.getString(key)))
-          .groups;
+      return GetGroupsResponse.fromJson(jsonDecode(prefs.getString(key)!))
+          .groups!;
     }
 
     http.Response httpResponse = await ApiCaller.get(
@@ -38,10 +38,10 @@ class GroupsService {
     var responseBody = utf8.decode(httpResponse.body.codeUnits);
     var response = GetGroupsResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
 
     prefs.setString(key, responseBody);
-    return response.groups;
+    return response.groups!;
   }
 }

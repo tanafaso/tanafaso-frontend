@@ -1,21 +1,20 @@
 import 'package:azkar/net/api_interface/request_base.dart';
-import 'package:flutter/cupertino.dart';
 
 class AddMemorizationChallengeRequestBody extends RequestBodyBase {
-  List<String> friendsIds;
-  int expiryDate;
-  int difficulty;
-  int firstJuz;
-  int lastJuz;
-  int firstSurah;
-  int lastSurah;
-  int numberOfQuestions;
+  List<String>? friendsIds;
+  int? expiryDate;
+  int? difficulty;
+  int? firstJuz;
+  int? lastJuz;
+  int? firstSurah;
+  int? lastSurah;
+  int? numberOfQuestions;
 
   AddMemorizationChallengeRequestBody({
-    @required this.friendsIds,
-    @required this.expiryDate,
-    @required this.difficulty,
-    @required this.numberOfQuestions,
+    required this.friendsIds,
+    required this.expiryDate,
+    required this.difficulty,
+    required this.numberOfQuestions,
     this.firstJuz,
     this.lastJuz,
     this.firstSurah,

@@ -1,24 +1,23 @@
-import 'package:flutter/material.dart';
 
 class Friend {
   final String userId;
-  final String groupId;
+  final String? groupId;
   final String username;
   final String firstName;
   final String lastName;
   final bool pending;
-  int userTotalScore;
+  int? userTotalScore;
   final int friendTotalScore;
 
   Friend({
-    @required this.userId,
-    @required this.groupId,
-    @required this.username,
-    @required this.firstName,
-    @required this.lastName,
-    @required this.pending,
+    required this.userId,
+    this.groupId,
+    required this.username,
+    required this.firstName,
+    required this.lastName,
+    required this.pending,
     this.userTotalScore,
-    @required this.friendTotalScore,
+    required this.friendTotalScore,
   });
 
   factory Friend.fromJson(Map<String, dynamic> json) => Friend(

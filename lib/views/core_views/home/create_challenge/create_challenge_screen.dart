@@ -24,7 +24,7 @@ class CreateChallengeScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Scrollbar(
-          isAlwaysShown: true,
+          thumbVisibility: true,
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: SingleChildScrollView(
@@ -39,9 +39,7 @@ class CreateChallengeScreen extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 30,
                             fontFamily: Theme.of(context)
-                                // ignore: deprecated_member_use
-                                .accentTextTheme
-                                .bodyText1
+                                .primaryTextTheme.labelLarge!
                                 .fontFamily),
                         maxLines: 1,
                       ),

@@ -12,7 +12,7 @@ class FriendRequestWidget extends StatefulWidget {
   final OnFriendRequestResolvedCallback onFriendRequestResolvedCallback;
 
   FriendRequestWidget(
-      {@required this.friend, @required this.onFriendRequestResolvedCallback});
+      {required this.friend, required this.onFriendRequestResolvedCallback});
 
   @override
   _FriendRequestWidgetState createState() => _FriendRequestWidgetState();
@@ -72,16 +72,18 @@ class _FriendRequestWidgetState extends State<FriendRequestWidget> {
                   Flexible(
                     fit: FlexFit.tight,
                     // ignore: deprecated_member_use
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       child: Text(AppLocalizations.of(context).accept),
-                      color: Colors.green.shade400,
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.green.shade400),
+                      ),
                       onPressed: () => onAcceptedPressed(),
                     ),
                   ),
                   Flexible(
                     fit: FlexFit.tight,
-                    // ignore: deprecated_member_use
-                    child: OutlineButton(
+                    child: OutlinedButton(
                       child: (Text(AppLocalizations.of(context).ignore)),
                       onPressed: () => onRejectedPressed(),
                     ),

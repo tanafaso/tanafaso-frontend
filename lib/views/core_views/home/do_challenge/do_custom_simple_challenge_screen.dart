@@ -29,11 +29,11 @@ class DoCustomSimpleChallengeScreen extends StatefulWidget {
   final List<Friend> friendshipScores;
 
   DoCustomSimpleChallengeScreen({
-    @required this.challenge,
-    @required this.group,
-    @required this.challengedUsersIds,
-    @required this.challengedUsersFullNames,
-    @required this.friendshipScores,
+    required this.challenge,
+    required this.group,
+    required this.challengedUsersIds,
+    required this.challengedUsersFullNames,
+    required this.friendshipScores,
   });
 
   @override
@@ -44,16 +44,16 @@ class DoCustomSimpleChallengeScreen extends StatefulWidget {
 class _DoCustomSimpleChallengeScreenState
     extends State<DoCustomSimpleChallengeScreen>
     with SingleTickerProviderStateMixin {
-  ConfettiController confettiControler;
-  bool _finishedConfetti;
-  ButtonState _progressButtonState;
+  ConfettiController? confettiControler;
+  bool? _finishedConfetti;
+  ButtonState? _progressButtonState;
 
   @override
   void initState() {
     super.initState();
 
     _progressButtonState =
-        widget.challenge.finished ? ButtonState.success : ButtonState.idle;
+        widget.challenge.finished! ? ButtonState.success : ButtonState.idle;
     _finishedConfetti = false;
     confettiControler =
         ConfettiController(duration: const Duration(seconds: 1));
@@ -64,7 +64,7 @@ class _DoCustomSimpleChallengeScreenState
     return Scaffold(
         appBar: AppBar(
           title: AutoSizeText(
-            widget.challenge.getName(),
+            widget.challenge.getName()!,
             style: TextStyle(fontSize: 30),
           ),
         ),
@@ -105,7 +105,7 @@ class _DoCustomSimpleChallengeScreenState
                                 child: FittedBox(
                                     fit: BoxFit.scaleDown,
                                     child: Text(
-                                      widget.challenge.description,
+                                      widget.challenge.description!,
                                       style: TextStyle(fontSize: 25),
                                     )))
                           ],
@@ -173,20 +173,20 @@ class _DoCustomSimpleChallengeScreenState
       });
       try {
         await ServiceProvider.challengesService
-            .finishCustomSimpleChallenge(widget.challenge.id);
+            .finishCustomSimpleChallenge(widget.challenge.id!);
       } on ApiException catch (e) {
         SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
         return;
       }
       setState(() {
         _progressButtonState = ButtonState.success;
-        confettiControler.addListener(() {
-          if (confettiControler.state == ConfettiControllerState.stopped) {
+        confettiControler!.addListener(() {
+          if (confettiControler!.state == ConfettiControllerState.stopped) {
             onFinishedConfetti();
           }
         });
 
-        confettiControler.play();
+        confettiControler!.play();
       });
     } else if (_progressButtonState == ButtonState.success) {
       SnackBarUtils.showSnackBar(context, "لقد أنهيت هذا التحدي سابقًا");
@@ -199,7 +199,7 @@ class _DoCustomSimpleChallengeScreenState
       child: ConfettiWidget(
         maximumSize: Size(30, 30),
         shouldLoop: false,
-        confettiController: confettiControler,
+        confettiController: confettiControler!,
         blastDirection: pi,
         blastDirectionality: BlastDirectionality.explosive,
         maxBlastForce: 10,
@@ -214,7 +214,7 @@ class _DoCustomSimpleChallengeScreenState
   onFinishedConfetti() async {
     // Avoid popping twice if confetti's controller decided to call our listner
     // more than once.
-    if (_finishedConfetti) {
+    if (_finishedConfetti!) {
       return;
     }
     _finishedConfetti = true;
@@ -238,7 +238,7 @@ class _DoCustomSimpleChallengeScreenState
 
   @override
   void dispose() {
-    confettiControler.dispose();
+    confettiControler!.dispose();
     super.dispose();
   }
 }

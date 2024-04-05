@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class FacebookFriendsScreen extends StatelessWidget {
   final List<User> facebookFriends;
 
-  FacebookFriendsScreen({@required this.facebookFriends});
+  FacebookFriendsScreen({required this.facebookFriends});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class FacebookFriendsScreen extends StatelessWidget {
   }
 
   Widget getMainWidgetConditionally(BuildContext context) {
-    if ((facebookFriends?.length ?? 0) == 0) {
+    if ((facebookFriends.length ?? 0) == 0) {
       return Center(
         child: Text(AppLocalizations.of(context).noFriendsFound),
       );

@@ -13,7 +13,7 @@ class FindFriendsNotPubliclyAvailableWidget extends StatefulWidget {
       onAddedToPubliclyAvailableUsersCallback;
 
   FindFriendsNotPubliclyAvailableWidget(
-      {@required this.onAddedToPubliclyAvailableUsersCallback});
+      {required this.onAddedToPubliclyAvailableUsersCallback});
 
   @override
   _FindFriendsNotPubliclyAvailableWidgetState createState() =>
@@ -28,11 +28,11 @@ enum GenderState {
 
 class _FindFriendsNotPubliclyAvailableWidgetState
     extends State<FindFriendsNotPubliclyAvailableWidget> {
-  GenderState _genderState;
-  Color _maleButtonColor;
-  Color _femaleButtonColor;
-  bool _consentGiven;
-  ButtonState _searchButtonState;
+  late GenderState _genderState;
+  late Color _maleButtonColor;
+  late Color _femaleButtonColor;
+  late bool _consentGiven;
+  late ButtonState _searchButtonState;
 
   @override
   void initState() {
@@ -126,6 +126,9 @@ class _FindFriendsNotPubliclyAvailableWidgetState
                         'قبل البحث عن أصدقاء ، يجب أن توافق على أن المستخدمين الآخرين سيتمكنون من رؤية اسمك وسيتمكنون من إرسال طلبات صداقة إليك.',
                         style: TextStyle(fontSize: 20),
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16),
+                      ),
                       Text.rich(TextSpan(
                         style: TextStyle(color: Colors.black, fontSize: 20),
                         children: [
@@ -142,11 +145,15 @@ class _FindFriendsNotPubliclyAvailableWidgetState
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Checkbox(
-                            checkColor: Colors.white,
-                            fillColor: MaterialStateProperty.resolveWith((_) =>
-                                _consentGiven
-                                    ? Colors.green.shade300
-                                    : Colors.red),
+                            side: BorderSide(
+                              color: Colors.black,
+                              width: 2,
+                            ),
+                            overlayColor: MaterialStateProperty.resolveWith(
+                                (_) => Colors.green.shade300),
+                            checkColor: Colors.black,
+                            fillColor: MaterialStateProperty.resolveWith(
+                                (_) => Colors.white),
                             value: _consentGiven,
                             onChanged: (_) {
                               setState(() {
@@ -186,7 +193,7 @@ class _FindFriendsNotPubliclyAvailableWidgetState
                               Icon(Icons.search, color: Colors.yellow.shade200),
                           color: Theme.of(context)
                               .buttonTheme
-                              .colorScheme
+                              .colorScheme!
                               .primary),
                       ButtonState.fail: IconedButton(
                           icon: Icon(Icons.cancel, color: Colors.white),

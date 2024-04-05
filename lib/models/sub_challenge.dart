@@ -4,7 +4,7 @@ class SubChallenge {
   Zekr zekr;
   int repetitions;
 
-  SubChallenge({this.zekr, this.repetitions});
+  SubChallenge({required this.zekr, required this.repetitions});
 
   factory SubChallenge.fromJson(Map<String, dynamic> json) {
     Zekr zekr = Zekr.fromJson(json["zekr"]);

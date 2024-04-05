@@ -4,9 +4,9 @@ import 'package:azkar/models/group.dart';
 import 'package:azkar/net/api_interface/response_base.dart';
 
 class GetHomeResponse extends ResponseBase {
-  List<Challenge> challenges;
-  List<Friend> friends;
-  List<Group> groups;
+  List<Challenge>? challenges;
+  List<Friend>? friends;
+  List<Group>? groups;
 
   static GetHomeResponse fromJson(Map<String, dynamic> json) {
     GetHomeResponse response = new GetHomeResponse();
@@ -16,15 +16,15 @@ class GetHomeResponse extends ResponseBase {
     }
     response.challenges = [];
     for (var jsonChallenge in json['data']['challenges']) {
-      response.challenges.add(Challenge.fromJson(jsonChallenge));
+      response.challenges!.add(Challenge.fromJson(jsonChallenge));
     }
     response.friends = [];
     for (var jsonFriend in json['data']['friends']) {
-      response.friends.add(Friend.fromJson(jsonFriend));
+      response.friends!.add(Friend.fromJson(jsonFriend));
     }
     response.groups = [];
     for (var jsonGroup in json['data']['groups']) {
-      response.groups.add(Group.fromJson(jsonGroup));
+      response.groups!.add(Group.fromJson(jsonGroup));
     }
     return response;
   }

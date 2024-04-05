@@ -1,5 +1,4 @@
 import 'package:azkar/net/api_interface/request_base.dart';
-import 'package:flutter/cupertino.dart';
 
 class AddCustomSimpleChallengeRequestBody extends RequestBodyBase {
   List<String> friendsIds;
@@ -7,9 +6,9 @@ class AddCustomSimpleChallengeRequestBody extends RequestBodyBase {
   String description;
 
   AddCustomSimpleChallengeRequestBody({
-    @required this.friendsIds,
-    @required this.expiryDate,
-    @required this.description,
+    required this.friendsIds,
+    required this.expiryDate,
+    required this.description,
   });
 
   @override

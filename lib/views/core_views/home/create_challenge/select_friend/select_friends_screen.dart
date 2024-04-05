@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 class SelectFriendsScreen extends StatefulWidget {
   final List<Friend> friends;
 
-  SelectFriendsScreen({@required this.friends});
+  SelectFriendsScreen({required this.friends});
 
   @override
   _SelectFriendsScreenState createState() => _SelectFriendsScreenState();
 }
 
 class _SelectFriendsScreenState extends State<SelectFriendsScreen> {
-  List<Friend> _selectedFriends;
+  late List<Friend> _selectedFriends;
 
   @override
   void initState() {
@@ -42,16 +42,15 @@ class _SelectFriendsScreenState extends State<SelectFriendsScreen> {
                     child: getFriendsList(
                         context,
                         widget.friends
-                                ?.where((friend) => !friend.pending)
-                                ?.toList() ??
+                                .where((friend) => !friend.pending)
+                                .toList() ??
                             []))),
             Padding(
               padding: const EdgeInsets.only(
                   left: 8.0, right: 8, top: 8, bottom: 3 * 8.0),
               child: Container(
                 child: ButtonTheme(
-                  // ignore: deprecated_member_use
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () => onCreatePressed(),
                     child: Center(
                         child: FittedBox(
@@ -96,7 +95,7 @@ class _SelectFriendsScreenState extends State<SelectFriendsScreen> {
   bool readyToFinish() => _selectedFriends.length != 0;
 
   Widget getFriendsList(BuildContext context, List<Friend> friends) {
-    if (friends?.isEmpty ?? false) {
+    if (friends.isEmpty ?? false) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

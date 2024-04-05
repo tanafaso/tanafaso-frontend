@@ -21,17 +21,17 @@ class MemorizationChallenge {
     this.difficulty,
   });
 
-  String id;
-  String groupId;
-  String creatingUserId;
-  int expiryDate;
-  List<String> usersFinished;
-  List<Question> questions;
-  int firstJuz;
-  int lastJuz;
-  int firstSurah;
-  int lastSurah;
-  int difficulty;
+  String? id;
+  String? groupId;
+  String? creatingUserId;
+  int? expiryDate;
+  List<String>? usersFinished;
+  List<Question>? questions;
+  int? firstJuz;
+  int? lastJuz;
+  int? firstSurah;
+  int? lastSurah;
+  int? difficulty;
 
   factory MemorizationChallenge.fromJson(Map<String, dynamic> json) =>
       MemorizationChallenge(
@@ -54,8 +54,8 @@ class MemorizationChallenge {
         "groupId": groupId,
         "creatingUserId": creatingUserId,
         "expiryDate": expiryDate,
-        "usersFinished": List<String>.from(usersFinished.map((x) => x)),
-        "questions": List<dynamic>.from(questions.map((x) => x.toJson())),
+        "usersFinished": List<String>.from(usersFinished ?? [].map((x) => x)),
+        "questions": List<dynamic>.from(questions ?? [].map((x) => x.toJson())),
         "firstJuz": firstJuz,
         "lastJuz": lastJuz,
         "firstSurah": firstSurah,
@@ -68,8 +68,8 @@ class MemorizationChallenge {
   }
 
   bool done() {
-    for (Question question in questions) {
-      if (!question.finished) {
+    for (Question question in questions ?? []) {
+      if (question.finished == null || !question.finished!) {
         return false;
       }
     }
@@ -93,19 +93,19 @@ class Question {
     this.finished,
   });
 
-  int number;
+  int? number;
   // ALL ONE-BASED
-  int juz;
-  int ayah;
-  int surah;
-  int firstAyahInRub;
-  int firstAyahInJuz;
-  List<int> wrongPreviousAyahOptions;
-  List<int> wrongNextAyahOptions;
-  List<int> wrongFirstAyahInRubOptions;
-  List<int> wrongFirstAyahInJuzOptions;
-  List<int> wrongSurahOptions;
-  bool finished;
+  int? juz;
+  int? ayah;
+  int? surah;
+  int? firstAyahInRub;
+  int? firstAyahInJuz;
+  List<int>? wrongPreviousAyahOptions;
+  List<int>? wrongNextAyahOptions;
+  List<int>? wrongFirstAyahInRubOptions;
+  List<int>? wrongFirstAyahInJuzOptions;
+  List<int>? wrongSurahOptions;
+  bool? finished;
 
   factory Question.fromJson(Map<String, dynamic> json) => Question(
         number: json["number"],
@@ -135,15 +135,15 @@ class Question {
         "firstAyahInRub": firstAyahInRub,
         "firstAyahInJuz": firstAyahInJuz,
         "wrongPreviousAyahOptions":
-            List<dynamic>.from(wrongPreviousAyahOptions.map((x) => x)),
+            List<dynamic>.from(wrongPreviousAyahOptions ?? [].map((x) => x)),
         "wrongNextAyahOptions":
-            List<dynamic>.from(wrongNextAyahOptions.map((x) => x)),
+            List<dynamic>.from(wrongNextAyahOptions ?? [].map((x) => x)),
         "wrongFirstAyahInRubOptions":
-            List<dynamic>.from(wrongFirstAyahInRubOptions.map((x) => x)),
+            List<dynamic>.from(wrongFirstAyahInRubOptions ?? [].map((x) => x)),
         "wrongFirstAyahInJuzOptions":
-            List<dynamic>.from(wrongFirstAyahInJuzOptions.map((x) => x)),
+            List<dynamic>.from(wrongFirstAyahInJuzOptions ?? [].map((x) => x)),
         "wrongSurahOptions":
-            List<dynamic>.from(wrongSurahOptions.map((x) => x)),
+            List<dynamic>.from(wrongSurahOptions ?? [].map((x) => x)),
         "finished": finished,
       };
 }

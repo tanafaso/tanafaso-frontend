@@ -15,8 +15,8 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String _email;
-  ButtonState progressButtonState;
+  late String _email;
+  late ButtonState progressButtonState;
 
   @override
   void initState() {
@@ -112,8 +112,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                                 RegExp regex = new RegExp(
                                                     '^[\\w-_\\.+]*[\\w-_\\.]\\@'
                                                     '([\\w]+\\.)+[\\w]+[\\w]\$');
-                                                if (regex.stringMatch(email) !=
-                                                    email) {
+                                                if (email == null ||
+                                                    regex.stringMatch(email) !=
+                                                        email) {
                                                   return AppLocalizations.of(
                                                           context)
                                                       .emailIsInvalid;
@@ -184,7 +185,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         ButtonState.idle: IconedButton(
             text: AppLocalizations.of(context).send,
             icon: Icon(Icons.add, color: Colors.black),
-            color: Theme.of(context).buttonTheme.colorScheme.primary),
+            color: Theme.of(context).buttonTheme.colorScheme!.primary),
         ButtonState.loading: IconedButton(
             text: AppLocalizations.of(context).sending,
             color: Colors.yellow.shade200),
@@ -208,7 +209,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   void onProgressButtonPressed() {
     switch (progressButtonState) {
       case ButtonState.idle:
-        if (!_formKey.currentState.validate()) {
+        if (_formKey.currentState == null ||
+            !_formKey.currentState!.validate()) {
           break;
         }
 

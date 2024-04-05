@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'status.dart';
 
 abstract class ResponseBase {
-  Status error;
+  Status? error;
 
   @protected
   setError(Map<String, dynamic> json) {
@@ -15,11 +15,11 @@ abstract class ResponseBase {
     error = Status(errorCode);
   }
 
-  String getErrorMessage() {
-    return error.errorMessage;
+  String? getErrorMessage() {
+    return error?.errorMessage;
   }
 
   bool hasError() {
-    return error?.code != Status.API_SUCCESS;
+    return error == null ? false : error!.code != Status.API_SUCCESS;
   }
 }

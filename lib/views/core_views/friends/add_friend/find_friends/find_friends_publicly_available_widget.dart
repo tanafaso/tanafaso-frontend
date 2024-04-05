@@ -16,8 +16,8 @@ class FindFriendsPubliclyAvailableWidget extends StatefulWidget {
   final OnNeedNextPageCallback onNeedNextPageCallback;
 
   FindFriendsPubliclyAvailableWidget({
-    @required this.publiclyAvailableUsers,
-    @required this.onNeedNextPageCallback,
+    required this.publiclyAvailableUsers,
+    required this.onNeedNextPageCallback,
   });
 
   @override
@@ -27,7 +27,7 @@ class FindFriendsPubliclyAvailableWidget extends StatefulWidget {
 
 class _FindFriendsPubliclyAvailableWidgetState
     extends State<FindFriendsPubliclyAvailableWidget> {
-  ButtonState _removeFromPubliclyAvailableListButtonState;
+  late ButtonState _removeFromPubliclyAvailableListButtonState;
   final _controller = ScrollController();
 
   @override
@@ -104,7 +104,7 @@ class _FindFriendsPubliclyAvailableWidgetState
               : Expanded(
                   child: Scrollbar(
                     controller: _controller,
-                    isAlwaysShown: true,
+                    thumbVisibility: true,
                     child: ListView.builder(
                       itemCount: widget.publiclyAvailableUsers.length,
                       controller: _controller,

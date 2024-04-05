@@ -30,10 +30,10 @@ class CreateReadingQuranChallengeScreen extends StatefulWidget {
 
 class _CreateReadingQuranChallengeScreenState
     extends State<CreateReadingQuranChallengeScreen> {
-  List<Friend> _selectedFriends;
-  List<SurahSubChallenge> _selectedSurahSubChallenges;
-  ButtonState progressButtonState;
-  int _expiresAfterHoursNum;
+  late List<Friend> _selectedFriends;
+  late List<SurahSubChallenge> _selectedSurahSubChallenges;
+  late ButtonState progressButtonState;
+  late int _expiresAfterHoursNum;
 
   @override
   void initState() {
@@ -61,7 +61,7 @@ class _CreateReadingQuranChallengeScreenState
 
           if (!currentFocus.hasPrimaryFocus &&
               currentFocus.focusedChild != null) {
-            FocusManager.instance.primaryFocus.unfocus();
+            FocusManager.instance.primaryFocus!.unfocus();
           }
         },
         child: Center(
@@ -194,8 +194,10 @@ class _CreateReadingQuranChallengeScreenState
       child: ButtonTheme(
         height: 50,
         // ignore: deprecated_member_use
-        child: FlatButton(
-          color: Colors.grey,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.grey),
+          ),
           onPressed: () async => onCreatePressed(),
           child: Center(
               child: Text(
@@ -312,10 +314,10 @@ class _CreateReadingQuranChallengeScreenState
   }
 
   bool readyToFinishChallenge(bool showWarnings) {
-    if ((_selectedFriends?.length ?? 0) == 0) {
+    if ((_selectedFriends.length ?? 0) == 0) {
       return false;
     }
-    if ((_selectedSurahSubChallenges?.length ?? 0) == 0) {
+    if ((_selectedSurahSubChallenges.length ?? 0) == 0) {
       return false;
     }
 

@@ -14,9 +14,9 @@ class PubliclyAvailableUser {
     this.lastName,
   });
 
-  String userId;
-  String firstName;
-  String lastName;
+  String? userId;
+  String? firstName;
+  String? lastName;
 
   factory PubliclyAvailableUser.fromJson(Map<String, dynamic> json) =>
       PubliclyAvailableUser(

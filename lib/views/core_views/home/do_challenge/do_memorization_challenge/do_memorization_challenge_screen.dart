@@ -27,11 +27,11 @@ class DoMemorizationChallengeScreen extends StatefulWidget {
   final List<Friend> friendshipScores;
 
   DoMemorizationChallengeScreen({
-    @required this.challenge,
-    @required this.group,
-    @required this.challengedUsersIds,
-    @required this.challengedUsersFullNames,
-    @required this.friendshipScores,
+    required this.challenge,
+    required this.group,
+    required this.challengedUsersIds,
+    required this.challengedUsersFullNames,
+    required this.friendshipScores,
   });
 
   @override
@@ -42,10 +42,10 @@ class DoMemorizationChallengeScreen extends StatefulWidget {
 class _DoMemorizationChallengeScreenState
     extends State<DoMemorizationChallengeScreen>
     with SingleTickerProviderStateMixin {
-  ConfettiController confettiControler;
-  bool _finishedConfetti;
-  ScrollController _scrollController;
-  bool _friendsTileExpanded;
+  ConfettiController? confettiControler;
+  bool? _finishedConfetti;
+  ScrollController? _scrollController;
+  bool? _friendsTileExpanded;
 
   @override
   void initState() {
@@ -83,10 +83,10 @@ class _DoMemorizationChallengeScreenState
                               title: Text(
                                 "الأصدقاء",
                                 style: TextStyle(
-                                    fontSize: _friendsTileExpanded ? 25 : 20,
+                                    fontSize: _friendsTileExpanded! ? 25 : 20,
                                     fontWeight: FontWeight.bold),
                               ),
-                              initiallyExpanded: _friendsTileExpanded,
+                              initiallyExpanded: _friendsTileExpanded!,
                               backgroundColor:
                                   Theme.of(context).colorScheme.secondary,
                               collapsedBackgroundColor:
@@ -96,7 +96,7 @@ class _DoMemorizationChallengeScreenState
                               collapsedTextColor: Colors.black,
                               collapsedIconColor: Colors.black,
                               trailing: Icon(
-                                _friendsTileExpanded
+                                _friendsTileExpanded!
                                     ? Icons.arrow_drop_up
                                     : Icons.arrow_drop_down,
                                 size: 30,
@@ -134,12 +134,13 @@ class _DoMemorizationChallengeScreenState
                       separatorBuilder: (BuildContext context, int index) =>
                           Padding(padding: EdgeInsets.only(bottom: 4)),
                       shrinkWrap: true,
-                      itemCount: widget.challenge.questions.length,
+                      itemCount: widget.challenge.questions!.length,
                       itemBuilder: (context, index) {
                         return DoMemorizationChallengeListItemWidget(
-                          question: widget.challenge.questions[index],
+                          key: Key("memorization_challenge_question$index"),
+                          question: widget.challenge.questions![index],
                           challenge: widget.challenge,
-                          scrollController: _scrollController,
+                          scrollController: _scrollController!,
                           onQuestionExpandedCallback: () {
                             setState(() {
                               _friendsTileExpanded = false;
@@ -147,13 +148,14 @@ class _DoMemorizationChallengeScreenState
                           },
                           onQuestionDoneCallback: () async {
                             setState(() {
-                              widget.challenge.questions[index].finished = true;
+                              widget.challenge.questions![index].finished =
+                                  true;
                             });
 
                             try {
                               await ServiceProvider.challengesService
                                   .finishMemorizationChallengeQuestion(
-                                      widget.challenge.id, index);
+                                      widget.challenge.id!, index);
                             } on ApiException catch (e) {
                               SnackBarUtils.showSnackBar(
                                   context, e.errorStatus.errorMessage);
@@ -161,14 +163,14 @@ class _DoMemorizationChallengeScreenState
                             }
 
                             if (widget.challenge.done()) {
-                              confettiControler.addListener(() {
-                                if (confettiControler.state ==
+                              confettiControler!.addListener(() {
+                                if (confettiControler!.state ==
                                     ConfettiControllerState.stopped) {
                                   onFinishedConfetti();
                                 }
                               });
 
-                              confettiControler.play();
+                              confettiControler!.play();
                             }
                           },
                         );
@@ -189,7 +191,7 @@ class _DoMemorizationChallengeScreenState
       child: ConfettiWidget(
         maximumSize: Size(30, 30),
         shouldLoop: false,
-        confettiController: confettiControler,
+        confettiController: confettiControler!,
         blastDirection: pi,
         blastDirectionality: BlastDirectionality.explosive,
         maxBlastForce: 10,
@@ -204,7 +206,7 @@ class _DoMemorizationChallengeScreenState
   onFinishedConfetti() async {
     // Avoid popping twice if confetti's controller decided to call our listner
     // more than once.
-    if (_finishedConfetti) {
+    if (_finishedConfetti!) {
       return;
     }
     _finishedConfetti = true;
@@ -228,7 +230,7 @@ class _DoMemorizationChallengeScreenState
 
   @override
   void dispose() {
-    confettiControler.dispose();
+    confettiControler!.dispose();
     super.dispose();
   }
 }

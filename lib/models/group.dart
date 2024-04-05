@@ -14,12 +14,12 @@ class Group {
     this.binary,
   });
 
-  String id;
-  String name;
-  String adminId;
-  List<String> usersIds;
-  List<String> challengesIds;
-  bool binary;
+  String? id;
+  String? name;
+  String? adminId;
+  List<String>? usersIds;
+  List<String>? challengesIds;
+  bool? binary;
 
   factory Group.fromJson(Map<String, dynamic> json) => Group(
         id: json["id"],
@@ -34,8 +34,8 @@ class Group {
         "id": id,
         "name": name,
         "adminId": adminId,
-        "usersIds": List<dynamic>.from(usersIds.map((x) => x)),
-        "challengesIds": List<dynamic>.from(challengesIds.map((x) => x)),
+        "usersIds": List<dynamic>.from(usersIds ?? [].map((x) => x)),
+        "challengesIds": List<dynamic>.from(challengesIds ?? [].map((x) => x)),
         "binary": binary,
       };
 }
@@ -50,13 +50,13 @@ class CachedGroupInfo {
     this.binary,
   });
 
-  String id;
-  String name;
-  String adminId;
-  List<String> usersIds;
+  String? id;
+  String? name;
+  String? adminId;
+  List<String>? usersIds;
 
   // List<String> challengesIds;
-  bool binary;
+  bool? binary;
 
   factory CachedGroupInfo.fromGroup(Group group) => CachedGroupInfo(
         id: group.id,
@@ -80,7 +80,7 @@ class CachedGroupInfo {
         "id": id,
         "name": name,
         "adminId": adminId,
-        "usersIds": List<dynamic>.from(usersIds.map((x) => x)),
+        "usersIds": List<dynamic>.from(usersIds ?? [].map((x) => x)),
         // "challengesIds": List<dynamic>.from(challengesIds.map((x) => x)),
         "binary": binary,
       };

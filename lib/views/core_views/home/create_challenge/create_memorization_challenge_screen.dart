@@ -47,16 +47,16 @@ enum Mode {
 
 class _CreateMemorizationChallengeScreenState
     extends State<CreateMemorizationChallengeScreen> {
-  List<Friend> _selectedFriends;
-  ButtonState progressButtonState;
-  int _expiresAfterHoursNum;
-  int _numberOfQuestions;
-  int _difficulty;
-  int _firstJuz;
-  int _lastJuz;
-  int _firstSurah;
-  int _lastSurah;
-  Mode _mode;
+  late List<Friend> _selectedFriends;
+  late ButtonState progressButtonState;
+  late int _expiresAfterHoursNum;
+  late int _numberOfQuestions;
+  late int _difficulty;
+  late int _firstJuz;
+  late int _lastJuz;
+  late int _firstSurah;
+  late int _lastSurah;
+  late Mode _mode;
 
   @override
   void initState() {
@@ -104,14 +104,14 @@ class _CreateMemorizationChallengeScreenState
 
           if (!currentFocus.hasPrimaryFocus &&
               currentFocus.focusedChild != null) {
-            FocusManager.instance.primaryFocus.unfocus();
+            FocusManager.instance.primaryFocus!.unfocus();
           }
         },
         child: Center(
             child: Container(
           child: Scrollbar(
             thickness: 5,
-            isAlwaysShown: true,
+            thumbVisibility: true,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -502,8 +502,10 @@ class _CreateMemorizationChallengeScreenState
       child: ButtonTheme(
         height: 50,
         // ignore: deprecated_member_use
-        child: FlatButton(
-          color: Colors.grey,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: Colors.grey,
+          ),
           onPressed: () async => onCreatePressed(),
           child: Center(
               child: Text(
@@ -623,7 +625,7 @@ class _CreateMemorizationChallengeScreenState
   }
 
   bool readyToFinishChallenge(bool showWarnings) {
-    if ((_selectedFriends?.length ?? 0) == 0) {
+    if ((_selectedFriends.length ?? 0) == 0) {
       return false;
     }
     if (_mode == Mode.JUZ_SELECTION) {

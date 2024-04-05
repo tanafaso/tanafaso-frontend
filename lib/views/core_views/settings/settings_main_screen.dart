@@ -9,15 +9,15 @@ class SettingsMainScreen extends StatefulWidget {
 }
 
 class _SettingsMainScreenState extends State<SettingsMainScreen> {
-  RepeatInterval _currentlySelectedRepeatValue;
-  String _currentlySelectedAzkarAndQuranFontFamily;
-  String _currentlySelectedNonAzkarAndNonQuranFontFamily;
+  late RepeatInterval currentlySelectedRepeatValue;
+  late String _currentlySelectedAzkarAndQuranFontFamily;
+  late String _currentlySelectedNonAzkarAndNonQuranFontFamily;
 
   @override
   void initState() {
     super.initState();
 
-    _currentlySelectedRepeatValue = RepeatInterval.weekly;
+    currentlySelectedRepeatValue = RepeatInterval.weekly;
     _currentlySelectedAzkarAndQuranFontFamily =
         FontService.DEFAULT_AZKAR_AND_QURAN_FONT_FAMILY;
     _currentlySelectedNonAzkarAndNonQuranFontFamily =
@@ -36,7 +36,7 @@ class _SettingsMainScreenState extends State<SettingsMainScreen> {
 
       if (mounted) {
         setState(() {
-          _currentlySelectedRepeatValue = preferredRepeatInterval;
+          currentlySelectedRepeatValue = preferredRepeatInterval;
           _currentlySelectedAzkarAndQuranFontFamily =
               preferredAzkarAndQuranFontFamily;
           _currentlySelectedNonAzkarAndNonQuranFontFamily =
@@ -100,7 +100,7 @@ class _SettingsMainScreenState extends State<SettingsMainScreen> {
                               alignedDropdown: true,
                               minWidth: 0,
                               child: DropdownButton<RepeatInterval>(
-                                value: _currentlySelectedRepeatValue,
+                                value: currentlySelectedRepeatValue,
                                 icon: const Icon(Icons.arrow_drop_down),
                                 iconSize: 24,
                                 dropdownColor: Colors.white,
@@ -111,11 +111,11 @@ class _SettingsMainScreenState extends State<SettingsMainScreen> {
                                   height: 1,
                                   color: Colors.black,
                                 ),
-                                onChanged: (RepeatInterval newValue) {
+                                onChanged: (RepeatInterval? newValue) {
                                   ServiceProvider.localNotificationsService
-                                      .setNudgeInterval(newValue);
+                                      .setNudgeInterval(newValue!);
                                   setState(() {
-                                    _currentlySelectedRepeatValue = newValue;
+                                    currentlySelectedRepeatValue = newValue;
                                   });
                                 },
                                 items: <RepeatInterval>[
@@ -186,10 +186,10 @@ class _SettingsMainScreenState extends State<SettingsMainScreen> {
                                   height: 1,
                                   color: Colors.black,
                                 ),
-                                onChanged: (String newValue) {
+                                onChanged: (String? newValue) {
                                   ServiceProvider.fontService
                                       .setPreferredAzkarAndQuranFontFamily(
-                                          context, newValue);
+                                          context, newValue!);
                                   setState(() {
                                     _currentlySelectedAzkarAndQuranFontFamily =
                                         newValue;
@@ -260,10 +260,10 @@ class _SettingsMainScreenState extends State<SettingsMainScreen> {
                                   height: 1,
                                   color: Colors.black,
                                 ),
-                                onChanged: (String newValue) {
+                                onChanged: (String? newValue) {
                                   ServiceProvider.fontService
                                       .setPreferredNonAzkarAndNonQuranFontFamily(
-                                          context, newValue);
+                                          context, newValue!);
                                   setState(() {
                                     _currentlySelectedNonAzkarAndNonQuranFontFamily =
                                         newValue;

@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 
 class QuranSurah {
   String name;
   int versesCount;
 
-  QuranSurah({@required this.name, @required this.versesCount});
+  QuranSurah({required this.name, required this.versesCount});
 }
 
 class QuranUtils {
@@ -24,7 +23,7 @@ class QuranUtils {
     if (surahNameToFirstAyahIndex.isEmpty) {
       computeSurahsFirstIndices();
     }
-    return ayahs[surahNameToFirstAyahIndex[surahName] + ayahNum];
+    return ayahs[surahNameToFirstAyahIndex[surahName]! + ayahNum];
   }
 
   static const List surahNameToVersesCount = [
@@ -148,7 +147,7 @@ class QuranUtils {
     int ayasCount = 0;
     for (var surahMap in surahNameToVersesCount) {
       surahNameToFirstAyahIndex[surahMap['name']] = ayasCount;
-      ayasCount += surahMap['versesCount'];
+      ayasCount += (surahMap['versesCount']! as int);
     }
   }
 }

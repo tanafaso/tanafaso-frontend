@@ -2,7 +2,7 @@ import 'package:azkar/models/friend.dart';
 import 'package:azkar/net/api_interface/response_base.dart';
 
 class GetFriendsLeaderboardResponse extends ResponseBase {
-  List<Friend> friends;
+  List<Friend>? friends;
 
   GetFriendsLeaderboardResponse({this.friends});
 
@@ -15,11 +15,11 @@ class GetFriendsLeaderboardResponse extends ResponseBase {
     }
     response.friends = [];
     for (var friendshipScore in json['data']) {
-      response.friends.add(Friend.fromJson(friendshipScore));
+      response.friends!.add(Friend.fromJson(friendshipScore));
     }
     return response;
   }
 
   Map<String, dynamic> toJson() =>
-      {'data': List<dynamic>.from(friends.map((x) => x.toJson()))};
+      {'data': List<dynamic>.from(friends ?? [].map((x) => x.toJson()))};
 }

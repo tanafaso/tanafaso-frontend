@@ -32,11 +32,11 @@ class Challenge {
                             ? ChallengeType.CUSTOM_SIMPLE
                             : ChallengeType.OTHER;
 
-  AzkarChallenge azkarChallenge;
-  MeaningChallenge meaningChallenge;
-  ReadingQuranChallenge readingQuranChallenge;
-  MemorizationChallenge memorizationChallenge;
-  CustomSimpleChallenge customSimpleChallenge;
+  AzkarChallenge? azkarChallenge;
+  MeaningChallenge? meaningChallenge;
+  ReadingQuranChallenge? readingQuranChallenge;
+  MemorizationChallenge? memorizationChallenge;
+  CustomSimpleChallenge? customSimpleChallenge;
   ChallengeType challengeType;
 
   factory Challenge.fromJson(Map<String, dynamic> json) {
@@ -70,68 +70,68 @@ class Challenge {
 
   Map<String, dynamic> toJson() => {
         "azkarChallenge":
-            azkarChallenge == null ? null : azkarChallenge.toJson(),
+            azkarChallenge == null ? null : azkarChallenge!.toJson(),
         "meaningChallenge":
-            meaningChallenge == null ? null : meaningChallenge.toJson(),
+            meaningChallenge == null ? null : meaningChallenge!.toJson(),
         "readingQuranChallenge": readingQuranChallenge == null
             ? null
-            : readingQuranChallenge.toJson(),
+            : readingQuranChallenge!.toJson(),
         "memorizationChallenge": memorizationChallenge == null
             ? null
-            : memorizationChallenge.toJson(),
+            : memorizationChallenge!.toJson(),
         "customSimpleChallenge": customSimpleChallenge == null
             ? null
-            : customSimpleChallenge.toJson(),
+            : customSimpleChallenge!.toJson(),
       };
 
-  String getId() {
+  String? getId() {
     switch (challengeType) {
       case ChallengeType.AZKAR:
-        return azkarChallenge.id;
+        return azkarChallenge!.id;
       case ChallengeType.MEANING:
-        return meaningChallenge.id;
+        return meaningChallenge!.id;
       case ChallengeType.READING_QURAN:
-        return readingQuranChallenge.id;
+        return readingQuranChallenge!.id;
       case ChallengeType.MEMORIZATION:
-        return memorizationChallenge.id;
+        return memorizationChallenge!.id;
       case ChallengeType.CUSTOM_SIMPLE:
-        return customSimpleChallenge.id;
+        return customSimpleChallenge!.id;
       case ChallengeType.OTHER:
         return null;
     }
     return null;
   }
 
-  String getGroupId() {
+  String? getGroupId() {
     switch (challengeType) {
       case ChallengeType.AZKAR:
-        return azkarChallenge.groupId;
+        return azkarChallenge!.groupId;
       case ChallengeType.MEANING:
-        return meaningChallenge.groupId;
+        return meaningChallenge!.groupId;
       case ChallengeType.READING_QURAN:
-        return readingQuranChallenge.groupId;
+        return readingQuranChallenge!.groupId;
       case ChallengeType.MEMORIZATION:
-        return memorizationChallenge.groupId;
+        return memorizationChallenge!.groupId;
       case ChallengeType.CUSTOM_SIMPLE:
-        return customSimpleChallenge.groupId;
+        return customSimpleChallenge!.groupId;
       case ChallengeType.OTHER:
         return null;
     }
     return null;
   }
 
-  String getName() {
+  String? getName() {
     switch (challengeType) {
       case ChallengeType.AZKAR:
-        return azkarChallenge.name;
+        return azkarChallenge!.name;
       case ChallengeType.MEANING:
-        return meaningChallenge.getName();
+        return meaningChallenge!.getName();
       case ChallengeType.READING_QURAN:
-        return readingQuranChallenge.getName();
+        return readingQuranChallenge!.getName();
       case ChallengeType.MEMORIZATION:
-        return memorizationChallenge.getName();
+        return memorizationChallenge!.getName();
       case ChallengeType.CUSTOM_SIMPLE:
-        return customSimpleChallenge.getName();
+        return customSimpleChallenge!.getName();
       case ChallengeType.OTHER:
         return null;
     }
@@ -141,15 +141,15 @@ class Challenge {
   bool done() {
     switch (challengeType) {
       case ChallengeType.AZKAR:
-        return azkarChallenge.done();
+        return azkarChallenge!.done();
       case ChallengeType.MEANING:
-        return meaningChallenge.finished;
+        return meaningChallenge!.finished ?? false;
       case ChallengeType.READING_QURAN:
-        return readingQuranChallenge.finished;
+        return readingQuranChallenge!.finished ?? false;
       case ChallengeType.MEMORIZATION:
-        return memorizationChallenge.done();
+        return memorizationChallenge!.done();
       case ChallengeType.CUSTOM_SIMPLE:
-        return customSimpleChallenge.finished;
+        return customSimpleChallenge!.finished ?? false;
       case ChallengeType.OTHER:
         return false;
     }
@@ -159,15 +159,15 @@ class Challenge {
   int getExpiryDate() {
     switch (challengeType) {
       case ChallengeType.AZKAR:
-        return azkarChallenge.expiryDate;
+        return azkarChallenge!.expiryDate ?? 0;
       case ChallengeType.MEANING:
-        return meaningChallenge.expiryDate;
+        return meaningChallenge!.expiryDate ?? 0;
       case ChallengeType.READING_QURAN:
-        return readingQuranChallenge.expiryDate;
+        return readingQuranChallenge!.expiryDate ?? 0;
       case ChallengeType.MEMORIZATION:
-        return memorizationChallenge.expiryDate;
+        return memorizationChallenge!.expiryDate ?? 0;
       case ChallengeType.CUSTOM_SIMPLE:
-        return customSimpleChallenge.expiryDate;
+        return customSimpleChallenge!.expiryDate ?? 0;
       case ChallengeType.OTHER:
         return 0;
     }
@@ -211,33 +211,33 @@ class Challenge {
   List<String> getUsersFinishedIds() {
     switch (challengeType) {
       case ChallengeType.AZKAR:
-        return azkarChallenge.usersFinished;
+        return azkarChallenge!.usersFinished ?? [];
       case ChallengeType.MEANING:
-        return meaningChallenge.usersFinished;
+        return meaningChallenge!.usersFinished ?? [];
       case ChallengeType.READING_QURAN:
-        return readingQuranChallenge.usersFinished;
+        return readingQuranChallenge!.usersFinished ?? [];
       case ChallengeType.MEMORIZATION:
-        return memorizationChallenge.usersFinished;
+        return memorizationChallenge!.usersFinished ?? [];
       case ChallengeType.CUSTOM_SIMPLE:
-        return customSimpleChallenge.usersFinished;
+        return customSimpleChallenge!.usersFinished ?? [];
       case ChallengeType.OTHER:
         return [];
     }
     return [];
   }
 
-  String creatingUserId() {
+  String? creatingUserId() {
     switch (challengeType) {
       case ChallengeType.AZKAR:
-        return azkarChallenge.creatingUserId;
+        return azkarChallenge!.creatingUserId;
       case ChallengeType.MEANING:
-        return meaningChallenge.creatingUserId;
+        return meaningChallenge!.creatingUserId;
       case ChallengeType.READING_QURAN:
-        return readingQuranChallenge.creatingUserId;
+        return readingQuranChallenge!.creatingUserId;
       case ChallengeType.MEMORIZATION:
-        return memorizationChallenge.creatingUserId;
+        return memorizationChallenge!.creatingUserId;
       case ChallengeType.CUSTOM_SIMPLE:
-        return customSimpleChallenge.creatingUserId;
+        return customSimpleChallenge!.creatingUserId;
       case ChallengeType.OTHER:
         return null;
     }

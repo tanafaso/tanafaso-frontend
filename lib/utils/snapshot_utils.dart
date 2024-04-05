@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class SnapshotUtils {
   static Widget getErrorWidget(
-      BuildContext context, AsyncSnapshot<Object> snapshot) {
+      BuildContext context, AsyncSnapshot<void> snapshot) {
     String error;
     if (snapshot.error is ApiException) {
       error = (snapshot.error as ApiException).errorStatus.errorMessage;

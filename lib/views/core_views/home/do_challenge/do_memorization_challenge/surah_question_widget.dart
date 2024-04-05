@@ -11,9 +11,9 @@ class SurahQuestionWidget extends StatefulWidget {
   final ScrollController scrollController;
 
   SurahQuestionWidget({
-    @required this.question,
-    @required this.callback,
-    @required this.scrollController,
+    required this.question,
+    required this.callback,
+    required this.scrollController,
   });
 
   @override
@@ -40,15 +40,15 @@ class _SurahQuestionWidgetState extends State<SurahQuestionWidget> {
           choices: [
             Choice(
                 word: QuranUtils
-                    .surahNameToVersesCount[widget.question.surah - 1]['name'],
+                    .surahNameToVersesCount[widget.question.surah! - 1]['name'],
                 correct: true),
             Choice(
                 word: QuranUtils.surahNameToVersesCount[
-                    widget.question.wrongSurahOptions[0] - 1]['name'],
+                    widget.question.wrongSurahOptions![0] - 1]['name'],
                 correct: false),
             Choice(
                 word: QuranUtils.surahNameToVersesCount[
-                    widget.question.wrongSurahOptions[1] - 1]['name'],
+                    widget.question.wrongSurahOptions![1] - 1]['name'],
                 correct: false),
           ],
           onCorrectChoiceSelected: () => widget.callback.call(),

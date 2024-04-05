@@ -6,88 +6,21 @@ import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/authentication/requests/apple_authentication_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/requests/email_login_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/requests/email_registration_request_body.dart';
-import 'package:azkar/net/api_interface/authentication/requests/facebook_authentication_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/requests/google_authentication_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/requests/reset_password_request_body.dart';
 import 'package:azkar/net/api_interface/authentication/responses/apple_authentication_response.dart';
 import 'package:azkar/net/api_interface/authentication/responses/email_login_response.dart';
 import 'package:azkar/net/api_interface/authentication/responses/email_registration_response.dart';
-import 'package:azkar/net/api_interface/authentication/responses/facebook_authentication_response.dart';
-import 'package:azkar/net/api_interface/authentication/responses/facebook_friends_response.dart';
 import 'package:azkar/net/api_interface/authentication/responses/google_authentication_response.dart';
 import 'package:azkar/net/api_interface/authentication/responses/reset_password_response.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/services/service_provider.dart';
-import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:http/http.dart' as http;
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
 class AuthenticationService {
   static const int FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE = 190;
   static const int MAXIMUM_FRIENDS_USING_APP_COUNT = 100;
-
-  // Returns true if authentication was successful.
-  Future<void> loginWithFacebook() async {
-    final _facebookLogin = FacebookLogin();
-
-    try {
-      await _facebookLogin.logOut();
-    } on Exception catch (_) {}
-
-    final facebookGraphApiResponse = await _facebookLogin.logIn(permissions: [
-      FacebookPermission.publicProfile,
-      FacebookPermission.email,
-    ]);
-
-    switch (facebookGraphApiResponse.status) {
-      case FacebookLoginStatus.success:
-        final FacebookAccessToken _facebookAccessToken =
-            facebookGraphApiResponse.accessToken;
-        await ServiceProvider.secureStorageService
-            .setFacebookToken(_facebookAccessToken.token);
-        await ServiceProvider.secureStorageService
-            .setFacebookUserId(_facebookAccessToken.userId);
-
-        await _loginWithFacebookAccessToken(_facebookAccessToken);
-        break;
-      case FacebookLoginStatus.cancel:
-        throw ApiException.withDefaultError();
-      case FacebookLoginStatus.error:
-        throw ApiException.withDefaultError();
-      default:
-        throw ApiException.withDefaultError();
-    }
-  }
-
-  // Returns true if authentication was successful.
-  Future<void> _loginWithFacebookAccessToken(
-      FacebookAccessToken facebookAccessToken) async {
-    final http.Response apiResponse = await http.put(
-        Uri.https(
-            ApiRoutesUtil.apiRouteToString(
-                Endpoint(endpointRoute: EndpointRoute.BASE_URL)),
-            ApiRoutesUtil.apiRouteToString(
-                Endpoint(endpointRoute: EndpointRoute.LOGIN_WITH_FACEBOOK))),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(new FacebookAuthenticationRequestBody(
-          facebookUserId: facebookAccessToken.userId,
-          token: facebookAccessToken.token,
-        ).toJson()));
-
-    FacebookAuthenticationResponse response =
-        FacebookAuthenticationResponse.fromJson(
-            jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
-
-    if (!response.hasError()) {
-      final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
-      await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
-    }
-    if (response.hasError()) {
-      throw new ApiException(response.error);
-    }
-  }
 
   Future<void> loginWithGoogle(String googleIdToken) async {
     final http.Response apiResponse = await http.put(
@@ -109,10 +42,10 @@ class AuthenticationService {
 
     if (!response.hasError()) {
       final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
-      await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
+      await ServiceProvider.secureStorageService.setJwtToken(jwtToken!);
     }
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -125,24 +58,26 @@ class AuthenticationService {
       case AuthorizationStatus.authorized:
         break;
       case AuthorizationStatus.error:
-        print("Sign in failed: ${result.error.localizedDescription}");
+        print("Sign in failed: ${result.error?.localizedDescription}");
         throw new Exception(
-            "Sign in failed: ${result.error.localizedDescription}");
+            "Sign in failed: ${result.error?.localizedDescription}");
       case AuthorizationStatus.cancelled:
         print('User cancelled');
         throw new Exception("User cancelled");
     }
 
-    String email = result.credential.email;
-    String givenName = result.credential.fullName.givenName;
-    String familyName = result.credential.fullName.familyName;
+    String? email = result.credential?.email;
+    String givenName = result.credential?.fullName?.givenName ?? "";
+    String familyName = result.credential?.fullName?.familyName ?? "";
 
     if (email == null || email == "<null>" || email == givenName) {
       email = (await ServiceProvider.secureStorageService.getAppleIdEmail());
       givenName =
-          (await ServiceProvider.secureStorageService.getAppleIdGivenName());
+          (await ServiceProvider.secureStorageService.getAppleIdGivenName()) ??
+              "";
       familyName =
-          (await ServiceProvider.secureStorageService.getAppleIdFamilyName());
+          (await ServiceProvider.secureStorageService.getAppleIdFamilyName()) ??
+              "";
     } else {
       // Cache user info as these are only returned the first time the
       // user attempts to sign in with Apple:
@@ -153,6 +88,13 @@ class AuthenticationService {
           .setAppleIdFamilyName(familyName);
     }
 
+    if (email == null || email.isEmpty) {
+      throw new Exception("Email was not provided by Apple");
+    }
+    if (result.credential == null ||
+        result.credential?.authorizationCode == null) {
+      throw new Exception("Authorization code was not provided by Apple");
+    }
     final http.Response apiResponse = await http.put(
         Uri.https(
             ApiRoutesUtil.apiRouteToString(
@@ -166,7 +108,7 @@ class AuthenticationService {
                 email: email,
                 firstName: givenName,
                 lastName: familyName,
-                authCode: utf8.decode(result.credential.authorizationCode))
+                authCode: utf8.decode(result.credential!.authorizationCode!))
             .toJson()));
 
     AppleAuthenticationResponse response = AppleAuthenticationResponse.fromJson(
@@ -174,76 +116,11 @@ class AuthenticationService {
 
     if (!response.hasError()) {
       final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
-      await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
+      await ServiceProvider.secureStorageService.setJwtToken(jwtToken!);
     }
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
-  }
-
-  Future<void> connectFacebook() async {
-    final _facebookLogin = FacebookLogin();
-
-    final facebookGraphApiResponse = await _facebookLogin.logIn(permissions: [
-      FacebookPermission.publicProfile,
-      FacebookPermission.email,
-      FacebookPermission.userFriends,
-    ]);
-
-    switch (facebookGraphApiResponse.status) {
-      case FacebookLoginStatus.success:
-        FacebookAccessToken facebookAccessToken =
-            facebookGraphApiResponse.accessToken;
-        await ServiceProvider.secureStorageService
-            .setFacebookToken(facebookAccessToken.token);
-        await ServiceProvider.secureStorageService
-            .setFacebookUserId(facebookAccessToken.userId);
-
-        _connectFacebookWithFacebookAccessToken(facebookAccessToken);
-        break;
-      case FacebookLoginStatus.cancel:
-        throw ApiException.withDefaultError();
-      case FacebookLoginStatus.error:
-        throw ApiException.withDefaultError();
-      default:
-        throw ApiException.withDefaultError();
-    }
-  }
-
-  Future<void> _connectFacebookWithFacebookAccessToken(
-      FacebookAccessToken facebookAccessToken) async {
-    final http.Response apiResponse = await ApiCaller.put(
-        route: Endpoint(endpointRoute: EndpointRoute.CONNECT_FACEBOOK),
-        requestBody: FacebookAuthenticationRequestBody(
-          facebookUserId: facebookAccessToken.userId,
-          token: facebookAccessToken.token,
-        ));
-
-    FacebookAuthenticationResponse response =
-        FacebookAuthenticationResponse.fromJson(
-            jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
-    if (response.hasError()) {
-      throw new ApiException(response.error);
-    }
-  }
-
-  Future<List<FacebookFriend>> getFacebookFriends() async {
-    String facebookToken =
-        await ServiceProvider.secureStorageService.getFacebookToken();
-    String facebookUserId =
-        await ServiceProvider.secureStorageService.getFacebookUserId();
-    http.Response response = await http.get(Uri.https("graph.facebook.com",
-        "v9.0/$facebookUserId/friends/", {'access_token': facebookToken}));
-    if (response.statusCode == FACEBOOK_INVALID_OAUTH_TOKEN_ERROR_CODE) {
-      throw ApiException.withDefaultError();
-    }
-    var responseJson = jsonDecode(utf8.decode(response.body.codeUnits));
-    if ((responseJson['error'] ?? null) != null) {
-      await connectFacebook();
-      throw ApiException.withDefaultError();
-    }
-
-    return FacebookFriendsResponse.fromJson(responseJson).facebookFriends;
   }
 
   Future<void> signUp(EmailRegistrationRequestBody request) async {
@@ -267,7 +144,7 @@ class AuthenticationService {
     var response = EmailRegistrationResponse.fromJson(
         jsonDecode(utf8.decode(apiResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -297,9 +174,9 @@ class AuthenticationService {
 
     if (!response.hasError()) {
       final jwtToken = apiResponse.headers[HttpHeaders.authorizationHeader];
-      await ServiceProvider.secureStorageService.setJwtToken(jwtToken);
+      await ServiceProvider.secureStorageService.setJwtToken(jwtToken!);
     } else {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -313,7 +190,7 @@ class AuthenticationService {
     var response = ResetPasswordResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 }

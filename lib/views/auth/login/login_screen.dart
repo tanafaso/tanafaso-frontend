@@ -23,12 +23,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _loginFormKey = GlobalKey<FormState>();
-  String _email;
-  String _password;
-  bool _passwordObscure = true;
-  FocusNode passwordFocus;
-  String _errorMessage;
-  ButtonState progressButtonState;
+  late String _email;
+  late String _password;
+  late bool _passwordObscure = true;
+  late FocusNode passwordFocus;
+  late String _errorMessage;
+  late ButtonState progressButtonState;
 
   @override
   void initState() {
@@ -97,6 +97,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         obscureText: false,
                                         autofocus: true,
                                         showCursor: true,
+                                        autocorrect: false,
+                                        textDirection: TextDirection.ltr,
                                         cursorColor: Colors.black,
                                         textAlign: TextAlign.left,
                                         onChanged: (email) =>
@@ -176,9 +178,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     focusNode: passwordFocus,
                                     showCursor: true,
                                     cursorColor: Colors.black,
+                                    textDirection: TextDirection.ltr,
                                     textAlign: TextAlign.left,
                                     onChanged: (password) =>
-                                        _password = password,
+                                        _password = password.trim(),
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       enabledBorder: new OutlineInputBorder(
@@ -270,56 +273,61 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
+                          Padding(padding: EdgeInsets.all(8)),
                           // ignore: deprecated_member_use
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              // ignore: deprecated_member_use
-                              new FlatButton(
-                                child: new Text(
-                                  AppLocalizations.of(context)
-                                      .youDoNotHaveAnAccount,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 15.0,
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                new OutlinedButton(
+                                  child: new Text(
+                                    AppLocalizations.of(context)
+                                        .youDoNotHaveAnAccount,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 15.0,
+                                    ),
+                                    textAlign: TextAlign.end,
                                   ),
-                                  textAlign: TextAlign.end,
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                new SignUpMainScreen()));
+                                  },
                                 ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              new SignUpMainScreen()));
-                                },
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           // ignore: deprecated_member_use
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              // ignore: deprecated_member_use
-                              new FlatButton(
-                                child: new Text(
-                                  AppLocalizations.of(context).forgotPassword,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 15.0,
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0, top: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                new OutlinedButton(
+                                  child: new Text(
+                                    AppLocalizations.of(context).forgotPassword,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 15.0,
+                                    ),
+                                    textAlign: TextAlign.end,
                                   ),
-                                  textAlign: TextAlign.end,
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                new ResetPasswordScreen()));
+                                  },
                                 ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              new ResetPasswordScreen()));
-                                },
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           Padding(padding: EdgeInsets.all(8)),
                         ],
@@ -341,7 +349,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ButtonState.idle: IconedButton(
             text: AppLocalizations.of(context).login,
             icon: Icon(Icons.login, color: Colors.black),
-            color: Theme.of(context).buttonTheme.colorScheme.primary),
+            color: Theme.of(context).buttonTheme.colorScheme!.primary),
         ButtonState.loading: IconedButton(
             text: AppLocalizations.of(context).sending,
             color: Colors.yellow.shade200),
@@ -394,18 +402,6 @@ class _LoginScreenState extends State<LoginScreen> {
         new EmailLoginRequestBody(email: _email, password: _password));
   }
 
-  loginWithFacebook() async {
-    try {
-      await ServiceProvider.authenticationService.loginWithFacebook();
-    } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
-      return;
-    }
-
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => LayoutOrganizer()));
-  }
-
   loginWithGoogle(BuildContext context) async {
     GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: [
@@ -414,11 +410,14 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     String googleIdToken;
     try {
-      GoogleSignInAccount account = await _googleSignIn.signIn();
-      GoogleSignInAuthentication authentication = await account.authentication;
-      googleIdToken = authentication.idToken;
+      GoogleSignInAccount? account = await _googleSignIn.signIn();
+      GoogleSignInAuthentication? authentication =
+          await account!.authentication;
+      googleIdToken = authentication.idToken!;
     } catch (error) {
-      print(error);
+      SnackBarUtils.showSnackBar(
+          context, AppLocalizations.of(context).errorWhileSigningInWithGoogle);
+      return;
     }
 
     try {

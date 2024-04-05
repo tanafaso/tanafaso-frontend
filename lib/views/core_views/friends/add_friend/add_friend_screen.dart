@@ -16,7 +16,7 @@ class AddFriendScreen extends StatefulWidget {
 class _AddFriendScreenState extends State<AddFriendScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String _friendUsername;
+  late String _friendUsername;
   ButtonState stateOnlyText = ButtonState.idle;
   ButtonState stateTextWithIcon = ButtonState.idle;
 
@@ -116,6 +116,10 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                 _friendUsername = username;
                               },
                               validator: (val) {
+                                if (val == null || val.isEmpty) {
+                                  return AppLocalizations.of(context)
+                                      .usernameShouldNotBeEmpty;
+                                }
                                 if (val.contains(" ")) {
                                   return AppLocalizations.of(context)
                                       .usernameShouldHaveNoSpaces;
@@ -209,7 +213,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                               color: Colors.black),
                                           color: Theme.of(context)
                                               .buttonTheme
-                                              .colorScheme
+                                              .colorScheme!
                                               .primary),
                                       ButtonState.loading: IconedButton(
                                           text: "ابحث",
@@ -217,7 +221,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                               color: Colors.black),
                                           color: Theme.of(context)
                                               .buttonTheme
-                                              .colorScheme
+                                              .colorScheme!
                                               .primary),
                                       ButtonState.fail: IconedButton(
                                           text: "ابحث",
@@ -225,7 +229,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
                                               color: Colors.black),
                                           color: Theme.of(context)
                                               .buttonTheme
-                                              .colorScheme
+                                              .colorScheme!
                                               .primary),
                                     },
                                     onPressed: () {
@@ -288,7 +292,8 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
   void onPressedIconWithText() {
     switch (stateTextWithIcon) {
       case ButtonState.idle:
-        if (!_formKey.currentState.validate()) {
+        if (_formKey.currentState == null ||
+            !_formKey.currentState!.validate()) {
           break;
         }
 

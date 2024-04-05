@@ -21,13 +21,13 @@ class ReadingQuranChallenge {
     this.finished,
   });
 
-  String id;
-  String groupId;
-  String creatingUserId;
-  int expiryDate;
-  List<String> usersFinished;
-  List<SurahSubChallenge> surahSubChallenges;
-  bool finished;
+  String? id;
+  String? groupId;
+  String? creatingUserId;
+  int? expiryDate;
+  List<String>? usersFinished;
+  List<SurahSubChallenge>? surahSubChallenges;
+  bool? finished;
 
   factory ReadingQuranChallenge.fromJson(Map<String, dynamic> json) =>
       ReadingQuranChallenge(
@@ -49,7 +49,7 @@ class ReadingQuranChallenge {
         "expiryDate": expiryDate,
         "usersFinished": usersFinished,
         "surahSubChallenges":
-            List<dynamic>.from(surahSubChallenges.map((x) => x.toJson())),
+            List<dynamic>.from(surahSubChallenges ?? [].map((x) => x.toJson())),
         "finished": finished,
       };
 
@@ -65,9 +65,9 @@ class SurahSubChallenge {
     this.endingVerseNumber,
   });
 
-  String surahName;
-  int startingVerseNumber;
-  int endingVerseNumber;
+  String? surahName;
+  int? startingVerseNumber;
+  int? endingVerseNumber;
 
   factory SurahSubChallenge.fromJson(Map<String, dynamic> json) =>
       SurahSubChallenge(

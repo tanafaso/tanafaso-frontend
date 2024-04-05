@@ -11,8 +11,8 @@ class FriendListItemLoadingWidget extends StatelessWidget {
         onPressed: () {},
         fillColor: Colors.white,
         child: Shimmer.fromColors(
-          baseColor: Colors.grey[500],
-          highlightColor: Colors.grey[100],
+          baseColor: Colors.grey[500]!,
+          highlightColor: Colors.grey[100]!,
           enabled: true,
           child: Padding(
             padding: const EdgeInsets.only(left: 4.0, right: 4.0),
@@ -54,7 +54,7 @@ class FriendListItemLoadingWidget extends StatelessWidget {
 class LineWidget extends StatelessWidget {
   final double width;
 
-  LineWidget({@required this.width});
+  LineWidget({required this.width});
 
   @override
   Widget build(BuildContext context) {

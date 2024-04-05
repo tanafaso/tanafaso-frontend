@@ -5,8 +5,8 @@ class UserProgressLoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[500],
-      highlightColor: Colors.grey[100],
+      baseColor: Colors.grey[500]!,
+      highlightColor: Colors.grey[100]!,
       enabled: true,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -73,7 +73,7 @@ class UserProgressLoadingWidget extends StatelessWidget {
 class LineWidget extends StatelessWidget {
   final double width;
 
-  LineWidget({@required this.width});
+  LineWidget({required this.width});
 
   @override
   Widget build(BuildContext context) {

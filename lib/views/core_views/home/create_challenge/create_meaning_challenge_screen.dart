@@ -27,10 +27,10 @@ class CreateMeaningChallengeScreen extends StatefulWidget {
 
 class _CreateMeaningChallengeScreenState
     extends State<CreateMeaningChallengeScreen> {
-  List<Friend> _selectedFriends;
-  ButtonState progressButtonState;
-  int _numberOfWords;
-  int _expiresAfterHoursNum;
+  late List<Friend> _selectedFriends;
+  late ButtonState progressButtonState;
+  late int _numberOfWords;
+  late int _expiresAfterHoursNum;
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class _CreateMeaningChallengeScreenState
 
           if (!currentFocus.hasPrimaryFocus &&
               currentFocus.focusedChild != null) {
-            FocusManager.instance.primaryFocus.unfocus();
+            FocusManager.instance.primaryFocus!.unfocus();
           }
         },
         child: Center(
@@ -273,8 +273,10 @@ class _CreateMeaningChallengeScreenState
       child: ButtonTheme(
         height: 50,
         // ignore: deprecated_member_use
-        child: FlatButton(
-          color: Colors.grey,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: Colors.grey,
+          ),
           onPressed: () async => onCreatePressed(),
           child: Center(
               child: Text(
@@ -393,7 +395,7 @@ class _CreateMeaningChallengeScreenState
   }
 
   bool readyToFinishChallenge(bool showWarnings) {
-    if ((_selectedFriends?.length ?? 0) == 0) {
+    if ((_selectedFriends.length ?? 0) == 0) {
       return false;
     }
 

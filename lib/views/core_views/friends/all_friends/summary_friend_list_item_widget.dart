@@ -8,8 +8,8 @@ class SummaryFriendListItemWidget extends StatelessWidget {
   final OnToggleViewCallback toggleViewCallback;
 
   SummaryFriendListItemWidget({
-    @required this.friendshipScore,
-    @required this.toggleViewCallback,
+    required this.friendshipScore,
+    required this.toggleViewCallback,
   });
 
   @override
@@ -57,7 +57,7 @@ class SummaryFriendListItemWidget extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            (friendshipScore.userTotalScore -
+                            (friendshipScore.userTotalScore! -
                                     friendshipScore.friendTotalScore)
                                 .abs()
                                 .toString(),
@@ -81,13 +81,13 @@ class SummaryFriendListItemWidget extends StatelessWidget {
   }
 
   Icon getArrowIcon() {
-    if (friendshipScore.friendTotalScore > friendshipScore.userTotalScore) {
+    if (friendshipScore.friendTotalScore > friendshipScore.userTotalScore!) {
       return Icon(
         Icons.arrow_downward,
         color: getColor(),
       );
     } else if (friendshipScore.friendTotalScore <
-        friendshipScore.userTotalScore) {
+        friendshipScore.userTotalScore!) {
       return Icon(
         Icons.arrow_upward,
         color: getColor(),
@@ -101,10 +101,10 @@ class SummaryFriendListItemWidget extends StatelessWidget {
   }
 
   Color getColor() {
-    if (friendshipScore.friendTotalScore > friendshipScore.userTotalScore) {
+    if (friendshipScore.friendTotalScore > friendshipScore.userTotalScore!) {
       return Colors.red;
     } else if (friendshipScore.friendTotalScore <
-        friendshipScore.userTotalScore) {
+        friendshipScore.userTotalScore!) {
       return Colors.green;
     }
     return Colors.yellow.shade700;

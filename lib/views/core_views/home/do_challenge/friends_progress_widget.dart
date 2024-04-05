@@ -10,9 +10,9 @@ class FriendsProgressWidget extends StatefulWidget {
   final int iconSize;
 
   FriendsProgressWidget({
-    @required this.challenge,
-    @required this.challengedUsersIds,
-    @required this.challengedUsersFullNames,
+    required this.challenge,
+    required this.challengedUsersIds,
+    required this.challengedUsersFullNames,
     this.fontSize = 25,
     this.iconSize = 25,
   });
@@ -22,7 +22,7 @@ class FriendsProgressWidget extends StatefulWidget {
 }
 
 class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Scrollbar(
-        isAlwaysShown: true,
+        thumbVisibility: true,
         controller: _scrollController,
         child: ListView.separated(
           padding: EdgeInsets.all(0),
@@ -62,7 +62,7 @@ class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
                 ),
                 Visibility(
                   visible: widget.challengedUsersIds[index] ==
-                      widget.challenge?.creatingUserId(),
+                      widget.challenge.creatingUserId(),
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Icon(
@@ -80,10 +80,6 @@ class _FriendsProgressWidgetState extends State<FriendsProgressWidget> {
   }
 
   Widget getFriendProgressOnChallengeIcon(String userId) {
-    if (userId == null) {
-      return Container();
-    }
-
     if (widget.challenge
         .getUsersFinishedIds()
         .any((userFinished) => userFinished == userId)) {

@@ -16,7 +16,7 @@ class CreateCustomSimpleChallengeScreen extends StatefulWidget {
 
   CreateCustomSimpleChallengeScreen({
     this.initiallySelectedFriends = const [],
-    this.description,
+    required this.description,
   });
 
   @override
@@ -26,8 +26,8 @@ class CreateCustomSimpleChallengeScreen extends StatefulWidget {
 
 class _CreateCustomSimpleChallengeScreenState
     extends State<CreateCustomSimpleChallengeScreen> {
-  List<Friend> _selectedFriends;
-  ButtonState progressButtonState;
+  late List<Friend> _selectedFriends;
+  late ButtonState progressButtonState;
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _CreateCustomSimpleChallengeScreenState
 
           if (!currentFocus.hasPrimaryFocus &&
               currentFocus.focusedChild != null) {
-            FocusManager.instance.primaryFocus.unfocus();
+            FocusManager.instance.primaryFocus!.unfocus();
           }
         },
         child: Center(
@@ -108,8 +108,10 @@ class _CreateCustomSimpleChallengeScreenState
       child: ButtonTheme(
         height: 50,
         // ignore: deprecated_member_use
-        child: FlatButton(
-          color: Colors.grey,
+        child: OutlinedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.grey),
+          ),
           onPressed: () async => onCreatePressed(),
           child: Center(
               child: Text(
@@ -224,7 +226,7 @@ class _CreateCustomSimpleChallengeScreenState
   }
 
   bool readyToFinishChallenge(bool showWarnings) {
-    if ((_selectedFriends?.length ?? 0) == 0) {
+    if ((_selectedFriends.length ?? 0) == 0) {
       return false;
     }
 

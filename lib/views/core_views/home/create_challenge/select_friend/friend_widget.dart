@@ -8,8 +8,8 @@ class FriendWidget extends StatefulWidget {
   final OnFriendSelectedChanged onFriendSelectedChanged;
 
   FriendWidget({
-    @required this.friend,
-    @required this.onFriendSelectedChanged,
+    required this.friend,
+    required this.onFriendSelectedChanged,
   });
 
   @override
@@ -18,7 +18,7 @@ class FriendWidget extends StatefulWidget {
 
 class _FriendWidgetState extends State<FriendWidget>
     with AutomaticKeepAliveClientMixin {
-  bool _selected;
+  late bool _selected;
 
   @override
   void initState() {
