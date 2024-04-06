@@ -12,16 +12,16 @@ import 'package:flutter/material.dart';
 class SelectAzkarScreen extends StatefulWidget {
   final List<Zekr> azkar;
 
-  SelectAzkarScreen({@required this.azkar});
+  SelectAzkarScreen({required this.azkar});
 
   @override
   _SelectAzkarScreenState createState() => _SelectAzkarScreenState();
 }
 
 class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
-  Map<int, SubChallenge> zekrIdToSubChallenge;
-  TextEditingController searchController;
-  Set<int> filteredAzkarIds;
+  late Map<int, SubChallenge> zekrIdToSubChallenge;
+  late TextEditingController searchController;
+  late Set<int> filteredAzkarIds;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
     filteredAzkarIds = HashSet();
     // All azkar are included at the beginning.
     widget.azkar.forEach((zekr) {
-      filteredAzkarIds.add(zekr.id);
+      filteredAzkarIds.add(zekr.id!);
     });
     zekrIdToSubChallenge = HashMap();
     searchController = TextEditingController();
@@ -44,8 +44,8 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
   void filterBy(String sequence) {
     filteredAzkarIds = HashSet();
     for (Zekr zekr in widget.azkar) {
-      if (ArabicUtils.normalize(zekr.zekr).contains(sequence)) {
-        filteredAzkarIds.add(zekr.id);
+      if (ArabicUtils.normalize(zekr.zekr!).contains(sequence)) {
+        filteredAzkarIds.add(zekr.id!);
       }
     }
   }
@@ -119,8 +119,7 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
                     left: 8.0, right: 8, top: 8, bottom: 3 * 8.0),
                 child: Container(
                   child: ButtonTheme(
-                    // ignore: deprecated_member_use
-                    child: FlatButton(
+                    child: TextButton(
                       onPressed: () => onCreatePressed(),
                       child: Center(
                           child: AutoSizeText(
@@ -172,7 +171,7 @@ class _SelectAzkarScreenState extends State<SelectAzkarScreen> {
         zekrIdToSubChallenge.remove(newSubChallenge.zekr.id);
       } else {
         zekrIdToSubChallenge.update(
-            newSubChallenge.zekr.id, (value) => newSubChallenge,
+            newSubChallenge.zekr.id!, (value) => newSubChallenge,
             ifAbsent: () => newSubChallenge);
       }
     });

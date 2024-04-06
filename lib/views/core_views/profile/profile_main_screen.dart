@@ -20,14 +20,15 @@ class ProfileMainScreen extends StatefulWidget {
 }
 
 class _ProfileMainScreenState extends State<ProfileMainScreen> {
-  Future<void> _neededData;
-  User _user;
-  bool isIpad;
+  late Future<void> _neededData;
+  late User _user;
+  late bool isIpad;
 
   Future<void> getNeededData() async {
     isIpad = await _isIpad();
 
     _user = await ServiceProvider.usersService.getCurrentUser();
+    print(_user);
   }
 
   @override
@@ -46,7 +47,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
               future: _neededData,
               builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
-                    _user != null) {
+                    !snapshot.hasError) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SingleChildScrollView(
@@ -60,7 +61,9 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                     child: FittedBox(
                                       fit: BoxFit.scaleDown,
                                       child: Text(
-                                        _user.firstName + " " + _user.lastName,
+                                        _user.firstName +
+                                            " " +
+                                            (_user.lastName ?? ""),
                                         maxLines: 1,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
@@ -239,7 +242,9 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                                 fillColor: Colors.red.shade600,
                                 onPressed: () async {
                                   bool deleted =
-                                      await _showDeleteUserAlertDialog(context);
+                                      await _showDeleteUserAlertDialog(
+                                              context) ??
+                                          false;
                                   if (deleted) {
                                     await ServiceProvider.secureStorageService
                                         .clear();
@@ -332,7 +337,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
         (_) => false);
   }
 
-  Future<bool> _showDeleteUserAlertDialog(BuildContext context) async {
+  Future<bool?> _showDeleteUserAlertDialog(BuildContext context) async {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,

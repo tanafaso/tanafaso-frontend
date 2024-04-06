@@ -1,7 +1,7 @@
 import 'package:azkar/net/api_interface/response_base.dart';
 
 class GetFinishedChallengesCountResponse extends ResponseBase {
-  int finishedChallengesCount;
+  int? finishedChallengesCount;
 
   static GetFinishedChallengesCountResponse fromJson(
       Map<String, dynamic> json) {

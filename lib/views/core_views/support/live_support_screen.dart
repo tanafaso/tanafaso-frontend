@@ -13,9 +13,9 @@ class LiveSupportScreen extends StatefulWidget {
 
 class _LiveSupportScreenState extends State<LiveSupportScreen>
     with SingleTickerProviderStateMixin {
-  CrispMain crispMain;
+  late CrispMain crispMain;
 
-  AnimationController _loadingAnimationController;
+  AnimationController? _loadingAnimationController;
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class _LiveSupportScreenState extends State<LiveSupportScreen>
       duration: const Duration(seconds: 10),
       vsync: this,
     );
-    _loadingAnimationController.repeat();
+    _loadingAnimationController!.repeat();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       String _userId = await ServiceProvider.usersService.getCurrentUserId();
@@ -62,7 +62,7 @@ class _LiveSupportScreenState extends State<LiveSupportScreen>
               child: RotationTransition(
                 child: Image.asset('assets/images/logo.png'),
                 turns: Tween(begin: 0.0, end: 1.0)
-                    .animate(_loadingAnimationController),
+                    .animate(_loadingAnimationController!),
               ),
             ),
           )
@@ -75,7 +75,7 @@ class _LiveSupportScreenState extends State<LiveSupportScreen>
 
   @override
   void dispose() {
-    _loadingAnimationController.dispose();
+    _loadingAnimationController!.dispose();
     super.dispose();
   }
 }

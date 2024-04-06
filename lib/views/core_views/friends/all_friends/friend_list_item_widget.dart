@@ -12,8 +12,8 @@ class FriendListItemWidget extends StatefulWidget {
   final OnFriendDeletedCallback onFriendDeletedCallback;
 
   FriendListItemWidget({
-    @required this.friendshipScores,
-    @required this.onFriendDeletedCallback,
+    required this.friendshipScores,
+    required this.onFriendDeletedCallback,
   });
 
   @override
@@ -21,8 +21,8 @@ class FriendListItemWidget extends StatefulWidget {
 }
 
 class _FriendListItemWidgetState extends State<FriendListItemWidget> {
-  bool _detailedView;
-  bool _isSabeq;
+  late bool _detailedView;
+  late bool _isSabeq;
 
   @override
   void initState() {
@@ -46,6 +46,7 @@ class _FriendListItemWidgetState extends State<FriendListItemWidget> {
     return !_isSabeq
         ? getMainWidget()
         : DescribedFeatureOverlay(
+            key: Key(Features.SABEQ_INTRODUCTION),
             featureId: Features.SABEQ_INTRODUCTION,
             overflowMode: OverflowMode.wrapBackground,
             barrierDismissible: false,

@@ -19,19 +19,19 @@ class SignUpMainScreen extends StatefulWidget {
 
 class _SignUpMainScreenState extends State<SignUpMainScreen> {
   final _signUpFormKey = GlobalKey<FormState>();
-  String _firstName;
-  String _lastName;
-  String _email;
-  String _password;
-  bool _passwordObscure = true;
-  bool _repeatedPasswordObscure = true;
-  FocusNode lastNameFocus;
-  FocusNode emailFocus;
-  FocusNode passwordFocus;
-  FocusNode repeatedPasswordFocus;
-  String _confirmedPassword;
-  String _errorMessage;
-  ButtonState progressButtonState;
+  late String _firstName;
+  late String _lastName;
+  late String _email;
+  late String _password;
+  late bool _passwordObscure = true;
+  late bool _repeatedPasswordObscure = true;
+  late FocusNode lastNameFocus;
+  late FocusNode emailFocus;
+  late FocusNode passwordFocus;
+  late FocusNode repeatedPasswordFocus;
+  late String _confirmedPassword;
+  late String _errorMessage;
+  late ButtonState progressButtonState;
 
   @override
   void initState() {
@@ -227,7 +227,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                 border: InputBorder.none,
                                 hintText: 'email@example.com',
                               ),
-                              onChanged: (email) => _email = email,
+                              onChanged: (email) => _email = email.trim(),
                               onEditingComplete: () =>
                                   passwordFocus.requestFocus(),
                             ),
@@ -296,7 +296,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                 ),
                                 border: InputBorder.none,
                               ),
-                              onChanged: (password) => _password = password,
+                              onChanged: (password) => _password = password.trim(),
                               onEditingComplete: () =>
                                   repeatedPasswordFocus.requestFocus(),
                             ),
@@ -393,8 +393,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                               ),
                               const SizedBox(width: 8),
                               // ignore: deprecated_member_use
-                              FlatButton(
-                                padding: EdgeInsets.zero,
+                              OutlinedButton(
                                 onPressed: () {
                                   Navigator.push(
                                       context,
@@ -407,7 +406,9 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16.0,
+                                    color: Colors.black,
                                     decoration: TextDecoration.underline,
+                                    decorationColor: Colors.black,
                                   ),
                                 ),
                               ),
@@ -498,7 +499,7 @@ class _SignUpMainScreenState extends State<SignUpMainScreen> {
         ButtonState.idle: IconedButton(
             text: AppLocalizations.of(context).signUp,
             icon: Icon(Icons.login, color: Colors.black),
-            color: Theme.of(context).buttonTheme.colorScheme.primary),
+            color: Theme.of(context).buttonTheme.colorScheme!.primary),
         ButtonState.loading: IconedButton(
             text: AppLocalizations.of(context).sending,
             color: Colors.yellow.shade200),

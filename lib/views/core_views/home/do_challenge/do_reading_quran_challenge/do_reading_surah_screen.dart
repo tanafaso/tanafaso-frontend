@@ -6,24 +6,24 @@ import 'package:flutter/material.dart';
 class DoReadingSurahScreen extends StatefulWidget {
   final SurahSubChallenge surahSubChallenge;
 
-  DoReadingSurahScreen({@required this.surahSubChallenge});
+  DoReadingSurahScreen({required this.surahSubChallenge});
 
   @override
   State<DoReadingSurahScreen> createState() => _DoReadingSurahScreenState();
 }
 
 class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
-  int currentAyah;
-  int startingVerseNumZeroBased;
-  int endingVerseNumZeroBased;
+  int? currentAyah;
+  int? startingVerseNumZeroBased;
+  int? endingVerseNumZeroBased;
 
   @override
   void initState() {
     super.initState();
 
     startingVerseNumZeroBased =
-        widget.surahSubChallenge.startingVerseNumber - 1;
-    endingVerseNumZeroBased = widget.surahSubChallenge.endingVerseNumber - 1;
+        widget.surahSubChallenge.startingVerseNumber! - 1;
+    endingVerseNumZeroBased = widget.surahSubChallenge.endingVerseNumber! - 1;
     currentAyah = startingVerseNumZeroBased;
   }
 
@@ -33,14 +33,10 @@ class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
         child: Scaffold(
       appBar: AppBar(
         title: AutoSizeText(
-          widget.surahSubChallenge.surahName,
+          widget.surahSubChallenge.surahName!,
           style: TextStyle(
             fontSize: 30,
-            fontFamily: Theme.of(context)
-                // ignore: deprecated_member_use
-                .accentTextTheme
-                .bodyText1
-                .fontFamily,
+            fontFamily: Theme.of(context).primaryTextTheme.labelLarge!.fontFamily,
           ),
         ),
       ),
@@ -59,7 +55,7 @@ class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
                       Navigator.pop(context);
                     }
                     setState(() {
-                      currentAyah++;
+                      currentAyah = currentAyah! + 1;
                     });
                   },
                   child: Padding(
@@ -71,19 +67,20 @@ class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
                             minHeight: 10,
                             color: Theme.of(context).colorScheme.primary,
                             backgroundColor: Colors.white,
-                            value:
-                                (currentAyah - startingVerseNumZeroBased + 1) /
-                                    (endingVerseNumZeroBased -
-                                        startingVerseNumZeroBased +
-                                        1),
+                            value: (currentAyah! -
+                                    startingVerseNumZeroBased! +
+                                    1) /
+                                (endingVerseNumZeroBased! -
+                                    startingVerseNumZeroBased! +
+                                    1),
                           ),
                           Flexible(
                             child: Center(
                               child: SingleChildScrollView(
                                 child: Text(
                                   QuranUtils.getAyahInSurah(
-                                      widget.surahSubChallenge.surahName,
-                                      currentAyah),
+                                      widget.surahSubChallenge.surahName!,
+                                      currentAyah!),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 30,
@@ -91,8 +88,7 @@ class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
                                         // ignore: deprecated_member_use
                                         Theme.of(context)
                                             // ignore: deprecated_member_use
-                                            .accentTextTheme
-                                            .bodyText1
+                                            .primaryTextTheme.labelLarge!
                                             .fontFamily,
                                   ),
                                 ),
@@ -115,7 +111,7 @@ class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
                           fillColor: Colors.white,
                           onPressed: () {
                             setState(() {
-                              currentAyah--;
+                              currentAyah = currentAyah! - 1;
                             });
                           },
                           child: Icon(Icons.arrow_back_outlined)),
@@ -130,7 +126,7 @@ class _DoReadingSurahScreenState extends State<DoReadingSurahScreen> {
                           Navigator.pop(context);
                         }
                         setState(() {
-                          currentAyah++;
+                          currentAyah = currentAyah! + 1;
                         });
                       },
                       child: Icon(

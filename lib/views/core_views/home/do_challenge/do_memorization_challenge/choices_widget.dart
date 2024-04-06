@@ -3,14 +3,14 @@ import 'package:azkar/views/core_views/home/do_challenge/do_memorization_challen
 import 'package:flutter/material.dart';
 
 class ChoicesWidget extends StatelessWidget {
-  final List<Choice> choices;
-  final MemorizationChallengeStepDoneCallback onCorrectChoiceSelected;
-  final ScrollController scrollController;
+  late List<Choice> choices;
+  late MemorizationChallengeStepDoneCallback onCorrectChoiceSelected;
+  late ScrollController scrollController;
 
   ChoicesWidget({
-    this.choices,
-    this.onCorrectChoiceSelected,
-    this.scrollController,
+    required this.choices,
+    required this.onCorrectChoiceSelected,
+    required this.scrollController,
   });
 
   @override
@@ -37,7 +37,7 @@ class ChoicesWidget extends StatelessWidget {
                   fontSize: 20,
                   fontFamily:
                       // ignore: deprecated_member_use
-                      Theme.of(context).accentTextTheme.bodyText1.fontFamily,
+                      Theme.of(context).primaryTextTheme.labelLarge!.fontFamily,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -71,7 +71,7 @@ class Choice {
   final bool correct;
 
   Choice({
-    @required this.word,
-    this.correct,
+    required this.word,
+    required this.correct,
   });
 }

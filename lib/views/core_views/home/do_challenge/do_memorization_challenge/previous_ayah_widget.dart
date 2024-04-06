@@ -10,9 +10,9 @@ class PreviousAyahQuestionWidget extends StatefulWidget {
   final ScrollController scrollController;
 
   PreviousAyahQuestionWidget({
-    @required this.question,
-    @required this.onStepDone,
-    @required this.scrollController,
+    required this.question,
+    required this.onStepDone,
+    required this.scrollController,
   });
 
   @override
@@ -40,15 +40,15 @@ class _PreviousAyahQuestionWidgetState
           scrollController: widget.scrollController,
           choices: [
             Choice(
-                word: QuranUtils.ayahs[(widget.question.ayah - 1) - 1],
+                word: QuranUtils.ayahs[(widget.question.ayah! - 1) - 1],
                 correct: true),
             Choice(
                 word: QuranUtils
-                    .ayahs[widget.question.wrongPreviousAyahOptions[0] - 1],
+                    .ayahs[widget.question.wrongPreviousAyahOptions![0] - 1],
                 correct: false),
             Choice(
                 word: QuranUtils
-                    .ayahs[widget.question.wrongPreviousAyahOptions[1] - 1],
+                    .ayahs[widget.question.wrongPreviousAyahOptions![1] - 1],
                 correct: false),
           ],
           onCorrectChoiceSelected: () => widget.onStepDone.call(),

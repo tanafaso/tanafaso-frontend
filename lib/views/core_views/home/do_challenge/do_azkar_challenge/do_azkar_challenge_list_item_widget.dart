@@ -17,10 +17,10 @@ class DoAzkarChallengeListItemWidget extends StatefulWidget {
   final AzkarChallenge challenge;
 
   DoAzkarChallengeListItemWidget({
-    Key key,
-    @required this.subChallenge,
-    @required this.callback,
-    @required this.challenge,
+    required Key key,
+    required this.subChallenge,
+    required this.callback,
+    required this.challenge,
   }) : super(key: key);
 
   @override
@@ -31,8 +31,8 @@ class DoAzkarChallengeListItemWidget extends StatefulWidget {
 class _DoAzkarChallengeListItemWidgetState
     extends State<DoAzkarChallengeListItemWidget>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  Color buttonColor;
-  int initialRepetitions;
+  Color? buttonColor;
+  late int initialRepetitions;
 
   @override
   void initState() {
@@ -45,10 +45,11 @@ class _DoAzkarChallengeListItemWidgetState
     // Necessary as documented by AutomaticKeepAliveClientMixin.
     super.build(context);
 
+    // Can't be called in initState
     if (buttonColor == null) {
       buttonColor = widget.subChallenge.done()
           ? Theme.of(context).colorScheme.primary
-          : Theme.of(context).buttonTheme.colorScheme.primary;
+          : Theme.of(context).buttonTheme.colorScheme!.primary;
     }
 
     return RawMaterialButton(
@@ -78,13 +79,13 @@ class _DoAzkarChallengeListItemWidgetState
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              widget.subChallenge.zekr.zekr,
+              widget.subChallenge.zekr.zekr!,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 25,
                 fontFamily:
                     // ignore: deprecated_member_use
-                    Theme.of(context).accentTextTheme.bodyText1.fontFamily,
+                    Theme.of(context).primaryTextTheme.labelLarge!.fontFamily,
               ),
             ),
           ),

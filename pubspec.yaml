@@ -12,71 +12,59 @@ description: A new Flutter project.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.14.6+147
+version: 1.14.7+148
 
 environment:
-  sdk: '>=2.10.0 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.6
   flutter_login_facebook: ^1.4.1
-  http: ^0.13.1
-  flutter_auth_buttons: ^0.8.0
-  flutter_login: ^1.0.14
-  flutter_secure_storage: ^5.1.0
-  flare_flutter: ^2.0.3
+  http: ^1.0.0
+  auth_buttons: ^3.0.2
+  flutter_login: ^3.0.0
+  flutter_secure_storage: ^9.0.0
+  flare_flutter: ^3.0.2
   progress_state_button: ^1.0.1
-  sprintf: "^4.0.0"
-  flutter_localizations:
-    sdk: flutter
-  firebase_core: ^1.20.0
-  firebase_messaging: ^12.0.1
+  sprintf: ^7.0.0
+  flutter_localization: any
+  firebase_core: ^2.28.0
+  firebase_messaging: ^14.8.0
   shared_preferences: ^2.0.5
-  optional: ^5.0.0+1
-  confetti: ^0.5.5
-  flutter_slidable: ^0.6.0
+  optional: ^6.1.0+1
+  confetti: ^0.7.0
+  flutter_slidable: ^3.1.0
   feature_discovery: ^0.14.0
-  share_plus: ^4.0.4
-  toggle_switch: ^0.1.9
-  introduction_screen: ^2.1.0
+  share_plus: ^8.0.2
+  toggle_switch: ^2.3.0
+  introduction_screen: ^3.1.14
   in_app_review: ^2.0.4
-  crisp: ^0.1.8
+  crisp: ^0.3.1
   crypto: ^3.0.1
-  shimmer: ^2.0.0
-  flutter_ringtone_player: ^3.0.0
-  auto_size_text: ^2.1.0
-  clear_all_notifications: ^0.0.2
-  google_sign_in: ^5.1.1
-  firebase_auth: ^3.1.2
-  googleapis: ^5.0.1
+  shimmer: ^3.0.0
+  flutter_ringtone_player: ^4.0.0+2
+  auto_size_text: ^3.0.0
+  clear_all_notifications: ^1.0.0
+  google_sign_in: ^6.2.1
+  firebase_auth: ^4.19.0
+  googleapis: ^13.1.0
   flutter_signin_button: ^2.0.0
-  flutter_local_notifications: ^9.7.0
-  numberpicker: ^2.1.1
+  flutter_local_notifications: ^17.0.0
+  numberpicker: ^2.1.2
   the_apple_sign_in: ^1.1.1
-  device_info_plus: ^3.2.3
+  device_info_plus: ^10.0.1
   url_launcher: ^6.1.0
   synchronized: ^3.0.0+2
-  firebase_analytics: ^9.3.0
-  intl: ^0.17.0
+  firebase_analytics: ^10.10.0
+  intl: ^0.18.1
   odometer: ^3.0.0
-  permission_handler: ^10.0.0
+  permission_handler: ^11.3.1
 
-dependency_overrides:
-  flutter_inappwebview:
-    git:
-      url: https://github.com/tanafaso/flutter_inappwebview
-      ref: master
+  collection: any
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  test: ^1.16.8
-  mockito: ^5.0.4
 
 
 # For information on the generic Dart part of this file, see the

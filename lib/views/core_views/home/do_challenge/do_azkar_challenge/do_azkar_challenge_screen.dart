@@ -29,11 +29,11 @@ class DoAzkarChallengeScreen extends StatefulWidget {
   final List<Friend> friendshipScores;
 
   DoAzkarChallengeScreen({
-    @required this.challenge,
-    @required this.group,
-    @required this.challengedUsersIds,
-    @required this.challengedUsersFullNames,
-    @required this.friendshipScores,
+    required this.challenge,
+    required this.group,
+    required this.challengedUsersIds,
+    required this.challengedUsersFullNames,
+    required this.friendshipScores,
   });
 
   @override
@@ -42,10 +42,10 @@ class DoAzkarChallengeScreen extends StatefulWidget {
 
 class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
     with WidgetsBindingObserver {
-  ConfettiController confettiControler;
-  bool _finishedConfetti;
-  bool _friendsTileExpanded;
-  List<int> _lastUpdatedRepetitionsList;
+  late ConfettiController confettiControler;
+  late bool _finishedConfetti;
+  late bool _friendsTileExpanded;
+  late List<int> _lastUpdatedRepetitionsList;
 
   @override
   void initState() {
@@ -75,7 +75,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
     return Scaffold(
         appBar: AppBar(
           title: AutoSizeText(
-            widget.challenge.name,
+            widget.challenge.name ?? "",
             style: TextStyle(fontSize: 30),
           ),
         ),
@@ -88,7 +88,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
                       child: ExpansionTile(
-                        key: GlobalKey(),
+                        key: GlobalKey(debugLabel: 'friends_tile_key'),
                         title: Text(
                           "الأصدقاء",
                           style: TextStyle(
@@ -142,12 +142,14 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                               ),
                               Visibility(
                                 child: Divider(),
-                                visible: (widget.challenge.motivation?.length ??
+                                visible: (widget.challenge.motivation ??
+                                        "".length ??
                                         0) !=
                                     0,
                               ),
                               Visibility(
-                                visible: (widget.challenge.motivation?.length ??
+                                visible: (widget.challenge.motivation ??
+                                        "".length ??
                                         0) !=
                                     0,
                                 maintainSize: false,
@@ -166,7 +168,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                                                 3 /
                                                 4,
                                         child: AutoSizeText(
-                                          widget.challenge.motivation,
+                                          widget.challenge.motivation ?? "",
                                           textAlign: TextAlign.center,
                                           softWrap: true,
                                           style: TextStyle(fontSize: 25),

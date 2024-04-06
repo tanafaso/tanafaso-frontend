@@ -12,11 +12,11 @@ typedef OnSelectedFriendsChanged = void Function(
 class SelectedFriendsWidget extends StatefulWidget {
   final List<Friend> initiallySelectedFriends;
   final OnSelectedFriendsChanged onSelectedFriendsChanged;
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
 
   SelectedFriendsWidget({
     this.initiallySelectedFriends = const [],
-    this.onSelectedFriendsChanged,
+    required this.onSelectedFriendsChanged,
     this.scrollController,
   });
 
@@ -26,7 +26,7 @@ class SelectedFriendsWidget extends StatefulWidget {
 
 class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
     with AutomaticKeepAliveClientMixin {
-  List<Friend> _selectedFriends;
+  late List<Friend> _selectedFriends;
 
   @override
   void initState() {
@@ -41,73 +41,76 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
     super.build(context);
 
     return Card(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Text(
-                  '*',
-                  style: TextStyle(color: Colors.red, fontSize: 17),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.person,
-                  size: 25,
-                ),
-              ),
-              Flexible(child: getTitle()),
-              Padding(padding: EdgeInsets.only(left: 16)),
-            ],
-          ),
-          Visibility(
-            visible: (_selectedFriends?.length ?? 0) != 0,
-            maintainSize: false,
-            child: getSelectedFriends(),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.all(8),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                  elevation: MaterialStateProperty.resolveWith((states) => 10),
-                  shape: MaterialStateProperty.resolveWith((_) =>
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)))),
-              onPressed: () async {
-                List<Friend> friends;
-                try {
-                  friends = await ServiceProvider.usersService
-                      .getFriendsLeaderboard();
-                } on ApiException catch (e) {
-                  SnackBarUtils.showSnackBar(
-                    context,
-                    e.errorStatus.errorMessage,
-                  );
-                  return;
-                }
-                List<Friend> selectedFriends = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SelectFriendsScreen(
-                      friends: friends,
-                    ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    '*',
+                    style: TextStyle(color: Colors.red, fontSize: 17),
                   ),
-                ) as List<Friend>;
-
-                setState(() {
-                  _selectedFriends =
-                      selectedFriends == null ? [] : selectedFriends;
-                  widget.onSelectedFriendsChanged(_selectedFriends);
-                });
-              },
-              child: _getSelectFriendsIcon(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.person,
+                    size: 25,
+                  ),
+                ),
+                Flexible(child: getTitle()),
+                Padding(padding: EdgeInsets.only(left: 16)),
+              ],
             ),
-          ),
-        ],
+            Visibility(
+              visible: (_selectedFriends.length ?? 0) != 0,
+              maintainSize: false,
+              child: getSelectedFriends(),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.all(8),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    elevation: MaterialStateProperty.resolveWith((states) => 10),
+                    shape: MaterialStateProperty.resolveWith((_) =>
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)))),
+                onPressed: () async {
+                  List<Friend> friends;
+                  try {
+                    friends = await ServiceProvider.usersService
+                        .getFriendsLeaderboard();
+                  } on ApiException catch (e) {
+                    SnackBarUtils.showSnackBar(
+                      context,
+                      e.errorStatus.errorMessage,
+                    );
+                    return;
+                  }
+                  List<Friend> selectedFriends = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SelectFriendsScreen(
+                        friends: friends,
+                      ),
+                    ),
+                  ) as List<Friend>;
+
+                  setState(() {
+                    _selectedFriends =
+                        selectedFriends == null ? [] : selectedFriends;
+                    widget.onSelectedFriendsChanged(_selectedFriends);
+                  });
+                },
+                child: _getSelectFriendsIcon(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -115,7 +118,7 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
   Widget getTitle() {
     String text;
     Color color;
-    if ((_selectedFriends?.length ?? 0) == 0) {
+    if ((_selectedFriends.length ?? 0) == 0) {
       text = AppLocalizations.of(context).noFriendsSelected;
       color = Colors.pink;
     } else {
@@ -139,7 +142,7 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
           padding: const EdgeInsets.only(right: 16.0, top: 8),
           child: ListView.separated(
             primary: false,
-            controller: widget?.scrollController ?? ScrollController(),
+            controller: widget.scrollController ?? ScrollController(),
             separatorBuilder: (BuildContext context, int index) => Divider(),
             shrinkWrap: true,
             itemCount: _selectedFriends.length,
@@ -154,11 +157,11 @@ class _SelectedFriendsWidgetState extends State<SelectedFriendsWidget>
     );
   }
 
-  Widget _getSelectFriendsIcon() => (_selectedFriends?.length ?? 0) == 0
+  Widget _getSelectFriendsIcon() => (_selectedFriends.length ?? 0) == 0
       ? Icon(Icons.add, color: Theme.of(context).iconTheme.color)
       : Text(
           AppLocalizations.of(context).changeSelectedFriends,
-          style: Theme.of(context).textTheme.button,
+          style: Theme.of(context).textTheme.labelLarge,
         );
 
   @override

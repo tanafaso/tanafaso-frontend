@@ -2,7 +2,7 @@ import 'package:azkar/models/user.dart';
 import 'package:azkar/net/api_interface/response_base.dart';
 
 class GetUserResponse extends ResponseBase {
-  User user;
+  User? user;
 
   static GetUserResponse fromJson(Map<String, dynamic> json) {
     GetUserResponse response = new GetUserResponse();

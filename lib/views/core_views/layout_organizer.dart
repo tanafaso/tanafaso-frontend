@@ -19,7 +19,7 @@ class Topic {
   BottomNavigationBarItem bottomNavigationBarItem;
   TopicType topicType;
 
-  Topic({@required this.bottomNavigationBarItem, @required this.topicType});
+  Topic({required this.bottomNavigationBarItem, required this.topicType});
 }
 
 enum TopicType {
@@ -41,8 +41,8 @@ class LayoutOrganizer extends StatefulWidget {
 
 class _LayoutOrganizerState extends State<LayoutOrganizer>
     with WidgetsBindingObserver, TickerProviderStateMixin {
-  String userToken;
-  int _selectedIdx;
+  late String userToken;
+  late int _selectedIdx;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -57,7 +57,7 @@ class _LayoutOrganizerState extends State<LayoutOrganizer>
   }
 
   Future<void> getUserToken() async {
-    userToken = await FlutterSecureStorage().read(key: 'jwtToken');
+    userToken = (await FlutterSecureStorage().read(key: 'jwtToken'))!;
   }
 
   void _onItemTapped(int index) {
@@ -84,10 +84,10 @@ class _LayoutOrganizerState extends State<LayoutOrganizer>
 
   initFirebase() async {
     // Get the token each time the application loads.
-    String token = await FirebaseMessaging.instance.getToken();
+    String? token = await FirebaseMessaging.instance.getToken();
 
     // Send initial token to database.
-    sendTokenToDatabase(token);
+    sendTokenToDatabase(token!);
 
     // Any time the token refreshes, store this in the database too.
     FirebaseMessaging.instance.onTokenRefresh.listen(sendTokenToDatabase);
@@ -265,13 +265,14 @@ class _LayoutOrganizerState extends State<LayoutOrganizer>
   }
 
   Widget getFeatureDiscoveryWith({
-    Widget mainWidget,
-    String featureId,
-    IconData iconData,
-    String title,
-    String body,
+    required Widget mainWidget,
+    required String featureId,
+    required IconData iconData,
+    required String title,
+    required String body,
   }) {
     return DescribedFeatureOverlay(
+      key: Key(featureId),
       featureId: featureId,
       barrierDismissible: false,
       backgroundDismissible: false,

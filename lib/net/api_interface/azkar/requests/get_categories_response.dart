@@ -3,7 +3,7 @@ import 'package:azkar/models/category.dart';
 import '../../response_base.dart';
 
 class GetCategoriesResponse extends ResponseBase {
-  List<Category> categories;
+  late List<Category> categories;
 
   static GetCategoriesResponse fromJson(Map<String, dynamic> json) {
     GetCategoriesResponse response = new GetCategoriesResponse();

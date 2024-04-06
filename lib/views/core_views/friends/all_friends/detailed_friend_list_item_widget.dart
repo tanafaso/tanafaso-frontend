@@ -15,9 +15,9 @@ class DetailedFriendListItemWidget extends StatelessWidget {
   final OnFriendDeletedCallback onFriendDeletedCallback;
 
   DetailedFriendListItemWidget({
-    @required this.friendshipScore,
-    @required this.toggleViewCallback,
-    @required this.onFriendDeletedCallback,
+    required this.friendshipScore,
+    required this.toggleViewCallback,
+    required this.onFriendDeletedCallback,
   });
 
   @override
@@ -173,7 +173,9 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                               fillColor: Colors.grey,
                               onPressed: () async {
                                 bool deleted =
-                                    await _showDeleteFriendAlertDialog(context);
+                                    await _showDeleteFriendAlertDialog(
+                                            context) ??
+                                        false;
                                 if (deleted) {
                                   onFriendDeletedCallback.call();
                                 }
@@ -211,8 +213,8 @@ class DetailedFriendListItemWidget extends StatelessWidget {
     );
   }
 
-  Future<bool> _showDeleteFriendAlertDialog(BuildContext context) async {
-    return showDialog<bool>(
+  Future<bool?> _showDeleteFriendAlertDialog(BuildContext context) async {
+    return showDialog<bool?>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -222,8 +224,11 @@ class DetailedFriendListItemWidget extends StatelessWidget {
             child: Text('هل تريد حقا حذف هذا الصديق؟'),
           ),
           actions: <Widget>[
-            TextButton(
-              child: const Text('نعم'),
+            ElevatedButton(
+              child: const Text(
+                'نعم',
+                style: TextStyle(color: Colors.black),
+              ),
               onPressed: () async {
                 try {
                   await ServiceProvider.usersService
@@ -235,8 +240,11 @@ class DetailedFriendListItemWidget extends StatelessWidget {
                 Navigator.of(context).pop(/*deleted=*/ true);
               },
             ),
-            TextButton(
-              child: const Text('لا'),
+            ElevatedButton(
+              child: const Text(
+                'لا',
+                style: TextStyle(color: Colors.black),
+              ),
               onPressed: () {
                 Navigator.of(context).pop(/*deleted=*/ false);
               },
@@ -248,10 +256,10 @@ class DetailedFriendListItemWidget extends StatelessWidget {
   }
 
   Color getColor() {
-    if (friendshipScore.friendTotalScore > friendshipScore.userTotalScore) {
+    if (friendshipScore.friendTotalScore > friendshipScore.userTotalScore!) {
       return Colors.red;
     } else if (friendshipScore.friendTotalScore <
-        friendshipScore.userTotalScore) {
+        friendshipScore.userTotalScore!) {
       return Colors.green;
     }
     return Colors.yellow.shade700;

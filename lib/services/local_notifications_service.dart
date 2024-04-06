@@ -13,8 +13,8 @@ class LocalNotificationsService {
       case RepeatInterval.everyMinute:
       case RepeatInterval.hourly:
         assert(false);
+        return "";
     }
-    assert(false);
   }
 
   Future<void> setNudgeInterval(RepeatInterval repeatInterval) async {
@@ -60,8 +60,10 @@ class LocalNotificationsService {
       visibility: NotificationVisibility.public,
       styleInformation: BigTextStyleInformation(''),
     );
-    const IOSNotificationDetails iosNotificationDetails =
-        IOSNotificationDetails(threadIdentifier: channelId);
+    const DarwinNotificationDetails iosNotificationDetails =
+        DarwinNotificationDetails(
+      categoryIdentifier: channelId,
+    );
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
       android: androidNotificationDetails,
       iOS: iosNotificationDetails,
@@ -86,8 +88,8 @@ class LocalNotificationsService {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/notification');
 
-    final IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings(
+    final DarwinInitializationSettings initializationSettingsDarwin =
+        DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
@@ -96,7 +98,7 @@ class LocalNotificationsService {
     final InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
-      iOS: initializationSettingsIOS,
+      iOS: initializationSettingsDarwin,
     );
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,

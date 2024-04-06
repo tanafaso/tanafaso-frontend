@@ -8,7 +8,7 @@ class AppLocalizations {
   final Locale locale;
 
   static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
   static Map<String, Map<String, String>> _localizedValues = {
@@ -250,762 +250,783 @@ class AppLocalizations {
       'yes': 'نعم',
       'no': 'لا',
       'are you a new user?': 'هل أنت مستخدم جديد؟',
+      'error while signing in with google':
+          'حدث خطأ أثناء تسجيل الدخول باستخدام جوجل',
+      'username should not be empty': 'يجب ألا يكون كود المستخدم فارغًا',
+      'signing in...': 'جاري تسجيل الدخول...',
     },
   };
 
+  String get signingIn {
+    return _localizedValues[locale.languageCode]!['signing in...']!;
+  }
   String get yes {
-    return _localizedValues[locale.languageCode]['yes'];
+    return _localizedValues[locale.languageCode]!['yes']!;
   }
 
   String get no {
-    return _localizedValues[locale.languageCode]['no'];
+    return _localizedValues[locale.languageCode]!['no']!;
   }
 
   String get areYouANewUser {
-    return _localizedValues[locale.languageCode]['are you a new user?'];
+    return _localizedValues[locale.languageCode]!['are you a new user?']!;
   }
 
   String get personalChallengeNotFoundTempErrorMessage {
-    return _localizedValues[locale.languageCode]
-        ['personal challenge not found temp error message'];
+    return _localizedValues[locale.languageCode]![
+        'personal challenge not found temp error message']!;
   }
 
   String get sabeqAndDetailedViewTitle {
-    return _localizedValues[locale.languageCode]
-        ['sabeq and detailed view title'];
+    return _localizedValues[locale.languageCode]![
+        'sabeq and detailed view title']!;
   }
 
   String get sabeqAndDetailedViewExplanation {
-    return _localizedValues[locale.languageCode]
-        ['sabeq and detailed view explanation'];
+    return _localizedValues[locale.languageCode]![
+        'sabeq and detailed view explanation']!;
   }
 
   String get challenge {
-    return _localizedValues[locale.languageCode]['challenge'];
+    return _localizedValues[locale.languageCode]!['challenge']!;
   }
 
   String get detailedView {
-    return _localizedValues[locale.languageCode]['detailed view'];
+    return _localizedValues[locale.languageCode]!['detailed view']!;
   }
 
   String get summaryView {
-    return _localizedValues[locale.languageCode]['summary view'];
+    return _localizedValues[locale.languageCode]!['summary view']!;
   }
 
   String get filteredAzkarNotFound {
-    return _localizedValues[locale.languageCode]['filtered azkar not found'];
+    return _localizedValues[locale.languageCode]!['filtered azkar not found']!;
   }
 
   String get shareUsernameExplanation {
-    return _localizedValues[locale.languageCode]['share username explanation'];
+    return _localizedValues[locale.languageCode]![
+        'share username explanation']!;
   }
 
   String get shareUsernameTitle {
-    return _localizedValues[locale.languageCode]['share username title'];
+    return _localizedValues[locale.languageCode]!['share username title']!;
   }
 
   String get noFriendsFound {
-    return _localizedValues[locale.languageCode]['no friends found'];
+    return _localizedValues[locale.languageCode]!['no friends found']!;
   }
 
   String get howToAddNewFriendsQuestion {
-    return _localizedValues[locale.languageCode]['how to add new friends?'];
+    return _localizedValues[locale.languageCode]!['how to add new friends?']!;
   }
 
   String get howToAddNewFriends {
-    return _localizedValues[locale.languageCode]['how to add new friends'];
+    return _localizedValues[locale.languageCode]!['how to add new friends']!;
   }
 
   String get addTheFirstFriendsChallenge {
-    return _localizedValues[locale.languageCode]
-        ['add the first friends challenge'];
+    return _localizedValues[locale.languageCode]![
+        'add the first friends challenge']!;
   }
 
   String get doingAChallenge {
-    return _localizedValues[locale.languageCode]['doing a challenge'];
+    return _localizedValues[locale.languageCode]!['doing a challenge']!;
   }
 
   String get challengeCreator {
-    return _localizedValues[locale.languageCode]['challenge creator'];
+    return _localizedValues[locale.languageCode]!['challenge creator']!;
   }
 
   String get shareWithFriend {
-    return _localizedValues[locale.languageCode]['share with friend'];
+    return _localizedValues[locale.languageCode]!['share with friend']!;
   }
 
   String shareMessage(String username) {
     return sprintf(
-        _localizedValues[locale.languageCode]['share message'], [username]);
+        _localizedValues[locale.languageCode]!['share message']!, [username]);
   }
 
   String get theChallengeHasBeenDeletedSuccessfully {
-    return _localizedValues[locale.languageCode]
-        ['the challenge has been deleted successfully'];
+    return _localizedValues[locale.languageCode]![
+        'the challenge has been deleted successfully']!;
   }
 
   String get deleteAndCopyChallenge {
-    return _localizedValues[locale.languageCode]['delete and copy challenge'];
+    return _localizedValues[locale.languageCode]!['delete and copy challenge']!;
   }
 
   String get swipeTheChallengeCardToTheRightToDeleteOrCopyAChallenge {
-    return _localizedValues[locale.languageCode]
-        ['swipe the challenge card to the right to delete or copy a challenge'];
+    return _localizedValues[locale.languageCode]![
+        'swipe the challenge card to the right to delete or copy a challenge']!;
   }
 
   String get copy {
-    return _localizedValues[locale.languageCode]['copy'];
+    return _localizedValues[locale.languageCode]!['copy']!;
   }
 
   String get delete {
-    return _localizedValues[locale.languageCode]['delete'];
+    return _localizedValues[locale.languageCode]!['delete']!;
   }
 
   String get repeatingThisChallenge {
-    return _localizedValues[locale.languageCode]['repeating this challenge'];
+    return _localizedValues[locale.languageCode]!['repeating this challenge']!;
   }
 
   String get other {
-    return _localizedValues[locale.languageCode]['other'];
+    return _localizedValues[locale.languageCode]!['other']!;
   }
 
   String get and {
-    return _localizedValues[locale.languageCode]['and'];
+    return _localizedValues[locale.languageCode]!['and']!;
   }
 
   String get selectedFriends {
-    return _localizedValues[locale.languageCode]['selected friends'];
+    return _localizedValues[locale.languageCode]!['selected friends']!;
   }
 
   String get others {
-    return _localizedValues[locale.languageCode]['others'];
+    return _localizedValues[locale.languageCode]!['others']!;
   }
 
   String get pleaseChooseFriendsFirst {
-    return _localizedValues[locale.languageCode]['please choose friends first'];
+    return _localizedValues[locale.languageCode]![
+        'please choose friends first']!;
   }
 
   String get addAzkar {
-    return _localizedValues[locale.languageCode]['add azkar'];
+    return _localizedValues[locale.languageCode]!['add azkar']!;
   }
 
   String get selectAzkarCategory {
-    return _localizedValues[locale.languageCode]['select azkar category'];
+    return _localizedValues[locale.languageCode]!['select azkar category']!;
   }
 
   String get selectAzkar {
-    return _localizedValues[locale.languageCode]['select azkar'];
+    return _localizedValues[locale.languageCode]!['select azkar']!;
   }
 
   String get pleaseSelectAzkarFirst {
-    return _localizedValues[locale.languageCode]['please select azkar first'];
+    return _localizedValues[locale.languageCode]!['please select azkar first']!;
   }
 
   String get anEmailHasBeenSentToYouPleaseCheckYourInbox {
-    return _localizedValues[locale.languageCode]
-        ['an email has been sent to you, please check your inbox'];
+    return _localizedValues[locale.languageCode]![
+        'an email has been sent to you, please check your inbox']!;
   }
 
   String get anEmailWillBeSentToYouSoThatYouCanResetYourPassword {
-    return _localizedValues[locale.languageCode]
-        ['an email will be sent to you so that you can reset your password'];
+    return _localizedValues[locale.languageCode]![
+        'an email will be sent to you so that you can reset your password']!;
   }
 
   String get send {
-    return _localizedValues[locale.languageCode]['send'];
+    return _localizedValues[locale.languageCode]!['send']!;
   }
 
   String get enterYourEmailAddress {
-    return _localizedValues[locale.languageCode]['enter your email address'];
+    return _localizedValues[locale.languageCode]!['enter your email address']!;
   }
 
   String get resetPassword {
-    return _localizedValues[locale.languageCode]['reset password'];
+    return _localizedValues[locale.languageCode]!['reset password']!;
   }
 
   String get challengeTargetHint {
-    return _localizedValues[locale.languageCode]['challenge target hint'];
+    return _localizedValues[locale.languageCode]!['challenge target hint']!;
   }
 
   String get yourFriendCanFindHisUserCodeOnHisProfilePage {
-    return _localizedValues[locale.languageCode]
-        ['your friend can find his user code on his profile page'];
+    return _localizedValues[locale.languageCode]![
+        'your friend can find his user code on his profile page']!;
   }
 
   String get challengesOfFriends {
-    return _localizedValues[locale.languageCode]['challenges of friends'];
+    return _localizedValues[locale.languageCode]!['challenges of friends']!;
   }
 
   String get optional {
-    return _localizedValues[locale.languageCode]['(optional)'];
+    return _localizedValues[locale.languageCode]!['(optional)']!;
   }
 
   String get writeANameWithWhichYouCanDistinguishTheChallenge {
-    return _localizedValues[locale.languageCode]
-        ['write a name with which you can distinguish the challenge'];
+    return _localizedValues[locale.languageCode]![
+        'write a name with which you can distinguish the challenge']!;
   }
 
   String get theMotivationMessage {
-    return _localizedValues[locale.languageCode]['the motivation message'];
+    return _localizedValues[locale.languageCode]!['the motivation message']!;
   }
 
   String get writeSomethingToMotivateYourFriendToSayTheZekr {
-    return _localizedValues[locale.languageCode]
-        ['write something to motivate your friend to say the zekr'];
+    return _localizedValues[locale.languageCode]![
+        'write something to motivate your friend to say the zekr']!;
   }
 
   String get noEmailProvided {
-    return _localizedValues[locale.languageCode]['no email provided'];
+    return _localizedValues[locale.languageCode]!['no email provided']!;
   }
 
   String get pleaseConnectToInternetAndTryAgain {
-    return _localizedValues[locale.languageCode]
-        ['please connect to internet and try again'];
+    return _localizedValues[locale.languageCode]![
+        'please connect to internet and try again']!;
   }
 
   String get youDoNotHaveAnAccount {
-    return _localizedValues[locale.languageCode]['you do not have an account?'];
+    return _localizedValues[locale.languageCode]![
+        'you do not have an account?']!;
   }
 
   String get anErrorHappenedWhileSettingUpThisDeviceToReceiveNotifications {
-    return _localizedValues[locale.languageCode][
-        'an error happened while setting up this device to receive notifications'];
+    return _localizedValues[locale.languageCode]![
+        'an error happened while setting up this device to receive notifications']!;
   }
 
   String get youHaveLoggedOutSuccessfully {
-    return _localizedValues[locale.languageCode]
-        ['you have logged out successfully'];
+    return _localizedValues[locale.languageCode]![
+        'you have logged out successfully']!;
   }
 
   String get logout {
-    return _localizedValues[locale.languageCode]['logout'];
+    return _localizedValues[locale.languageCode]!['logout']!;
   }
 
   String get theDeadlineHasAlreadyPassedForThisChallenge {
-    return _localizedValues[locale.languageCode]
-        ['the deadline has already passed for this challenge'];
+    return _localizedValues[locale.languageCode]![
+        'the deadline has already passed for this challenge']!;
   }
 
   String get searchForAZekr {
-    return _localizedValues[locale.languageCode]['search for a zekr'];
+    return _localizedValues[locale.languageCode]!['search for a zekr']!;
   }
 
   String get usernameCopiedSuccessfully {
-    return _localizedValues[locale.languageCode]
-        ['username copied successfully'];
+    return _localizedValues[locale.languageCode]![
+        'username copied successfully']!;
   }
 
   String get challenges {
-    return _localizedValues[locale.languageCode]['challenges'];
+    return _localizedValues[locale.languageCode]!['challenges']!;
   }
 
   String get youHaveFinished {
-    return _localizedValues[locale.languageCode]['you have finished'];
+    return _localizedValues[locale.languageCode]!['you have finished']!;
   }
 
   String get yourFriend {
-    return _localizedValues[locale.languageCode]['your friend'];
+    return _localizedValues[locale.languageCode]!['your friend']!;
   }
 
   String get challengeThisFriend {
-    return _localizedValues[locale.languageCode]['challenge this friend'];
+    return _localizedValues[locale.languageCode]!['challenge this friend']!;
   }
 
   String get you {
-    return _localizedValues[locale.languageCode]['you'];
+    return _localizedValues[locale.languageCode]!['you']!;
   }
 
   String get totalPoints {
-    return _localizedValues[locale.languageCode]['total points'];
+    return _localizedValues[locale.languageCode]!['total points']!;
   }
 
   String get then {
-    return _localizedValues[locale.languageCode]['then'];
+    return _localizedValues[locale.languageCode]!['then']!;
   }
 
   String get firstNameExample {
-    return _localizedValues[locale.languageCode]['first name example'];
+    return _localizedValues[locale.languageCode]!['first name example']!;
   }
 
   String get lastNameExample {
-    return _localizedValues[locale.languageCode]['last name example'];
+    return _localizedValues[locale.languageCode]!['last name example']!;
   }
 
   String get firstName {
-    return _localizedValues[locale.languageCode]['first name'];
+    return _localizedValues[locale.languageCode]!['first name']!;
   }
 
   String get lastName {
-    return _localizedValues[locale.languageCode]['last name'];
+    return _localizedValues[locale.languageCode]!['last name']!;
   }
 
   String get day {
-    return _localizedValues[locale.languageCode]['day'];
+    return _localizedValues[locale.languageCode]!['day']!;
   }
 
   String get hour {
-    return _localizedValues[locale.languageCode]['hour'];
+    return _localizedValues[locale.languageCode]!['hour']!;
   }
 
   String get minute {
-    return _localizedValues[locale.languageCode]['minute'];
+    return _localizedValues[locale.languageCode]!['minute']!;
   }
 
   String get youHaveFinishedTheChallengeSuccessfully {
-    return _localizedValues[locale.languageCode]
-        ['you have finished the challenge successfully'];
+    return _localizedValues[locale.languageCode]![
+        'you have finished the challenge successfully']!;
   }
 
   String get theRemainingRepetitions {
-    return _localizedValues[locale.languageCode]['the remaining repetitions'];
+    return _localizedValues[locale.languageCode]!['the remaining repetitions']!;
   }
 
   String get youHaveFinishedReadingIt {
-    return _localizedValues[locale.languageCode]
-        ['you have finished reading it'];
+    return _localizedValues[locale.languageCode]![
+        'you have finished reading it']!;
   }
 
   String get clickOnZekrAfterReadingIt {
-    return _localizedValues[locale.languageCode]
-        ['click on zekr after reading it'];
+    return _localizedValues[locale.languageCode]![
+        'click on zekr after reading it']!;
   }
 
   String get repetitions {
-    return _localizedValues[locale.languageCode]['repetitions'];
+    return _localizedValues[locale.languageCode]!['repetitions']!;
   }
 
   String get challengeMyself {
-    return _localizedValues[locale.languageCode]['challenge myself'];
+    return _localizedValues[locale.languageCode]!['challenge myself']!;
   }
 
   String get addZekr {
-    return _localizedValues[locale.languageCode]['add zekr'];
+    return _localizedValues[locale.languageCode]!['add zekr']!;
   }
 
   String get noAzkarSelected {
-    return _localizedValues[locale.languageCode]['no azkar selected'];
+    return _localizedValues[locale.languageCode]!['no azkar selected']!;
   }
 
   String get theSelectedAzkar {
-    return _localizedValues[locale.languageCode]['the selected azkar'];
+    return _localizedValues[locale.languageCode]!['the selected azkar']!;
   }
 
   String get changeSelectedFriends {
-    return _localizedValues[locale.languageCode]['change selected friends'];
+    return _localizedValues[locale.languageCode]!['change selected friends']!;
   }
 
   String get youWillChallenge {
-    return _localizedValues[locale.languageCode]['you will challenge'];
+    return _localizedValues[locale.languageCode]!['you will challenge']!;
   }
 
   String get noFriendsSelected {
-    return _localizedValues[locale.languageCode]['no friend selected'];
+    return _localizedValues[locale.languageCode]!['no friend selected']!;
   }
 
   String get challengeHasBeenAddedSuccessfully {
-    return _localizedValues[locale.languageCode]
-        ['challenge has been added successfully'];
+    return _localizedValues[locale.languageCode]![
+        'challenge has been added successfully']!;
   }
 
   String get add {
-    return _localizedValues[locale.languageCode]['add'];
+    return _localizedValues[locale.languageCode]!['add']!;
   }
 
   String get addNotReady {
-    return _localizedValues[locale.languageCode]['add (not ready)'];
+    return _localizedValues[locale.languageCode]!['add (not ready)']!;
   }
 
   String get days {
-    return _localizedValues[locale.languageCode]['days'];
+    return _localizedValues[locale.languageCode]!['days']!;
   }
 
   String get challengeExpiresAfter {
-    return _localizedValues[locale.languageCode]['challenge expires after'];
+    return _localizedValues[locale.languageCode]!['challenge expires after']!;
   }
 
   String get challengeName {
-    return _localizedValues[locale.languageCode]['challenge name'];
+    return _localizedValues[locale.languageCode]!['challenge name']!;
   }
 
   String get challengeFriends {
-    return _localizedValues[locale.languageCode]['challenge friends'];
+    return _localizedValues[locale.languageCode]!['challenge friends']!;
   }
 
   String get iWantTo {
-    return _localizedValues[locale.languageCode]['i want to'];
+    return _localizedValues[locale.languageCode]!['i want to']!;
   }
 
   String get selectFriends {
-    return _localizedValues[locale.languageCode]['select friends'];
+    return _localizedValues[locale.languageCode]!['select friends']!;
   }
 
   String get daysMustBeLessThanOrEqual100 {
-    return _localizedValues[locale.languageCode]
-        ['days must be less than or equal 100'];
+    return _localizedValues[locale.languageCode]![
+        'days must be less than or equal 100']!;
   }
 
   String get daysMustBeMoreThan0 {
-    return _localizedValues[locale.languageCode]['days must be more than 0'];
+    return _localizedValues[locale.languageCode]!['days must be more than 0']!;
   }
 
   String get daysMustBeANumberFrom1to100 {
-    return _localizedValues[locale.languageCode]
-        ['days must be a number from 1 to 100'];
+    return _localizedValues[locale.languageCode]![
+        'days must be a number from 1 to 100']!;
   }
 
   String get hoursMustBeLessThanOrEqual24 {
-    return _localizedValues[locale.languageCode]
-        ['hours must be less than or equal 24'];
+    return _localizedValues[locale.languageCode]![
+        'hours must be less than or equal 24']!;
   }
 
   String get hoursMustBeMoreThan0 {
-    return _localizedValues[locale.languageCode]['hours must be more than 0'];
+    return _localizedValues[locale.languageCode]!['hours must be more than 0']!;
   }
 
   String get hoursMustBeANumberFrom1to24 {
-    return _localizedValues[locale.languageCode]
-        ['hours must be a number from 1 to 24'];
+    return _localizedValues[locale.languageCode]![
+        'hours must be a number from 1 to 24']!;
   }
 
   String get repetitionsMustBeLessThanOrEqual1000 {
-    return _localizedValues[locale.languageCode]
-        ['repetitions must be less than or equal 1000'];
+    return _localizedValues[locale.languageCode]![
+        'repetitions must be less than or equal 1000']!;
   }
 
   String get repetitionsMustBeMoreThan0 {
-    return _localizedValues[locale.languageCode]
-        ['repetitions must be more than 0'];
+    return _localizedValues[locale.languageCode]![
+        'repetitions must be more than 0']!;
   }
 
   String get repetitionsMustBeANumberFrom1to1000 {
-    return _localizedValues[locale.languageCode]
-        ['repetitions must be a number from 1 to 1000'];
+    return _localizedValues[locale.languageCode]![
+        'repetitions must be a number from 1 to 1000']!;
   }
 
   String get youHaveNotAddedAnyFriendsYet {
-    return _localizedValues[locale.languageCode]
-        ['you have not added any friends yet'];
+    return _localizedValues[locale.languageCode]![
+        'you have not added any friends yet']!;
   }
 
   String get motivationShouldNotBeEmpty {
-    return _localizedValues[locale.languageCode]
-        ['motivation should not be empty'];
+    return _localizedValues[locale.languageCode]![
+        'motivation should not be empty']!;
   }
 
   String get nameShouldNotBeEmpty {
-    return _localizedValues[locale.languageCode]['name should not be empty'];
+    return _localizedValues[locale.languageCode]!['name should not be empty']!;
   }
 
   String get selectZekr {
-    return _localizedValues[locale.languageCode]['select zekr'];
+    return _localizedValues[locale.languageCode]!['select zekr']!;
   }
 
   String get nameNotFound {
-    return _localizedValues[locale.languageCode]['name not found'];
+    return _localizedValues[locale.languageCode]!['name not found']!;
   }
 
   String get theFriend {
-    return _localizedValues[locale.languageCode]['the friend'];
+    return _localizedValues[locale.languageCode]!['the friend']!;
   }
 
   String get theGroup {
-    return _localizedValues[locale.languageCode]['the group'];
+    return _localizedValues[locale.languageCode]!['the group']!;
   }
 
   String get motivation {
-    return _localizedValues[locale.languageCode]['motivation'];
+    return _localizedValues[locale.languageCode]!['motivation']!;
   }
 
   String get noChallengesFound {
-    return _localizedValues[locale.languageCode]['no challenges found'];
+    return _localizedValues[locale.languageCode]!['no challenges found']!;
   }
 
   String get endsAfter {
-    return _localizedValues[locale.languageCode]['ends after'];
+    return _localizedValues[locale.languageCode]!['ends after']!;
   }
 
   String get hours {
-    return _localizedValues[locale.languageCode]['hours'];
+    return _localizedValues[locale.languageCode]!['hours']!;
   }
 
   String get minutes {
-    return _localizedValues[locale.languageCode]['minutes'];
+    return _localizedValues[locale.languageCode]!['minutes']!;
   }
 
   String get endsAfterLessThan {
-    return _localizedValues[locale.languageCode]['ends after less than'];
+    return _localizedValues[locale.languageCode]!['ends after less than']!;
   }
 
   String get passed {
-    return _localizedValues[locale.languageCode]['passed'];
+    return _localizedValues[locale.languageCode]!['passed']!;
   }
 
   String get deadline {
-    return _localizedValues[locale.languageCode]['deadline'];
+    return _localizedValues[locale.languageCode]!['deadline']!;
   }
 
   String get noPersonalChallengesFound {
-    return _localizedValues[locale.languageCode]
-        ['no personal challenges found'];
+    return _localizedValues[locale.languageCode]![
+        'no personal challenges found']!;
   }
 
   String get createAChallenge {
-    return _localizedValues[locale.languageCode]['create a challenge'];
+    return _localizedValues[locale.languageCode]!['create a challenge']!;
   }
 
   String get loadingTheChallenges {
-    return _localizedValues[locale.languageCode]['loading the challenges'];
+    return _localizedValues[locale.languageCode]!['loading the challenges']!;
   }
 
   String get loadingTheChallenge {
-    return _localizedValues[locale.languageCode]['loading the challenge'];
+    return _localizedValues[locale.languageCode]!['loading the challenge']!;
   }
 
   String get allChallenges {
-    return _localizedValues[locale.languageCode]['all challenges'];
+    return _localizedValues[locale.languageCode]!['all challenges']!;
   }
 
   String get personalChallenges {
-    return _localizedValues[locale.languageCode]['personal challenges'];
+    return _localizedValues[locale.languageCode]!['personal challenges']!;
   }
 
   String get noFriendRequestsFound {
-    return _localizedValues[locale.languageCode]['no friend requests found'];
+    return _localizedValues[locale.languageCode]!['no friend requests found']!;
   }
 
   String get inviteFriends {
-    return _localizedValues[locale.languageCode]['invite friends'];
+    return _localizedValues[locale.languageCode]!['invite friends']!;
   }
 
   String get connectedFacebookSuccessfully {
-    return _localizedValues[locale.languageCode]
-        ['connected facebook Successfully'];
+    return _localizedValues[locale.languageCode]![
+        'connected facebook Successfully']!;
   }
 
   String get sent {
-    return _localizedValues[locale.languageCode]['sent'];
+    return _localizedValues[locale.languageCode]!['sent']!;
   }
 
   String get failed {
-    return _localizedValues[locale.languageCode]['failed'];
+    return _localizedValues[locale.languageCode]!['failed']!;
   }
 
   String get sending {
-    return _localizedValues[locale.languageCode]['sending'];
+    return _localizedValues[locale.languageCode]!['sending']!;
   }
 
   String get addFacebookFriend {
-    return _localizedValues[locale.languageCode]['add facebook friend'];
+    return _localizedValues[locale.languageCode]!['add facebook friend']!;
   }
 
   String get connectYourAccountWithFacebook {
-    return _localizedValues[locale.languageCode]
-        ['connect your account with facebook'];
+    return _localizedValues[locale.languageCode]![
+        'connect your account with facebook']!;
   }
 
   String get inviteFacebookFriends {
-    return _localizedValues[locale.languageCode]['invite facebook Friends'];
+    return _localizedValues[locale.languageCode]!['invite facebook Friends']!;
   }
 
   String get orAddFriendsBy {
-    return _localizedValues[locale.languageCode]['or add friends by'];
+    return _localizedValues[locale.languageCode]!['or add friends by']!;
   }
 
   String get usernameShouldHaveNoSpaces {
-    return _localizedValues[locale.languageCode]
-        ['username should have no spaces'];
+    return _localizedValues[locale.languageCode]![
+        'username should have no spaces']!;
+  }
+
+  String get usernameShouldNotBeEmpty {
+    return _localizedValues[locale.languageCode]![
+        'username should not be empty']!;
+  }
+
+  String get errorWhileSigningInWithGoogle {
+    return _localizedValues[locale.languageCode]![
+        'error while signing in with google']!;
   }
 
   String get enterAUsername {
-    return _localizedValues[locale.languageCode]['enter a username'];
+    return _localizedValues[locale.languageCode]!['enter a username']!;
   }
 
   String get invited {
-    return _localizedValues[locale.languageCode]['invited'];
+    return _localizedValues[locale.languageCode]!['invited']!;
   }
 
   String get invite {
-    return _localizedValues[locale.languageCode]['invite'];
+    return _localizedValues[locale.languageCode]!['invite']!;
   }
 
   String get anInvitationHasBeenSentTo {
-    return _localizedValues[locale.languageCode]
-        ['an invitation has been sent to'];
+    return _localizedValues[locale.languageCode]![
+        'an invitation has been sent to']!;
   }
 
   String get howToAddFriendsExplanation {
-    return _localizedValues[locale.languageCode]
-        ['how to add friends explanation'];
+    return _localizedValues[locale.languageCode]![
+        'how to add friends explanation']!;
   }
 
   String get ignore {
-    return _localizedValues[locale.languageCode]['ignore'];
+    return _localizedValues[locale.languageCode]!['ignore']!;
   }
 
   String get accept {
-    return _localizedValues[locale.languageCode]['accept'];
+    return _localizedValues[locale.languageCode]!['accept']!;
   }
 
   String get isNowYourFriend {
-    return _localizedValues[locale.languageCode]['is now your friend'];
+    return _localizedValues[locale.languageCode]!['is now your friend']!;
   }
 
   String get friendRequest {
-    return _localizedValues[locale.languageCode]['friend request'];
+    return _localizedValues[locale.languageCode]!['friend request']!;
   }
 
   String get isIgnored {
-    return _localizedValues[locale.languageCode]['is ignored'];
+    return _localizedValues[locale.languageCode]!['is ignored']!;
   }
 
   String get loadingFriends {
-    return _localizedValues[locale.languageCode]['loading friends'];
+    return _localizedValues[locale.languageCode]!['loading friends']!;
   }
 
   String get addFriend {
-    return _localizedValues[locale.languageCode]['add friend'];
+    return _localizedValues[locale.languageCode]!['add friend']!;
   }
 
   String get friendRequests {
-    return _localizedValues[locale.languageCode]['friend requests'];
+    return _localizedValues[locale.languageCode]!['friend requests']!;
   }
 
   String get loading {
-    return _localizedValues[locale.languageCode]['loading'];
+    return _localizedValues[locale.languageCode]!['loading']!;
   }
 
   String get username {
-    return _localizedValues[locale.languageCode]['username'];
+    return _localizedValues[locale.languageCode]!['username']!;
   }
 
   String get theChallenges {
-    return _localizedValues[locale.languageCode]['the challenges'];
+    return _localizedValues[locale.languageCode]!['the challenges']!;
   }
 
   String get homePage {
-    return _localizedValues[locale.languageCode]['home page'];
+    return _localizedValues[locale.languageCode]!['home page']!;
   }
 
   String get friends {
-    return _localizedValues[locale.languageCode]['friends'];
+    return _localizedValues[locale.languageCode]!['friends']!;
   }
 
   String get profile {
-    return _localizedValues[locale.languageCode]['profile'];
+    return _localizedValues[locale.languageCode]!['profile']!;
   }
 
   String get enterTheCodeSentTo {
-    return _localizedValues[locale.languageCode]['enter the code sent to'];
+    return _localizedValues[locale.languageCode]!['enter the code sent to']!;
   }
 
   String get clear {
-    return _localizedValues[locale.languageCode]['clear'];
+    return _localizedValues[locale.languageCode]!['clear']!;
   }
 
   String get resend {
-    return _localizedValues[locale.languageCode]['resend'];
+    return _localizedValues[locale.languageCode]!['resend']!;
   }
 
   String get didNotReceiveTheCjode {
-    return _localizedValues[locale.languageCode]['did not receive the code'];
+    return _localizedValues[locale.languageCode]!['did not receive the code']!;
   }
 
   String get pleaseFillUpAllTheCellsProperly {
-    return _localizedValues[locale.languageCode]
-        ['please fill up all the cells properly'];
+    return _localizedValues[locale.languageCode]![
+        'please fill up all the cells properly']!;
   }
 
   String get title {
-    return _localizedValues[locale.languageCode]['title'];
+    return _localizedValues[locale.languageCode]!['title']!;
   }
 
   String get email {
-    return _localizedValues[locale.languageCode]['email'];
+    return _localizedValues[locale.languageCode]!['email']!;
   }
 
   String get password {
-    return _localizedValues[locale.languageCode]['password'];
+    return _localizedValues[locale.languageCode]!['password']!;
   }
 
   String get forgotPassword {
-    return _localizedValues[locale.languageCode]['forgot password'];
+    return _localizedValues[locale.languageCode]!['forgot password']!;
   }
 
   String get orLoginWith {
-    return _localizedValues[locale.languageCode]['or login with'];
+    return _localizedValues[locale.languageCode]!['or login with']!;
   }
 
   String get login {
-    return _localizedValues[locale.languageCode]['login'];
+    return _localizedValues[locale.languageCode]!['login']!;
   }
 
   String get signUp {
-    return _localizedValues[locale.languageCode]['sign up'];
+    return _localizedValues[locale.languageCode]!['sign up']!;
   }
 
   String get facebook {
-    return _localizedValues[locale.languageCode]['facebook'];
+    return _localizedValues[locale.languageCode]!['facebook']!;
   }
 
   String get passwordHintText {
-    return _localizedValues[locale.languageCode]['password hint text'];
+    return _localizedValues[locale.languageCode]!['password hint text']!;
   }
 
   String get passwordShouldBeOfAtLeast8Characters {
-    return _localizedValues[locale.languageCode]
-        ['Password should be of at least 8 characters'];
+    return _localizedValues[locale.languageCode]![
+        'Password should be of at least 8 characters']!;
   }
 
   String get name {
-    return _localizedValues[locale.languageCode]['name'];
+    return _localizedValues[locale.languageCode]!['name']!;
   }
 
   String get confirmPassword {
-    return _localizedValues[locale.languageCode]['confirm password'];
+    return _localizedValues[locale.languageCode]!['confirm password']!;
   }
 
   String get alreadyHaveAnAccount {
-    return _localizedValues[locale.languageCode]['already have an account'];
+    return _localizedValues[locale.languageCode]!['already have an account']!;
   }
 
   String get passwordsDidNotMatch {
-    return _localizedValues[locale.languageCode]['passwords did not match'];
+    return _localizedValues[locale.languageCode]!['passwords did not match']!;
   }
 
   String get emailIsInvalid {
-    return _localizedValues[locale.languageCode]['email is invalid'];
+    return _localizedValues[locale.languageCode]!['email is invalid']!;
   }
 
   String get nameExample {
-    return _localizedValues[locale.languageCode]['name example'];
+    return _localizedValues[locale.languageCode]!['name example']!;
   }
 
   String get nameShouldBeOfAtLeast2Letters {
-    return _localizedValues[locale.languageCode]
-        ['name should be of at least 2 letters'];
+    return _localizedValues[locale.languageCode]![
+        'name should be of at least 2 letters']!;
   }
 
   String get ok {
-    return _localizedValues[locale.languageCode]['ok'];
+    return _localizedValues[locale.languageCode]!['ok']!;
   }
 
   String get error {
-    return _localizedValues[locale.languageCode]['error'];
+    return _localizedValues[locale.languageCode]!['error']!;
   }
 
   String get emailVerification {
-    return _localizedValues[locale.languageCode]['email verification'];
+    return _localizedValues[locale.languageCode]!['email verification']!;
   }
 
   String get verify {
-    return _localizedValues[locale.languageCode]['verify'];
+    return _localizedValues[locale.languageCode]!['verify']!;
   }
 
   String get verificationSuccessful {
-    return _localizedValues[locale.languageCode]['verification Successful'];
+    return _localizedValues[locale.languageCode]!['verification Successful']!;
   }
 
   String get emailVerifiedSuccessfully {
-    return _localizedValues[locale.languageCode]['email verified successfully'];
+    return _localizedValues[locale.languageCode]![
+        'email verified successfully']!;
   }
 }
 

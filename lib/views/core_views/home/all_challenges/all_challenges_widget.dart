@@ -13,16 +13,16 @@ import 'package:flutter/material.dart';
 class AllChallengesWidget extends StatefulWidget {
   final ReloadHomeMainScreenCallback reloadHomeMainScreenCallback;
 
-  const AllChallengesWidget({this.reloadHomeMainScreenCallback});
+  AllChallengesWidget({required this.reloadHomeMainScreenCallback});
 
   @override
   _AllChallengesWidgetState createState() => _AllChallengesWidgetState();
 }
 
 class _AllChallengesWidgetState extends State<AllChallengesWidget> {
-  List<Challenge> challenges;
-  List<Group> groups;
-  List<Friend> friends;
+  late List<Challenge> challenges;
+  late List<Group> groups;
+  late List<Friend> friends;
 
   Future<void> getNeededData() async {
     try {
@@ -81,7 +81,7 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
 
   Widget getChallengesListWidget(List<Challenge> challenges, List<Group> groups,
       List<Friend> friendshipScores) {
-    if (challenges == null || challenges.isEmpty) {
+    if (challenges.isEmpty) {
       return Center(
         child: Text(
           AppLocalizations.of(context).noChallengesFound,
@@ -89,7 +89,6 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
         ),
       );
     }
-
     return RefreshIndicator(
       onRefresh: () {
         ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -99,18 +98,14 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
       color: Colors.black,
       child: Padding(
         padding: const EdgeInsets.only(left: 8, right: 8),
-        child: ListView.separated(
-          key: Keys.allChallengesWidgetListKey,
+        child: ListView.builder(
           addAutomaticKeepAlives: true,
           // Cache half screen after and half screen before the current screen.
           cacheExtent: MediaQuery.of(context).size.height * 0.5,
-          separatorBuilder: (context, index) => Padding(
-            padding: EdgeInsets.only(bottom: 4),
-          ),
           itemCount: challenges.length,
           itemBuilder: (context, index) {
             return ChallengeListItemWidget(
-              key: Key(challenges[index].getId()),
+              key: Key(challenges[index].getId()!),
               challenge: challenges[index],
               group: groups.firstWhere(
                   (group) => group.id == challenges[index].getGroupId()),

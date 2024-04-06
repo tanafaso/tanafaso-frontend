@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class HomeMainScreen extends StatefulWidget {
+
   @override
   _HomeMainScreenState createState() => _HomeMainScreenState();
 }
@@ -81,6 +82,7 @@ class _HomeMainScreenState extends State<HomeMainScreen>
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               DescribedFeatureOverlay(
+                key: Key(Features.ADD_CHALLENGE),
                 featureId: Features.ADD_CHALLENGE,
                 barrierDismissible: false,
                 backgroundDismissible: false,

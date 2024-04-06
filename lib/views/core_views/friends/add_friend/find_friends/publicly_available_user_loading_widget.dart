@@ -11,8 +11,8 @@ class PubliclyAvailableUserLoadingWidget extends StatelessWidget {
         onPressed: () {},
         fillColor: Colors.white,
         child: Shimmer.fromColors(
-          baseColor: Colors.grey[500],
-          highlightColor: Colors.grey[100],
+          baseColor: Colors.grey[500]!,
+          highlightColor: Colors.grey[100]!,
           enabled: true,
           child: Row(
             children: [
@@ -23,14 +23,6 @@ class PubliclyAvailableUserLoadingWidget extends StatelessWidget {
                   children: [
                     LineWidget(width: MediaQuery.of(context).size.width * 3 / 5)
                   ],
-                ),
-              ),
-              Padding(padding: EdgeInsets.all(8)),
-              // ignore: deprecated_member_use
-              Expanded(
-                // ignore: deprecated_member_use
-                child: RaisedButton(
-                  onPressed: () {},
                 ),
               ),
               Padding(padding: EdgeInsets.all(8)),
@@ -48,7 +40,7 @@ class PubliclyAvailableUserLoadingWidget extends StatelessWidget {
 class LineWidget extends StatelessWidget {
   final double width;
 
-  LineWidget({@required this.width});
+  LineWidget({required this.width});
 
   @override
   Widget build(BuildContext context) {

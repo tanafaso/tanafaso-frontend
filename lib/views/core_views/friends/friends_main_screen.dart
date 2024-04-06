@@ -25,21 +25,21 @@ class FriendsMainScreen extends StatefulWidget {
 
 class _FriendsMainScreenState extends State<FriendsMainScreen>
     with TickerProviderStateMixin {
-  UniqueKey allFriendsTabKey;
-  UniqueKey friendRequestsTabKey;
+  late UniqueKey allFriendsTabKey;
+  late UniqueKey friendRequestsTabKey;
 
-  List<Tab> friendsTabs;
-  TabController _tabController;
-  bool _addExpanded;
+  late List<Tab> friendsTabs;
+  late TabController _tabController;
+  late bool _addExpanded;
 
-  List<Friend> _friendshipScores;
-  List<Friend> _pendingFriends;
+  late List<Friend> _friendshipScores;
+  late List<Friend> _pendingFriends;
 
-  Future<void> _neededData;
+  late Future<void> _neededData;
 
-  int _tabIndex;
+  late int _tabIndex;
 
-  bool isIpad;
+  late bool isIpad;
 
   @override
   void initState() {
@@ -124,7 +124,8 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
         future: _neededData,
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           List<Widget> children;
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              !snapshot.hasError) {
             friendsTabs = <Tab>[
               Tab(
                 key: allFriendsTabKey,
@@ -213,6 +214,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
             );
           } else {
             assert(false);
+            return Container();
           }
         }).toList(),
       ),
@@ -225,7 +227,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
             maintainSize: false,
             maintainState: false,
             child: DescribedFeatureOverlay(
-                // BUG: This is not shown at the moment.
+                key: Key(Features.SHARE_USERNAME),
                 featureId: Features.SHARE_USERNAME,
                 barrierDismissible: false,
                 backgroundDismissible: false,
@@ -331,6 +333,7 @@ class _FriendsMainScreenState extends State<FriendsMainScreen>
             visible: !_addExpanded,
             maintainSize: false,
             child: DescribedFeatureOverlay(
+                key: Key(Features.ADD_FRIEND),
                 featureId: Features.ADD_FRIEND,
                 barrierDismissible: false,
                 backgroundDismissible: false,

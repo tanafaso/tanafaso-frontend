@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 
 import '../../request_base.dart';
 
@@ -7,7 +6,7 @@ class FacebookAuthenticationRequestBody extends RequestBodyBase {
   final String facebookUserId;
 
   FacebookAuthenticationRequestBody(
-      {@required this.token, @required this.facebookUserId});
+      {required this.token, required this.facebookUserId});
 
   @override
   Map<String, dynamic> toJson() =>

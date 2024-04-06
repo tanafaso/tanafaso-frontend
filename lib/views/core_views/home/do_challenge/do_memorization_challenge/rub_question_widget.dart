@@ -10,9 +10,9 @@ class RubQuestionWidget extends StatefulWidget {
   final ScrollController scrollController;
 
   RubQuestionWidget({
-    @required this.question,
-    @required this.onStepDone,
-    @required this.scrollController,
+    required this.question,
+    required this.onStepDone,
+    required this.scrollController,
   });
 
   @override
@@ -38,15 +38,15 @@ class _RubQuestionWidgetState extends State<RubQuestionWidget> {
           scrollController: widget.scrollController,
           choices: [
             Choice(
-                word: QuranUtils.ayahs[widget.question.firstAyahInRub - 1],
+                word: QuranUtils.ayahs[widget.question.firstAyahInRub! - 1],
                 correct: true),
             Choice(
                 word: QuranUtils
-                    .ayahs[widget.question.wrongFirstAyahInRubOptions[0] - 1],
+                    .ayahs[widget.question.wrongFirstAyahInRubOptions![0] - 1],
                 correct: false),
             Choice(
                 word: QuranUtils
-                    .ayahs[widget.question.wrongFirstAyahInRubOptions[1] - 1],
+                    .ayahs[widget.question.wrongFirstAyahInRubOptions![1] - 1],
                 correct: false),
           ],
           onCorrectChoiceSelected: () => widget.onStepDone.call(),

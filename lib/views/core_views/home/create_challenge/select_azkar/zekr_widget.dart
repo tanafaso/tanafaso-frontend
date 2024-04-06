@@ -15,9 +15,9 @@ class ZekrWidget extends StatefulWidget {
   final OnZekrRepetitionsChangedCallback onRepetitionsChangedCallback;
 
   ZekrWidget({
-    @required this.visible,
-    @required this.zekr,
-    @required this.onRepetitionsChangedCallback,
+    required this.visible,
+    required this.zekr,
+    required this.onRepetitionsChangedCallback,
   });
 
   @override
@@ -71,15 +71,13 @@ class ZekrWidgetState extends State<ZekrWidget>
                                       child: SingleChildScrollView(
                                         scrollDirection: Axis.vertical,
                                         child: Text(
-                                          widget.zekr.zekr,
+                                          widget.zekr.zekr!,
                                           textAlign: TextAlign.center,
                                           textDirection: TextDirection.rtl,
                                           style: TextStyle(
                                             fontSize: 25,
                                             fontFamily: Theme.of(context)
-                                                // ignore: deprecated_member_use
-                                                .accentTextTheme
-                                                .bodyText1
+                                                .primaryTextTheme.labelLarge!
                                                 .fontFamily,
                                           ),
                                         ),

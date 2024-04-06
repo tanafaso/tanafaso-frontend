@@ -44,42 +44,38 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Widget _landingWidget;
-  String _azkarAndQuranFontFamily;
-  String _nonAzkarAndNonQuranFontFamily;
-  FirebaseApp _firebaseApp;
+  Widget? _landingWidget;
+  late String _azkarAndQuranFontFamily;
+  late String _nonAzkarAndNonQuranFontFamily;
+  late FirebaseApp _firebaseApp;
 
   Future<void> asyncInitialization(BuildContext context) async {
-    if (_firebaseApp == null) {
-      try {
-        _firebaseApp = await Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform);
-      } catch (e) {
-        print(e);
-      }
-      await FirebaseMessaging.instance
-          .setForegroundNotificationPresentationOptions(
-        alert: false,
-        badge: false,
-        sound: false,
+    try {
+      _firebaseApp = await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform);
+    } catch (e) {
+      print(e);
+    }
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: false,
+      badge: false,
+      sound: false,
+    );
+
+    if (Platform.isIOS) {
+      await FirebaseMessaging.instance.requestPermission(
+        alert: true,
+        announcement: true,
+        badge: true,
+        carPlay: false,
+        criticalAlert: true,
+        provisional: true,
+        sound: true,
       );
-
-      if (Platform.isIOS) {
-        await FirebaseMessaging.instance.requestPermission(
-          alert: true,
-          announcement: true,
-          badge: true,
-          carPlay: false,
-          criticalAlert: true,
-          provisional: true,
-          sound: true,
-        );
-      }
-
-      FirebaseMessaging.onBackgroundMessage(
-          _firebaseMessagingBackgroundHandler);
     }
 
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'challenges_and_friend_requests', // id
       'تحديات الاصدقاء وطلبات الصداقه', // title
@@ -113,28 +109,31 @@ class _MyAppState extends State<MyApp> {
     return FutureBuilder(
         future: asyncInitialization(context),
         builder: (BuildContext context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              !snapshot.hasError) {
             if (_landingWidget == null) {
-              _landingWidget = getMaterialAppWithBody(LandingWidget());
+              _landingWidget = getMaterialAppWithBody(LandingWidget(), true);
             }
-            return _landingWidget;
+            return _landingWidget!;
           } else if (snapshot.hasError) {
             if (_landingWidget == null) {
-              _landingWidget = getMaterialAppWithBody(LandingWidget());
+              _landingWidget = getMaterialAppWithBody(LandingWidget(), false);
             }
-            return _landingWidget;
+            return _landingWidget!;
           } else {
             // TODO(omorsi): Show loader
-            return getMaterialAppWithBody(Container(
-              child: Center(
-                child: Image.asset('assets/images/logo.png'),
-              ),
-            ));
+            return getMaterialAppWithBody(
+                Container(
+                  child: Center(
+                    child: Image.asset('assets/images/logo.png'),
+                  ),
+                ),
+                false);
           }
         });
   }
 
-  Widget getMaterialAppWithBody(Widget body) {
+  Widget getMaterialAppWithBody(Widget body, bool lateInitializationDone) {
     return FeatureDiscovery(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -157,11 +156,7 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Color(0xffcef6ce),
           colorScheme: ColorScheme(
             primary: Color(0xffcef5ce),
-            // ignore: deprecated_member_use
-            primaryVariant: Color(0xffcee6ce),
             secondary: Colors.white,
-            // ignore: deprecated_member_use
-            secondaryVariant: Colors.white30,
             surface: Colors.white,
             background: Color(0xffcef5ce),
             error: Colors.red.shade600,
@@ -182,94 +177,112 @@ class _MyAppState extends State<MyApp> {
           cardTheme: CardTheme(elevation: 10),
           iconTheme: IconThemeData(color: Colors.black),
           textTheme: TextTheme(
-            headline1: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            headline2: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            headline3: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            headline4: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            headline5: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            headline6: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            subtitle1: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            subtitle2: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            bodyText1: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            bodyText2: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            button: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            displayLarge: TextStyle(
+              color: Colors.black,
+            ),
+            displayMedium: TextStyle(
+              color: Colors.black,
+            ),
+            displaySmall: TextStyle(
+              color: Colors.black,
+            ),
+            headlineMedium: TextStyle(
+              color: Colors.black,
+            ),
+            headlineSmall: TextStyle(
+              color: Colors.black,
+            ),
+            titleLarge: TextStyle(
+              color: Colors.black,
+            ),
+            titleMedium: TextStyle(
+              color: Colors.black,
+            ),
+            titleSmall: TextStyle(
+              color: Colors.black,
+            ),
+            bodyLarge: TextStyle(
+              color: Colors.black,
+            ),
+            bodyMedium: TextStyle(
+              color: Colors.black,
+            ),
+            labelLarge: TextStyle(
+              color: Colors.black,
+            ),
           ),
           primaryTextTheme: TextTheme(
-            headline1: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            headline2: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            headline3: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            headline4: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            headline5: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            headline6: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            subtitle1: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            subtitle2: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            bodyText1: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            bodyText2: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
-            button: TextStyle(
-                color: Colors.black,
-                fontFamily: _nonAzkarAndNonQuranFontFamily),
+            displayLarge: TextStyle(
+              color: Colors.black,
+            ),
+            displayMedium: TextStyle(
+              color: Colors.black,
+            ),
+            displaySmall: TextStyle(
+              color: Colors.black,
+            ),
+            headlineMedium: TextStyle(
+              color: Colors.black,
+            ),
+            headlineSmall: TextStyle(
+              color: Colors.black,
+            ),
+            titleLarge: TextStyle(
+              color: Colors.black,
+            ),
+            titleMedium: TextStyle(
+              color: Colors.black,
+            ),
+            titleSmall: TextStyle(
+              color: Colors.black,
+            ),
+            bodyLarge: TextStyle(
+              color: Colors.black,
+            ),
+            bodyMedium: TextStyle(
+              color: Colors.black,
+            ),
+            labelLarge: TextStyle(
+              color: Colors.black,
+              fontFamily:
+                  lateInitializationDone ? _azkarAndQuranFontFamily : 'arabic',
+            ),
+          ),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all(Colors.black),
+              overlayColor: MaterialStateProperty.all(Colors.black),
+              side: MaterialStateProperty.all(BorderSide(color: Colors.black)),
+            ),
           ),
           indicatorColor: Colors.white,
           tabBarTheme: TabBarTheme(
             labelColor: Color(0xffcef5ce),
           ),
-          fontFamily: _nonAzkarAndNonQuranFontFamily,
-          // That's a hack used to save a secondary font family only used
-          // throughout the whole app for azkar and quran.
-          // ignore: deprecated_member_use
-          accentTextTheme: TextTheme(
-              bodyText1: TextStyle(fontFamily: _azkarAndQuranFontFamily)),
+          fontFamily: lateInitializationDone
+              ? _nonAzkarAndNonQuranFontFamily
+              : 'arabic',
           appBarTheme: AppBarTheme(
             backgroundColor: Color(0xffcef5ce),
             titleTextStyle: TextStyle(
               color: Colors.black,
               fontSize: 30,
-              fontFamily: _nonAzkarAndNonQuranFontFamily,
+              fontFamily: lateInitializationDone
+                  ? _nonAzkarAndNonQuranFontFamily
+                  : 'arabic',
             ),
             iconTheme: IconThemeData(
               color: Colors.black, //change your color here
+            ),
+          ),
+          sliderTheme: SliderThemeData(
+            activeTrackColor: Colors.black,
+            inactiveTrackColor: Colors.grey,
+            thumbColor: Colors.black,
+            overlayColor: Colors.black,
+            valueIndicatorTextStyle: TextStyle(
+              color: Colors.black,
+              fontSize: 20
             ),
           ),
         ),

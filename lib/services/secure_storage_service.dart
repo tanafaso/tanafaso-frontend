@@ -8,30 +8,30 @@ class SecureStorageService {
   static const String APPLE_ID_GIVEN_NAME = 'appleIdGivenName';
   static const String APPLE_ID_FAMILY_NAME = 'appleIdFamilyName';
 
-  Future<String> getFacebookToken() async {
+  Future<String?> getFacebookToken() async {
     return await _readKey(FACEBOOK_TOKEN_STORAGE_KEY);
   }
 
-  Future<String> getFacebookUserId() async {
+  Future<String?> getFacebookUserId() async {
     return await _readKey(FACEBOOK_USER_ID_STORAGE_KEY);
   }
 
-  Future<String> getJwtToken() async {
+  Future<String?> getJwtToken() async {
     return await _readKey(JWT_TOKEN_STORAGE_KEY);
   }
 
-  Future<String> _readKey(String key) async {
+  Future<String?> _readKey(String key) async {
     final _storage = FlutterSecureStorage();
     bool keyInEncryptedStorage =
         await _storage.containsKey(key: key, aOptions: _getAndroidOptions());
     if (keyInEncryptedStorage) {
-      return await _storage.read(key: key, aOptions: _getAndroidOptions());
+      return (await _storage.read(key: key, aOptions: _getAndroidOptions()))!;
     }
 
     bool keyInNonEncryptedStorage = await _storage.containsKey(key: key);
     if (keyInNonEncryptedStorage) {
       // Migrate to encrypted storage
-      String value = await _storage.read(key: key);
+      String? value = await _storage.read(key: key);
       await _storage.write(
           key: key, value: value, aOptions: _getAndroidOptions());
       return value;
@@ -73,7 +73,7 @@ class SecureStorageService {
     await _storage.write(key: APPLE_ID_EMAIL, value: email);
   }
 
-  Future<String> getAppleIdEmail() async {
+  Future<String?> getAppleIdEmail() async {
     final _storage = FlutterSecureStorage();
     return await _storage.read(key: APPLE_ID_EMAIL);
   }
@@ -83,7 +83,7 @@ class SecureStorageService {
     await _storage.write(key: APPLE_ID_GIVEN_NAME, value: firstName);
   }
 
-  Future<String> getAppleIdGivenName() async {
+  Future<String?> getAppleIdGivenName() async {
     final _storage = FlutterSecureStorage();
     return await _storage.read(key: APPLE_ID_GIVEN_NAME);
   }
@@ -93,7 +93,7 @@ class SecureStorageService {
     await _storage.write(key: APPLE_ID_FAMILY_NAME, value: lastName);
   }
 
-  Future<String> getAppleIdFamilyName() async {
+  Future<String?> getAppleIdFamilyName() async {
     final _storage = FlutterSecureStorage();
     return await _storage.read(key: APPLE_ID_FAMILY_NAME);
   }
@@ -127,11 +127,11 @@ class SecureStorageService {
     final _storage = FlutterSecureStorage();
     String token;
     try {
-      token = await _storage.read(
-          key: JWT_TOKEN_STORAGE_KEY, aOptions: _getAndroidOptions());
+      token = (await _storage.read(
+          key: JWT_TOKEN_STORAGE_KEY, aOptions: _getAndroidOptions()))!;
     } catch (e) {
       return false;
     }
-    return (token?.length ?? 0) != 0;
+    return (token.length ?? 0) != 0;
   }
 }

@@ -23,12 +23,12 @@ class DoMemorizationChallengeListItemWidget extends StatefulWidget {
   final ScrollController scrollController;
 
   DoMemorizationChallengeListItemWidget({
-    Key key,
-    @required this.question,
-    @required this.onQuestionDoneCallback,
-    @required this.onQuestionExpandedCallback,
-    @required this.challenge,
-    @required this.scrollController,
+    required Key key,
+    required this.question,
+    required this.onQuestionDoneCallback,
+    required this.onQuestionExpandedCallback,
+    required this.challenge,
+    required this.scrollController,
   }) : super(key: key);
 
   @override
@@ -89,15 +89,15 @@ Step nextStep(Step step) {
 
 class _DoMemorizationChallengeListItemWidgetState
     extends State<DoMemorizationChallengeListItemWidget> {
-  bool _tileExpanded;
-  Step _currentStep;
+  bool? _tileExpanded;
+  Step? _currentStep;
 
   @override
   void initState() {
     super.initState();
 
     _tileExpanded = false;
-    _currentStep = widget.question.finished ? Step.DONE : Step.SURAH_QUESTION;
+    _currentStep = widget.question.finished! ? Step.DONE : Step.SURAH_QUESTION;
   }
 
   @override
@@ -114,7 +114,7 @@ class _DoMemorizationChallengeListItemWidgetState
             ),
             Text(
                 ArabicUtils.englishToArabic(
-                    (widget.question.number + 1).toString()),
+                    (widget.question.number! + 1).toString()),
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -129,7 +129,7 @@ class _DoMemorizationChallengeListItemWidgetState
         collapsedTextColor: Colors.black,
         collapsedIconColor: Colors.black,
         trailing: Icon(
-          _tileExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+          _tileExpanded! ? Icons.arrow_drop_up : Icons.arrow_drop_down,
           size: 30,
         ),
         onExpansionChanged: (bool expanded) {
@@ -143,13 +143,13 @@ class _DoMemorizationChallengeListItemWidgetState
           Column(
             children: [
               Text(
-                QuranUtils.ayahs[widget.question.ayah - 1],
+                QuranUtils.ayahs[widget.question.ayah! - 1],
                 style: TextStyle(
                   fontSize: 25,
                   // ignore: deprecated_member_use
                   fontFamily:
                       // ignore: deprecated_member_use
-                      Theme.of(context).accentTextTheme.bodyText1.fontFamily,
+                      Theme.of(context).primaryTextTheme.labelLarge!.fontFamily,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -215,7 +215,7 @@ class _DoMemorizationChallengeListItemWidgetState
           _currentStep == Step.PREVIOUS_AYAH_QUESTION) {
         _currentStep = Step.DONE;
       } else {
-        _currentStep = nextStep(_currentStep);
+        _currentStep = nextStep(_currentStep!);
       }
       if (_currentStep == Step.DONE) {
         widget.question.finished = true;
@@ -225,7 +225,7 @@ class _DoMemorizationChallengeListItemWidgetState
   }
 
   Widget getIcon() {
-    if (widget.question.finished) {
+    if (widget.question.finished!) {
       return Icon(
         Icons.done_outline,
         color: Colors.green,

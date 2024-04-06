@@ -19,7 +19,8 @@ class AuthMainScreen extends StatefulWidget {
 
 class _AuthMainScreenState extends State<AuthMainScreen>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
+  bool _isSigningInWithGoogle = false;
 
   @override
   void initState() {
@@ -48,7 +49,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
             child: SafeArea(
       child: new Column(
         children: <Widget>[
-          Flexible(
+          Expanded(
             child: Column(
               children: [
                 Padding(padding: EdgeInsets.all(8)),
@@ -75,7 +76,8 @@ class _AuthMainScreenState extends State<AuthMainScreen>
               ],
             ),
           ),
-          Flexible(
+          Padding(padding: EdgeInsets.all(16)),
+          Expanded(
             child: Column(
               children: [
                 Padding(padding: EdgeInsets.only(top: 16)),
@@ -151,83 +153,61 @@ class _AuthMainScreenState extends State<AuthMainScreen>
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  padding: const EdgeInsets.all(16),
                   child: Divider(
+                    color: Colors.green.shade800,
                     thickness: 2,
+                    height: 2,
                   ),
                 ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 8.0,
-                                  right: 8.0,
-                                ),
-                                child: FittedBox(
-                                  child: googleButton(),
-                                ),
-                              ),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 8.0,
+                              right: 8.0,
                             ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 8.0,
-                                  right: 8.0,
-                                ),
-                                child: FittedBox(
-                                  child: facebookButton(),
-                                ),
-                              ),
+                            child: FittedBox(
+                              child: googleButton(),
                             ),
-                          ],
-                        ),
-                      ),
-                      Visibility(
-                        visible: Platform.isIOS,
-                        child: Expanded(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 8.0,
-                                    right: 8.0,
-                                  ),
-                                  child: FittedBox(
-                                    child: Directionality(
-                                      textDirection: TextDirection.ltr,
-                                      child: SignInButton(
-                                        Buttons.AppleDark,
-                                        text: "Sign in with Apple",
-                                        shape: new RoundedRectangleBorder(
-                                            borderRadius:
-                                                new BorderRadius.circular(
-                                                    10.0)),
-                                        onPressed: () {
-                                          loginWithApple(context);
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
                           ),
                         ),
+                      ],
+                    ),
+                    Visibility(
+                      visible: Platform.isIOS,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 8.0,
+                                right: 8.0,
+                              ),
+                              child: FittedBox(
+                                child: Directionality(
+                                  textDirection: TextDirection.ltr,
+                                  child: SignInButton(
+                                    Buttons.AppleDark,
+                                    text: "Sign in with Apple",
+                                    shape: new RoundedRectangleBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(10.0)),
+                                    onPressed: () {
+                                      loginWithApple(context);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -238,6 +218,15 @@ class _AuthMainScreenState extends State<AuthMainScreen>
   }
 
   Widget googleButton() {
+    if (_isSigningInWithGoogle) {
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(AppLocalizations.of(context).signingIn,
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 30.0,)),
+      );
+    }
     if (Platform.isIOS) {
       return Directionality(
         textDirection: TextDirection.ltr,
@@ -254,7 +243,7 @@ class _AuthMainScreenState extends State<AuthMainScreen>
     }
     return SignInButton(
       Buttons.Google,
-      text: "جوجل",
+      text: "الدخول باستخدام جوجل",
       shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(50.0)),
       onPressed: () {
@@ -263,45 +252,10 @@ class _AuthMainScreenState extends State<AuthMainScreen>
     );
   }
 
-  Widget facebookButton() {
-    if (Platform.isIOS) {
-      return Directionality(
-        textDirection: TextDirection.ltr,
-        child: SignInButton(
-          Buttons.Facebook,
-          text: "Sign in with Facebook",
-          shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(10.0)),
-          onPressed: () {
-            loginWithFacebook(context);
-          },
-        ),
-      );
-    }
-    return SignInButton(
-      Buttons.Facebook,
-      text: "الفيسبوك",
-      shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(50.0)),
-      onPressed: () {
-        loginWithFacebook(context);
-      },
-    );
-  }
-
-  loginWithFacebook(BuildContext context) async {
-    try {
-      await ServiceProvider.authenticationService.loginWithFacebook();
-    } on ApiException catch (e) {
-      SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
-      return;
-    }
-
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
-  }
-
   loginWithGoogle(BuildContext context) async {
+    setState(() {
+      _isSigningInWithGoogle = true;
+    });
     GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: [
         'email',
@@ -309,11 +263,15 @@ class _AuthMainScreenState extends State<AuthMainScreen>
     );
     String googleIdToken;
     try {
-      GoogleSignInAccount account = await _googleSignIn.signIn();
-      GoogleSignInAuthentication authentication = await account.authentication;
-      googleIdToken = authentication.idToken;
+      GoogleSignInAccount? account = await _googleSignIn.signIn();
+      GoogleSignInAuthentication? authentication =
+          await account!.authentication;
+      googleIdToken = authentication.idToken!;
     } catch (error) {
       print(error);
+      setState(() {
+        _isSigningInWithGoogle = false;
+      });
       return;
     }
 
@@ -322,9 +280,15 @@ class _AuthMainScreenState extends State<AuthMainScreen>
           .loginWithGoogle(googleIdToken);
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
+      setState(() {
+        _isSigningInWithGoogle = false;
+      });
       return;
     }
 
+    setState(() {
+      _isSigningInWithGoogle = false;
+    });
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => new LayoutOrganizer()));
   }

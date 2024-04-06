@@ -14,13 +14,13 @@ class FindFriendsScreen extends StatefulWidget {
 }
 
 class _FindFriendsScreenState extends State<FindFriendsScreen> {
-  Future<void> _neededData;
-  List<PubliclyAvailableUser> _publiclyAvailableUsers;
-  bool _isPubliclyAvailableUser;
-  String _errorMessage;
-  int _pageNum;
-  bool _pageEmpty;
-  bool _nextPageNeeded;
+  late Future<void> _neededData;
+  late List<PubliclyAvailableUser> _publiclyAvailableUsers;
+  late bool _isPubliclyAvailableUser;
+  String? _errorMessage;
+  late int _pageNum;
+  late bool _pageEmpty;
+  late bool _nextPageNeeded;
 
   Future<void> getNeededData() async {
     try {
@@ -44,7 +44,6 @@ class _FindFriendsScreenState extends State<FindFriendsScreen> {
 
     _publiclyAvailableUsers = [];
     _isPubliclyAvailableUser = true;
-    _errorMessage = null;
     _neededData = getNeededData();
     _pageNum = 0;
     _pageEmpty = false;
@@ -66,7 +65,7 @@ class _FindFriendsScreenState extends State<FindFriendsScreen> {
         child: FutureBuilder(
             future: _neededData,
             builder: (BuildContext context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
                 if (_errorMessage != null) {
                   return Column(
                     children: [

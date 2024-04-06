@@ -14,9 +14,9 @@ class UserProgressWidget extends StatefulWidget {
 
 class _UserProgressWidgetState extends State<UserProgressWidget>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<OdometerNumber> finishedCountAnimation;
-  Animation<OdometerNumber> consecutiveDaysAnimation;
+  late AnimationController animationController;
+  late Animation<OdometerNumber> finishedCountAnimation;
+  late Animation<OdometerNumber> consecutiveDaysAnimation;
 
   Future<void> getNeededData() async {
     try {
@@ -85,6 +85,7 @@ class _UserProgressWidgetState extends State<UserProgressWidget>
                               textDirection: TextDirection.ltr,
                               // ignore: missing_required_param
                               child: SlideOdometerTransition(
+                                letterWidth: 30,
                                 odometerAnimation: consecutiveDaysAnimation,
                                 numberTextStyle: const TextStyle(
                                   fontSize: 45,
@@ -120,8 +121,8 @@ class _UserProgressWidgetState extends State<UserProgressWidget>
                             fit: BoxFit.scaleDown,
                             child: Directionality(
                               textDirection: TextDirection.ltr,
-                              // ignore: missing_required_param
                               child: SlideOdometerTransition(
+                                letterWidth: 30,
                                 odometerAnimation: finishedCountAnimation,
                                 numberTextStyle: const TextStyle(
                                   fontSize: 45,

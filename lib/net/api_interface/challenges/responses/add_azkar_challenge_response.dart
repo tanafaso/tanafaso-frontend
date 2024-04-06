@@ -2,7 +2,7 @@ import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/net/api_interface/response_base.dart';
 
 class AddAzkarChallengeResponse extends ResponseBase {
-  AzkarChallenge challenge;
+  AzkarChallenge? challenge;
 
   static AddAzkarChallengeResponse fromJson(Map<String, dynamic> json) {
     AddAzkarChallengeResponse response = new AddAzkarChallengeResponse();

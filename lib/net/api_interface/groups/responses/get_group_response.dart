@@ -2,7 +2,7 @@ import 'package:azkar/models/group.dart';
 import 'package:azkar/net/api_interface/response_base.dart';
 
 class GetGroupResponse extends ResponseBase {
-  Group group;
+  Group? group;
 
   static GetGroupResponse fromJson(Map<String, dynamic> json) {
     GetGroupResponse response = new GetGroupResponse();

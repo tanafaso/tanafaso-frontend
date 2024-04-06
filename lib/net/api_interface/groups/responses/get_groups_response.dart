@@ -2,7 +2,7 @@ import 'package:azkar/models/group.dart';
 import 'package:azkar/net/api_interface/response_base.dart';
 
 class GetGroupsResponse extends ResponseBase {
-  List<Group> groups;
+  List<Group>? groups;
 
   GetGroupsResponse({this.groups});
 
@@ -14,11 +14,11 @@ class GetGroupsResponse extends ResponseBase {
     }
     response.groups = [];
     for (var jsonGroup in json['data']) {
-      response.groups.add(Group.fromJson(jsonGroup));
+      response.groups!.add(Group.fromJson(jsonGroup));
     }
     return response;
   }
 
   Map<String, dynamic> toJson() =>
-      {'data': List<dynamic>.from(groups.map((x) => x.toJson()))};
+      {'data': List<dynamic>.from(groups ?? [].map((x) => x.toJson()))};
 }

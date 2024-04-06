@@ -36,15 +36,15 @@ class CreateAzkarChallengeScreen extends StatefulWidget {
 
 class _CreateAzkarChallengeScreenState
     extends State<CreateAzkarChallengeScreen> {
-  TextEditingController _challengeNameController;
-  String _lastChallengeName = '';
-  TextEditingController _motivationController;
-  List<SubChallenge> _subChallenges;
-  bool _subChallengesValid;
-  List<Friend> _selectedFriends;
-  ButtonState progressButtonState;
-  int _expiresAfterHoursNum;
-  ScrollController pageScrollController;
+  late TextEditingController _challengeNameController;
+  late String _lastChallengeName = '';
+  late TextEditingController _motivationController;
+  late List<SubChallenge> _subChallenges;
+  late bool _subChallengesValid;
+  late List<Friend> _selectedFriends;
+  late ButtonState progressButtonState;
+  late int _expiresAfterHoursNum;
+  late ScrollController pageScrollController;
 
   initChallengeNameController() {
     _lastChallengeName = widget.initiallyChosenName;
@@ -119,7 +119,7 @@ class _CreateAzkarChallengeScreenState
 
           if (!currentFocus.hasPrimaryFocus &&
               currentFocus.focusedChild != null) {
-            FocusManager.instance.primaryFocus.unfocus();
+            FocusManager.instance.primaryFocus!.unfocus();
           }
         },
         child: Center(
@@ -440,9 +440,10 @@ class _CreateAzkarChallengeScreenState
       margin: const EdgeInsets.all(8),
       child: ButtonTheme(
         height: 50,
-        // ignore: deprecated_member_use
-        child: FlatButton(
-          color: Colors.grey,
+        child: TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.grey),
+          ),
           onPressed: () async => onCreatePressed(),
           child: Center(
               child: Text(
@@ -520,8 +521,8 @@ class _CreateAzkarChallengeScreenState
       return;
     }
 
-    bool challengingOneFriend = (_selectedFriends?.length ?? 0) == 1;
-    final String groupId =
+    bool challengingOneFriend = (_selectedFriends.length ?? 0) == 1;
+    final String? groupId =
         challengingOneFriend ? _selectedFriends[0].groupId : null;
 
     AzkarChallenge challenge = AzkarChallenge(
@@ -573,7 +574,7 @@ class _CreateAzkarChallengeScreenState
   }
 
   bool readyToFinishChallenge(bool showWarnings) {
-    if ((_selectedFriends?.length ?? 0) == 0) {
+    if ((_selectedFriends.length ?? 0) == 0) {
       return false;
     }
     if (_subChallenges.length == 0) {

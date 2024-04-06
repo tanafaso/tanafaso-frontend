@@ -12,7 +12,7 @@ class AllFriendsWidget extends StatefulWidget {
   final OnRefreshRequested onRefreshRequested;
 
   AllFriendsWidget(
-      {@required this.friendshipScores, @required this.onRefreshRequested});
+      {required this.friendshipScores, required this.onRefreshRequested});
 
   @override
   _AllFriendsWidgetState createState() => _AllFriendsWidgetState();
@@ -21,7 +21,7 @@ class AllFriendsWidget extends StatefulWidget {
 class _AllFriendsWidgetState extends State<AllFriendsWidget> {
   @override
   Widget build(BuildContext context) {
-    if (widget.friendshipScores == null || widget.friendshipScores.isEmpty) {
+    if (widget.friendshipScores.isEmpty) {
       return NoFriendsFoundWidget();
     }
 

@@ -27,11 +27,11 @@ class DoMeaningChallengeScreen extends StatefulWidget {
   final List<Friend> friendshipScores;
 
   DoMeaningChallengeScreen({
-    @required this.challenge,
-    @required this.group,
-    @required this.challengedUsersIds,
-    @required this.challengedUsersFullNames,
-    @required this.friendshipScores,
+    required this.challenge,
+    required this.group,
+    required this.challengedUsersIds,
+    required this.challengedUsersFullNames,
+    required this.friendshipScores,
   });
 
   @override
@@ -43,25 +43,25 @@ class TextIndex {
   final String text;
   final int index;
 
-  TextIndex({this.text, this.index});
+  TextIndex({required this.text, required this.index});
 }
 
 class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
     with SingleTickerProviderStateMixin {
-  ConfettiController confettiControler;
-  bool _finishedConfetti;
-  bool _shouldChooseWord;
+  late ConfettiController confettiControler;
+  late bool _finishedConfetti;
+  late bool _shouldChooseWord;
 
-  AnimationController _colorAnimationController;
-  Animation _colorAnimation;
+  late AnimationController _colorAnimationController;
+  late Animation _colorAnimation;
 
-  List<TextIndex> _words;
-  List<TextIndex> _meanings;
+  late List<TextIndex> _words;
+  late List<TextIndex> _meanings;
 
-  int _chosenWordIndex;
+  late int _chosenWordIndex;
 
-  ScrollController _pageScrollController;
-  bool _friendsTileExpanded;
+  late ScrollController _pageScrollController;
+  late bool _friendsTileExpanded;
 
   @override
   void initState() {
@@ -79,11 +79,11 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
 
     _words = [];
     _meanings = [];
-    for (int i = 0; i < widget.challenge.words.length; i++) {
-      _words.add(TextIndex(text: widget.challenge.words[i], index: i));
+    for (int i = 0; i < widget.challenge.words!.length; i++) {
+      _words.add(TextIndex(text: widget.challenge.words![i], index: i));
     }
-    for (int i = 0; i < widget.challenge.meanings.length; i++) {
-      _meanings.add(TextIndex(text: widget.challenge.meanings[i], index: i));
+    for (int i = 0; i < widget.challenge.meanings!.length; i++) {
+      _meanings.add(TextIndex(text: widget.challenge.meanings![i], index: i));
     }
     _words.shuffle();
     _meanings.shuffle();
@@ -206,8 +206,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
                                                       fontFamily: Theme.of(
                                                               context)
                                                           // ignore: deprecated_member_use
-                                                          .accentTextTheme
-                                                          .bodyText1
+                                                          .primaryTextTheme.labelLarge!
                                                           .fontFamily),
                                                 ),
                                               )),
@@ -307,7 +306,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
     if (_meanings[indexInList].index == _chosenWordIndex) {
       // last one is chosen correctly.
       if (_words.length == 1) {
-        if (widget.challenge.finished) {
+        if (widget.challenge.finished!) {
           SnackBarUtils.showSnackBar(context,
               Status(Status.CHALLENGE_HAS_ALREADY_BEEN_FINISHED).errorMessage);
           Navigator.of(context).pop();
@@ -315,7 +314,7 @@ class _DoMeaningChallengeScreenState extends State<DoMeaningChallengeScreen>
         } else {
           try {
             await ServiceProvider.challengesService
-                .finishMeaningChallenge(widget.challenge.id);
+                .finishMeaningChallenge(widget.challenge.id!);
           } on ApiException catch (e) {
             SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
             return;

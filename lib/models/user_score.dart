@@ -6,10 +6,10 @@ class UserScore {
     this.totalScore,
   });
 
-  String firstName;
-  String lastName;
-  String username;
-  int totalScore;
+  String? firstName;
+  String? lastName;
+  String? username;
+  int? totalScore;
 
   factory UserScore.fromJson(Map<String, dynamic> json) => UserScore(
         firstName: json["firstName"],

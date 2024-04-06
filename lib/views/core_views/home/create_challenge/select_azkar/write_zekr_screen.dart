@@ -13,9 +13,9 @@ class WriteZekrScreen extends StatefulWidget {
 }
 
 class _WriteZekrScreenState extends State<WriteZekrScreen> {
-  TextEditingController _zekrTextController;
-  ButtonState _progressButtonState;
-  String _lastZekrText = "";
+  late TextEditingController _zekrTextController;
+  late ButtonState _progressButtonState;
+  late String _lastZekrText = "";
 
   @override
   void initState() {
@@ -101,8 +101,10 @@ class _WriteZekrScreenState extends State<WriteZekrScreen> {
       child: ButtonTheme(
         height: 50,
         // ignore: deprecated_member_use
-        child: FlatButton(
-          color: Colors.grey,
+        child: OutlinedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.grey),
+          ),
           onPressed: () async => onAddPressed(),
           child: Center(
               child: Text(

@@ -43,9 +43,8 @@ class SelectSurahScreen extends StatelessWidget {
                                 text: quranSurahs[index].name,
                                 style: TextStyle(
                                   fontFamily: Theme.of(context)
-                                      // ignore: deprecated_member_use
-                                      .accentTextTheme
-                                      .bodyText1
+                                      .primaryTextTheme
+                                      .labelLarge!
                                       .fontFamily,
                                 )),
                           ],
@@ -99,52 +98,44 @@ class SelectSurahScreen extends StatelessWidget {
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontFamily: Theme.of(context)
-                                                      // ignore: deprecated_member_use
-                                                      .accentTextTheme
-                                                      .bodyText1
+                                                      .primaryTextTheme
+                                                      .labelLarge!
                                                       .fontFamily,
                                                   fontSize: 30,
                                                   color: Colors.black)),
-                                          TextSpan(text: '.'),
+                                          TextSpan(
+                                            style: TextStyle(
+                                                color: Colors.grey.shade700,
+                                                fontSize: 25),
+                                            children: [
+                                              TextSpan(text: ' من الآية رقم '),
+                                              TextSpan(
+                                                  text: ArabicUtils.englishToArabic(
+                                                      firstAyah.toString()),
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 30,
+                                                      color: Colors.black)),
+                                              TextSpan(
+                                                text: ' إلى الآية رقم ',
+                                              ),
+                                              TextSpan(
+                                                  text: ArabicUtils.englishToArabic(
+                                                      lastAyah.toString()),
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 30,
+                                                      color: Colors.black)),
+                                            ],
+                                          )
                                         ],
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
-                                    Text.rich(
-                                      TextSpan(
-                                        style: TextStyle(
-                                            color: Colors.grey.shade700,
-                                            fontSize: 25),
-                                        children: [
-                                          TextSpan(text: 'من الآية رقم '),
-                                          TextSpan(
-                                              text: ArabicUtils.englishToArabic(
-                                                  firstAyah.toString()),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 30,
-                                                  color: Colors.black)),
-                                          TextSpan(
-                                            text: ' إلى الآية رقم ',
-                                          ),
-                                          TextSpan(
-                                              text: ArabicUtils.englishToArabic(
-                                                  lastAyah.toString()),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 30,
-                                                  color: Colors.black)),
-                                        ],
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
+
                                     RangeSlider(
                                       values: RangeValues(firstAyah.toDouble(),
                                           lastAyah.toDouble()),
-                                      activeColor:
-                                          Theme.of(context).colorScheme.primary,
-                                      inactiveColor:
-                                          Theme.of(context).colorScheme.primary,
                                       min: 1,
                                       max: quranSurahs[index].versesCount * 1.0,
                                       divisions: quranSurahs[index].versesCount,

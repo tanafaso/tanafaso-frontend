@@ -2,7 +2,7 @@ import 'package:azkar/models/meaning_challenge.dart';
 import 'package:azkar/net/api_interface/response_base.dart';
 
 class AddMeaningChallengeResponse extends ResponseBase {
-  MeaningChallenge challenge;
+  MeaningChallenge? challenge;
 
   static AddMeaningChallengeResponse fromJson(Map<String, dynamic> json) {
     AddMeaningChallengeResponse response = new AddMeaningChallengeResponse();

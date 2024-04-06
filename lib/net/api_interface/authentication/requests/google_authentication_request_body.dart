@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 
 import '../../request_base.dart';
 
@@ -6,7 +5,7 @@ class GoogleAuthenticationRequestBody extends RequestBodyBase {
   final String googleIdToken;
 
   GoogleAuthenticationRequestBody({
-    @required this.googleIdToken,
+    required this.googleIdToken,
   });
 
   @override

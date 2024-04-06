@@ -26,16 +26,17 @@ import 'package:synchronized/synchronized.dart';
 class UsersService {
   static final Lock getUserByIdLock = new Lock();
   static final Lock getCurrentUserLock = new Lock();
+
   // ignore: missing_return
   Future<User> getCurrentUser() async {
-    User result;
+    late User result;
     await getCurrentUserLock.synchronized(() async {
       SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
       String key = CacheManager.CACHE_KEY_CURRENT_USER.toString();
 
       if (prefs.containsKey(key)) {
         result =
-            GetUserResponse.fromJson(jsonDecode(prefs.getString(key))).user;
+            GetUserResponse.fromJson(jsonDecode(prefs.getString(key)!)).user!;
         return;
       }
 
@@ -45,11 +46,11 @@ class UsersService {
       var responseBody = utf8.decode(httpResponse.body.codeUnits);
       var response = GetUserResponse.fromJson(jsonDecode(responseBody));
       if (response.hasError()) {
-        throw new ApiException(response.error);
+        throw new ApiException(response.error!);
       }
 
       prefs.setString(key, responseBody);
-      result = response.user;
+      result = response.user!;
     });
     return result;
   }
@@ -60,10 +61,10 @@ class UsersService {
     var responseBody = utf8.decode(httpResponse.body.codeUnits);
     var response = DeleteUserResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
 
-    return response.user;
+    return response.user!;
   }
 
   // Either returns the current user's ID or throws an ApiException.
@@ -71,7 +72,7 @@ class UsersService {
     SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
     String key = CacheManager.CACHE_KEY_CURRENT_USER_ID.toString();
     if (prefs.containsKey(key)) {
-      return prefs.getString(key);
+      return prefs.getString(key)!;
     }
     User user = await getCurrentUser();
     await cacheCurrentUserDetails(user);
@@ -83,11 +84,11 @@ class UsersService {
     SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
     String key = CacheManager.CACHE_KEY_CURRENT_USER_FULL_NAME.toString();
     if (prefs.containsKey(key)) {
-      return prefs.getString(key);
+      return prefs.getString(key)!;
     }
     User user = await getCurrentUser();
     await cacheCurrentUserDetails(user);
-    return user.firstName + " " + user.lastName;
+    return user.firstName + " " + (user.lastName ?? "");
   }
 
   // Either returns the current user's email or throws an ApiException.
@@ -95,36 +96,36 @@ class UsersService {
     SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
     String key = CacheManager.CACHE_KEY_CURRENT_USER_EMAIL.toString();
     if (prefs.containsKey(key)) {
-      return prefs.getString(key);
+      return prefs.getString(key)!;
     }
     User user = await getCurrentUser();
     await cacheCurrentUserDetails(user);
-    return user.email;
+    return user.email!;
   }
 
   Future<void> cacheCurrentUserDetails(User user) async {
     SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
     prefs.setString(CacheManager.CACHE_KEY_CURRENT_USER_ID, user.id);
-    prefs.setString(CacheManager.CACHE_KEY_CURRENT_USER_EMAIL, user.email);
+    prefs.setString(CacheManager.CACHE_KEY_CURRENT_USER_EMAIL, user.email!);
     prefs.setString(CacheManager.CACHE_KEY_CURRENT_USER_FULL_NAME,
-        user.firstName + " " + user.lastName);
+        user.firstName + " " + (user.lastName ?? ""));
   }
 
   Future<String> getSabeqId() async {
     SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
     String key = CacheManager.CACHE_KEY_SABEQ.toString();
     if (prefs.containsKey(key)) {
-      return prefs.getString(key);
+      return prefs.getString(key)!;
     }
     http.Response httpResponse = await ApiCaller.get(
         route: Endpoint(endpointRoute: EndpointRoute.GET_SABEQ));
     var response = GetUserResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
-    prefs.setString(key, response.user.id);
-    return response.user.id;
+    prefs.setString(key, response.user!.id);
+    return response.user!.id;
   }
 
   Future<User> getUserById(String id) async {
@@ -134,23 +135,23 @@ class UsersService {
     var response = GetUserResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
-    return response.user;
+    return response.user!;
   }
 
   // ignore: missing_return
   Future<String> getUserFullNameById(String id) async {
-    String fullName;
+    String fullName = "";
     await getUserByIdLock.synchronized(() async {
       SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
       String key = CacheManager.CACHE_KEY_USER_FULL_NAME_PREFIX.toString() + id;
       if (prefs.containsKey(key)) {
-        fullName = prefs.getString(key);
+        fullName = prefs.getString(key)!;
         return;
       }
       User user = await getUserById(id);
-      fullName = user.firstName + " " + user.lastName;
+      fullName = user.firstName + " " + (user.lastName ?? "");
       prefs.setString(key, fullName);
     });
     return fullName;
@@ -164,9 +165,9 @@ class UsersService {
     var response = GetUserResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
-    return response.user;
+    return response.user!;
   }
 
   Future<User> getUserByFacebookUserId(String facebookUserId) async {
@@ -177,9 +178,9 @@ class UsersService {
     var response = GetUserResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
-    return response.user;
+    return response.user!;
   }
 
   Future<List<PubliclyAvailableUser>> getPubliclyAvailableUsers() async {
@@ -189,9 +190,9 @@ class UsersService {
     var response = GetPubliclyAvailableUsersResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
-    return response.publiclyAvailableUsers;
+    return response.publiclyAvailableUsers!;
   }
 
   Future<List<PubliclyAvailableUser>> getPubliclyAvailableUsersWithPage(
@@ -203,9 +204,9 @@ class UsersService {
     var response = GetPubliclyAvailableUsersResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
-    return response.publiclyAvailableUsers;
+    return response.publiclyAvailableUsers!;
   }
 
   Future<void> deleteFromPubliclyAvailableUsers() async {
@@ -215,7 +216,7 @@ class UsersService {
     var response = DeleteFromPubliclyAvailableUsersResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -226,7 +227,7 @@ class UsersService {
     var response = AddToPubliclyAvailableUsersResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -237,7 +238,7 @@ class UsersService {
     var response = AddToPubliclyAvailableUsersResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -245,14 +246,13 @@ class UsersService {
     User user = await getUserByUsername(username);
 
     String userId = user.id;
-    assert(userId != null);
     http.Response httpResponse = await ApiCaller.put(
         route: Endpoint(
             endpointRoute: EndpointRoute.ADD_FRIEND, pathVariables: [userId]));
     var response = AddFriendResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -263,7 +263,7 @@ class UsersService {
     var response = AddFriendResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -276,7 +276,7 @@ class UsersService {
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
 
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -288,8 +288,8 @@ class UsersService {
 
     if (prefs.containsKey(key)) {
       return GetFriendsLeaderboardResponse.fromJson(
-              jsonDecode(prefs.getString(key)))
-          .friends;
+              jsonDecode(prefs.getString(key)!))
+          .friends!;
     }
 
     http.Response httpResponse = await ApiCaller.get(
@@ -298,11 +298,11 @@ class UsersService {
     var response =
         GetFriendsLeaderboardResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
 
     prefs.setString(key, responseBody);
-    return response.friends;
+    return response.friends!;
   }
 
   Future<void> acceptFriend(String friendId) async {
@@ -313,7 +313,7 @@ class UsersService {
     var response = ResolveFriendRequestResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -327,7 +327,7 @@ class UsersService {
     var response = ResolveFriendRequestResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
 
     ServiceProvider.cacheManager.invalidateFrequentlyChangingData();
@@ -341,7 +341,7 @@ class UsersService {
     var response = SetNotificationsTokenResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 }

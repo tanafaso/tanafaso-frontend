@@ -10,9 +10,9 @@ class JuzQuestionWidget extends StatefulWidget {
   final ScrollController scrollController;
 
   JuzQuestionWidget({
-    @required this.question,
-    @required this.callback,
-    @required this.scrollController,
+    required this.question,
+    required this.callback,
+    required this.scrollController,
   });
 
   @override
@@ -38,15 +38,15 @@ class _JuzQuestionWidgetState extends State<JuzQuestionWidget> {
           scrollController: widget.scrollController,
           choices: [
             Choice(
-                word: QuranUtils.ayahs[widget.question.firstAyahInJuz - 1],
+                word: QuranUtils.ayahs[widget.question.firstAyahInJuz! - 1],
                 correct: true),
             Choice(
                 word: QuranUtils
-                    .ayahs[widget.question.wrongFirstAyahInJuzOptions[0] - 1],
+                    .ayahs[widget.question.wrongFirstAyahInJuzOptions![0] - 1],
                 correct: false),
             Choice(
                 word: QuranUtils
-                    .ayahs[widget.question.wrongFirstAyahInJuzOptions[1] - 1],
+                    .ayahs[widget.question.wrongFirstAyahInJuzOptions![1] - 1],
                 correct: false),
           ],
           onCorrectChoiceSelected: () => widget.callback.call(),

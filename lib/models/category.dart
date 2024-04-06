@@ -2,9 +2,9 @@ import 'package:azkar/models/zekr.dart';
 
 class Category {
   Category({
-    this.id,
-    this.name,
-    this.azkar,
+    required this.id,
+    required this.name,
+    required this.azkar,
   });
 
   int id;

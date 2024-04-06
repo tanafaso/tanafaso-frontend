@@ -1,6 +1,5 @@
 import 'dart:io' show Platform;
 
-import 'package:flutter/material.dart';
 
 enum EndpointRoute {
   BASE_URL,
@@ -62,11 +61,12 @@ class Endpoint {
   Map<String, String> requestParams = Map<String, String>();
 
   Endpoint(
-      {@required this.endpointRoute, this.pathVariables, this.requestParams});
+      {required this.endpointRoute,
+      this.pathVariables = const [],
+      this.requestParams = const {}});
 }
 
 class ApiRoutesUtil {
-  // ignore: missing_return
   static String apiRouteToString(Endpoint route) {
     switch (route.endpointRoute) {
       case EndpointRoute.BASE_URL:
@@ -81,7 +81,7 @@ class ApiRoutesUtil {
           return 'tanafaso-3cituzoyra-ew.a.run.app';
         }
         assert(false);
-        break;
+        return "";
       case EndpointRoute.GET_HOME:
         return '/apiHome';
       case EndpointRoute.LOGIN_WITH_APPLE:
@@ -207,6 +207,7 @@ class ApiRoutesUtil {
         return '/challenges/finished-challenges-count';
       default:
         print('Route enum is not registered.');
+        return "";
     }
   }
 }

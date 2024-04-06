@@ -8,12 +8,12 @@ class UserGroup {
     this.totalScore,
   });
 
-  String groupId;
-  String groupName;
-  String invitingUserId;
-  bool isPending;
-  int monthScore;
-  int totalScore;
+  String? groupId;
+  String? groupName;
+  String? invitingUserId;
+  bool? isPending;
+  int? monthScore;
+  int? totalScore;
 
   factory UserGroup.fromJson(Map<String, dynamic> json) => UserGroup(
         groupId: json["groupId"],

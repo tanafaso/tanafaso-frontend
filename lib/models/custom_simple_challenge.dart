@@ -21,13 +21,13 @@ class CustomSimpleChallenge {
     this.finished,
   });
 
-  String id;
-  String groupId;
-  String creatingUserId;
-  int expiryDate;
-  List<String> usersFinished;
-  String description;
-  bool finished;
+  String? id;
+  String? groupId;
+  String? creatingUserId;
+  int? expiryDate;
+  List<String>? usersFinished;
+  String? description;
+  bool? finished;
 
   factory CustomSimpleChallenge.fromJson(Map<String, dynamic> json) =>
       CustomSimpleChallenge(
@@ -50,7 +50,7 @@ class CustomSimpleChallenge {
         "finished": finished,
       };
 
-  String getName() {
+  String? getName() {
     return description;
   }
 }
@@ -62,9 +62,9 @@ class SurahSubChallenge {
     this.endingVerseNumber,
   });
 
-  String surahName;
-  int startingVerseNumber;
-  int endingVerseNumber;
+  String? surahName;
+  int? startingVerseNumber;
+  int? endingVerseNumber;
 
   factory SurahSubChallenge.fromJson(Map<String, dynamic> json) =>
       SurahSubChallenge(

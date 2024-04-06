@@ -13,7 +13,7 @@ class SelectedSurahsWidget extends StatefulWidget {
 
   SelectedSurahsWidget(
       {this.initiallySelectedSurahs = const [],
-      @required this.onSelectedSurahsChanged});
+      required this.onSelectedSurahsChanged});
 
   @override
   _SelectedSurahsWidgetState createState() => _SelectedSurahsWidgetState();
@@ -21,8 +21,8 @@ class SelectedSurahsWidget extends StatefulWidget {
 
 class _SelectedSurahsWidgetState extends State<SelectedSurahsWidget>
     with AutomaticKeepAliveClientMixin {
-  List<SurahSubChallenge> _selectedSurahs;
-  ScrollController scrollController;
+  late List<SurahSubChallenge> _selectedSurahs;
+  late ScrollController scrollController;
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _SelectedSurahsWidgetState extends State<SelectedSurahsWidget>
               ],
             ),
             Visibility(
-              visible: (_selectedSurahs?.length ?? 0) != 0,
+              visible: (_selectedSurahs.length ?? 0) != 0,
               maintainSize: false,
               child: getSelectedSurahs(),
             ),
@@ -88,12 +88,10 @@ class _SelectedSurahsWidgetState extends State<SelectedSurahsWidget>
                     ),
                   ) as SurahSubChallenge;
 
-                  if (selectedSurahSubChallenge != null) {
-                    setState(() {
-                      _selectedSurahs.add(selectedSurahSubChallenge);
-                      widget.onSelectedSurahsChanged(_selectedSurahs);
-                    });
-                  }
+                  setState(() {
+                    _selectedSurahs.add(selectedSurahSubChallenge);
+                    widget.onSelectedSurahsChanged(_selectedSurahs);
+                  });
                 },
                 child:
                     Icon(Icons.add, color: Theme.of(context).iconTheme.color),
@@ -108,7 +106,7 @@ class _SelectedSurahsWidgetState extends State<SelectedSurahsWidget>
   Widget getTitle() {
     String text;
     Color color;
-    if ((_selectedSurahs?.length ?? 0) == 0) {
+    if ((_selectedSurahs.length ?? 0) == 0) {
       text = "لم يتم اختيار أية سور";
       color = Colors.pink;
     } else {
@@ -137,19 +135,13 @@ class _SelectedSurahsWidgetState extends State<SelectedSurahsWidget>
                 Expanded(
                   child: AutoSizeText.rich(
                     TextSpan(
-                      style: TextStyle(
-                        color: Colors.grey.shade700,
-                        fontSize: 20,
-                      ),
                       children: [
                         TextSpan(
                             text: _selectedSurahs[index].surahName,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontFamily: Theme.of(context)
-                                    // ignore: deprecated_member_use
-                                    .accentTextTheme
-                                    .bodyText1
+                                    .primaryTextTheme.labelLarge!
                                     .fontFamily,
                                 color: Colors.black)),
                         TextSpan(text: ' من الآية رقم '),
@@ -173,6 +165,10 @@ class _SelectedSurahsWidgetState extends State<SelectedSurahsWidget>
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black)),
                       ],
+                    ),
+                    style: TextStyle(
+                      color: Colors.grey.shade700,
+                      fontSize: 20,
                     ),
                     minFontSize: 5,
                     maxLines: 1,

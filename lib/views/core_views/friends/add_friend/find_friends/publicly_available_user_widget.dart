@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class PubliclyAvailableUserWidget extends StatefulWidget {
   final PubliclyAvailableUser publiclyAvailableUser;
 
-  PubliclyAvailableUserWidget({@required this.publiclyAvailableUser});
+  PubliclyAvailableUserWidget({required this.publiclyAvailableUser});
 
   @override
   _PubliclyAvailableUserWidgetState createState() =>
@@ -25,22 +25,16 @@ class _PubliclyAvailableUserWidgetState
       child: Card(
         shadowColor: Colors.black,
         elevation: 10,
-        child: Row(
+        child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${widget.publiclyAvailableUser.firstName} ${widget.publiclyAvailableUser.lastName}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  )
-                ],
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                '${widget.publiclyAvailableUser.firstName} ${widget.publiclyAvailableUser.lastName}',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ),
-            Padding(padding: EdgeInsets.all(8)),
-            Expanded(child: conditionallyGetInviteButton()),
+            conditionallyGetInviteButton(),
           ],
         ),
       ),
@@ -48,15 +42,16 @@ class _PubliclyAvailableUserWidgetState
   }
 
   Widget conditionallyGetInviteButton() {
-    // ignore: deprecated_member_use
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      // ignore: deprecated_member_use
-      child: RaisedButton(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
         child: invited
-            ? Text(AppLocalizations.of(context).invited)
-            : Text(AppLocalizations.of(context).invite),
-        color: invited ? null : Colors.green.shade400,
+            ? Text(AppLocalizations.of(context).invited, style: TextStyle(fontSize: 20))
+            : Text(AppLocalizations.of(context).invite, style: TextStyle(fontSize: 20)),
+        style: ButtonStyle(
+          backgroundColor:
+              MaterialStateProperty.all(invited ? null : Colors.green.shade400),
+        ),
         onPressed: () => invited ? null : onInvitePressed(),
       ),
     );
@@ -65,7 +60,7 @@ class _PubliclyAvailableUserWidgetState
   void onInvitePressed() async {
     try {
       await ServiceProvider.usersService
-          .addFriendWithId(widget.publiclyAvailableUser.userId);
+          .addFriendWithId(widget.publiclyAvailableUser.userId!);
     } on ApiException catch (e) {
       SnackBarUtils.showSnackBar(
         context,

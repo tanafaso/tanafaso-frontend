@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 
 import '../../request_base.dart';
 
@@ -9,10 +8,10 @@ class AppleAuthenticationRequestBody extends RequestBodyBase {
   final String authCode;
 
   AppleAuthenticationRequestBody({
-    @required this.firstName,
-    @required this.lastName,
-    @required this.email,
-    @required this.authCode,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.authCode,
   });
 
   @override

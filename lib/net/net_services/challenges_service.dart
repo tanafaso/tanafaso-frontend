@@ -43,7 +43,7 @@ class ChallengesService {
     var response = AddAzkarChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -58,7 +58,7 @@ class ChallengesService {
     var response = AddAzkarChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -73,7 +73,7 @@ class ChallengesService {
     var response = AddMeaningChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -89,7 +89,7 @@ class ChallengesService {
     var response = AddReadingQuranChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -105,7 +105,7 @@ class ChallengesService {
     var response = AddMemorizationChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -121,7 +121,7 @@ class ChallengesService {
     var response = AddCustomSimpleChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -136,7 +136,7 @@ class ChallengesService {
     var response = FinishMeaningChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
 
     await _updateStreakDataAfterFinishingChallenge();
@@ -153,7 +153,7 @@ class ChallengesService {
     var response = FinishReadingQuranChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
 
     await _updateStreakDataAfterFinishingChallenge();
@@ -170,7 +170,7 @@ class ChallengesService {
     var response = FinishReadingQuranChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
 
     await _updateStreakDataAfterFinishingChallenge();
@@ -181,8 +181,8 @@ class ChallengesService {
     String key = CacheManager.CACHE_KEY_CHALLENGES.toString();
 
     if (prefs.containsKey(key)) {
-      return GetChallengesResponse.fromJson(jsonDecode(prefs.getString(key)))
-          .challenges;
+      return GetChallengesResponse.fromJson(jsonDecode(prefs.getString(key)!))
+          .challenges!;
     }
 
     http.Response httpResponse = await ApiCaller.get(
@@ -190,11 +190,11 @@ class ChallengesService {
     String responseBody = utf8.decode(httpResponse.body.codeUnits);
     var response = GetChallengesResponse.fromJson(jsonDecode(responseBody));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
 
     prefs.setString(key, responseBody);
-    return response.challenges;
+    return response.challenges!;
   }
 
   Future<AzkarChallenge> getAzkarChallenge(String challengeId) async {
@@ -205,9 +205,9 @@ class ChallengesService {
     var response = GetAzkarChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
-    return response.challenge;
+    return response.challenge!;
   }
 
   Future<void> deleteChallenge(String challengeId) async {
@@ -220,7 +220,7 @@ class ChallengesService {
     var response = DeleteChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
   }
 
@@ -229,7 +229,7 @@ class ChallengesService {
     String key = CacheManager.CACHE_KEY_ORIGINAL_CHALLENGE_PREFIX.toString() +
         challengeId;
     if (prefs.containsKey(key)) {
-      return AzkarChallenge.fromJson(json.decode(prefs.getString(key)));
+      return AzkarChallenge.fromJson(json.decode(prefs.getString(key)!));
     }
     http.Response httpResponse = await ApiCaller.get(
         route: Endpoint(
@@ -238,10 +238,10 @@ class ChallengesService {
     var response = GetAzkarChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
-    prefs.setString(key, json.encode(response.challenge.toJson()));
-    return response.challenge;
+    prefs.setString(key, json.encode(response.challenge!.toJson()));
+    return response.challenge!;
   }
 
   Future<void> updateAzkarChallenge(AzkarChallenge challenge) async {
@@ -252,12 +252,12 @@ class ChallengesService {
     http.Response httpResponse = await ApiCaller.put(
         route: Endpoint(
             endpointRoute: EndpointRoute.UPDATE_AZKAR_CHALLENGE,
-            pathVariables: [challenge.id]),
+            pathVariables: [challenge.id!]),
         requestBody: requestBody);
     var response = UpdateAzkarChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
 
     if (challenge.done()) {
@@ -280,7 +280,7 @@ class ChallengesService {
     var response = FinishMemorizationChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
 
     await _updateStreakDataAfterFinishingChallenge();
@@ -290,7 +290,7 @@ class ChallengesService {
     SharedPreferences prefs = await ServiceProvider.cacheManager.getPrefs();
     String key = CacheManager.CACHE_KEY_FINISHED_CHALLENGES_COUNT.toString();
     if (prefs.containsKey(key)) {
-      return prefs.getInt(key);
+      return prefs.getInt(key)!;
     }
     http.Response httpResponse = await ApiCaller.get(
         route: Endpoint(
@@ -298,10 +298,10 @@ class ChallengesService {
     var response = GetFinishedChallengesCountResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
-      throw new ApiException(response.error);
+      throw new ApiException(response.error!);
     }
-    prefs.setInt(key, response.finishedChallengesCount);
-    return response.finishedChallengesCount;
+    prefs.setInt(key, response.finishedChallengesCount!);
+    return response.finishedChallengesCount!;
   }
 
   Future<int> getConsecutiveDaysStreak() async {
@@ -319,9 +319,9 @@ class ChallengesService {
 
     int daysDifference = DateTime.now()
         .difference(DateTime.fromMillisecondsSinceEpoch(
-            prefs.getInt(lastFinishedDateKey)))
+            prefs.getInt(lastFinishedDateKey)!))
         .inDays;
-    int daysStreakWas = prefs.getInt(daysStreaksKey);
+    int daysStreakWas = prefs.getInt(daysStreaksKey)!;
     return max(1, daysStreakWas - max(0, daysDifference - 1));
   }
 
@@ -342,15 +342,15 @@ class ChallengesService {
     }
 
     DateTime lastFinishedChallengeDate =
-        DateTime.fromMillisecondsSinceEpoch(prefs.getInt(lastFinishedDateKey));
+        DateTime.fromMillisecondsSinceEpoch(prefs.getInt(lastFinishedDateKey)!);
     bool sameDay = _isSameDay(lastFinishedChallengeDate, now);
 
     if (!sameDay) {
       int daysDifference = DateTime.now()
           .difference(DateTime.fromMillisecondsSinceEpoch(
-              prefs.getInt(lastFinishedDateKey)))
+              prefs.getInt(lastFinishedDateKey)!))
           .inDays;
-      int daysStreakWas = prefs.getInt(daysStreaksKey);
+      int daysStreakWas = prefs.getInt(daysStreaksKey)!;
       await prefs.setInt(daysStreaksKey,
           max(2, 1 + daysStreakWas - max(0, daysDifference - 1)));
     }

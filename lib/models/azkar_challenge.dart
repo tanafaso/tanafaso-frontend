@@ -9,17 +9,17 @@ class AzkarChallenge {
     this.name,
     this.expiryDate,
     this.usersFinished = const [],
-    this.subChallenges,
+    this.subChallenges = const [],
   });
 
-  String id;
-  String groupId;
-  String creatingUserId;
-  String motivation;
-  String name;
+  String? id;
+  String? groupId;
+  String? creatingUserId;
+  String? motivation;
+  String? name;
 
   // In seconds since epoch
-  int expiryDate;
+  int? expiryDate;
   List<String> usersFinished;
   List<SubChallenge> subChallenges;
 
@@ -58,6 +58,6 @@ class AzkarChallenge {
 
   bool deadlinePassed() {
     int secondsSinceEpoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-    return secondsSinceEpoch >= expiryDate;
+    return secondsSinceEpoch >= (expiryDate ?? 0);
   }
 }

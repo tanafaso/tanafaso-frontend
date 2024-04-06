@@ -31,11 +31,11 @@ class DoReadingQuranChallengeScreen extends StatefulWidget {
   final List<Friend> friendshipScores;
 
   DoReadingQuranChallengeScreen({
-    @required this.challenge,
-    @required this.group,
-    @required this.challengedUsersIds,
-    @required this.challengedUsersFullNames,
-    @required this.friendshipScores,
+    required this.challenge,
+    required this.group,
+    required this.challengedUsersIds,
+    required this.challengedUsersFullNames,
+    required this.friendshipScores,
   });
 
   @override
@@ -46,17 +46,17 @@ class DoReadingQuranChallengeScreen extends StatefulWidget {
 class _DoReadingQuranChallengeScreenState
     extends State<DoReadingQuranChallengeScreen>
     with SingleTickerProviderStateMixin {
-  ConfettiController confettiControler;
-  bool _finishedConfetti;
-  ButtonState _progressButtonState;
-  ScrollController _scrollController;
+  ConfettiController? confettiControler;
+  bool? _finishedConfetti;
+  ButtonState? _progressButtonState;
+  ScrollController? _scrollController;
 
   @override
   void initState() {
     super.initState();
 
     _progressButtonState =
-        widget.challenge.finished ? ButtonState.success : ButtonState.idle;
+        widget.challenge.finished! ? ButtonState.success : ButtonState.idle;
     _finishedConfetti = false;
     confettiControler =
         ConfettiController(duration: const Duration(seconds: 1));
@@ -102,7 +102,7 @@ class _DoReadingQuranChallengeScreenState
                     padding: const EdgeInsets.all(8.0),
                     child: Scrollbar(
                       interactive: true,
-                      isAlwaysShown: true,
+                      thumbVisibility: true,
                       controller: _scrollController,
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
@@ -112,7 +112,8 @@ class _DoReadingQuranChallengeScreenState
                           separatorBuilder: (BuildContext context, int index) =>
                               Padding(padding: EdgeInsets.all(4)),
                           shrinkWrap: true,
-                          itemCount: widget.challenge.surahSubChallenges.length,
+                          itemCount:
+                              widget.challenge.surahSubChallenges!.length,
                           itemBuilder: (context, index) {
                             return RawMaterialButton(
                               onPressed: () => Navigator.push(
@@ -120,7 +121,7 @@ class _DoReadingQuranChallengeScreenState
                                 MaterialPageRoute(
                                   builder: (context) => DoReadingSurahScreen(
                                     surahSubChallenge: widget
-                                        .challenge.surahSubChallenges[index],
+                                        .challenge.surahSubChallenges![index],
                                   ),
                                 ),
                               ),
@@ -142,15 +143,14 @@ class _DoReadingQuranChallengeScreenState
                                               TextSpan(
                                                   text: widget
                                                       .challenge
-                                                      .surahSubChallenges[index]
+                                                      .surahSubChallenges![
+                                                          index]
                                                       .surahName,
                                                   style: TextStyle(
-                                                      fontFamily: Theme.of(
-                                                              context)
-                                                          // ignore: deprecated_member_use
-                                                          .accentTextTheme
-                                                          .bodyText1
-                                                          .fontFamily,
+                                                      fontFamily:
+                                                          Theme.of(context)
+                                                              .primaryTextTheme.labelLarge!
+                                                              .fontFamily,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black)),
@@ -159,7 +159,7 @@ class _DoReadingQuranChallengeScreenState
                                                   text: ArabicUtils
                                                       .englishToArabic(widget
                                                           .challenge
-                                                          .surahSubChallenges[
+                                                          .surahSubChallenges![
                                                               index]
                                                           .startingVerseNumber
                                                           .toString()),
@@ -174,7 +174,7 @@ class _DoReadingQuranChallengeScreenState
                                                   text: ArabicUtils
                                                       .englishToArabic(widget
                                                           .challenge
-                                                          .surahSubChallenges[
+                                                          .surahSubChallenges![
                                                               index]
                                                           .endingVerseNumber
                                                           .toString()),
@@ -257,20 +257,20 @@ class _DoReadingQuranChallengeScreenState
       });
       try {
         await ServiceProvider.challengesService
-            .finishReadingQuranChallenge(widget.challenge.id);
+            .finishReadingQuranChallenge(widget.challenge.id!);
       } on ApiException catch (e) {
         SnackBarUtils.showSnackBar(context, e.errorStatus.errorMessage);
         return;
       }
       setState(() {
         _progressButtonState = ButtonState.success;
-        confettiControler.addListener(() {
-          if (confettiControler.state == ConfettiControllerState.stopped) {
+        confettiControler!.addListener(() {
+          if (confettiControler!.state == ConfettiControllerState.stopped) {
             onFinishedConfetti();
           }
         });
 
-        confettiControler.play();
+        confettiControler!.play();
       });
     } else if (_progressButtonState == ButtonState.success) {
       SnackBarUtils.showSnackBar(context, "لقد أنهيت هذا التحدي سابقًا");
@@ -283,7 +283,7 @@ class _DoReadingQuranChallengeScreenState
       child: ConfettiWidget(
         maximumSize: Size(30, 30),
         shouldLoop: false,
-        confettiController: confettiControler,
+        confettiController: confettiControler!,
         blastDirection: pi,
         blastDirectionality: BlastDirectionality.explosive,
         maxBlastForce: 10,
@@ -298,7 +298,7 @@ class _DoReadingQuranChallengeScreenState
   onFinishedConfetti() async {
     // Avoid popping twice if confetti's controller decided to call our listner
     // more than once.
-    if (_finishedConfetti) {
+    if (_finishedConfetti!) {
       return;
     }
     _finishedConfetti = true;
@@ -322,7 +322,7 @@ class _DoReadingQuranChallengeScreenState
 
   @override
   void dispose() {
-    confettiControler.dispose();
+    confettiControler!.dispose();
     super.dispose();
   }
 }

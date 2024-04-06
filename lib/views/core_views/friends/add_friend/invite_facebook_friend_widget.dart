@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class InviteFacebookFriendWidget extends StatefulWidget {
   final User facebookFriend;
 
-  InviteFacebookFriendWidget({@required this.facebookFriend});
+  InviteFacebookFriendWidget({required this.facebookFriend});
 
   @override
   _InviteFacebookFriendWidgetState createState() =>
@@ -48,15 +48,16 @@ class _InviteFacebookFriendWidgetState
   }
 
   Widget conditionallyGetInviteButton() {
-    // ignore: deprecated_member_use
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
-      // ignore: deprecated_member_use
-      child: RaisedButton(
+      child: ElevatedButton(
         child: invited
             ? Text(AppLocalizations.of(context).invited)
             : Text(AppLocalizations.of(context).invite),
-        color: invited ? null : Colors.green.shade400,
+        style: ButtonStyle(
+          backgroundColor:
+              MaterialStateProperty.all(invited ? null : Colors.green.shade400),
+        ),
         onPressed: () => invited ? null : onInvitePressed(),
       ),
     );
