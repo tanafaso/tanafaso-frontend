@@ -127,13 +127,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "الفيسبوك",
-          body:
-              "يمكنك ربط حساب الفيسبوك الخاص بك حتى تتمكن من دعوة أصدقائك على الفيسبوك الذين قاموا بالفعل بتنزيل التطبيق وربط حسابات الفيسبوك الخاصة بهم بالتطبيق",
-          image: _buildImage('add_facebook_friend.png'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
           title: "تحدي الأصدقاء",
           body: "يمكنك اختيار الأصدقاء وتحدِّيهم لقراءة بعض الأذكار وتكرارها",
           image: _buildImage('challenge.png'),

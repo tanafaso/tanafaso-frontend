@@ -29,7 +29,7 @@ class CacheManager {
       "018";
   // Saved in milliseconds since epoch
   static const String CACHE_KEY_LAST_FINISHED_CHALLENGE_DATE = "019";
-  static const String ASKED_FOR_NOTIFICATIONS_PERMISSION = "020";
+  static const String CACHE_KEY_ASKED_FOR_NOTIFICATIONS_PERMISSION = "020";
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 

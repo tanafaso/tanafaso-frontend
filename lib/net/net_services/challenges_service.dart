@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:azkar/models/azkar_challenge.dart';
 import 'package:azkar/models/challenge.dart';
+import 'package:azkar/models/global_challenge.dart';
 import 'package:azkar/net/api_caller.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/net/api_interface/challenges/requests/add_azkar_challenge_in_group_request.dart';
@@ -18,12 +19,15 @@ import 'package:azkar/net/api_interface/challenges/responses/add_memorization_ch
 import 'package:azkar/net/api_interface/challenges/responses/add_reading_quran_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/add_simple_custom_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/delete_challenge_response.dart';
+import 'package:azkar/net/api_interface/challenges/responses/finish_custom_simple_challenge_response.dart';
+import 'package:azkar/net/api_interface/challenges/responses/finish_global_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/finish_meaning_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/finish_memorization_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/finish_reading_quran_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/get_azkar_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/get_challenges_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/get_finished_challenges_count_response.dart';
+import 'package:azkar/net/api_interface/challenges/responses/get_global_challenge_response.dart';
 import 'package:azkar/net/api_interface/challenges/responses/update_azkar_challenge_response.dart';
 import 'package:azkar/net/endpoints.dart';
 import 'package:azkar/services/cache_manager.dart';
@@ -167,7 +171,21 @@ class ChallengesService {
             endpointRoute: EndpointRoute.FINISH_CUSTOM_SIMPLE_CHALLENGE,
             pathVariables: [id]));
 
-    var response = FinishReadingQuranChallengeResponse.fromJson(
+    var response = FinishCustomSimpleChallengeResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.error!);
+    }
+
+    await _updateStreakDataAfterFinishingChallenge();
+  }
+
+  Future<void> finishGlobalChallenge() async {
+    http.Response httpResponse = await ApiCaller.put(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.FINISH_GLOBAL_CHALLENGE));
+
+    var response = FinishGlobalChallengeResponse.fromJson(
         jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
     if (response.hasError()) {
       throw new ApiException(response.error!);
@@ -208,6 +226,18 @@ class ChallengesService {
       throw new ApiException(response.error!);
     }
     return response.challenge!;
+  }
+
+  Future<GlobalChallenge> getGlobalChallenge() async {
+    http.Response httpResponse = await ApiCaller.get(
+        route: Endpoint(
+            endpointRoute: EndpointRoute.GET_GLOBAL_CHALLENGE));
+    var response = GetGlobalChallengeResponse.fromJson(
+        jsonDecode(utf8.decode(httpResponse.body.codeUnits)));
+    if (response.hasError()) {
+      throw new ApiException(response.error!);
+    }
+    return response.challenge;
   }
 
   Future<void> deleteChallenge(String challengeId) async {

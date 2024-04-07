@@ -142,16 +142,14 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
                               ),
                               Visibility(
                                 child: Divider(),
-                                visible: (widget.challenge.motivation ??
-                                        "".length ??
-                                        0) !=
-                                    0,
+                                visible: (((widget.challenge.motivation ?? "")
+                                        .length) !=
+                                    0),
                               ),
                               Visibility(
-                                visible: (widget.challenge.motivation ??
-                                        "".length ??
-                                        0) !=
-                                    0,
+                                visible: (((widget.challenge.motivation ?? "")
+                                        .length) !=
+                                    0),
                                 maintainSize: false,
                                 child: Row(
                                   children: [
@@ -225,6 +223,7 @@ class _DoAzkarChallengeScreenState extends State<DoAzkarChallengeScreen>
       itemBuilder: (context, index) {
         return DoAzkarChallengeListItemWidget(
           key: UniqueKey(),
+          keepAlive: true,
           subChallenge: widget.challenge.subChallenges[index],
           challenge: widget.challenge,
           callback: (SubChallenge newSubChallenge) async {

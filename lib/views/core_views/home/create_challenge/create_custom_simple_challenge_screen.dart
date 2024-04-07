@@ -107,8 +107,7 @@ class _CreateCustomSimpleChallengeScreenState
       margin: const EdgeInsets.all(8),
       child: ButtonTheme(
         height: 50,
-        // ignore: deprecated_member_use
-        child: OutlinedButton(
+        child: TextButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.grey),
           ),

@@ -16,8 +16,11 @@ class DoAzkarChallengeListItemWidget extends StatefulWidget {
   // and will not be consistent.
   final AzkarChallenge challenge;
 
+  final bool keepAlive;
+
   DoAzkarChallengeListItemWidget({
     required Key key,
+    required this.keepAlive,
     required this.subChallenge,
     required this.callback,
     required this.challenge,
@@ -130,5 +133,5 @@ class _DoAzkarChallengeListItemWidgetState
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => widget.keepAlive;
 }

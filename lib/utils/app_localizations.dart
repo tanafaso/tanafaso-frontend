@@ -254,6 +254,10 @@ class AppLocalizations {
           'حدث خطأ أثناء تسجيل الدخول باستخدام جوجل',
       'username should not be empty': 'يجب ألا يكون كود المستخدم فارغًا',
       'signing in...': 'جاري تسجيل الدخول...',
+      'global challenge feature': 'تحدي مشترك',
+      'global challenge feature description':
+          'هذا تحدي مشترك بين جميع مستخدمي التطبيق',
+      'global challenge': 'تحدي مشترك',
     },
   };
 
@@ -355,9 +359,21 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]!['delete and copy challenge']!;
   }
 
+  String get globalChallengeFeature {
+    return _localizedValues[locale.languageCode]!['global challenge feature']!;
+  }
+
   String get swipeTheChallengeCardToTheRightToDeleteOrCopyAChallenge {
     return _localizedValues[locale.languageCode]![
         'swipe the challenge card to the right to delete or copy a challenge']!;
+  }
+
+  String get globalChallengeFeatureDescription {
+    return _localizedValues[locale.languageCode]!['global challenge feature description']!;
+  }
+
+  String get globalChallenge {
+    return _localizedValues[locale.languageCode]!['global challenge']!;
   }
 
   String get copy {
