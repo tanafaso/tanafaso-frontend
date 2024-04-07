@@ -112,12 +112,13 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
                 },
               );
             }
+            Challenge challenge = challenges[index - 1];
             return ChallengeListItemWidget(
-              key: Key(challenges[index].getId()!),
-              challenge: challenges[index],
-              group: groups.firstWhere(
-                  (group) => group.id == challenges[index].getGroupId()),
-              firstChallengeInList: index == 0,
+              key: Key(challenge.getId()!),
+              challenge: challenge,
+              group: groups
+                  .firstWhere((group) => group.id == challenge.getGroupId()),
+              firstChallengeInList: index == 1,
               friendshipScores: friendshipScores,
               reloadHomeMainScreenCallback: () {
                 widget.reloadHomeMainScreenCallback();
