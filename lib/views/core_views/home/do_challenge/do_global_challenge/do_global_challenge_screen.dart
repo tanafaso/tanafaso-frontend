@@ -5,6 +5,7 @@ import 'package:azkar/models/global_challenge.dart';
 import 'package:azkar/models/sub_challenge.dart';
 import 'package:azkar/net/api_exception.dart';
 import 'package:azkar/services/service_provider.dart';
+import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/snack_bar_utils.dart';
 import 'package:azkar/views/core_views/home/do_challenge/do_azkar_challenge/do_azkar_challenge_list_item_widget.dart';
 import 'package:confetti/confetti.dart';
@@ -210,14 +211,16 @@ class _DoGlobalChallengeScreenState extends State<DoGlobalChallengeScreen>
                             ]
                           : <TextSpan>[
                               new TextSpan(
-                                text: 'تهانينا! لقد تم إنهاء هذا التحدي المشترك ',
+                                text:
+                                    'تهانينا! لقد تم إنهاء هذا التحدي المشترك ',
                                 style: new TextStyle(
                                     color: Colors.grey.shade700,
                                     fontWeight: FontWeight.bold),
                               ),
                               new TextSpan(
-                                text: (widget.globalChallenge.finishedCount + 1)
-                                    .toString(),
+                                text: ArabicUtils.englishToArabic(
+                                    (widget.globalChallenge.finishedCount + 1)
+                                        .toString()),
                                 style: new TextStyle(
                                     color: Colors.green,
                                     fontSize: 35,
