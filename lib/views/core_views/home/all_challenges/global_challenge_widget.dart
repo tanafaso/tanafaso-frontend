@@ -3,6 +3,7 @@ import 'package:azkar/models/challenge.dart';
 import 'package:azkar/models/global_challenge.dart';
 import 'package:azkar/services/service_provider.dart';
 import 'package:azkar/utils/app_localizations.dart';
+import 'package:azkar/utils/arabic_utils.dart';
 import 'package:azkar/utils/features.dart';
 import 'package:azkar/views/core_views/home/all_challenges/challenge_list_item_loading_widget.dart';
 import 'package:azkar/views/core_views/home/do_challenge/do_global_challenge/do_global_challenge_screen.dart';
@@ -192,8 +193,9 @@ class _GlobalChallengeWidgetState extends State<GlobalChallengeWidget>
                                         fontWeight: FontWeight.bold),
                                   ),
                                   new TextSpan(
-                                    text: _globalChallenge.finishedCount
-                                        .toString(),
+                                    text: ArabicUtils.englishToArabic(
+                                        _globalChallenge.finishedCount
+                                            .toString()),
                                     style: new TextStyle(
                                         color: Colors.green,
                                         fontWeight: FontWeight.bold),
