@@ -42,9 +42,11 @@ enum EndpointRoute {
   FINISH_MEANING_CHALLENGE,
   FINISH_READING_QURAN_CHALLENGE,
   FINISH_CUSTOM_SIMPLE_CHALLENGE,
+  FINISH_GLOBAL_CHALLENGE,
   GET_ALL_CHALLENGES,
   GET_ALL_CHALLENGES_IN_GROUP,
   GET_AZKAR_CHALLENGE,
+  GET_GLOBAL_CHALLENGE,
   DELETE_CHALLENGE,
   DELETE_PERSONAL_CHALLENGE,
   GET_ORIGINAL_CHALLENGE,
@@ -175,6 +177,8 @@ class ApiRoutesUtil {
       case EndpointRoute.FINISH_CUSTOM_SIMPLE_CHALLENGE:
         assert(route.pathVariables.length == 1);
         return '/challenges/finish/simple/${route.pathVariables[0]}/';
+      case EndpointRoute.FINISH_GLOBAL_CHALLENGE:
+        return '/challenges/finish/global/';
       case EndpointRoute.GET_ALL_CHALLENGES:
         return '/challenges/v2';
       case EndpointRoute.GET_ALL_CHALLENGES_IN_GROUP:
@@ -183,6 +187,8 @@ class ApiRoutesUtil {
       case EndpointRoute.GET_AZKAR_CHALLENGE:
         assert(route.pathVariables.length == 1);
         return '/challenges/${route.pathVariables[0]}';
+      case EndpointRoute.GET_GLOBAL_CHALLENGE:
+        return '/challenges/global';
       case EndpointRoute.DELETE_CHALLENGE:
         assert(route.pathVariables.length == 1);
         return '/challenges/${route.pathVariables[0]}';

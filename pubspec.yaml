@@ -12,7 +12,7 @@ description: A new Flutter project.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.14.7+148
+version: 1.14.8+149
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -62,15 +62,9 @@ dependencies:
   intl: ^0.18.1
   odometer: ^3.0.0
   permission_handler: ^11.3.1
-
   collection: any
 
 
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
 flutter:
 
   # The following line ensures that the Material Icons font is
@@ -87,7 +81,6 @@ flutter:
     - assets/images/logo_fore.png
     - assets/images/username.png
     - assets/images/add_friend.png
-    - assets/images/add_facebook_friend.png
     - assets/images/challenge.png
     - assets/images/friends.png
     - assets/gts-root-r1.crt

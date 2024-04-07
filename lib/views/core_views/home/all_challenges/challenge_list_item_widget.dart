@@ -111,7 +111,6 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
       parent: _controller,
       curve: Curves.elasticIn,
     ));
-
   }
 
   @override
@@ -202,7 +201,8 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 16),
-                          child: SnapshotUtils.getErrorWidget(context, snapshot),
+                          child:
+                              SnapshotUtils.getErrorWidget(context, snapshot),
                         )
                       ],
                     ),
@@ -292,16 +292,16 @@ class _ChallengeListItemWidgetState extends State<ChallengeListItemWidget>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [],
-                      ),
                       Visibility(
+                        maintainSize: false,
+                        maintainAnimation: false,
+                        maintainState: false,
                         visible: widget.challenge.challengeType ==
                                 ChallengeType.AZKAR &&
-                            (widget.challenge.azkarChallenge?.motivation ??
-                                    "".length ??
-                                    0) !=
-                                0,
+                            (((widget.challenge.azkarChallenge?.motivation ??
+                                        "")
+                                    .length) !=
+                                0),
                         child: Container(
                           width: MediaQuery.of(context).size.width * 2 / 3,
                           child: AutoSizeText(

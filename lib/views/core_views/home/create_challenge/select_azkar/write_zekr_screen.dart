@@ -74,19 +74,17 @@ class _WriteZekrScreenState extends State<WriteZekrScreen> {
                 ),
               ),
               Padding(padding: EdgeInsets.all(4)),
-              Flexible(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8, top: 8),
-                        child: !readyToFinishChallenge(false)
-                            ? getNotReadyButton()
-                            : getReadyButton(),
-                      ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8, top: 8),
+                      child: !readyToFinishChallenge(false)
+                          ? getNotReadyButton()
+                          : getReadyButton(),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -99,9 +97,7 @@ class _WriteZekrScreenState extends State<WriteZekrScreen> {
     return Container(
       margin: const EdgeInsets.all(8),
       child: ButtonTheme(
-        height: 50,
-        // ignore: deprecated_member_use
-        child: OutlinedButton(
+        child: ElevatedButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.grey),
           ),

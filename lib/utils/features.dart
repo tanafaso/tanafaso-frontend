@@ -12,4 +12,5 @@ class Features {
   static const String PROFILE_SCREEN = "profile-screen-feature";
   static const String LIVE_SUPPORT_SCREEN = "live-support-screen-feature";
   static const String SETTING_SCREEN = "settings-screen-feature";
+  static const String GLOBAL_CHALLENGE = "global-challenge-feature";
 }

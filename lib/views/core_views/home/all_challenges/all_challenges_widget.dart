@@ -6,6 +6,7 @@ import 'package:azkar/utils/app_localizations.dart';
 import 'package:azkar/utils/snapshot_utils.dart';
 import 'package:azkar/views/core_views/home/all_challenges/challenge_list_item_loading_widget.dart';
 import 'package:azkar/views/core_views/home/all_challenges/challenge_list_item_widget.dart';
+import 'package:azkar/views/core_views/home/all_challenges/global_challenge_widget.dart';
 import 'package:azkar/views/core_views/home/home_main_screen.dart';
 import 'package:azkar/views/keys.dart';
 import 'package:flutter/material.dart';
@@ -102,8 +103,15 @@ class _AllChallengesWidgetState extends State<AllChallengesWidget> {
           addAutomaticKeepAlives: true,
           // Cache half screen after and half screen before the current screen.
           cacheExtent: MediaQuery.of(context).size.height * 0.5,
-          itemCount: challenges.length,
+          itemCount: challenges.length + 1,
           itemBuilder: (context, index) {
+            if (index == 0) {
+              return GlobalChallengeWidget(
+                reloadHomeMainScreenCallback: () {
+                  widget.reloadHomeMainScreenCallback();
+                },
+              );
+            }
             return ChallengeListItemWidget(
               key: Key(challenges[index].getId()!),
               challenge: challenges[index],

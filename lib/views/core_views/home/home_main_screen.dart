@@ -32,6 +32,7 @@ class _HomeMainScreenState extends State<HomeMainScreen>
         // Feature ids for every feature that we want to showcase in order.
         [
           Features.ADD_CHALLENGE,
+          Features.GLOBAL_CHALLENGE,
           Features.CLONE_AND_DELETE,
           Features.CHALLENGES_SCREEN,
           Features.FRIENDS_SCREEN,
@@ -48,11 +49,11 @@ class _HomeMainScreenState extends State<HomeMainScreen>
           await ServiceProvider.cacheManager.getPrefs();
       if (Platform.isAndroid &&
           !sharedPreferences
-              .containsKey(CacheManager.ASKED_FOR_NOTIFICATIONS_PERMISSION)) {
+              .containsKey(CacheManager.CACHE_KEY_ASKED_FOR_NOTIFICATIONS_PERMISSION)) {
         await Permission.notification.request();
 
         await sharedPreferences.setBool(
-            CacheManager.ASKED_FOR_NOTIFICATIONS_PERMISSION, true);
+            CacheManager.CACHE_KEY_ASKED_FOR_NOTIFICATIONS_PERMISSION, true);
       }
     });
   }
@@ -63,12 +64,8 @@ class _HomeMainScreenState extends State<HomeMainScreen>
         body: SafeArea(
             child: Column(
           children: [
-            Expanded(
-              flex: 2,
-              child: UserProgressWidget(),
-            ),
+            UserProgressWidget(),
             Flexible(
-              flex: 5,
               child: AllChallengesWidget(
                 reloadHomeMainScreenCallback: () {
                   setState(() {});

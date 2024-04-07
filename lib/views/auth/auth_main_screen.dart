@@ -268,7 +268,6 @@ class _AuthMainScreenState extends State<AuthMainScreen>
           await account!.authentication;
       googleIdToken = authentication.idToken!;
     } catch (error) {
-      print(error);
       setState(() {
         _isSigningInWithGoogle = false;
       });

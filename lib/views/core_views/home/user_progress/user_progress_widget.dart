@@ -57,41 +57,39 @@ class _UserProgressWidgetState extends State<UserProgressWidget>
               !snapshot.hasError) {
             animationController.forward();
             return Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(
+                  left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
+                  Flexible(
+                    flex: 1,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Flexible(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              'المواظبة',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 45,
-                              ),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            'المواظبة',
+                            maxLines: 1,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 40,
                             ),
                           ),
                         ),
-                        Flexible(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Directionality(
-                              textDirection: TextDirection.ltr,
-                              // ignore: missing_required_param
-                              child: SlideOdometerTransition(
-                                letterWidth: 30,
-                                odometerAnimation: consecutiveDaysAnimation,
-                                numberTextStyle: const TextStyle(
-                                  fontSize: 45,
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Directionality(
+                            textDirection: TextDirection.ltr,
+                            // ignore: missing_required_param
+                            child: SlideOdometerTransition(
+                              letterWidth: 30,
+                              odometerAnimation: consecutiveDaysAnimation,
+                              numberTextStyle: const TextStyle(
+                                fontSize: 45,
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -99,36 +97,34 @@ class _UserProgressWidgetState extends State<UserProgressWidget>
                       ],
                     ),
                   ),
-                  Expanded(
+                  Padding(padding: EdgeInsets.only(left: 16)),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Flexible(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              'الإنجازات',
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 45,
-                              ),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            'الإنجازات',
+                            maxLines: 1,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 40,
                             ),
                           ),
                         ),
-                        Flexible(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Directionality(
-                              textDirection: TextDirection.ltr,
-                              child: SlideOdometerTransition(
-                                letterWidth: 30,
-                                odometerAnimation: finishedCountAnimation,
-                                numberTextStyle: const TextStyle(
-                                  fontSize: 45,
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Directionality(
+                            textDirection: TextDirection.ltr,
+                            child: SlideOdometerTransition(
+                              letterWidth: 30,
+                              odometerAnimation: finishedCountAnimation,
+                              numberTextStyle: const TextStyle(
+                                fontSize: 45,
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
